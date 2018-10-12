@@ -335,26 +335,6 @@ export const selects_options = {
             val: 'zh_TW'
         }
     ],
-    ntp_text: [
-        {
-            key: x.unique_id(),
-            text: create_option_data_text_val('default'),
-            name: 'ntp_text',
-            val: 'default'
-        },
-        {
-            key: x.unique_id(),
-            text: create_option_data_text_val('black'),
-            name: 'ntp_text',
-            val: '0, 0, 0'
-        },
-        {
-            key: x.unique_id(),
-            text: create_option_data_text_val('white'),
-            name: 'ntp_text',
-            val: '255, 255, 255'
-        }
-    ],
     ntp_background_alignment: [
         {
             key: x.unique_id(),
@@ -384,37 +364,37 @@ export const selects_options = {
             key: x.unique_id(),
             text: create_option_data_text_val('left_top'),
             name: 'ntp_background_alignment',
-            val: 'left-top'
+            val: 'left top'
         },
         {
             key: x.unique_id(),
             text: create_option_data_text_val('left_center'),
             name: 'ntp_background_alignment',
-            val: 'left-center'
+            val: 'left center'
         },
         {
             key: x.unique_id(),
             text: create_option_data_text_val('left_bottom'),
             name: 'ntp_background_alignment',
-            val: 'left-bottom'
+            val: 'left bottom'
         },
         {
             key: x.unique_id(),
             text: create_option_data_text_val('right_top'),
             name: 'ntp_background_alignment',
-            val: 'right-top'
+            val: 'right top'
         },
         {
             key: x.unique_id(),
             text: create_option_data_text_val('right_center'),
             name: 'ntp_background_alignment',
-            val: 'right-center'
+            val: 'right center'
         },
         {
             key: x.unique_id(),
             text: create_option_data_text_val('right_bottom'),
             name: 'ntp_background_alignment',
-            val: 'right-bottom'
+            val: 'right bottom'
         }
     ],
     ntp_background_repeat: [
