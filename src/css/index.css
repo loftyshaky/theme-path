@@ -421,6 +421,10 @@ header span, header label, header .open_in_chrome_btn {
 .folder_arrow_placeholder {
     width: 23px;
 }
+
+.folder_name {
+    padding: 3px 6px 3px 6px;
+}
 /*< work_folder */
 
 /*> help */
@@ -704,7 +708,7 @@ header span, header label, header .open_in_chrome_btn {
 /*< ordinary color inputs */
 
 /*> transition */
-.checkbox_checkmark_w svg, a, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen {
+.checkbox_checkmark_w svg, a, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .selected_folder {
     transition: all 0.2s ease-out;
 }
 
@@ -728,6 +732,10 @@ textarea, .select_w, .select_title {
     transition-property: background-color;
 }
 
+.selected_folder {
+    transition-property: background-color, color;
+}
+
 a:active, .upload_box_browse_label:active, .btn:active {
     transition: none;
 }
@@ -736,6 +744,11 @@ a:active, .upload_box_browse_label:active, .btn:active {
 /*> mods */
 .none {
     display: none;
+}
+
+.selected_folder {
+    background-color: #fbff75;
+    color: #212121;
 }
 /*< mods */
 

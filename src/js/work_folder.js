@@ -119,6 +119,10 @@ export const expand_folder = action((path, files, nest_level, index_to_insert_fo
 });
 //< expand folder when clicking on folder
 
+export const select_folder = action((path) => {
+    ob.chosen_folder_path = path;
+});
+
 const close_all_folders = action(() => {
     ob.folders.clear();
     mut.opened_folders = [];
@@ -135,6 +139,7 @@ export const mut = {
 
 export const ob = observable({
     folders: [],
+    chosen_folder_path: '',
     show_work_folder_selector: true
 });
 //< varibles t
