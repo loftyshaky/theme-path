@@ -42,7 +42,7 @@ export class Textarea extends react.Component {
                         ref={this.textarea}
                         onInput={this.resize_textarea}
                     ></textarea>
-                     <Help {...this.props} />
+                    <Help {...this.props} />
                 </div>
             </react.Fragment>
         );
