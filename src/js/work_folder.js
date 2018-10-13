@@ -124,6 +124,8 @@ export const expand_folder = action((path, files, nest_level, index_to_insert_fo
 
 //> select folder and fill inputs with theme data
 export const select_folder = action(async (path, children) => {
+    shared.ob.chosen_folder_path = path;
+    
     const folder_is_theme = children.find(file => file.name == 'manifest.json');
 
     if (folder_is_theme) {
@@ -136,10 +138,11 @@ export const select_folder = action(async (path, children) => {
             const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
 
             if (item) {
-                const val_is_localized = val.indexOf('__MSG_') > -1;
+                const val_is_localized = shared.val_is_localized(val);
 
                 if (val_is_localized) {
-                    const message_key = val.replace(/__MSG_|__/g, '');
+                    const message_key = shared.get_message_key(val);
+                    
                     get_theme_name_or_descrption(name, message_key, default_locale, path);
 
                 } else {
@@ -156,8 +159,6 @@ export const select_folder = action(async (path, children) => {
             }
         }
     }
-
-    shared.ob.chosen_folder_path = path;
 });
 
 const get_theme_name_or_descrption = (name, message_key, default_locale, path) => {
