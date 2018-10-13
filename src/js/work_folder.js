@@ -2,10 +2,14 @@
 
 import x from 'x';
 
+import * as shared from 'js/shared';
+import * as change_theme_props from 'js/change_theme_props';
+import { inputs_data, reset_inputs_data } from 'js/inputs_data';
+
 import { observable, action, configure } from "mobx";
 import * as r from 'ramda';
 //import * as dir_tree from "directory-tree";
-const { readdirSync, statSync } = require('fs')
+const { readdirSync, statSync, readFileSync } = require('fs')
 const { join } = require('path')
 const Store = require('electron-store');
 
@@ -119,9 +123,58 @@ export const expand_folder = action((path, files, nest_level, index_to_insert_fo
 });
 //< expand folder when clicking on folder
 
-export const select_folder = action((path) => {
+//> select folder and fill inputs with theme data
+export const select_folder = action(async (path, children) => {
+    const folder_is_theme = children.find(file => file.name == 'manifest.json');
+
+    if (folder_is_theme) {
+        reset_inputs_data();
+
+        change_theme_props.mut.manifest = JSON.parse(readFileSync(path + '/manifest.json', 'utf8').trim());
+        const default_locale = change_theme_props.mut.manifest.default_locale;
+
+        for (const [name, value] of Object.entries(change_theme_props.mut.manifest)) {
+            const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
+
+            if (item) {
+                const value_is_localized = value.indexOf('__MSG_') > -1;
+
+                if (value_is_localized) {
+                    const message_key = value.replace(/__MSG_|__/g, '');
+                    get_theme_name_or_descrption(name, message_key, default_locale, path);
+
+                } else {
+                    set_value('theme_metadata', name, value)
+                }
+            }
+        }
+
+        set_value('theme_metadata', 'locale', default_locale);
+
+        for (const [main_key, main_val] of Object.entries(change_theme_props.mut.manifest.theme)) {
+            for (const [key, val] of Object.entries(main_val)) {
+                set_value(main_key, key, val);
+            }
+        }
+    }
+
     ob.chosen_folder_path = path;
 });
+
+const get_theme_name_or_descrption = (name, message_key, default_locale, path) => {
+    const value = JSON.parse(readFileSync(path + '/_locales/' + default_locale + '/messages.json', 'utf8').trim())[message_key].message;
+
+    set_value('theme_metadata', name, value)
+};
+
+const set_value = (main_key, key, value) => {
+    const item = shared.find_from_name(inputs_data.obj[main_key], key);
+
+    if (item) {
+        item.value = value;
+    }
+};
+//< select folder and fill inputs with theme data
 
 const close_all_folders = action(() => {
     ob.folders.clear();

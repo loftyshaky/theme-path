@@ -20,7 +20,8 @@
   
   "upload_box_label_text": "Choose Image",
 
-  "default_checkbox_label": "Default",
+  "default_checkbox_label_text": "Default",
+  "disable_checkbox_label_text": "Disable",
 
   "also_use_img_as_title": "Also use the image as...",
 
@@ -104,7 +105,7 @@
   "donate_link_text": "💖 Support the development of this app by donating any amount via PayPal",
   
   "clear_new_tab_link_href": "https://bit.ly/clear-new-tab",
-  
+
 
   "option_ar_text": "Arabic",
   "option_am_text": "Amharic",

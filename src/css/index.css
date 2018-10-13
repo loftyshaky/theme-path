@@ -116,6 +116,7 @@ hr {
     width: 75%;
     margin: auto;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .hr:first-child {
@@ -196,7 +197,7 @@ textarea, .select_title, .option  {
     margin-top: 10px;
 }
 
-.img_selector_box > span:not(:last-child), .color_input_label, .ordinary_color_input .color_input_vizualization {
+.img_selector_box > span:not(:last-child), .color_input_label, .ordinary_color_input .color_input_vizualization, .img_selector_checkbox_w:not(:last-child) {
     margin-right: 12px;
 }
 
@@ -697,13 +698,17 @@ header span, header label, header .open_in_chrome_btn {
 /*< protecting screen */
 
 /*> ordinary color inputs */
+.colors_and_tints_input_block {
+    width: fit-content;
+}
+
 .color_input_label {
-    display: inline-block;
     margin-bottom: 0;
+    flex-grow: 1;
 }
 
 .ordinary_color_input {
-    display: block;
+    display: flex;
 }
 /*< ordinary color inputs */
 

@@ -37,15 +37,15 @@ export const Img_selector = props => {
                     </span>
                 </span>
                 <Color
-                    name={props.name}
-                    type='img'
+                    {...props}
+                    color_input_type='img'
                 />
                 <span className='also_use_img_as' data-title='also_use_img_as_title'>
                     <Svg src={library_add_svg} />
                 </span>
                 <Checkbox
-                    name={props.name}
-                    is_default_checkbox={true}
+                    {...props}
+                    special_checkbox='default'
                 />
             </div>
             <Help name={props.name} />

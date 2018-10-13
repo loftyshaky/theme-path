@@ -3,13 +3,17 @@
 import x from 'x';
 
 import { selects_options } from 'js/selects_options';
+import { inputs_data } from 'js/inputs_data';
+import * as shared from 'js/shared';
+import * as change_val from 'js/change_val';
 
 import { Help } from 'components/Help';
 
 import react from 'react';
 import * as r from 'ramda';
 
-//> Select c
+import { observer } from "mobx-react";
+
 export class Select extends react.Component {
     constructor(props) {
         super(props);
@@ -19,21 +23,31 @@ export class Select extends react.Component {
         this.select = react.createRef();
     }
 
-    //>1 create one option element t
+    //> create one option element
     create_option = option => {
         return <li key={option.key} className='option' data-storage={option.storage} data-val={option.val} onClick={this.change_select_val}>{option.text}</li>
     }
-    //<1 create one option element t
+    //< create one option element
 
-    //>1 change option value when selecting option t
+    //> change option value when selecting option
     change_select_val = e => {
-        settings.change_select_val(e.target.dataset.storage, e.target.dataset.val, e.target.textContent);
+        change_val.change_select_val(this.props.family, this.props.i, e.target.dataset.storage, e.target.dataset.val);
 
         this.hide_options();
     }
-    //<1 change option value when selecting option t
+    //< change option value when selecting option
 
-    //>1 hide options when clicking on option or select_title / scroll select options into view when oipening select
+    //> hide options when clicking on option or select_title
+    hide_options = async () => {
+        if (document.activeElement == this.select_w.current) {
+            await x.delay(0);
+
+            this.select_w.current.blur();
+        }
+    }
+    //< hide options when clicking on option or select_title
+
+    //> hide options when clicking on option or select_title / scroll select options into view when oipening select
     on_click = async () => {
         if (document.activeElement == this.select_w.current) {
             await x.delay(0);
@@ -65,10 +79,22 @@ export class Select extends react.Component {
             }
         }
     }
-    //<1 hide options when clicking on option or select_title / scroll select options into view when oipening select
+    //< hide options when clicking on option or select_title / scroll select options into view when oipening select
 
     render() {
         const options = selects_options[this.props.name != 'default_locale' ? this.props.name : 'locale'];
+        const val = inputs_data.obj[this.props.family][this.props.i].value;
+        const selected_option = shared.find_from_val(options, val);
+        const selected_option_text = r.ifElse(
+            () => selected_option,
+
+            () => selected_option.text,
+            () => {
+                if (options[0].val == 'default') {
+                    return shared.find_from_val(options, options[0].val).text;
+                }
+            }
+        )();
 
         return (
             <div
@@ -88,7 +114,9 @@ export class Select extends react.Component {
                         <div
                             className='select_title'
                             onMouseDown={this.on_click}
-                        ></div>
+                        >
+                            {selected_option_text}
+                        </div>
                         <ul
                             className='select'
                             ref={this.select}
@@ -102,4 +130,5 @@ export class Select extends react.Component {
         );
     }
 }
-//< Select c
+
+Select = observer(Select);

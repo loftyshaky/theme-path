@@ -20,7 +20,8 @@
 
   "upload_box_label_text": "Выберите картинку",
 
-  "default_checkbox_label": "Cтандарт",
+  "default_checkbox_label_text": "Cтандарт",
+  "disable_checkbox_label_text": "Отключить",
 
   "also_use_img_as_title": "Также использовать эту картинку в качестве...",
 

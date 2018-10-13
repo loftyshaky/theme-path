@@ -17,15 +17,18 @@ export const Input_block = props => {
     return (
         <react.Fragment>
             {hr}
-            {
-                inputs_data[props.name].map(item => {
-                    const Component = components[item.type];
+            <div className={props.name == 'colors' || props.name == 'tints' ? 'colors_and_tints_input_block' : null}>
+                {
+                    inputs_data.obj[props.name].map((item, i) => {
+                        const Component = components[item.type];
+                        const color_input_type = item.type == 'color' ? 'color' : null;
 
-                    return (
-                        < Component {...item} />
-                    );
-                })
-            }
+                        return (
+                            < Component {...item} i={i} color_input_type={color_input_type} />
+                        );
+                    })
+                }
+            </div>
         </react.Fragment>
     )
 }

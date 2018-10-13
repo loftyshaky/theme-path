@@ -83,13 +83,13 @@ export class Work_folder extends react.Component {
                         {arrow}
                         <span
                             className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
-                            onClick={this.select_folder.bind(null, [folder.path])}
+                            onClick={this.select_folder.bind(null, [folder.path, folder.children])}
                         >
                             <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
                         </span>
                         <span
                             className={x.cls(['folder_name', folder.path == work_folder.ob.chosen_folder_path ? 'selected_folder' : null])}
-                            onClick={this.select_folder.bind(null, [folder.path])}
+                            onClick={this.select_folder.bind(null, [folder.path, folder.children])}
                         >
                             {folder.name}
                         </span>
