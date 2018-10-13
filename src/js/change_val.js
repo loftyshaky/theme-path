@@ -1,5 +1,6 @@
 'use_strict';
 
+import  * as shared from 'js/shared';
 import { inputs_data } from 'js/inputs_data';
 
 import { action, configure } from "mobx";

@@ -3,7 +3,6 @@
 import x from 'x';
 
 import * as shared from 'js/shared';
-import * as change_theme_props from 'js/change_theme_props';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 
 import { observable, action, configure } from "mobx";
@@ -130,10 +129,10 @@ export const select_folder = action(async (path, children) => {
     if (folder_is_theme) {
         reset_inputs_data();
 
-        change_theme_props.mut.manifest = JSON.parse(readFileSync(path + '/manifest.json', 'utf8').trim());
-        const default_locale = change_theme_props.mut.manifest.default_locale;
+        shared.mut.manifest = JSON.parse(readFileSync(path + '/manifest.json', 'utf8').trim());
+        const default_locale = shared.mut.manifest.default_locale;
 
-        for (const [name, val] of Object.entries(change_theme_props.mut.manifest)) {
+        for (const [name, val] of Object.entries(shared.mut.manifest)) {
             const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
 
             if (item) {
@@ -151,14 +150,14 @@ export const select_folder = action(async (path, children) => {
 
         set_val('theme_metadata', 'locale', default_locale);
 
-        for (const [main_key, main_val] of Object.entries(change_theme_props.mut.manifest.theme)) {
+        for (const [main_key, main_val] of Object.entries(shared.mut.manifest.theme)) {
             for (const [key, val] of Object.entries(main_val)) {
                 set_val(main_key, key, val);
             }
         }
     }
 
-    ob.chosen_folder_path = path;
+    shared.ob.chosen_folder_path = path;
 });
 
 const get_theme_name_or_descrption = (name, message_key, default_locale, path) => {
@@ -192,7 +191,6 @@ export const mut = {
 
 export const ob = observable({
     folders: [],
-    chosen_folder_path: '',
     show_work_folder_selector: true
 });
 //< varibles t

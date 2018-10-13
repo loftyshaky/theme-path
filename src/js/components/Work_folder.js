@@ -2,6 +2,7 @@
 
 import x from 'x';
 
+import * as shared from 'js/shared';
 import * as work_folder from 'js/work_folder';
 import * as choose_folder from 'js/choose_folder';
 import { Fieldset } from 'components/Fieldset';
@@ -84,7 +85,7 @@ export class Work_folder extends react.Component {
                             <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
                         </span>
                         <span
-                            className={x.cls(['folder_name', folder.path == work_folder.ob.chosen_folder_path ? 'selected_folder' : null])}
+                            className={x.cls(['folder_name', folder.path == shared.ob.chosen_folder_path ? 'selected_folder' : null])}
                             onClick={work_folder.select_folder.bind(null, folder.path, folder.children)}
                         >
                             {folder.name}
@@ -108,7 +109,7 @@ export class Work_folder extends react.Component {
     });
 
     render() {
-        work_folder.ob.chosen_folder_path
+        shared.ob.chosen_folder_path
 
         const work_folder_path = store.get('work_folder');
         const number_of_rows = work_folder.ob.folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
