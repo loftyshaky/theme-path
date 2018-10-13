@@ -133,27 +133,27 @@ export const select_folder = action(async (path, children) => {
         change_theme_props.mut.manifest = JSON.parse(readFileSync(path + '/manifest.json', 'utf8').trim());
         const default_locale = change_theme_props.mut.manifest.default_locale;
 
-        for (const [name, value] of Object.entries(change_theme_props.mut.manifest)) {
+        for (const [name, val] of Object.entries(change_theme_props.mut.manifest)) {
             const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
 
             if (item) {
-                const value_is_localized = value.indexOf('__MSG_') > -1;
+                const val_is_localized = val.indexOf('__MSG_') > -1;
 
-                if (value_is_localized) {
-                    const message_key = value.replace(/__MSG_|__/g, '');
+                if (val_is_localized) {
+                    const message_key = val.replace(/__MSG_|__/g, '');
                     get_theme_name_or_descrption(name, message_key, default_locale, path);
 
                 } else {
-                    set_value('theme_metadata', name, value)
+                    set_val('theme_metadata', name, val)
                 }
             }
         }
 
-        set_value('theme_metadata', 'locale', default_locale);
+        set_val('theme_metadata', 'locale', default_locale);
 
         for (const [main_key, main_val] of Object.entries(change_theme_props.mut.manifest.theme)) {
             for (const [key, val] of Object.entries(main_val)) {
-                set_value(main_key, key, val);
+                set_val(main_key, key, val);
             }
         }
     }
@@ -162,16 +162,16 @@ export const select_folder = action(async (path, children) => {
 });
 
 const get_theme_name_or_descrption = (name, message_key, default_locale, path) => {
-    const value = JSON.parse(readFileSync(path + '/_locales/' + default_locale + '/messages.json', 'utf8').trim())[message_key].message;
+    const val = JSON.parse(readFileSync(path + '/_locales/' + default_locale + '/messages.json', 'utf8').trim())[message_key].message;
 
-    set_value('theme_metadata', name, value)
+    set_val('theme_metadata', name, val)
 };
 
-const set_value = (main_key, key, value) => {
+const set_val = (main_key, key, val) => {
     const item = shared.find_from_name(inputs_data.obj[main_key], key);
 
     if (item) {
-        item.value = value;
+        item.val = val;
     }
 };
 //< select folder and fill inputs with theme data

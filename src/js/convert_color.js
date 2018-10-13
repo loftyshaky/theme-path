@@ -7,7 +7,7 @@ import * as r from 'ramda';
 
 configure({ enforceActions: 'observed' });
 
-export const convert_color_to_hsla = action((family, i, val) => {
+export const convert_theme_color_props_to_color = action((family, i, val) => {
     const yellow = '#fbff75';
 
     if (family == 'images') {
@@ -21,10 +21,10 @@ export const convert_color_to_hsla = action((family, i, val) => {
         const rgb_val = val.length == 4 ? r.dropLast(1, val) : val;
         
         if (val != '') {
-            inputs_data.obj[family][i].value = 'rgb(' + rgb_val.join() + ')';
+            inputs_data.obj[family][i].val = 'rgb(' + rgb_val.join() + ')';
             inputs_data.obj[family][i].default = false;
         } else {
-            inputs_data.obj[family][i].value = yellow;
+            inputs_data.obj[family][i].val = yellow;
         }
 
     } else if (family == 'tints') {
@@ -50,17 +50,17 @@ export const convert_color_to_hsla = action((family, i, val) => {
             const every_number_in_hsla_arr_is_minus_1 = hsla_arr.every(number => number.indexOf('-1') > -1);
 
             if (every_number_in_hsla_arr_is_minus_1) {
-                inputs_data.obj[family][i].value = '#212121';
+                inputs_data.obj[family][i].val = '#212121';
                 inputs_data.obj[family][i].default = false;
 
             } else {
-                inputs_data.obj[family][i].value = 'hsl(' + hsla_arr.join() + ')';
+                inputs_data.obj[family][i].val = 'hsl(' + hsla_arr.join() + ')';
                 inputs_data.obj[family][i].default = false;
                 inputs_data.obj[family][i].disable = false;
             }
 
         } else {
-            inputs_data.obj[family][i].value = yellow;
+            inputs_data.obj[family][i].val = yellow;
             inputs_data.obj[family][i].disable = false;
         }
     }

@@ -29,13 +29,13 @@ export class Select extends react.Component {
     }
     //< create one option element
 
-    //> change option value when selecting option
+    //> change option val when selecting option
     change_select_val = e => {
         change_val.change_select_val(this.props.family, this.props.i, e.target.dataset.storage, e.target.dataset.val);
 
         this.hide_options();
     }
-    //< change option value when selecting option
+    //< change option val when selecting option
 
     //> hide options when clicking on option or select_title
     hide_options = async () => {
@@ -83,7 +83,7 @@ export class Select extends react.Component {
 
     render() {
         const options = selects_options[this.props.name != 'default_locale' ? this.props.name : 'locale'];
-        const val = inputs_data.obj[this.props.family][this.props.i].value;
+        const val = inputs_data.obj[this.props.family][this.props.i].val;
         const selected_option = shared.find_from_val(options, val);
         const selected_option_text = r.ifElse(
             () => selected_option,

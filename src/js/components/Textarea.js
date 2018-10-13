@@ -37,7 +37,7 @@ export class Textarea extends react.Component {
     }
 
     render() {
-        const value = inputs_data.obj[this.props.family][this.props.i].value;
+        const val = inputs_data.obj[this.props.family][this.props.i].val;
 
         return (
             <div className='input'>
@@ -49,7 +49,7 @@ export class Textarea extends react.Component {
                 <textarea
                     id={this.props.name + '_input'}
                     ref={this.textarea}
-                    value={value}
+                    val={val}
                     onInput={change_val.change_val.bind(null, this.props.family, this.props.i)}
                 ></textarea>
                 <Help {...this.props} />

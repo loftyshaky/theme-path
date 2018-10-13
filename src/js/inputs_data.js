@@ -19,14 +19,14 @@ export let inputs_data = observable({
                 name: 'version',
                 family: 'theme_metadata',
                 type: 'textarea',
-                value: ''
+                val: ''
             },
             {
                 key: x.unique_id(),
                 name: 'locale',
                 family: 'theme_metadata',
                 type: 'select',
-                value: '',
+                val: '',
                 add_help: true
             },
             {
@@ -34,21 +34,21 @@ export let inputs_data = observable({
                 name: 'name',
                 family: 'theme_metadata',
                 type: 'textarea',
-                value: ''
+                val: ''
             },
             {
                 key: x.unique_id(),
                 name: 'description',
                 family: 'theme_metadata',
                 type: 'textarea',
-                value: ''
+                val: ''
             },
             {
                 key: x.unique_id(),
                 name: 'default_locale',
                 family: 'theme_metadata',
                 type: 'select',
-                value: '',
+                val: '',
                 add_help: true
             },
         ],
@@ -58,7 +58,7 @@ export let inputs_data = observable({
                 name: 'theme_ntp_background',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -67,7 +67,7 @@ export let inputs_data = observable({
                 name: 'theme_toolbar',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -76,7 +76,7 @@ export let inputs_data = observable({
                 name: 'theme_frame',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -85,7 +85,7 @@ export let inputs_data = observable({
                 name: 'theme_frame_inactive',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -94,7 +94,7 @@ export let inputs_data = observable({
                 name: 'theme_frame_incognito',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -103,7 +103,7 @@ export let inputs_data = observable({
                 name: 'theme_frame_incognito_inactive',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -112,7 +112,7 @@ export let inputs_data = observable({
                 name: 'theme_frame_overlay',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -121,7 +121,7 @@ export let inputs_data = observable({
                 name: 'theme_tab_background',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -130,7 +130,7 @@ export let inputs_data = observable({
                 name: 'theme_tab_background_incognito',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -139,7 +139,7 @@ export let inputs_data = observable({
                 name: 'theme_window_control_background',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             },
@@ -148,7 +148,7 @@ export let inputs_data = observable({
                 name: 'theme_ntp_attribution',
                 family: 'images',
                 type: 'img_selector',
-                value: '',
+                val: '',
                 color_input_vizualization: '',
                 default: true
             }
@@ -159,7 +159,7 @@ export let inputs_data = observable({
                 name: 'ntp_background',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -167,7 +167,7 @@ export let inputs_data = observable({
                 name: 'toolbar',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -175,7 +175,7 @@ export let inputs_data = observable({
                 name: 'frame',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -183,7 +183,7 @@ export let inputs_data = observable({
                 name: 'frame_inactive',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -191,7 +191,7 @@ export let inputs_data = observable({
                 name: 'frame_incognito',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -199,7 +199,7 @@ export let inputs_data = observable({
                 name: 'frame_incognito_inactive',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -207,7 +207,7 @@ export let inputs_data = observable({
                 name: 'bookmark_text',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -215,7 +215,7 @@ export let inputs_data = observable({
                 name: 'tab_text',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -223,7 +223,7 @@ export let inputs_data = observable({
                 name: 'tab_background_text',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -231,7 +231,7 @@ export let inputs_data = observable({
                 name: 'button_background',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             },
             {
@@ -239,7 +239,7 @@ export let inputs_data = observable({
                 name: 'ntp_text',
                 family: 'colors',
                 type: 'color',
-                value: '',
+                val: '',
                 default: true
             }
         ],
@@ -249,7 +249,7 @@ export let inputs_data = observable({
                 name: 'frame',
                 family: 'tints',
                 type: 'color',
-                value: '',
+                val: '',
                 disable: true,
                 default: true
             },
@@ -258,7 +258,7 @@ export let inputs_data = observable({
                 name: 'frame_inactive',
                 family: 'tints',
                 type: 'color',
-                value: '',
+                val: '',
                 disable: true,
                 default: true
             },
@@ -267,7 +267,7 @@ export let inputs_data = observable({
                 name: 'frame_incognito',
                 family: 'tints',
                 type: 'color',
-                value: '',
+                val: '',
                 disable: true,
                 default: true
             },
@@ -276,7 +276,7 @@ export let inputs_data = observable({
                 name: 'frame_incognito_inactive',
                 family: 'tints',
                 type: 'color',
-                value: '',
+                val: '',
                 disable: true,
                 default: true
             },
@@ -285,7 +285,7 @@ export let inputs_data = observable({
                 name: 'background_tab',
                 family: 'tints',
                 type: 'color',
-                value: '',
+                val: '',
                 disable: true,
                 default: true
             },
@@ -294,7 +294,7 @@ export let inputs_data = observable({
                 name: 'buttons',
                 family: 'tints',
                 type: 'color',
-                value: '',
+                val: '',
                 disable: true,
                 default: true
             }
@@ -305,7 +305,7 @@ export let inputs_data = observable({
                 name: 'ntp_background_alignment',
                 family: 'properties',
                 type: 'select',
-                value: '',
+                val: '',
                 add_help: true
             },
             {
@@ -313,7 +313,7 @@ export let inputs_data = observable({
                 name: 'ntp_background_repeat',
                 family: 'properties',
                 type: 'select',
-                value: '',
+                val: '',
                 add_help: true
             },
             {
@@ -321,7 +321,7 @@ export let inputs_data = observable({
                 name: 'ntp_logo_alternate',
                 family: 'properties',
                 type: 'select',
-                value: '',
+                val: '',
                 add_help: true
             }
         ],
@@ -331,14 +331,14 @@ export let inputs_data = observable({
                 name: 'theme',
                 family: 'settings',
                 type: 'select',
-                value: ''
+                val: ''
             },
             {
                 key: x.unique_id(),
                 name: 'chrome_user_data_dirs',
                 family: 'settings',
                 type: 'textarea',
-                value: '',
+                val: '',
                 add_help: true
             }
         ]

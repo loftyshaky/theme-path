@@ -14,7 +14,7 @@ import { observer } from "mobx-react";
 import { SketchPicker } from 'react-color';
 
 export let Color = props => {
-    convert_color.convert_color_to_hsla(props.family, props.i, inputs_data.obj[props.family][props.i].value);
+    convert_color.convert_theme_color_props_to_color(props.family, props.i, inputs_data.obj[props.family][props.i].val);
 
     const label = props.color_input_type == 'color' ?
         <label
@@ -44,7 +44,7 @@ export let Color = props => {
             <span
                 className={x.cls(['color_input_vizualization', props.color_input_type == 'img' ? 'tall_color_input_vizualization' : null])}
                 data-name={props.name}
-                style={{ backgroundColor: inputs_data.obj[props.family][props.i].color_input_vizualization  || inputs_data.obj[props.family][props.i].value }}
+                style={{ backgroundColor: inputs_data.obj[props.family][props.i].color_input_vizualization  || inputs_data.obj[props.family][props.i].val }}
             >
                 <div
                     className='color_pickier_w'
