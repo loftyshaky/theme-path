@@ -144,7 +144,7 @@ export const select_folder = action(async (path, children) => {
                     get_theme_name_or_descrption(name, message_key, default_locale, path);
 
                 } else {
-                    set_val('theme_metadata', name, val)
+                    set_val('theme_metadata', name, val);
                 }
             }
         }

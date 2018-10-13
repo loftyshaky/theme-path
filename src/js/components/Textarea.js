@@ -49,7 +49,7 @@ export class Textarea extends react.Component {
                 <textarea
                     id={this.props.name + '_input'}
                     ref={this.textarea}
-                    val={val}
+                    value={val}
                     onInput={change_val.change_val.bind(null, this.props.family, this.props.i)}
                 ></textarea>
                 <Help {...this.props} />
