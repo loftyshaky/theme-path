@@ -2,8 +2,13 @@
 'use strict';
 
 import { observable, configure } from "mobx";
+const { readFileSync } = require('fs');
 
 configure({ enforceActions: 'observed' });
+
+export const parse_json = file_path => {
+    return JSON.parse(readFileSync(file_path, 'utf-8').trim());
+};
 
 export const find_from_name = (array, name) => {
     return array.find(item => item.name === name);

@@ -8,7 +8,7 @@ import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 import { observable, action, configure } from "mobx";
 import * as r from 'ramda';
 //import * as dir_tree from "directory-tree";
-const { readdirSync, statSync, readFileSync } = require('fs')
+const { existsSync, readdirSync, statSync } = require('fs')
 const { join } = require('path')
 const Store = require('electron-store');
 
@@ -125,13 +125,13 @@ export const expand_folder = action((path, files, nest_level, index_to_insert_fo
 //> select folder and fill inputs with theme data
 export const select_folder = action(async (path, children) => {
     shared.ob.chosen_folder_path = path;
-    
+
     const folder_is_theme = children.find(file => file.name == 'manifest.json');
 
     if (folder_is_theme) {
         reset_inputs_data();
 
-        shared.mut.manifest = JSON.parse(readFileSync(path + '/manifest.json', 'utf8').trim());
+        shared.mut.manifest = shared.parse_json(path + '/manifest.json');
         const default_locale = shared.mut.manifest.default_locale;
 
         for (const [name, val] of Object.entries(shared.mut.manifest)) {
@@ -142,7 +142,7 @@ export const select_folder = action(async (path, children) => {
 
                 if (val_is_localized) {
                     const message_key = shared.get_message_key(val);
-                    
+
                     get_theme_name_or_descrption(name, message_key, default_locale, path);
 
                 } else {
@@ -162,9 +162,18 @@ export const select_folder = action(async (path, children) => {
 });
 
 const get_theme_name_or_descrption = (name, message_key, default_locale, path) => {
-    const val = JSON.parse(readFileSync(path + '/_locales/' + default_locale + '/messages.json', 'utf8').trim())[message_key].message;
+    const messages_path = path + '/_locales/' + default_locale + '/messages.json';
+    const messages_file_exist = existsSync(messages_path);
 
-    set_val('theme_metadata', name, val)
+    if (messages_file_exist) {
+        const key_exist = shared.parse_json(messages_path)[message_key]; // key ex: description, name
+
+        if (key_exist) {
+            const val = shared.parse_json(messages_path)[message_key].message;
+
+            set_val('theme_metadata', name, val);
+        }
+    }
 };
 
 const set_val = (main_key, key, val) => {
