@@ -8,14 +8,21 @@ const { existsSync, mkdirSync, writeFileSync } = require('fs');
 
 configure({ enforceActions: 'observed' });
 
-export const change_val = action((family, i, e) => {
-    inputs_data.obj[family][i].val = e.target.value;
+export const change_val = action((family, i, val, e) => {
+    const new_val = val == 'is_not_select' ? e.target.value : val;
+    const key = inputs_data.obj[family][i].name;
+    const manifest_path = shared.ob.chosen_folder_path + '/manifest.json';
+    const first_if_keys = ['name', 'description'];
+    const second_if_keys = ['version', 'default_locale'];
 
-    set_name_or_description_prop(inputs_data.obj[family][i].name, e.target.value);
-});
+    inputs_data.obj[family][i].val = new_val;
 
-export const change_select_val = action((family, i, storage, val, e) => {
-    inputs_data.obj[family][i].val = val;
+    if (first_if_keys.indexOf(key) > -1) {
+        set_name_or_description_prop(key, e.target.value);
+
+    } else if (second_if_keys.indexOf(key) > -1) {
+        write_to_json(shared.mut.manifest, manifest_path, key, new_val);
+    }
 });
 
 const set_name_or_description_prop = (key, new_val) => {
@@ -51,7 +58,7 @@ const write_to_json = (json, json_path, key, new_val) => {
         json[key] = { message: 'message' }; // ex: { "name": {"message": "Theme name" } }
     }
 
-    json[key].message ? json[key].message = new_val : json[key] = new_val; // write to manifest.json or messages.json
+    writing_at_messages ? json[key].message = new_val : json[key] = new_val; // write to messages.json or manifest.json
 
     const new_json = JSON.stringify(json);
 

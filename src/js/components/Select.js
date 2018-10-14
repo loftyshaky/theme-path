@@ -25,13 +25,13 @@ export class Select extends react.Component {
 
     //> create one option element
     create_option = option => {
-        return <li key={option.key} className='option' data-storage={option.storage} data-val={option.val} onClick={this.change_select_val}>{option.text}</li>
+        return <li key={option.key} className='option' data-val={option.val} onClick={this.change_select_val}>{option.text}</li>
     }
     //< create one option element
 
     //> change option val when selecting option
     change_select_val = e => {
-        change_val.change_select_val(this.props.family, this.props.i, e.target.dataset.storage, e.target.dataset.val);
+        change_val.change_val(this.props.family, this.props.i, e.target.dataset.val);
 
         this.hide_options();
     }
