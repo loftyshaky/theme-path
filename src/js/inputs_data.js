@@ -7,6 +7,8 @@ import * as r from 'ramda';
 
 configure({ enforceActions: 'observed' });
 
+const yellow = '#fbff75';
+
 export const reset_inputs_data = () => {
     inputs_data.obj = data_obj_default;
 }
@@ -59,7 +61,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -68,7 +72,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -77,7 +83,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -86,7 +94,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -95,7 +105,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -104,7 +116,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -113,7 +127,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -122,7 +138,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -131,7 +149,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -140,7 +160,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -149,7 +171,9 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: '',
+                color_input_vizualization: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             }
         ],
@@ -159,7 +183,9 @@ export let inputs_data = observable({
                 name: 'ntp_background',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -167,7 +193,9 @@ export let inputs_data = observable({
                 name: 'toolbar',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -175,7 +203,9 @@ export let inputs_data = observable({
                 name: 'frame',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -183,7 +213,9 @@ export let inputs_data = observable({
                 name: 'frame_inactive',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -191,7 +223,9 @@ export let inputs_data = observable({
                 name: 'frame_incognito',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -199,7 +233,9 @@ export let inputs_data = observable({
                 name: 'frame_incognito_inactive',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -207,7 +243,9 @@ export let inputs_data = observable({
                 name: 'bookmark_text',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -215,7 +253,9 @@ export let inputs_data = observable({
                 name: 'tab_text',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -223,7 +263,9 @@ export let inputs_data = observable({
                 name: 'tab_background_text',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -231,7 +273,9 @@ export let inputs_data = observable({
                 name: 'button_background',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -239,7 +283,9 @@ export let inputs_data = observable({
                 name: 'ntp_text',
                 family: 'colors',
                 type: 'color',
-                val: '',
+                val: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             }
         ],
@@ -249,8 +295,10 @@ export let inputs_data = observable({
                 name: 'frame',
                 family: 'tints',
                 type: 'color',
-                val: '',
-                disable: true,
+                val: yellow,
+                disable: false,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -258,8 +306,10 @@ export let inputs_data = observable({
                 name: 'frame_inactive',
                 family: 'tints',
                 type: 'color',
-                val: '',
-                disable: true,
+                val: yellow,
+                disable: false,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -267,8 +317,10 @@ export let inputs_data = observable({
                 name: 'frame_incognito',
                 family: 'tints',
                 type: 'color',
-                val: '',
-                disable: true,
+                val: yellow,
+                disable: false,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -276,8 +328,10 @@ export let inputs_data = observable({
                 name: 'frame_incognito_inactive',
                 family: 'tints',
                 type: 'color',
-                val: '',
-                disable: true,
+                val: yellow,
+                disable: false,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -285,8 +339,10 @@ export let inputs_data = observable({
                 name: 'background_tab',
                 family: 'tints',
                 type: 'color',
-                val: '',
-                disable: true,
+                val: yellow,
+                disable: false,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             },
             {
@@ -294,8 +350,10 @@ export let inputs_data = observable({
                 name: 'buttons',
                 family: 'tints',
                 type: 'color',
-                val: '',
-                disable: true,
+                val: yellow,
+                disable: false,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
                 default: true
             }
         ],

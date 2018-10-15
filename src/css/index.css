@@ -210,6 +210,7 @@ textarea, .select_w, .checkbox_checkmark_w {
 }
 
 .color_input_vizualization {
+    position: relative;
     background-color: white;
     height: 18px;
     width: 30px;
@@ -220,9 +221,9 @@ textarea, .select_w, .checkbox_checkmark_w {
 }
 
 .color_pickier_w {
+    z-index: 2;
     position: absolute;
-    display: none;
-    left: 38px;
+    left: -95px;
 }
 
 .color_ok_btn {   
@@ -243,7 +244,7 @@ textarea, .select_w, .checkbox_checkmark_w {
     background-color: #4285f4;
 }
 
-.color_ok_btn {
+.flexbox-fix input, .color_ok_btn {
     color: #222222;
 }
 

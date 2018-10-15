@@ -2,6 +2,8 @@
 
 import x from 'x';
 
+import * as color_pickiers from 'js/color_pickiers';
+
 import { Header } from 'components/Header';
 import { Fieldset } from 'components/Fieldset';
 import { Work_folder } from 'components/Work_folder';
@@ -15,6 +17,14 @@ import react from 'react';
 export class All extends react.Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
     }
 
     render() {

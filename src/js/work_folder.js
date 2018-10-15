@@ -3,6 +3,7 @@
 import x from 'x';
 
 import * as shared from 'js/shared';
+import * as convert_color from 'js/convert_color';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 
 import { observable, action, configure } from "mobx";
@@ -123,7 +124,7 @@ export const expand_folder = action((path, files, nest_level, index_to_insert_fo
 //< expand folder when clicking on folder
 
 //> select folder and fill inputs with theme data
-export const select_folder = action(async (path, children) => {
+export const select_folder = action((path, children) => {
     shared.ob.chosen_folder_path = path;
 
     const folder_is_theme = children.find(file => file.name == 'manifest.json');
@@ -159,6 +160,8 @@ export const select_folder = action(async (path, children) => {
             }
         }
     }
+
+    convert_color.convert_all();
 });
 
 const get_theme_name_or_descrption = (name, message_key, default_locale, path) => {
