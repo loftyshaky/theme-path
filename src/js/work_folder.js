@@ -154,9 +154,11 @@ export const select_folder = action((path, children) => {
 
         set_val('theme_metadata', 'locale', default_locale);
 
-        for (const [main_key, main_val] of Object.entries(shared.mut.manifest.theme)) {
-            for (const [key, val] of Object.entries(main_val)) {
-                set_val(main_key, key, val);
+        if (shared.mut.manifest.theme) {
+            for (const [main_key, main_val] of Object.entries(shared.mut.manifest.theme)) {
+                for (const [key, val] of Object.entries(main_val)) {
+                    set_val(main_key, key, val);
+                }
             }
         }
     }

@@ -21,7 +21,10 @@ export const change_val = action((family, i, val, e) => {
         set_name_or_description_prop(key, e.target.value);
 
     } else if (second_if_keys.indexOf(key) > -1) {
-        write_to_json(shared.mut.manifest, manifest_path, key, new_val);
+        write_to_json(shared.mut.manifest, manifest_path, key, new_val, 'theme_metadata');
+
+    } else {
+        write_to_json(shared.mut.manifest, manifest_path, key, new_val, family);
     }
 });
 
@@ -39,26 +42,39 @@ const set_name_or_description_prop = (key, new_val) => {
         const message_key = shared.get_message_key(val);
         const messages = shared.parse_json(messages_path);
 
-        write_to_json(messages, messages_path, message_key, new_val); // write to messages.json
+        write_to_json(messages, messages_path, message_key, new_val, 'theme_metadata'); // write to messages.json
 
     } else {
         create_messages_file(messages_path);
-        write_to_json(shared.mut.manifest, shared.ob.chosen_folder_path + '/manifest.json', key, sta.msg_dict[key]); // set message link (__MSG_name__ or __MSG_description__)
+        write_to_json(shared.mut.manifest, shared.ob.chosen_folder_path + '/manifest.json', key, sta.msg_dict[key], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
         const messages = shared.parse_json(messages_path);
 
-        write_to_json(messages, messages_path, key, new_val); // write to messages.json
+        write_to_json(messages, messages_path, key, new_val, 'theme_metadata'); // write to messages.json
     }
 };
 
-const write_to_json = (json, json_path, key, new_val) => {
-    const writing_at_messages = json_path.indexOf('/messages.json') > -1;
+const write_to_json = (json, json_path, key, new_val, family) => {
+    if (family == 'theme_metadata') {
+        const writing_at_messages = json_path.indexOf('/messages.json') > -1;
 
-    if (writing_at_messages) {
-        json[key] = { message: 'message' }; // ex: { "name": {"message": "Theme name" } }
+        if (writing_at_messages) {
+            json[key] = { message: 'message' }; // ex: { "name": {"message": "Theme name" } }
+        }
+
+        writing_at_messages ? json[key].message = new_val : json[key] = new_val; // write to messages.json or manifest.json
+
+    } else {
+        if (!json.theme) {
+            json.theme = {};
+        }
+
+        if (!json.theme[family]) {
+            json.theme[family] = {};
+        }
+
+        json.theme[family][key] = new_val;
     }
-
-    writing_at_messages ? json[key].message = new_val : json[key] = new_val; // write to messages.json or manifest.json
 
     const new_json = JSON.stringify(json);
 

@@ -1,7 +1,11 @@
 import x from 'x';
+import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 
 import { observable, action, configure } from "mobx";
+import * as r from 'ramda';
+const hexToHsl = require('hex-to-hsl');
+const hexToRgb = require('hex-to-rgb');
 
 configure({ enforceActions: 'observed' });
 
@@ -77,6 +81,25 @@ export const set_color_input_vizualization_color = action((family, i, color) => 
 
 //> accept color when clicking OK t
 export const accept_color = (family, i) => {
+    const hex = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
+    let color;
+
+    if (family == 'images') {
+        color = hex;
+
+    } else if (family == 'colors') {
+        color = hexToRgb(hex);
+
+    } else if (family == 'tints') {
+        const hsl = hexToHsl(hex);
+        const h = hsl[0] / 360;
+        const sl = [hsl[1], hsl[2]];
+        const sl_final = sl.map(item => item == 100 ? 1 : Number('0.' + item));
+        color = r.prepend(h, sl_final);
+    }
+
+    change_val.change_val(family, i, color);
+
     show_or_hide_color_pickier(family, i, false);
 
     mut.current_color_pickier.el = null;
