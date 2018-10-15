@@ -61,7 +61,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -72,7 +72,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -83,7 +83,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -94,7 +94,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -105,7 +105,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -116,7 +116,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -127,7 +127,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -138,7 +138,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -149,7 +149,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -160,7 +160,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -171,7 +171,7 @@ export let inputs_data = observable({
                 family: 'images',
                 type: 'img_selector',
                 val: '',
-                color_input_vizualization: yellow,
+                color: yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true

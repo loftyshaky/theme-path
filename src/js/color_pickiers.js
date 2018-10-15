@@ -40,7 +40,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                 mut.current_color_pickier.el = color_pickier;
                 mut.current_color_pickier.family = family;
                 mut.current_color_pickier.i = i;
-                mut.current_color_pickier.color = inputs_data.obj[family][i].color_input_vizualization || inputs_data.obj[family][i].val;
+                mut.current_color_pickier.color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
 
                 show_or_hide_color_pickier(family, i, true);
                 set_color_color_pickier_position(family, i, 'top');
@@ -68,7 +68,7 @@ export const set_color_input_vizualization_color = action((family, i, color) => 
     const color_final = color.hex || color;
 
     if (family == 'images') {
-        inputs_data.obj[family][i].color_input_vizualization = color_final;
+        inputs_data.obj[family][i].color = color_final;
 
     } else {
         inputs_data.obj[family][i].val = color_final;

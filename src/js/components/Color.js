@@ -16,7 +16,7 @@ import { SketchPicker } from 'react-color';
 
 export let Color = props => {
     const get_current_color = () => {
-        return inputs_data.obj[props.family][props.i].color_input_vizualization || inputs_data.obj[props.family][props.i].val;
+        return inputs_data.obj[props.family][props.i].color || inputs_data.obj[props.family][props.i].val;
     };
 
     const color_after = get_current_color();

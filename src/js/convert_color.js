@@ -12,7 +12,7 @@ export const convert_theme_color_props_to_color = action((family, i, val) => {
     const val_is_arr = Array.isArray(val);
 
     if (family == 'images') {
-        inputs_data.obj[family][i].color_input_vizualization = yellow;
+        inputs_data.obj[family][i].color = yellow;
 
         if (val != '') {
             inputs_data.obj[family][i].default = false;
