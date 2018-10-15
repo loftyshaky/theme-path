@@ -15,11 +15,7 @@ import { observer } from "mobx-react";
 import { SketchPicker } from 'react-color';
 
 export let Color = props => {
-    const get_current_color = () => {
-        return inputs_data.obj[props.family][props.i].color || inputs_data.obj[props.family][props.i].val;
-    };
-
-    const color_after = get_current_color();
+    const color_after = inputs_data.obj[props.family][props.i].color || inputs_data.obj[props.family][props.i].val;
 
     const label = props.color_input_type == 'color' ?
         <label
