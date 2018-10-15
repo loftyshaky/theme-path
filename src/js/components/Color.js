@@ -44,38 +44,40 @@ export let Color = props => {
 
     return (
         <span className={x.cls(['input', props.color_input_type == 'img' ? 'tall_color_input' : 'ordinary_color_input'])}>
-            {label}
-            <span
-                className={x.cls(['color_input_vizualization', props.color_input_type == 'img' ? 'tall_color_input_vizualization' : null])}
-                data-family={props.family}
-                data-i={props.i}
-                style={{ backgroundColor: color_after }}
-            >
-                <div
-                    className='color_pickier_w'
-                    style={{ [color_pickiers_position]: props.family == 'images' ? '40px' : '26px' }}>
-                    <Tr attr={{
-                        className: 'color_pickier'
-                    }}
-                        tag='div'
-                        name='gen'
-                        state={color_pickier_state}
-                    >
-                        <SketchPicker
-                            color={color_after}
-                            disableAlpha={true}
-                            onChange={color_pickiers.set_color_input_vizualization_color.bind(null, props.family, props.i)}
-                        /><button
-                            className='color_ok_btn'
-                            onClick={color_pickiers.accept_color.bind(null, props.family, props.i)}
+            <span class='ordinary_color_input_inner'>
+                {label}
+                <span
+                    className={x.cls(['color_input_vizualization', props.color_input_type == 'img' ? 'tall_color_input_vizualization' : null])}
+                    data-family={props.family}
+                    data-i={props.i}
+                    style={{ backgroundColor: color_after }}
+                >
+                    <div
+                        className='color_pickier_w'
+                        style={{ [color_pickiers_position]: props.family == 'images' ? '40px' : '26px' }}>
+                        <Tr attr={{
+                            className: 'color_pickier'
+                        }}
+                            tag='div'
+                            name='gen'
+                            state={color_pickier_state}
+                        >
+                            <SketchPicker
+                                color={color_after}
+                                disableAlpha={true}
+                                onChange={color_pickiers.set_color_input_vizualization_color.bind(null, props.family, props.i)}
+                            /><button
+                                className='color_ok_btn'
+                                onClick={color_pickiers.accept_color.bind(null, props.family, props.i)}
 
-                        >OK</button>
-                    </Tr>
-                </div>
+                            >OK</button>
+                        </Tr>
+                    </div>
+                </span>
+                {disable_checkbox}
+                {default_checkbox}
             </span>
-            {disable_checkbox}
-            {default_checkbox}
-            <Help name={props.name} />
+            <Help {...props} />
         </span>
     );
 };

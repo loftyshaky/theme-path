@@ -39,6 +39,7 @@ export const Img_selector = props => {
                 <Color
                     {...props}
                     color_input_type='img'
+                    add_help={false}
                 />
                 <span className='also_use_img_as' data-title='also_use_img_as_title'>
                     <Svg src={library_add_svg} />
@@ -48,7 +49,7 @@ export const Img_selector = props => {
                     special_checkbox='default'
                 />
             </div>
-            <Help name={props.name} />
+            <Help name={props.name} add_help />
         </div>
     );
 }

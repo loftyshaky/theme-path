@@ -193,7 +193,7 @@ textarea, .select_title, .option  {
     display: block;
 }
 
-.input:not(.tall_color_input):not(:first-child) {
+.input:not(.tall_color_input):not(:first-child), .input:not(.tall_color_input):not(:first-child) > .ordinary_color_input_inner {
     margin-top: 10px;
 }
 
@@ -699,7 +699,7 @@ header span, header label, header .open_in_chrome_btn {
 /*< protecting screen */
 
 /*> ordinary color inputs */
-.colors_and_tints_input_block {
+.colors_and_tints_input_block, .ordinary_color_input {
     width: fit-content;
 }
 
@@ -708,7 +708,7 @@ header span, header label, header .open_in_chrome_btn {
     flex-grow: 1;
 }
 
-.ordinary_color_input {
+.ordinary_color_input_inner {
     display: flex;
 }
 /*< ordinary color inputs */
