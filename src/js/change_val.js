@@ -76,7 +76,7 @@ const write_to_json = (json, json_path, key, new_val, family) => {
             json.theme[family] = {};
         }
 
-        json.theme[family][key] = new_val;
+        json.theme[family][key] = key == 'ntp_logo_alternate' ? +new_val : new_val;
     }
 
     const new_json = JSON.stringify(json);

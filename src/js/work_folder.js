@@ -185,7 +185,7 @@ const set_val = (main_key, key, val) => {
     const item = shared.find_from_name(inputs_data.obj[main_key], key);
 
     if (item) {
-        item.val = val;
+        item.val = key == 'ntp_logo_alternate' ? val.toString() : val;
     }
 };
 //< select folder and fill inputs with theme data

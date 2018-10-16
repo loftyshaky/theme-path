@@ -440,13 +440,13 @@ export const selects_options = {
             key: x.unique_id(),
             text: create_option_data_text_val('colorful'),
             name: 'ntp_logo_alternate',
-            val: 0
+            val: '0'
         },
         {
             key: x.unique_id(),
             text: create_option_data_text_val('ntp_logo_alternate_white'),
             name: 'ntp_logo_alternate',
-            val: 1
+            val: '1'
         },
     ],
     theme: [

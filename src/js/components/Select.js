@@ -85,6 +85,7 @@ export class Select extends react.Component {
         const options = selects_options[this.props.name != 'default_locale' ? this.props.name : 'locale'];
         const val = inputs_data.obj[this.props.family][this.props.i].val;
         const selected_option = shared.find_from_val(options, val);
+
         const selected_option_text = r.ifElse(
             () => selected_option,
 
