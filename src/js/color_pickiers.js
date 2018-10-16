@@ -1,5 +1,6 @@
 import x from 'x';
 import * as change_val from 'js/change_val';
+import * as imgs from 'js/imgs';
 import { inputs_data } from 'js/inputs_data';
 
 import { observable, action, configure } from "mobx";
@@ -85,10 +86,17 @@ export const accept_color = (family, i) => {
     let color;
 
     if (family == 'images') {
+        const name = inputs_data.obj[family][i].name;
         color = hex;
+
+        imgs.create_solid_color_image(name, color);
+
+       change_val.change_val(family, i, name, null);
 
     } else if (family == 'colors') {
         color = hexToRgb(hex);
+
+        change_val.change_val(family, i, color, null);
 
     } else if (family == 'tints') {
         const hsl = hexToHsl(hex);
@@ -96,9 +104,9 @@ export const accept_color = (family, i) => {
         const sl = [hsl[1], hsl[2]];
         const sl_final = sl.map(item => item == 100 ? 1 : Number('0.' + item));
         color = r.prepend(h, sl_final);
-    }
 
-    change_val.change_val(family, i, color);
+        change_val.change_val(family, i, color, null);
+    }
 
     show_or_hide_color_pickier(family, i, false);
 

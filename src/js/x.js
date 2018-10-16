@@ -53,8 +53,8 @@ window.sab = (base_element, selector) => { // $ All with base element
 //< selecting elements t
 
 //> notify about error f
-x.error = (error_code) => { // last error code: 2
-    const error_message = x.message('error_alert') + error_code;
+x.error = (error_code, extra) => {
+    const error_message = x.message('error_alert') + error_code + (extra ? '\n' + x.message(extra) : '');
 
     alert(error_message);
 }

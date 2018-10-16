@@ -50,7 +50,7 @@ export class Textarea extends react.Component {
                     id={this.props.name + '_input'}
                     ref={this.textarea}
                     value={val}
-                    onInput={change_val.change_val.bind(null, this.props.family, this.props.i, 'is_not_select')}
+                    onInput={change_val.change_val.bind(null, this.props.family, this.props.i, 'is_not_select', null)}
                 ></textarea>
                 <Help {...this.props} />
             </div>

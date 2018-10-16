@@ -2,29 +2,32 @@
 
 import * as shared from 'js/shared';
 import { inputs_data } from 'js/inputs_data';
-
 import { action, configure } from "mobx";
 const { existsSync, mkdirSync, writeFileSync } = require('fs');
 
 configure({ enforceActions: 'observed' });
 
-export const change_val = action((family, i, val, e) => {
+export const change_val = action((family, i, val, img_extension, e) => {
     const new_val = val == 'is_not_select' ? e.target.value : val;
     const key = inputs_data.obj[family][i].name;
     const manifest_path = shared.ob.chosen_folder_path + '/manifest.json';
     const first_if_keys = ['name', 'description'];
     const second_if_keys = ['version', 'default_locale'];
+    const third_if_keys = ['colors', 'tints', 'properties'];
 
     inputs_data.obj[family][i].val = new_val;
 
     if (first_if_keys.indexOf(key) > -1) {
         set_name_or_description_prop(key, e.target.value);
 
-    } else if (second_if_keys.indexOf(key) > -1) {
+    } else if (third_if_keys.indexOf(key) > -1) {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val, 'theme_metadata');
 
-    } else {
+    } else if (third_if_keys.indexOf(family) > -1) {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val, family);
+
+    } else if (family == 'images') {
+        write_to_json(shared.mut.manifest, manifest_path, key, new_val + '.' + (img_extension ? img_extension : 'png'), family);
     }
 });
 

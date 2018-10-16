@@ -44,7 +44,7 @@ export let Color = props => {
 
     return (
         <span className={x.cls(['input', props.color_input_type == 'img' ? 'tall_color_input' : 'ordinary_color_input'])}>
-            <span class='ordinary_color_input_inner'>
+            <span className='ordinary_color_input_inner'>
                 {label}
                 <span
                     className={x.cls(['color_input_vizualization', props.color_input_type == 'img' ? 'tall_color_input_vizualization' : null])}

@@ -31,7 +31,7 @@ export class Select extends react.Component {
 
     //> change option val when selecting option
     change_select_val = e => {
-        change_val.change_val(this.props.family, this.props.i, e.target.dataset.val);
+        change_val.change_val(this.props.family, this.props.i, e.target.dataset.val, null);
 
         this.hide_options();
     }

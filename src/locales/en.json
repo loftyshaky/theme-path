@@ -38,6 +38,7 @@
   "theme_frame_incognito_label_text": "Frame (incognito)",
   "theme_frame_incognito_inactive_label_text": "Frame (incognito, inactive)",
   "theme_frame_overlay_label_text": "Frame overlay",
+  "theme_frame_overlay_inactive_label_text": "Frame overlay (inactive)",
   "theme_tab_background_label_text": "Inactive tabs",
   "theme_tab_background_incognito_label_text": "Inactive tabs (incognito)",
   "theme_window_control_background_label_text": "Window controls",

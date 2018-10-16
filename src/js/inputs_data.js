@@ -134,6 +134,17 @@ export let inputs_data = observable({
             },
             {
                 key: x.unique_id(),
+                name: 'theme_frame_overlay_inactive',
+                family: 'images',
+                type: 'img_selector',
+                val: '',
+                color: yellow,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
+                default: true
+            },
+            {
+                key: x.unique_id(),
                 name: 'theme_tab_background',
                 family: 'images',
                 type: 'img_selector',
