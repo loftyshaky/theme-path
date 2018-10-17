@@ -27,6 +27,11 @@ export const get_message_key = val => {
 };
 
 //> varibles t
+export const sta = {
+    yellow: '#fbff75',
+    black: '#212121'
+}
+
 export const ob = observable({
     chosen_folder_path: ''
 });

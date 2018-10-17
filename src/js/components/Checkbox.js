@@ -1,6 +1,7 @@
 'use strict';
 
 import x from 'x';
+import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import checkmark_svg from 'svg/checkmark';
 
 import { inputs_data } from 'js/inputs_data';
@@ -20,7 +21,7 @@ export let Checkbox = props => {
                     type='checkbox'
                     id={checkbox_id}
                     checked={inputs_data.obj[props.family][props.i][props.special_checkbox]}
-                    onChange={()=> null}
+                    onChange={set_default_or_disabled.set_default_or_disabled.bind(null, props.family, props.i, props.special_checkbox)}
                 />
                 <span className='checkbox_checkmark_w'>
                     <Svg src={checkmark_svg} />

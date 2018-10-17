@@ -2,10 +2,11 @@
 
 import x from 'x';
 
-import { selects_options } from 'js/selects_options';
-import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
+import * as set_default_or_disabled from 'js/set_default_or_disabled';
+import { selects_options } from 'js/selects_options';
+import { inputs_data } from 'js/inputs_data';
 
 import { Help } from 'components/Help';
 
@@ -31,9 +32,15 @@ export class Select extends react.Component {
 
     //> change option val when selecting option
     change_select_val = e => {
-        change_val.change_val(this.props.family, this.props.i, e.target.dataset.val, null);
+      const val = e.target.dataset.val
+
+        change_val.change_val(this.props.family, this.props.i, val, null);
 
         this.hide_options();
+
+        if (val == 'default') {
+            set_default_or_disabled.set_default_or_disabled(this.props.family, this.props.i, 'select');
+        }
     }
     //< change option val when selecting option
 

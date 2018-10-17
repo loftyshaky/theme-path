@@ -1,5 +1,6 @@
 'use strict';
 
+import * as shared from 'js/shared';
 import { inputs_data } from "js/inputs_data";
 
 import { action, configure } from "mobx";
@@ -8,11 +9,10 @@ import * as r from 'ramda';
 configure({ enforceActions: 'observed' });
 
 export const convert_theme_color_props_to_color = action((family, i, val) => {
-    const yellow = '#fbff75';
     const val_is_arr = Array.isArray(val);
 
     if (family == 'images') {
-        inputs_data.obj[family][i].color = yellow;
+        inputs_data.obj[family][i].color = shared.sta.yellow;
 
         if (val != '') {
             inputs_data.obj[family][i].default = false;
@@ -27,7 +27,7 @@ export const convert_theme_color_props_to_color = action((family, i, val) => {
                 inputs_data.obj[family][i].default = false;
 
             } else {
-                inputs_data.obj[family][i].val = yellow;
+                inputs_data.obj[family][i].val = shared.sta.yellow;
             }
         }
 
@@ -55,7 +55,7 @@ export const convert_theme_color_props_to_color = action((family, i, val) => {
                 const every_number_in_hsla_arr_is_minus_1 = hsla_arr.every(number => number.indexOf('-1') > -1);
 
                 if (every_number_in_hsla_arr_is_minus_1) {
-                    inputs_data.obj[family][i].val = '#212121';
+                    inputs_data.obj[family][i].val = shared.sta.black;
                     inputs_data.obj[family][i].default = false;
                     inputs_data.obj[family][i].disable = true;
 
@@ -65,7 +65,7 @@ export const convert_theme_color_props_to_color = action((family, i, val) => {
                 }
 
             } else {
-                inputs_data.obj[family][i].val = yellow;
+                inputs_data.obj[family][i].val = shared.sta.yellow;
             }
         }
     }

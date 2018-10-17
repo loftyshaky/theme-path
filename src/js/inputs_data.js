@@ -1,13 +1,12 @@
 'use strict';
 
 import x from 'x';
+import * as shared from 'js/shared';
 
 import { observable, configure } from "mobx";
 import * as r from 'ramda';
 
 configure({ enforceActions: 'observed' });
-
-const yellow = '#fbff75';
 
 export const reset_inputs_data = () => {
     inputs_data.obj = data_obj_default;
@@ -62,7 +61,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -74,7 +73,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -86,7 +85,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -98,7 +97,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -110,7 +109,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -122,7 +121,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -134,7 +133,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -146,7 +145,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -158,7 +157,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -170,7 +169,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -182,7 +181,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -194,7 +193,7 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: yellow,
+                color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -206,7 +205,7 @@ export let inputs_data = observable({
                 name: 'ntp_background',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -216,7 +215,7 @@ export let inputs_data = observable({
                 name: 'toolbar',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -226,7 +225,7 @@ export let inputs_data = observable({
                 name: 'frame',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -236,7 +235,7 @@ export let inputs_data = observable({
                 name: 'frame_inactive',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -246,7 +245,7 @@ export let inputs_data = observable({
                 name: 'frame_incognito',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -256,7 +255,7 @@ export let inputs_data = observable({
                 name: 'frame_incognito_inactive',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -266,7 +265,7 @@ export let inputs_data = observable({
                 name: 'bookmark_text',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -276,7 +275,7 @@ export let inputs_data = observable({
                 name: 'tab_text',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -286,7 +285,7 @@ export let inputs_data = observable({
                 name: 'tab_background_text',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -296,7 +295,7 @@ export let inputs_data = observable({
                 name: 'button_background',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -306,7 +305,7 @@ export let inputs_data = observable({
                 name: 'ntp_text',
                 family: 'colors',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true
@@ -318,7 +317,7 @@ export let inputs_data = observable({
                 name: 'frame',
                 family: 'tints',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
@@ -329,7 +328,7 @@ export let inputs_data = observable({
                 name: 'frame_inactive',
                 family: 'tints',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
@@ -340,7 +339,7 @@ export let inputs_data = observable({
                 name: 'frame_incognito',
                 family: 'tints',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
@@ -351,7 +350,7 @@ export let inputs_data = observable({
                 name: 'frame_incognito_inactive',
                 family: 'tints',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
@@ -362,7 +361,7 @@ export let inputs_data = observable({
                 name: 'background_tab',
                 family: 'tints',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
@@ -373,7 +372,7 @@ export let inputs_data = observable({
                 name: 'buttons',
                 family: 'tints',
                 type: 'color',
-                val: yellow,
+                val: shared.sta.yellow,
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',

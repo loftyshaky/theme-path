@@ -29,6 +29,18 @@ export const change_val = action((family, i, val, img_extension, e) => {
     } else if (family == 'images') {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val + '.' + (img_extension ? img_extension : 'png'), family);
     }
+
+    if (family == 'images' || third_if_keys.indexOf(family) > -1) {
+        inputs_data.obj[family][i].default = false;
+    }
+
+    if (family == 'tints') {
+        const not_disabling = val.some(item => item > -1);
+
+        if (not_disabling) {
+            inputs_data.obj[family][i].disable = false;
+        }
+    }
 });
 
 const set_name_or_description_prop = (key, new_val) => {
