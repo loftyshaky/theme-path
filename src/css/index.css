@@ -228,7 +228,7 @@ textarea, .select_w, .checkbox_checkmark_w {
 
 .color_ok_btn {   
     top: 283px;
-    width: 220px;
+    width: 100%;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 8px 16px;
     border: none;
     background-color: white;

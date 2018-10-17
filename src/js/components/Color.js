@@ -12,7 +12,7 @@ import { Help } from 'components/Help';
 
 import react from 'react';
 import { observer } from "mobx-react";
-import { SketchPicker } from 'react-color';
+import { ChromePicker  } from 'react-color';
 
 export let Color = props => {
     const color_after = inputs_data.obj[props.family][props.i].color || inputs_data.obj[props.family][props.i].val;
@@ -62,7 +62,7 @@ export let Color = props => {
                             name='gen'
                             state={color_pickier_state}
                         >
-                            <SketchPicker
+                            <ChromePicker
                                 color={color_after}
                                 disableAlpha={true}
                                 onChange={color_pickiers.set_color_input_vizualization_color.bind(null, props.family, props.i)}
