@@ -20,7 +20,7 @@ export const change_val = action((family, i, val, img_extension, e) => {
     if (first_if_keys.indexOf(key) > -1) {
         set_name_or_description_prop(key, e.target.value);
 
-    } else if (third_if_keys.indexOf(key) > -1) {
+    } else if (second_if_keys.indexOf(key) > -1) {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val, 'theme_metadata');
 
     } else if (third_if_keys.indexOf(family) > -1) {

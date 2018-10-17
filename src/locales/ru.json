@@ -161,5 +161,8 @@
   "option_uk_text": "Украинский",
   "option_vi_text": "Вьетнамский",
   "option_zh_CN_text": "Китайский (Китай)",
-  "option_zh_TW_text": "Китайский (Тайвань)"
+  "option_zh_TW_text": "Китайский (Тайвань)",
+
+  "error_alert": "Произошла ошибка. Код ошибки: ",
+  "invalid_image_type_alert": "Недопустимый тип изображения"
 }

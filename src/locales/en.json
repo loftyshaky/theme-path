@@ -161,5 +161,9 @@
   "option_uk_text": "Ukrainian",
   "option_vi_text": "Vietnamese",
   "option_zh_CN_text": "Chinese (China)",
-  "option_zh_TW_text": "Chinese (Taiwan)"
+  "option_zh_TW_text": "Chinese (Taiwan)",
+
+
+  "error_alert": "An error occured. Error code: ",
+  "invalid_image_type_alert": "Invalid image type"
 }

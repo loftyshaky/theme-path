@@ -470,30 +470,6 @@ header span, header label, header .open_in_chrome_btn {
     justify-content: center;
 }
 
-.upload_box_loader {
-    height: 100%;
-    background-image: 
-      repeating-linear-gradient(
-        -45deg,
-        #5d7daf,
-        #5d7daf 7px,
-        #212121 7px,
-        #212121 14px /* determines size */
-      );
-    background-size: 40px 40px;
-    animation: move 675ms linear infinite;
-  }
-  
-  @keyframes move {
-    0% {
-      background-position: 0 0;
-    }
-    100% {
-      background-position: 40px 0;
-    }
-  }
-
-
 .upload_btn {
     display: none;
 }
