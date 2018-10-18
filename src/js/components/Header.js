@@ -8,10 +8,14 @@ import gear from 'svg/gear';
 import question from 'svg/question';
 import list from 'svg/list';
 
+import * as open_in_chrome from 'js/open_in_chrome';
 import * as toogle_popup from 'js/toogle_popup';
 
 import react from 'react';
 import Svg from 'svg-inline-react';
+const Store = require('electron-store');
+
+const store = new Store();
 
 export const Header = props => {
     return (
@@ -28,9 +32,15 @@ export const Header = props => {
                 </span>
             </span>
             <span className='header_section header_right'>
-                <Open_in_chrome_btn no='1' />
-                <Open_in_chrome_btn no='2' />
-                <Open_in_chrome_btn no='3' />
+                {
+                    store.get('chrome_user_data_dirs').split(',').map((path, i) => {
+                        return <Open_in_chrome_btn
+                            key={x.unique_id()}
+                            path={path.trim()}
+                            no={i + 1}
+                        />
+                    })
+                }
                 <Pack_btn name='zip' />
                 <Pack_btn name='crx' />
                 <Btn
@@ -54,8 +64,16 @@ export const Header = props => {
 }
 
 const Open_in_chrome_btn = props => {
+    const open_in_chrome_caller = () => {
+        open_in_chrome.open_in_chrome(props.path);
+    }
+
     return (
-        <button className='header_btn open_in_chrome_btn' data-title='open_in_chrome_btn_title'>
+        <button
+            className='header_btn open_in_chrome_btn'
+            title={x.message('open_in_chrome_btn_title') + ' - ' + props.path}
+            onClick={open_in_chrome_caller}
+        >
             {props.no}
         </button>
     );
@@ -75,7 +93,9 @@ const Btn = props => {
 
 const Pack_btn = props => {
     return (
-        <button className='header_btn pack_btn' data-title={'pack_as_' + props.name + '_btn_title'}>
+        <button
+            className='header_btn pack_btn'
+            data-title={'pack_as_' + props.name + '_btn_title'}>
             <span className='header_btn_icon pack_btn_icon'>
                 <Svg src={archive} />
             </span>

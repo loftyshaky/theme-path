@@ -9,7 +9,7 @@ import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 import { observable, action, configure } from "mobx";
 import * as r from 'ramda';
 //import * as dir_tree from "directory-tree";
-const { existsSync, readdirSync, statSync } = require('fs')
+const { existsSync, readdirSync, statSync } = require('fs');
 const { join } = require('path')
 const Store = require('electron-store');
 

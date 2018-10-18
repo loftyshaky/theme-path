@@ -9,8 +9,10 @@ export const set_defaults = () => {
     store.set({
         work_folder: '',
         theme: 'dark',
-        chrome_user_data_dirs: ''
-    })
+        chrome_dir: '',
+        chrome_user_data_dirs: '',
+        chrome_process_ids: {}
+    });
 };
 
 const store_is_empty = r.isEmpty(store.store);

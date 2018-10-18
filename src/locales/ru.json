@@ -64,6 +64,7 @@
   "ntp_logo_alternate_label_text": "Логотип Google",
 
   "theme_label_text": "Тема",
+  "chrome_dir_label_text": "Путь Chrome",
   "chrome_user_data_dirs_label_text": "Пути к папкам пользователей Chrome",
 
 
@@ -164,5 +165,7 @@
   "option_zh_TW_text": "Китайский (Тайвань)",
 
   "error_alert": "Произошла ошибка. Код ошибки: ",
-  "invalid_image_type_alert": "Недопустимый тип изображения"
+  "invalid_image_type_alert": "Недопустимый тип изображения",
+  "theme_folder_is_not_chosen_alert": "Выберите папку с темой.",
+  "chosen_folder_is_not_theme_alert": "Chosen folder is not a theme."
 }

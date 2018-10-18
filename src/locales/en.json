@@ -64,6 +64,7 @@
   "ntp_logo_alternate_label_text": "Google logo",
 
   "theme_label_text": "Theme",
+  "chrome_dir_label_text": "Path to Chrome",
   "chrome_user_data_dirs_label_text": "Paths to Chrome user data folders",
 
   "option_default_text": "Default",
@@ -165,5 +166,7 @@
 
 
   "error_alert": "An error occured. Error code: ",
-  "invalid_image_type_alert": "Invalid image type"
+  "invalid_image_type_alert": "Invalid image type.",
+  "theme_folder_is_not_chosen_alert": "Choose folder with a theme.",
+  "chosen_folder_is_not_theme_alert": "Chosen folder is not a theme."
 }
