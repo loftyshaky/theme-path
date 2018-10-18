@@ -9,9 +9,7 @@ export const choose_folder = (key, callback) => {
     });
 
     if (path) { // if not cancelled folder chosing
-        const final_path = path[0].replace(/\\/g, '/');
-
-        store.set(key, final_path);
+        store.set(key, path[0]);
 
         callback();
 
