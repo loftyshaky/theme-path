@@ -21,7 +21,7 @@ const get_folders = path => {
     const files = readdirSync(path);
 
     return files.map(file => {
-        const child_path = path + '/' + file;
+        const child_path = path + '\\' + file;
         return {
             name: file,
             path: child_path,

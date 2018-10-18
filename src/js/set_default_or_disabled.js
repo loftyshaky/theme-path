@@ -53,13 +53,13 @@ const set_default = (family, i) => {
     }
 
     const new_json = JSON.stringify(shared.mut.manifest);
-    const img_to_delete_path = shared.ob.chosen_folder_path + '/' + inputs_data.obj[family][i].val;
+    const img_to_delete_path = shared.ob.chosen_folder_path + '\\' + inputs_data.obj[family][i].val;
 
     if (existsSync(img_to_delete_path)) {
-        unlinkSync(shared.ob.chosen_folder_path + '/' + inputs_data.obj[family][i].val);
+        unlinkSync(shared.ob.chosen_folder_path + '\\' + inputs_data.obj[family][i].val);
     }
 
-    writeFileSync(shared.ob.chosen_folder_path + '/manifest.json', new_json, 'utf8');
+    writeFileSync(shared.ob.chosen_folder_path + '\\manifest.json', new_json, 'utf8');
 
     inputs_data.obj[family][i].color ? inputs_data.obj[family][i].color = shared.sta.yellow : inputs_data.obj[family][i].val = shared.sta.yellow
 };
