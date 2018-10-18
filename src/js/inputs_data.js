@@ -415,6 +415,14 @@ export let inputs_data = observable({
             },
             {
                 key: x.unique_id(),
+                name: 'chrome_dir',
+                family: 'settings',
+                type: 'textarea',
+                val: '',
+                add_help: true
+            },
+            {
+                key: x.unique_id(),
                 name: 'chrome_user_data_dirs',
                 family: 'settings',
                 type: 'textarea',
