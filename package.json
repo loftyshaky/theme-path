@@ -33,6 +33,7 @@
     "hex-to-rgb": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
     "jimp": "^0.5.4",
+    "lockfile": "^1.0.4",
     "mini-css-extract-plugin": "^0.4.2",
     "mobx": "^5.5.0",
     "mobx-react": "^5.2.8",
@@ -51,7 +52,8 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.7",
     "webpack-merge": "^4.1.4",
-    "write-file-webpack-plugin": "^4.3.2"
+    "write-file-webpack-plugin": "^4.3.2",
+    "zip-local": "^0.3.4"
   },
   "dependencies": {}
 }

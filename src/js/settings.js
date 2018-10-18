@@ -1,6 +1,6 @@
 'use_strict';
 
-import * as open_in_chrome from 'js/open_in_chrome';
+import * as open_and_pack from 'js/open_and_pack';
 import { inputs_data } from 'js/inputs_data';
 
 import { action, configure } from "mobx";
@@ -17,5 +17,5 @@ export const load_setting = action(() => {
         item.val = store.get(item.name);
     }
 
-    open_in_chrome.update_chrome_user_data_dirs_observable();
+    open_and_pack.update_chrome_user_data_dirs_observable();
 });

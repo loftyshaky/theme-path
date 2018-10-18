@@ -9,7 +9,7 @@ import gear_svg from 'svg/gear';
 import question_svg from 'svg/question';
 import list_svg from 'svg/list';
 
-import * as open_in_chrome from 'js/open_in_chrome';
+import * as open_and_pack from 'js/open_and_pack';
 import * as toogle_popup from 'js/toogle_popup';
 
 import react from 'react';
@@ -25,7 +25,7 @@ export class Header extends react.Component {
     }
 
     render() {
-        const chrome_user_data_dirs = open_in_chrome.ob.chrome_user_data_dirs.split(',');
+        const chrome_user_data_dirs = open_and_pack.ob.chrome_user_data_dirs.split(',');
         const chrome_user_data_dirs_final = chrome_user_data_dirs.length == 1 && chrome_user_data_dirs[0] == '' ? [] : chrome_user_data_dirs;
 
         return (
@@ -80,7 +80,7 @@ const Open_in_profiled_chrome_btn = props => {
         <button
             className='header_btn open_in_chrome_btn'
             title={x.message('open_in_chrome_btn_title') + ' - ' + props.path}
-            onClick={open_in_chrome.open_in_chrome.bind(null, props.path)}
+            onClick={open_and_pack.open_in_chrome.bind(null, props.path)}
         >
             {props.no}
         </button>
@@ -92,7 +92,7 @@ const Open_in_chrome_btn = props => {
         <button
             className='header_btn header_btn_icon'
             data-title='open_in_chrome_btn_title'
-            onClick={open_in_chrome.open_in_chrome.bind(null, '')}
+            onClick={open_and_pack.open_in_chrome.bind(null, '')}
         >
             <Svg src={open_in_browser_svg} />
         </button>
@@ -115,7 +115,9 @@ const Pack_btn = props => {
     return (
         <button
             className='header_btn pack_btn'
-            data-title={'pack_as_' + props.name + '_btn_title'}>
+            data-title={'pack_as_' + props.name + '_btn_title'}
+            onClick={open_and_pack.pack.bind(null, props.name)}
+        >
             <span className='header_btn_icon pack_btn_icon'>
                 <Svg src={archive_svg} />
             </span>
