@@ -90,7 +90,7 @@ export class Img_selector extends react.Component {
                         special_checkbox='default'
                     />
                 </div>
-                <Help name={this.props.name} add_help />
+                <Help name={this.props.name} add_help={this.props.add_help} />
             </div>
         );
     }

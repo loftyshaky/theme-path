@@ -67,7 +67,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -79,7 +80,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -91,7 +93,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -103,7 +106,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -115,7 +119,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -127,7 +132,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -139,7 +145,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -151,7 +158,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -163,7 +171,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -175,7 +184,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -187,7 +197,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -199,7 +210,8 @@ export let inputs_data = observable({
                 color: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             }
         ],
         colors: [
@@ -211,7 +223,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -221,7 +234,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -231,7 +245,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -241,7 +256,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -251,7 +267,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -261,7 +278,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -271,7 +289,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -281,7 +300,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -291,7 +311,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -301,7 +322,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -311,7 +333,8 @@ export let inputs_data = observable({
                 val: shared.sta.yellow,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             }
         ],
         tints: [
@@ -324,7 +347,8 @@ export let inputs_data = observable({
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -335,7 +359,8 @@ export let inputs_data = observable({
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -346,7 +371,8 @@ export let inputs_data = observable({
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -357,7 +383,8 @@ export let inputs_data = observable({
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -368,7 +395,8 @@ export let inputs_data = observable({
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             },
             {
                 key: x.unique_id(),
@@ -379,7 +407,8 @@ export let inputs_data = observable({
                 disable: false,
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
-                default: true
+                default: true,
+                add_help: true
             }
         ],
         properties: [
