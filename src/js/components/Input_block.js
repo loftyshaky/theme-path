@@ -28,7 +28,7 @@ export const Input_block = props => {
                                 {...item}
                                 i={i}
                                 color_input_type={color_input_type}
-                                add_help={sta.no_help.indexOf(item.name) == -1 ? true : false} />
+                                add_help={item.add_help} />
                         );
                     })
                 }
@@ -44,9 +44,6 @@ const sta = {
         select: Select,
         img_selector: Img_selector,
         color: Color
-    },
-    no_help: [
-        'theme'
-    ]
+    }
 }
 //< varibles t
