@@ -16,6 +16,9 @@ export class Textarea extends react.Component {
 
         this.textarea = react.createRef();
     }
+    componentDidMount() {
+        this.resize_textarea();
+    }
 
     componentDidUpdate() {
         this.resize_textarea();
@@ -51,6 +54,7 @@ export class Textarea extends react.Component {
                     ref={this.textarea}
                     value={val}
                     onInput={change_val.change_val.bind(null, this.props.family, this.props.i, 'is_not_select', null)}
+                    onChange={() => null}
                 ></textarea>
                 <Help {...this.props} />
             </div>

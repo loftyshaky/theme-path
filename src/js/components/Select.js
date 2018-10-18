@@ -32,7 +32,7 @@ export class Select extends react.Component {
 
     //> change option val when selecting option
     change_select_val = e => {
-      const val = e.target.dataset.val
+        const val = e.target.dataset.val
 
         change_val.change_val(this.props.family, this.props.i, val, null);
 
@@ -61,7 +61,7 @@ export class Select extends react.Component {
 
             this.select_w.current.blur();
 
-        } else {
+        } else if (this.props.family != 'settings') {
             await x.delay(0);
 
             const fieldset_w = x.closest(this.input.current, '.fieldset_w');

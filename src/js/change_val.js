@@ -4,6 +4,9 @@ import * as shared from 'js/shared';
 import { inputs_data } from 'js/inputs_data';
 import { action, configure } from "mobx";
 const { existsSync, mkdirSync, writeFileSync } = require('fs');
+const Store = require('electron-store');
+
+const store = new Store();
 
 configure({ enforceActions: 'observed' });
 
@@ -28,6 +31,9 @@ export const change_val = action((family, i, val, img_extension, e) => {
 
     } else if (family == 'images') {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val + '.' + (img_extension ? img_extension : 'png'), family);
+    
+    } else if (family == 'settings') {
+     
     }
 
     if (family == 'images' || third_if_keys.indexOf(family) > -1) {
