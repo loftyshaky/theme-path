@@ -3,6 +3,7 @@
 import x from 'x';
 
 import plus from 'svg/plus';
+import open_in_browser from 'svg/open_in_browser';
 import archive from 'svg/archive';
 import gear from 'svg/gear';
 import question from 'svg/question';
@@ -43,13 +44,14 @@ export class Header extends react.Component {
                 <span className='header_section header_right'>
                     {
                         chrome_user_data_dirs_final.map((path, i) => {
-                            return <Open_in_chrome_btn
+                            return <Open_in_profiled_chrome_btn
                                 key={x.unique_id()}
                                 path={path.trim()}
                                 no={i + 1}
                             />
                         })
                     }
+                    <Open_in_chrome_btn />
                     <Pack_btn name='zip' />
                     <Pack_btn name='crx' />
                     <Btn
@@ -73,18 +75,26 @@ export class Header extends react.Component {
     }
 }
 
-const Open_in_chrome_btn = props => {
-    const open_in_chrome_caller = () => {
-        open_in_chrome.open_in_chrome(props.path);
-    }
-
+const Open_in_profiled_chrome_btn = props => {
     return (
         <button
             className='header_btn open_in_chrome_btn'
             title={x.message('open_in_chrome_btn_title') + ' - ' + props.path}
-            onClick={open_in_chrome_caller}
+            onClick={open_in_chrome.open_in_chrome.bind(null, props.path)}
         >
             {props.no}
+        </button>
+    );
+};
+
+const Open_in_chrome_btn = props => {
+    return (
+        <button
+            className='header_btn header_btn_icon'
+            data-title='open_in_chrome_btn_title'
+            onClick={open_in_chrome.open_in_chrome.bind(null, '')}
+        >
+            <Svg src={open_in_browser} />
         </button>
     );
 };
