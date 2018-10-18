@@ -18,6 +18,9 @@ const Store = require('electron-store');
 const store = new Store();
 
 export const Header = props => {
+    const chrome_user_data_dirs = store.get('chrome_user_data_dirs').split(',');
+    const chrome_user_data_dirs_final = chrome_user_data_dirs.length == 1 && chrome_user_data_dirs[0] == '' ? [] : chrome_user_data_dirs;
+
     return (
         <header>
             <span className='header_section header_left'>
@@ -33,7 +36,7 @@ export const Header = props => {
             </span>
             <span className='header_section header_right'>
                 {
-                    store.get('chrome_user_data_dirs').split(',').map((path, i) => {
+                    chrome_user_data_dirs_final.map((path, i) => {
                         return <Open_in_chrome_btn
                             key={x.unique_id()}
                             path={path.trim()}

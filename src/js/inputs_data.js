@@ -2,6 +2,7 @@
 
 import x from 'x';
 import * as shared from 'js/shared';
+import * as settings from 'js/settings'
 
 import { observable, configure } from "mobx";
 import * as r from 'ramda';
@@ -10,6 +11,8 @@ configure({ enforceActions: 'observed' });
 
 export const reset_inputs_data = () => {
     inputs_data.obj = data_obj_default;
+
+    settings.load_setting();
 }
 
 export let inputs_data = observable({
