@@ -55,7 +55,7 @@ export class Select extends react.Component {
     //< hide options when clicking on option or select_title
 
     //> hide options when clicking on option or select_title / scroll select options into view when oipening select
-    on_click = async () => {
+    on_mouse_down = async () => {
         if (document.activeElement == this.select_w.current) {
             await x.delay(0);
 
@@ -121,7 +121,7 @@ export class Select extends react.Component {
                     >
                         <div
                             className='select_title'
-                            onMouseDown={this.on_click}
+                            onMouseDown={this.on_mouse_down}
                         >
                             {selected_option_text}
                         </div>
