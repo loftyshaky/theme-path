@@ -734,6 +734,6 @@ a:active, .upload_box_browse_label:active, .btn:active {
 }
 /*< mods */
 
-.help_message, .popup, .protecting_screen {
+.help_message {
     display: none;
 }

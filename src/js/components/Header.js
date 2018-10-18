@@ -8,6 +8,8 @@ import gear from 'svg/gear';
 import question from 'svg/question';
 import list from 'svg/list';
 
+import * as toogle_popup from 'js/toogle_popup';
+
 import react from 'react';
 import Svg from 'svg-inline-react';
 
@@ -64,6 +66,7 @@ const Btn = props => {
         <button
             className={x.cls(['header_btn header_btn_icon', props.name + '_btn'])}
             data-title={props.name + '_btn_title'}
+            onClick={toogle_popup.toggle_popup.bind(null, props.name)}
         >
             <Svg src={props.svg} />
         </button>
