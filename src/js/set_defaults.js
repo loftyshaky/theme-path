@@ -10,8 +10,7 @@ export const set_defaults = () => {
         work_folder: '',
         theme: 'dark',
         chrome_dir: '',
-        chrome_user_data_dirs: '',
-        chrome_process_ids: {}
+        chrome_user_data_dirs: ''
     });
 };
 
