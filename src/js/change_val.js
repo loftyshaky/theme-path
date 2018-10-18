@@ -31,9 +31,9 @@ export const change_val = action((family, i, val, img_extension, e) => {
 
     } else if (family == 'images') {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val + '.' + (img_extension ? img_extension : 'png'), family);
-    
+
     } else if (family == 'settings') {
-     
+        store.set(key, new_val);
     }
 
     if (family == 'images' || third_if_keys.indexOf(family) > -1) {
