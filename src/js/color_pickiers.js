@@ -41,7 +41,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
             const clicked_on_same_color_input_vizualization_second_time = previously_opened_color_pickier == color_pickier
 
             if (color_pickier_hidden && !clicked_on_same_color_input_vizualization_second_time) {
-                const margin_bottom_of_body_plus_fieldset_border_and_fieldset_w_bottom_filling = parseInt(window.getComputedStyle(s('body')).marginBottom) + parseInt(window.getComputedStyle(s('fieldset')).borderWidth) + 3;
+                const margin_bottom_of_body_plus_fieldset_border = parseInt(window.getComputedStyle(s('body')).marginBottom) + parseInt(window.getComputedStyle(s('fieldset')).borderWidth);
                 mut.current_color_pickier.el = color_pickier;
                 mut.current_color_pickier.family = family;
                 mut.current_color_pickier.i = i;
@@ -50,7 +50,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                 show_or_hide_color_pickier(family, i, true);
                 set_color_color_pickier_position(family, i, 'top');
 
-                const color_pickier_is_fully_visible = color_pickier.getBoundingClientRect().bottom <= window.innerHeight - margin_bottom_of_body_plus_fieldset_border_and_fieldset_w_bottom_filling;
+                const color_pickier_is_fully_visible = color_pickier.getBoundingClientRect().bottom <= window.innerHeight - margin_bottom_of_body_plus_fieldset_border;
 
                 if (!color_pickier_is_fully_visible) {
                     set_color_color_pickier_position(family, i, 'bottom');

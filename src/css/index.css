@@ -34,7 +34,7 @@
 }
 
 body {
-    margin: 0 0 12px 16px;
+    margin: 0 0 16px 16px;
     overflow-x: hidden;
 }
 
@@ -42,14 +42,25 @@ body, .btn, .option, .legend_line, .fieldset_w .cover, .popup {
     background-color: #212121;
 } 
 
+.fieldsets {
+    display: flex;
+    margin-top: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 fieldset:not(.work_folder_fieldset) > div, .popup {
     padding: 12px;
 }
 
 fieldset {
     margin: 0;
-    display: inline-block;
     padding: 0;
+    box-sizing: border-box;
+}
+
+fieldset:not(.theme_metadata_fieldset) {
+    height: calc(100vh - 76px);
 }
 
 fieldset:not(.work_folder_fieldset) > div {
@@ -65,7 +76,7 @@ fieldset:not(.work_folder_fieldset) > div {
 
 .fieldset_w {
     position: relative;
-    margin-top: 60px;
+    margin-top: 20px;
 }
 
 .fieldset_w {
@@ -252,12 +263,6 @@ textarea, .select_w, .checkbox_checkmark_w {
     border-radius: 0!important;
 }
 
-.all {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
 svg {
     fill: white;
     display: block;
@@ -375,7 +380,6 @@ header span, header label, header .open_in_chrome_btn {
 .work_folder_fieldset {
     min-width: 500px;
     width: 100%;
-    height: calc(100% - 3px);
     box-sizing: border-box;
 }
 

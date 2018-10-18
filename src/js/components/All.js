@@ -31,28 +31,30 @@ export class All extends react.Component {
         return (
             <div className='all'>
                 <Header />
-                <Work_folder />
-                <Fieldset name="theme_metadata">
-                    <Input_block name='theme_metadata' />
-                </Fieldset>
-                <Fieldset name="theme">
-                    <Input_block
-                        name='images'
-                        hr
-                    />
-                    <Input_block
-                        name='colors'
-                        hr
-                    />
-                    <Input_block
-                        name='tints'
-                        hr
-                    />
-                    <Input_block
-                        name='properties'
-                        hr
-                    />
-                </Fieldset>
+                <div className='fieldsets'>
+                    <Work_folder />
+                    <Fieldset name="theme_metadata">
+                        <Input_block name='theme_metadata' />
+                    </Fieldset>
+                    <Fieldset name="theme">
+                        <Input_block
+                            name='images'
+                            hr
+                        />
+                        <Input_block
+                            name='colors'
+                            hr
+                        />
+                        <Input_block
+                            name='tints'
+                            hr
+                        />
+                        <Input_block
+                            name='properties'
+                            hr
+                        />
+                    </Fieldset>
+                </div>
                 <Protecting_screen />
                 <Settings />
                 <Links />
