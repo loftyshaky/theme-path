@@ -1,6 +1,7 @@
 'use_strict';
 
 import * as shared from 'js/shared';
+import * as open_in_chrome from 'js/open_in_chrome';
 import { inputs_data } from 'js/inputs_data';
 import { action, configure } from "mobx";
 const { existsSync, mkdirSync, writeFileSync } = require('fs');
@@ -34,6 +35,12 @@ export const change_val = action((family, i, val, img_extension, e) => {
 
     } else if (family == 'settings') {
         store.set(key, new_val);
+
+        if (key == 'chrome_user_data_dirs') {
+            store.set('chrome_process_ids', {});
+
+            open_in_chrome.update_chrome_user_data_dirs_observable();
+        }
     }
 
     if (family == 'images' || third_if_keys.indexOf(family) > -1) {

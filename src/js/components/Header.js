@@ -12,58 +12,65 @@ import * as open_in_chrome from 'js/open_in_chrome';
 import * as toogle_popup from 'js/toogle_popup';
 
 import react from 'react';
+import { observer } from "mobx-react";
 import Svg from 'svg-inline-react';
 const Store = require('electron-store');
 
 const store = new Store();
 
-export const Header = props => {
-    const chrome_user_data_dirs = store.get('chrome_user_data_dirs').split(',');
-    const chrome_user_data_dirs_final = chrome_user_data_dirs.length == 1 && chrome_user_data_dirs[0] == '' ? [] : chrome_user_data_dirs;
+export class Header extends react.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <header>
-            <span className='header_section header_left'>
-                <button className='header_btn new_theme_btn'>
-                    <span className='header_btn_icon new_theme_btn_icon'>
-                        <Svg src={plus} />
-                    </span>
-                    <label data-text='new_theme_btn_label_text'>
-                    </label>
-                </button>
-                <span className='current_theme_name'>Theme Name
+    render() {
+        const chrome_user_data_dirs = open_in_chrome.ob.chrome_user_data_dirs.split(',');
+        const chrome_user_data_dirs_final = chrome_user_data_dirs.length == 1 && chrome_user_data_dirs[0] == '' ? [] : chrome_user_data_dirs;
+
+        return (
+            <header>
+                <span className='header_section header_left'>
+                    <button className='header_btn new_theme_btn'>
+                        <span className='header_btn_icon new_theme_btn_icon'>
+                            <Svg src={plus} />
+                        </span>
+                        <label data-text='new_theme_btn_label_text'>
+                        </label>
+                    </button>
+                    <span className='current_theme_name'>Theme Name
                 </span>
-            </span>
-            <span className='header_section header_right'>
-                {
-                    chrome_user_data_dirs_final.map((path, i) => {
-                        return <Open_in_chrome_btn
-                            key={x.unique_id()}
-                            path={path.trim()}
-                            no={i + 1}
-                        />
-                    })
-                }
-                <Pack_btn name='zip' />
-                <Pack_btn name='crx' />
-                <Btn
-                    name='settings'
-                    svg={gear}
-                >
-                </Btn>
-                <Btn
-                    name='help'
-                    svg={question}
-                >
-                </Btn>
-                <Btn
-                    name='links'
-                    svg={list}
-                >
-                </Btn>
-            </span>
-        </header >
-    );
+                </span>
+                <span className='header_section header_right'>
+                    {
+                        chrome_user_data_dirs_final.map((path, i) => {
+                            return <Open_in_chrome_btn
+                                key={x.unique_id()}
+                                path={path.trim()}
+                                no={i + 1}
+                            />
+                        })
+                    }
+                    <Pack_btn name='zip' />
+                    <Pack_btn name='crx' />
+                    <Btn
+                        name='settings'
+                        svg={gear}
+                    >
+                    </Btn>
+                    <Btn
+                        name='help'
+                        svg={question}
+                    >
+                    </Btn>
+                    <Btn
+                        name='links'
+                        svg={list}
+                    >
+                    </Btn>
+                </span>
+            </header >
+        );
+    }
 }
 
 const Open_in_chrome_btn = props => {
@@ -106,3 +113,5 @@ const Pack_btn = props => {
         </button>
     );
 };
+
+Header = observer(Header);

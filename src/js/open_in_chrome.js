@@ -2,10 +2,14 @@
 
 import x from 'x';
 import * as shared from 'js/shared';
+import { observable, action, configure } from "mobx";
+
 const kill = require('tree-kill');
 const { readdirSync } = require('fs');
 const { exec } = require('child_process');
 const Store = require('electron-store');
+
+configure({ enforceActions: 'observed' });
 
 const store = new Store();
 
@@ -30,8 +34,16 @@ export const open_in_chrome = async path => {
     }
 };
 
+export const update_chrome_user_data_dirs_observable = action(() => {
+    ob.chrome_user_data_dirs = store.get('chrome_user_data_dirs');
+});
+
 //> variables
 const mut = {
     chrome_process_ids: {}
-}
+};
+
+export const ob = observable({
+    chrome_user_data_dirs: null
+});
 //< variables
