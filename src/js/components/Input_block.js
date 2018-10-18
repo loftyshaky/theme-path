@@ -20,11 +20,15 @@ export const Input_block = props => {
             <div className={props.name == 'colors' || props.name == 'tints' ? 'colors_and_tints_input_block' : null}>
                 {
                     inputs_data.obj[props.name].map((item, i) => {
-                        const Component = components[item.type];
+                        const Component = sta.components[item.type];
                         const color_input_type = item.type == 'color' ? 'color' : null;
 
                         return (
-                            < Component {...item} i={i} color_input_type={color_input_type} add_help />
+                            < Component
+                                {...item}
+                                i={i}
+                                color_input_type={color_input_type}
+                                add_help={sta.no_help.indexOf(item.name) == -1 ? true : false} />
                         );
                     })
                 }
@@ -34,10 +38,15 @@ export const Input_block = props => {
 }
 
 //> varibles t
-const components = {
-    textarea: Textarea,
-    select: Select,
-    img_selector: Img_selector,
-    color: Color
-};
+const sta = {
+    components: {
+        textarea: Textarea,
+        select: Select,
+        img_selector: Img_selector,
+        color: Color
+    },
+    no_help: [
+        'theme'
+    ]
+}
 //< varibles t
