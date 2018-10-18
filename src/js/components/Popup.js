@@ -1,6 +1,6 @@
 'use strict';
 
-import close from 'svg/close';
+import close_svg from 'svg/close';
 
 import * as toogle_popup from 'js/toogle_popup';
 import { Tr } from 'js/Tr';
@@ -25,7 +25,7 @@ export let Popup = props => {
                 className='close_btn'
                 onClick={toogle_popup.close_all_popups}
             >
-                <Svg src={close} />
+                <Svg src={close_svg} />
             </button>
             <Hr name={props.name} />
             <div className='popup_content'>

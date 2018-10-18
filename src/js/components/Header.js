@@ -2,12 +2,12 @@
 
 import x from 'x';
 
-import plus from 'svg/plus';
-import open_in_browser from 'svg/open_in_browser';
-import archive from 'svg/archive';
-import gear from 'svg/gear';
-import question from 'svg/question';
-import list from 'svg/list';
+import plus_svg from 'svg/plus';
+import open_in_browser_svg from 'svg/open_in_browser';
+import archive_svg from 'svg/archive';
+import gear_svg from 'svg/gear';
+import question_svg from 'svg/question';
+import list_svg from 'svg/list';
 
 import * as open_in_chrome from 'js/open_in_chrome';
 import * as toogle_popup from 'js/toogle_popup';
@@ -33,7 +33,7 @@ export class Header extends react.Component {
                 <span className='header_section header_left'>
                     <button className='header_btn new_theme_btn'>
                         <span className='header_btn_icon new_theme_btn_icon'>
-                            <Svg src={plus} />
+                            <Svg src={plus_svg} />
                         </span>
                         <label data-text='new_theme_btn_label_text'>
                         </label>
@@ -56,17 +56,17 @@ export class Header extends react.Component {
                     <Pack_btn name='crx' />
                     <Btn
                         name='settings'
-                        svg={gear}
+                        svg={gear_svg}
                     >
                     </Btn>
                     <Btn
                         name='help'
-                        svg={question}
+                        svg={question_svg}
                     >
                     </Btn>
                     <Btn
                         name='links'
-                        svg={list}
+                        svg={list_svg}
                     >
                     </Btn>
                 </span>
@@ -94,7 +94,7 @@ const Open_in_chrome_btn = props => {
             data-title='open_in_chrome_btn_title'
             onClick={open_in_chrome.open_in_chrome.bind(null, '')}
         >
-            <Svg src={open_in_browser} />
+            <Svg src={open_in_browser_svg} />
         </button>
     );
 };
@@ -117,7 +117,7 @@ const Pack_btn = props => {
             className='header_btn pack_btn'
             data-title={'pack_as_' + props.name + '_btn_title'}>
             <span className='header_btn_icon pack_btn_icon'>
-                <Svg src={archive} />
+                <Svg src={archive_svg} />
             </span>
             <label>{props.name.toUpperCase()}</label>
         </button>
