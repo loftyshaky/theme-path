@@ -23,7 +23,7 @@ module.exports = merge(shared, {
 
         new mini_css_extract_plugin(),
         
-        new clean_webpack_plugin(['dist']),
+        new clean_webpack_plugin(['resources']),
 
         new write_file_webpack_plugin(),
     ],

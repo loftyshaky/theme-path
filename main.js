@@ -4,6 +4,8 @@
 const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 const url = require('url');
+const { existsSync } = require('fs');
+const runs_from_package = !existsSync(path.join(__dirname, 'resources'));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -50,7 +52,7 @@ function create_window() {
   } else {
     index_path = url.format({
       protocol: 'file:',
-      pathname: path.join(__dirname, 'dist', 'index.html'),
+      pathname: path.join(__dirname, runs_from_package ? '' : 'resources', runs_from_package ? '' : 'app', 'dist', 'index.html'),
       slashes: true
     });
   }
