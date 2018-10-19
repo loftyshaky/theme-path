@@ -278,6 +278,8 @@ header {
     left: 0;
     width: 100%;
     background-color: #70c34c;
+    display: flex;
+    justify-content: space-between;
 }
 
 header span, header label, header .open_in_chrome_btn {
@@ -285,16 +287,12 @@ header span, header label, header .open_in_chrome_btn {
 }
 
 .header_section {
-    display: inline-flex;
-    align-items: center;
-}
-
-.header_left {
-    float: left;
+    display: flex;
+    overflow: hidden;
 }
 
 .header_right {
-    float: right;
+    flex-shrink: 0;
 }
 
 .header_btn {
@@ -302,6 +300,12 @@ header span, header label, header .open_in_chrome_btn {
     border: none;
     cursor: pointer;
     outline: none;
+}
+
+.current_theme_name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .header_btn, .current_theme_name {
@@ -330,9 +334,12 @@ header span, header label, header .open_in_chrome_btn {
     fill: #212121;
 }
 
+.new_theme_btn {
+    white-space: nowrap;
+}
+
 .pack_btn, .new_theme_btn {
     display: inline-flex;
-    align-items: center;
 }
 
 .pack_btn_icon, .new_theme_btn_icon {

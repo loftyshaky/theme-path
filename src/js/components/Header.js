@@ -9,8 +9,10 @@ import gear_svg from 'svg/gear';
 import question_svg from 'svg/question';
 import list_svg from 'svg/list';
 
+import * as shared from 'js/shared';
 import * as open_and_pack from 'js/open_and_pack';
 import * as toogle_popup from 'js/toogle_popup';
+import { inputs_data } from 'js/inputs_data';
 
 import react from 'react';
 import { observer } from "mobx-react";
@@ -25,6 +27,7 @@ export class Header extends react.Component {
     }
 
     render() {
+        const theme_name = shared.find_from_name(inputs_data.obj.theme_metadata, 'name');
         const chrome_user_data_dirs = open_and_pack.ob.chrome_user_data_dirs.split(',');
         const chrome_user_data_dirs_final = chrome_user_data_dirs.length == 1 && chrome_user_data_dirs[0] == '' ? [] : chrome_user_data_dirs;
 
@@ -38,8 +41,9 @@ export class Header extends react.Component {
                         <label data-text='new_theme_btn_label_text'>
                         </label>
                     </button>
-                    <span className='current_theme_name'>Theme Name
-                </span>
+                    <span className='current_theme_name'>
+                        {theme_name.val}
+                    </span>
                 </span>
                 <span className='header_section header_right'>
                     {
