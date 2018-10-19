@@ -316,16 +316,6 @@ header span, header label, header .open_in_chrome_btn {
     cursor: pointer;
 }
 
-/*
-.header_btn:focus {
-    background-color: #7171fd;
-}
-
-.header_btn:focus svg {
-    fill: white;
-}
-*/
-
 .header_btn:hover {
     background-color: white;
 }
