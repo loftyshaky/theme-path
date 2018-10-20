@@ -3,7 +3,7 @@ import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
 import { inputs_data } from 'js/inputs_data';
 
-import { observable, action, configure } from "mobx";
+import { action, configure } from "mobx";
 import * as r from 'ramda';
 const hexToHsl = require('hex-to-hsl');
 const hexToRgb = require('hex-to-rgb');
@@ -81,7 +81,7 @@ export const set_color_input_vizualization_color = action((family, i, color) => 
 });
 
 //> accept color when clicking OK t
-export const accept_color = (family, i) => {
+export const accept_color = action((family, i) => {
     const hex = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
     let color;
 
@@ -91,7 +91,7 @@ export const accept_color = (family, i) => {
 
         imgs.create_solid_color_image(name, color);
 
-       change_val.change_val(family, i, name, null);
+        change_val.change_val(family, i, name, null);
 
     } else if (family == 'colors') {
         color = hexToRgb(hex);
@@ -110,8 +110,9 @@ export const accept_color = (family, i) => {
 
     show_or_hide_color_pickier(family, i, false);
 
+    inputs_data.obj[family][i].val = hex;
     mut.current_color_pickier.el = null;
-};
+});
 //< accept color when clicking OK t
 
 //> varibles t

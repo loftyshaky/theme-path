@@ -2,7 +2,6 @@
 
 import x from 'x';
 
-import * as convert_color from 'js/convert_color';
 import * as color_pickiers from 'js/color_pickiers';
 import { inputs_data } from 'js/inputs_data';
 import { Tr } from 'js/Tr';
@@ -12,10 +11,10 @@ import { Help } from 'components/Help';
 
 import react from 'react';
 import { observer } from "mobx-react";
-import { ChromePicker  } from 'react-color';
+import { ChromePicker } from 'react-color';
 
 export let Color = props => {
-    const color_after = inputs_data.obj[props.family][props.i].color || inputs_data.obj[props.family][props.i].val;
+    const color = inputs_data.obj[props.family][props.i].color || inputs_data.obj[props.family][props.i].val;
 
     const label = props.color_input_type == 'color' ?
         <label
@@ -50,7 +49,7 @@ export let Color = props => {
                     className={x.cls(['color_input_vizualization', props.color_input_type == 'img' ? 'tall_color_input_vizualization' : null])}
                     data-family={props.family}
                     data-i={props.i}
-                    style={{ backgroundColor: color_after }}
+                    style={{ backgroundColor: color }}
                 >
                     <div
                         className='color_pickier_w'
@@ -63,7 +62,7 @@ export let Color = props => {
                             state={color_pickier_state}
                         >
                             <ChromePicker
-                                color={color_after}
+                                color={color}
                                 disableAlpha={true}
                                 onChange={color_pickiers.set_color_input_vizualization_color.bind(null, props.family, props.i)}
                             /><button
