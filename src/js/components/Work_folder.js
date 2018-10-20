@@ -40,8 +40,8 @@ export class Work_folder extends react.Component {
         this.rerender_list();
     }
 
-    expand_folder = async args => {
-        work_folder.expand_folder(...args);
+    expand_or_collapse_folder = async args => {
+        work_folder.expand_or_collapse_folder(...args);
 
         this.rerender_list();
     };
@@ -58,7 +58,7 @@ export class Work_folder extends react.Component {
             :
             <span
                 className='folder_arrow'
-                onClick={this.expand_folder.bind(null, [folder.path, folder.children, folder.nest_level + 1, index + 1])}
+                onClick={this.expand_or_collapse_folder.bind(null, ['arrow', folder.path, folder.nest_level + 1, index + 1])}
             ><Svg src={folder_is_opened ? arrow_down_svg : arrow_right_svg} /> </span>;
 
         return (
@@ -86,7 +86,7 @@ export class Work_folder extends react.Component {
                         </span>
                         <span
                             className={x.cls(['folder_name', folder.path == shared.ob.chosen_folder_path ? 'selected_folder' : null])}
-                            onClick={work_folder.select_folder.bind(null, folder.path, folder.children)}
+                            onClick={work_folder.select_folder.bind(null, folder.path, folder.children, folder.nest_level + 1, index + 1)}
                         >
                             {folder.name}
                         </span>
@@ -142,6 +142,7 @@ export class Work_folder extends react.Component {
                                 style={{
                                     padding: '60px 12px 12px 8px',
                                     boxSizing: 'border-box',
+                                    overflow: 'auto!important'
                                 }}
                             />
                         );

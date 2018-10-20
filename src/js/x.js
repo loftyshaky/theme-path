@@ -136,6 +136,34 @@ x.load_css = (filename) => {
 };
 //< load_css f
 
+//> debounce f
+x.debounce = (f, wait, immediate, e) => {
+    let timeout;
+
+    return function () {
+        var context = this, args = arguments;
+
+        var later = () => {
+            timeout = null;
+
+            if (!immediate) {
+                f.apply(context, args)
+            };
+        };
+
+        let call_now = immediate && !timeout;
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(later, wait);
+
+        if (call_now) {
+            f.apply(context, args)
+        };
+    };
+};
+//< debounce f
+
 //> delay f
 x.delay = delay => {
     return new Promise(resolve => window.setTimeout(() => resolve(), delay));

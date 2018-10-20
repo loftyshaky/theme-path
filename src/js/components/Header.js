@@ -10,6 +10,7 @@ import question_svg from 'svg/question';
 import list_svg from 'svg/list';
 
 import * as shared from 'js/shared';
+import * as work_folder from 'js/work_folder';
 import * as open_and_pack from 'js/open_and_pack';
 import * as toogle_popup from 'js/toogle_popup';
 import { inputs_data } from 'js/inputs_data';
@@ -26,6 +27,11 @@ export class Header extends react.Component {
         super(props);
     }
 
+    expand_or_collapse_folder = async () => {
+        work_folder.expand_or_collapse_folder('new_theme', work_folder.mut.selected_folder_info.path, work_folder.mut.selected_folder_info.nest_level, work_folder.mut.selected_folder_info.index_to_insert_folfder_in);
+        //  this.rerender_list();
+    };
+
     render() {
         const theme_name = shared.find_from_name(inputs_data.obj.theme_metadata, 'name');
         const chrome_user_data_dirs = open_and_pack.ob.chrome_user_data_dirs.split(',');
@@ -34,7 +40,10 @@ export class Header extends react.Component {
         return (
             <header>
                 <span className='header_section header_left'>
-                    <button className='header_btn new_theme_btn'>
+                    <button
+                        className='header_btn new_theme_btn'
+                        onClick={this.expand_or_collapse_folder}
+                    >
                         <span className='header_btn_icon new_theme_btn_icon'>
                             <Svg src={plus_svg} />
                         </span>

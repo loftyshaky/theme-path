@@ -44,7 +44,7 @@ module.exports = {
         new copy_webpack_plugin([
             { from: path.join(__dirname, 'src', 'mods'), to: path.join(__dirname, output_dir) },
             { from: path.join(__dirname, 'src', 'Roboto-Light.ttf'), to: path.join(__dirname, output_dir) },
-            { from: path.join(__dirname, 'src', 'New theme'), to: path.join(__dirname, output_dir + '/New theme') }
+            { from: path.join(__dirname, 'src', 'new_theme'), to: path.join(__dirname, output_dir + '/new_theme') }
         ]),
 
         new hard_source_webpack_plugin()
