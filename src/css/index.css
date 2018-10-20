@@ -428,6 +428,10 @@ header span, header label, header .open_in_chrome_btn {
 .folder_name {
     padding: 3px 6px 3px 6px;
 }
+
+.ReactVirtualized__Grid {
+    overflow: auto!important;
+}
 /*< work_folder */
 
 /*> help */
