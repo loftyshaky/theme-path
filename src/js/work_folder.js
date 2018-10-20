@@ -254,7 +254,7 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, name
     }
 });
 
-export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder(folder_path, name_input_val));
+export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder(folder_path, name_input_val), 250);
 //< create new theme when clicking on "New theme" or rename theme folder when typing in name input
 
 const close_all_folders = action(() => {
