@@ -29,7 +29,6 @@ export class Header extends react.Component {
 
     expand_or_collapse_folder = async () => {
         work_folder.expand_or_collapse_folder('new_theme', shared.ob.chosen_folder_path, work_folder.mut.chosen_folder_info.nest_level, work_folder.mut.chosen_folder_info.index_to_insert_folfder_in);
-        //  this.rerender_list();
     };
 
     render() {
