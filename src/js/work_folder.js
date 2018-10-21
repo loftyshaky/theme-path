@@ -44,7 +44,7 @@ export const create_top_level_folders = async () => {
 //< on extension load / work_folder folder content change
 
 export const expand_or_collapse_folder = action((mode, folder_path, nest_level, index_to_insert_folfder_in) => {
-    if (mode != 'new_theme' || !mut.selected_folder_info.is_theme) {
+    if (mode != 'new_theme' || !mut.chosen_folder_info.is_theme) {
         const folder_is_not_opened = mut.opened_folders.indexOf(folder_path) == - 1;
 
         if (mode == 'new_theme') {
@@ -180,8 +180,7 @@ export const select_folder = action((folder_path, children, nest_level, index_to
 
     convert_color.convert_all();
 
-    mut.selected_folder_info = {
-        path: folder_path,
+    mut.chosen_folder_info = {
         children: children,
         is_theme: folder_is_theme,
         nest_level: nest_level,
@@ -269,7 +268,7 @@ export const show_or_hide_choose_work_folder_btn = action((scroll_info) => {
 //> varibles t
 export const mut = {
     opened_folders: [],
-    selected_folder_info: {}
+    chosen_folder_info: {}
 };
 
 export const ob = observable({
