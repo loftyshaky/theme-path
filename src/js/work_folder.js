@@ -226,7 +226,24 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, name
         try {
             if (!existsSync(path.join(folder_path, folder_name_final))) {
                 if (mode == 'creating_folder') {
-                    copySync(source_folder_path, path.join(folder_path, folder_name_final));
+                    const new_theme_path = path.join(folder_path, folder_name_final);
+                    const root_folder_chosen = shared.ob.chosen_folder_path == store.get('work_folder');
+
+                    copySync(source_folder_path, new_theme_path);
+
+                    if (root_folder_chosen) {
+                        const new_theme = {
+                            key: x.unique_id(),
+                            name: folder_name_final,
+                            path: new_theme_path,
+                            children: get_folders(new_theme_path),
+                            nest_level: 0,
+                            is_theme: true,
+                            is_empty: false
+                        }
+
+                        ob.folders.unshift(new_theme);
+                    }
 
                 } else if (mode == 'renaming_folder') {
                     const new_folder_path = path.join(parent_of_renamed_folder_path, folder_name_final);

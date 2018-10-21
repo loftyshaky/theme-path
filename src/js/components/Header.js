@@ -28,7 +28,16 @@ export class Header extends react.Component {
     }
 
     expand_or_collapse_folder = async () => {
-        work_folder.expand_or_collapse_folder('new_theme', shared.ob.chosen_folder_path, work_folder.mut.chosen_folder_info.nest_level, work_folder.mut.chosen_folder_info.index_to_insert_folfder_in);
+        const root_folder_chosen = shared.ob.chosen_folder_path == store.get('work_folder');
+
+        if (root_folder_chosen) {
+            work_folder.create_new_theme_or_rename_theme_folder(shared.ob.chosen_folder_path);
+
+            s('.ReactVirtualized__Grid').scrollTop = 0;
+
+        } else {
+            work_folder.expand_or_collapse_folder('new_theme', shared.ob.chosen_folder_path, work_folder.mut.chosen_folder_info.nest_level, work_folder.mut.chosen_folder_info.index_to_insert_folfder_in);
+        }
     };
 
     render() {
