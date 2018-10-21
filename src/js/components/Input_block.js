@@ -24,7 +24,7 @@ export const Input_block = props => {
                         const color_input_type = item.type == 'color' ? 'color' : null;
 
                         return (
-                            < Component
+                            <Component
                                 {...item}
                                 i={i}
                                 color_input_type={color_input_type}
