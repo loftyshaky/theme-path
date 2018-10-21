@@ -362,7 +362,7 @@ header span, header label, header .open_in_chrome_btn {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    cursor: help;
+    cursor: pointer;
 }
 
 .work_folder_message {
