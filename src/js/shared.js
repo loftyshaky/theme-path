@@ -3,6 +3,9 @@
 
 import { observable, configure } from "mobx";
 const { readFileSync } = require('fs');
+const Store = require('electron-store');
+
+const store = new Store();
 
 configure({ enforceActions: 'observed' });
 
@@ -33,7 +36,7 @@ export const sta = {
 }
 
 export const ob = observable({
-    chosen_folder_path: ''
+    chosen_folder_path: store.get('work_folder')
 });
 
 export const mut = {
