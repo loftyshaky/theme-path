@@ -14,7 +14,7 @@ import arrow_down_svg from 'svg/arrow_down';
 import react from 'react';
 import { observer } from "mobx-react";
 import Svg from 'svg-inline-react';
-import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from "react-virtualized";
+import { List, AutoSizer } from "react-virtualized";
 const Store = require('electron-store');
 
 const store = new Store();
@@ -26,31 +26,15 @@ export class Work_folder extends react.Component {
         this.list = react.createRef();
     }
 
-    componentDidMount() {
-        window.addEventListener('load', () => {
-            this.rerender_list();
-        });
-
-        window.addEventListener('resize', () => {
-            this.rerender_list();
-        });
-    }
-
-    componentDidUpdate() {
-        this.rerender_list();
-    }
-
     expand_or_collapse_folder = async args => {
         work_folder.expand_or_collapse_folder(...args);
-
-        this.rerender_list();
     };
 
     show_or_hide_choose_work_folder_btn = scroll_info => {
         work_folder.show_or_hide_choose_work_folder_btn(scroll_info);
     };
 
-    render_row = ({ index, key, style, parent }) => {
+    render_row = ({ index, key, style }) => {
         const folder = work_folder.ob.folders[index];
         const folder_is_opened = work_folder.mut.opened_folders.indexOf(folder.path) > - 1;
         const arrow = folder.is_empty || folder.is_theme ?
@@ -62,51 +46,33 @@ export class Work_folder extends react.Component {
             ><Svg src={folder_is_opened ? arrow_down_svg : arrow_right_svg} /> </span>;
 
         return (
-            <CellMeasurer
+            <div
+                className='folder_w'
                 key={key}
-                cache={this.cache}
-                parent={parent}
-                columnIndex={0}
-                rowIndex={index}
+                style={style}
             >
                 <div
-                    className='folder_w'
-                    style={style}
+                    className='folder'
+                    style={{ marginLeft: folder.nest_level + '0px' }}
                 >
-                    <div
-                        className='folder'
-                        style={{ marginLeft: folder.nest_level + '0px' }}
+                    {arrow}
+                    <span
+                        className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
+                        onClick={work_folder.select_folder.bind(null, folder.path, folder.children)}
                     >
-                        {arrow}
-                        <span
-                            className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
-                            onClick={work_folder.select_folder.bind(null, folder.path, folder.children)}
-                        >
-                            <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
-                        </span>
-                        <span
-                            className={x.cls(['folder_name', folder.path == shared.ob.chosen_folder_path ? 'selected_folder' : null])}
-                            onClick={work_folder.select_folder.bind(null, folder.path, folder.children, folder.nest_level + 1, index + 1)}
-                        >
-                            {folder.name}
-                        </span>
-                    </div>
+                        <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
+                    </span>
+                    <span
+                        className={x.cls(['folder_name', folder.path == shared.ob.chosen_folder_path ? 'selected_folder' : null])}
+                        onClick={work_folder.select_folder.bind(null, folder.path, folder.children, folder.nest_level + 1, index + 1)}
+                        title={folder.path}
+                    >
+                        {folder.name}
+                    </span>
                 </div>
-            </CellMeasurer>
+            </div>
         );
     };
-
-    rerender_list = async () => {
-        await x.delay(0);
-
-        this.cache.clearAll();
-        this.list.current.forceUpdateGrid();
-    }
-
-    cache = new CellMeasurerCache({
-        fixedWidth: true,
-        minHeight: 24
-    });
 
     render() {
         shared.ob.chosen_folder_path
@@ -139,8 +105,7 @@ export class Work_folder extends react.Component {
                                 ref={this.list}
                                 width={width}
                                 height={height}
-                                deferredMeasurementCache={this.cache}
-                                rowHeight={this.cache.rowHeight}
+                                rowHeight={32} // 32 + 3 paddding = 38
                                 rowRenderer={this.render_row}
                                 rowCount={number_of_rows}
                                 tabIndex={null}
