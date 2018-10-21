@@ -125,7 +125,10 @@ export class Work_folder extends react.Component {
                     ></button>
                     <span
                         className={x.cls(['work_folder_path', shared.ob.chosen_folder_path == store.get('work_folder') ? 'selected_folder' : null])}
-                        title={work_folder_path}>{work_folder_path}
+                        title={work_folder_path}
+                        onClick={work_folder.select_root_folder}
+                    >
+                        {work_folder_path}
                     </span>
                 </div>
                 {work_folder_is_empty_message}

@@ -278,6 +278,10 @@ const close_all_folders = action(() => {
     mut.opened_folders = [];
 });
 
+export const select_root_folder = action(() => {
+    shared.ob.chosen_folder_path = store.get('work_folder');
+});
+
 export const show_or_hide_choose_work_folder_btn = action((scroll_info) => {
     ob.show_work_folder_selector = scroll_info.scrollTop == 0 ? true : false
 });
