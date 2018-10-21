@@ -123,7 +123,10 @@ export class Work_folder extends react.Component {
                         data-text='choose_folder_btn_text'
                         onClick={choose_folder.choose_folder.bind(null, 'work_folder', work_folder.create_top_level_folders)}
                     ></button>
-                    <span className='work_folder_path' title={work_folder_path}>{work_folder_path}</span>
+                    <span
+                        className={x.cls(['work_folder_path', shared.ob.chosen_folder_path == store.get('work_folder') ? 'selected_folder' : null])}
+                        title={work_folder_path}>{work_folder_path}
+                    </span>
                 </div>
                 {work_folder_is_empty_message}
                 <AutoSizer>
