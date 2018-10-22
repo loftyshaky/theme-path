@@ -3,6 +3,7 @@
 import x from 'x';
 
 import * as shared from 'js/shared';
+import * as sort_folders from 'js/sort_folders';
 import * as convert_color from 'js/convert_color';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 
@@ -43,28 +44,22 @@ export const create_top_level_folders = async () => {
 };
 //< on extension load / work_folder folder content change
 
-export const expand_or_collapse_folder = action((mode, folder_path, nest_level, index_to_insert_folfder_in) => {
+export const expand_or_collapse_folder = action((mode, folder_path, nest_level, i_to_insert_folfder_in) => {
     if (mode != 'new_theme' || !mut.chosen_folder_info.is_theme) {
-        const folder_is_not_opened = mut.opened_folders.indexOf(folder_path) == - 1;
+        const folder_is_opened = mut.opened_folders.indexOf(folder_path) != - 1;
 
         if (mode == 'new_theme') {
-            create_new_theme_or_rename_theme_folder(folder_path);
+            create_new_theme_or_rename_theme_folder(folder_path, nest_level, i_to_insert_folfder_in, folder_is_opened);
         }
 
         const files = get_folders(folder_path);
 
-        if (folder_is_not_opened) {
-            expand_folder(folder_path, files, nest_level, index_to_insert_folfder_in);
+        if (!folder_is_opened) {
+            expand_folder(folder_path, files, nest_level, i_to_insert_folfder_in);
 
-        } else { // folder is opened so close it
-            const folder_to_remove_start_i = index_to_insert_folfder_in;
-
-            //>1 get number of folders to close
-            const close_preceding_folder = r.drop(folder_to_remove_start_i);
-            const get_last_folder_to_close_i = r.findIndex(item => item.nest_level < nest_level || item == ob.folders[ob.folders.length - 1]); // item == ob.folders[ob.folders.length - 1] if last folder
-            const number_of_folders_to_close = r.pipe(close_preceding_folder, get_last_folder_to_close_i)(ob.folders);
-            //<1 get number of folders to close 
-
+        } else if (mode != 'new_theme') { // folder is opened so close it
+            const folder_to_remove_start_i = i_to_insert_folfder_in;
+            const number_of_folders_to_close = get_number_of_folders_to_work_with(i_to_insert_folfder_in, nest_level); //>1 get number of folders to close
             const stop_folder_i = folder_to_remove_start_i + number_of_folders_to_close;
             const stop_folder_is_not_last_folder = ob.folders[stop_folder_i + 1];
             const folder_to_close_end_i = stop_folder_is_not_last_folder ? stop_folder_i - 1 : stop_folder_i;
@@ -93,15 +88,11 @@ export const expand_or_collapse_folder = action((mode, folder_path, nest_level, 
             mut.opened_folders.splice(mut.opened_folders.indexOf(folder_path), 1); // mark target folder as closed
             ob.folders = r.pipe(set_opened_folders_to_null, close_nulled)(ob.folders);
             //<1 close folders
-
-            if (mode == 'new_theme') {
-                expand_folder(folder_path, files, nest_level, index_to_insert_folfder_in);
-            }
         }
     }
 });
 
-const expand_folder = (folder_path, files, nest_level, index_to_insert_folfder_in) => {
+const expand_folder = (folder_path, files, nest_level, i_to_insert_folfder_in) => {
     let expanded_folders = [];
 
     for (const file of files) {
@@ -133,13 +124,14 @@ const expand_folder = (folder_path, files, nest_level, index_to_insert_folfder_i
             mut.opened_folders.push(folder_path);  // mark target folder as opened
         }
 
-        ob.folders = r.insertAll(index_to_insert_folfder_in, expanded_folders, ob.folders);
+        const folders_with_new_folder = r.insertAll(i_to_insert_folfder_in, expanded_folders, ob.folders);
+
+        ob.folders = sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, expanded_folders.length, nest_level);
     }
 };
 
-
 //> select folder and fill inputs with theme data
-export const select_folder = action((folder_path, children, nest_level, index_to_insert_folfder_in) => {
+export const select_folder = action((folder_path, children, nest_level, i_to_insert_folfder_in) => {
     shared.ob.chosen_folder_path = folder_path;
 
     const folder_is_theme = children.find(file => file.name == 'manifest.json');
@@ -184,7 +176,7 @@ export const select_folder = action((folder_path, children, nest_level, index_to
         children: children,
         is_theme: folder_is_theme,
         nest_level: nest_level,
-        index_to_insert_folfder_in: index_to_insert_folfder_in
+        i_to_insert_folfder_in: i_to_insert_folfder_in
     }
 });
 
@@ -211,8 +203,9 @@ const set_val = (main_key, key, val) => {
     }
 };
 //< select folder and fill inputs with theme data
+
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
-export const create_new_theme_or_rename_theme_folder = action((folder_path, name_input_val) => {
+export const create_new_theme_or_rename_theme_folder = action((folder_path, nest_level, i_to_insert_folfder_in, folder_is_opened, name_input_val) => {
     const mode = name_input_val ? 'renaming_folder' : 'creating_folder';
     const folder_name = mode == 'renaming_folder' ? name_input_val : x.message('new_theme_btn_label_text');
     const timne_id = Date.now();
@@ -228,21 +221,24 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, name
                 if (mode == 'creating_folder') {
                     const new_theme_path = path.join(folder_path, folder_name_final);
                     const root_folder_chosen = shared.ob.chosen_folder_path == store.get('work_folder');
+                    const number_of_folders = get_number_of_folders_to_work_with(i_to_insert_folfder_in, nest_level) + 1;
 
                     copySync(source_folder_path, new_theme_path);
 
-                    if (root_folder_chosen) {
+                    if (root_folder_chosen || folder_is_opened) {
                         const new_theme = {
                             key: x.unique_id(),
                             name: folder_name_final,
                             path: new_theme_path,
                             children: get_folders(new_theme_path),
-                            nest_level: 0,
+                            nest_level: nest_level,
                             is_theme: true,
                             is_empty: false
                         }
 
-                        ob.folders.unshift(new_theme);
+                        const folders_with_new_folder = r.insert(i_to_insert_folfder_in, new_theme, ob.folders);
+
+                        ob.folders = sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, number_of_folders, nest_level);
                     }
 
                 } else if (mode == 'renaming_folder') {
@@ -270,7 +266,7 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, name
     }
 });
 
-export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder(folder_path, name_input_val), 250);
+export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder(folder_path, null, null, null, name_input_val), 250);
 //< create new theme when clicking on "New theme" or rename theme folder when typing in name input
 
 const close_all_folders = action(() => {
@@ -285,6 +281,12 @@ export const select_root_folder = action(() => {
 export const show_or_hide_choose_work_folder_btn = action((scroll_info) => {
     ob.show_work_folder_selector = scroll_info.scrollTop == 0 ? true : false
 });
+
+const get_number_of_folders_to_work_with = (start_i, nest_level) => {
+    const close_preceding_folder = r.drop(start_i);
+    const get_last_folder_to_close_i = r.findIndex(item => item.nest_level < nest_level || item == ob.folders[ob.folders.length - 1]); // item == ob.folders[ob.folders.length - 1] if last folder
+    return r.pipe(close_preceding_folder, get_last_folder_to_close_i)(ob.folders);
+};
 
 //> varibles t
 export const mut = {
