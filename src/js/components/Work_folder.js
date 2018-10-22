@@ -55,19 +55,21 @@ export class Work_folder extends react.Component {
                     style={{ marginLeft: folder.nest_level + '0px' }}
                 >
                     {arrow}
-                    <span
-                        className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
-                        onClick={select_folder.select_folder.bind(null, folder.path, folder.children)}
-                    >
-                        <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
-                    </span>
-                    <span
-                        className={x.cls(['folder_name', folder.path == shared.ob.chosen_folder_path ? 'selected_folder' : null])}
-                        onClick={select_folder.select_folder.bind(null, folder.path, folder.children, folder.nest_level + 1, index + 1)}
-                        title={folder.name}
-                    >
-                        {folder.name}
-                    </span>
+                    <div className='folder_inner'>
+                        <span
+                            className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
+                            onClick={select_folder.select_folder.bind(null, folder.path, folder.children)}
+                        >
+                            <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
+                        </span>
+                        <span
+                            className={x.cls(['folder_name', folder.path == shared.ob.chosen_folder_path ? 'selected_folder' : null])}
+                            onClick={select_folder.select_folder.bind(null, folder.path, folder.children, folder.nest_level + 1, index + 1)}
+                            title={folder.name}
+                        >
+                            {folder.name}
+                        </span>
+                    </div>
                 </div>
             </div>
         );
