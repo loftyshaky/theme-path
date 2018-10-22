@@ -365,7 +365,7 @@ header span, header label, header .open_in_chrome_btn {
     margin-left: 10px;
 }
 
-.work_folder_path, .folder_name {
+.work_folder_path, .folder_name, .folder_inner{
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
