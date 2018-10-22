@@ -1,7 +1,7 @@
 'use_strict';
 
 import * as shared from 'js/shared';
-import * as work_folder from 'js/work_folder';
+import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as open_and_pack from 'js/open_and_pack';
 import { inputs_data } from 'js/inputs_data';
 import { action, configure } from "mobx";
@@ -26,7 +26,7 @@ export const change_val = action((family, i, val, img_extension, e) => {
         set_name_or_description_prop(key, e.target.value);
 
         if (key === 'name') {
-            work_folder.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
+            new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
         }
 
     } else if (second_if_keys.indexOf(key) > -1) {
