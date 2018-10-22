@@ -357,6 +357,10 @@ header span, header label, header .open_in_chrome_btn {
     align-items: center;
 }
 
+.choose_work_folder_btn {
+    flex-shrink: 0;
+}
+
 .work_folder_path {
     margin-left: 10px;
 }
