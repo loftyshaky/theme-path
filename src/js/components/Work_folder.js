@@ -64,7 +64,7 @@ export class Work_folder extends react.Component {
                     <span
                         className={x.cls(['folder_name', folder.path == shared.ob.chosen_folder_path ? 'selected_folder' : null])}
                         onClick={select_folder.select_folder.bind(null, folder.path, folder.children, folder.nest_level + 1, index + 1)}
-                        title={folder.path}
+                        title={folder.name}
                     >
                         {folder.name}
                     </span>
