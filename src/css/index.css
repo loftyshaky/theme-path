@@ -392,11 +392,6 @@ header span, header label, header .open_in_chrome_btn {
     height: calc(100vh - 78px);
 }
 
-.folder_w {
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
-
 .folder_w, .folder {
     display: flex;
 }

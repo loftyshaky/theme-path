@@ -104,7 +104,7 @@ export class Work_folder extends react.Component {
                                 ref={this.list}
                                 width={width}
                                 height={height}
-                                rowHeight={32} // 32 + 3 paddding = 38
+                                rowHeight={32}
                                 rowRenderer={this.render_row}
                                 rowCount={number_of_rows}
                                 tabIndex={null}
