@@ -2,6 +2,7 @@
 
 import * as shared from 'js/shared';
 import * as convert_color from 'js/convert_color';
+import * as wf_shared from 'js/work_folder/shared';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 
 import { action, configure } from "mobx";
@@ -11,11 +12,15 @@ configure({ enforceActions: 'observed' });
 
 //> select folder and fill inputs with theme data
 export const select_folder = action((folder_path, children, nest_level, i_to_insert_folfder_in) => {
+    const folder_info = wf_shared.get_info_about_folder(folder_path);
+
+    wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_theme = folder_info.is_theme;
+    wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_empty = folder_info.is_empty;
+
+    shared.ob.chosen_folder_path = '/';
     shared.ob.chosen_folder_path = folder_path;
 
-    const folder_is_theme = children.find(file => file.name == 'manifest.json');
-
-    if (folder_is_theme) {
+    if (folder_info.is_theme) {
         reset_inputs_data();
 
         shared.mut.manifest = shared.parse_json(folder_path + '/manifest.json');
@@ -53,7 +58,7 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
 
     mut.chosen_folder_info = {
         children: children,
-        is_theme: folder_is_theme,
+        is_theme: folder_info.is_theme,
         nest_level: nest_level,
         i_to_insert_folfder_in: i_to_insert_folfder_in
     }

@@ -4,7 +4,6 @@ import x from 'x';
 
 import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/shared';
-import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
 
 import { action, configure } from "mobx";
@@ -43,7 +42,7 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
                             key: x.unique_id(),
                             name: folder_name_final,
                             path: new_theme_path,
-                            children: expand_or_collapse.get_folders(new_theme_path),
+                            children: wf_shared.get_folders(new_theme_path),
                             nest_level: nest_level,
                             is_theme: true,
                             is_empty: false

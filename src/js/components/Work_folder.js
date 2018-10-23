@@ -35,7 +35,7 @@ export class Work_folder extends react.Component {
 
     render_row = ({ index, key, style }) => {
         const folder = wf_shared.ob.folders[index];
-        const folder_is_opened = expand_or_collapse.mut.opened_folders.indexOf(folder.path) > - 1;
+        const folder_is_opened = wf_shared.mut.opened_folders.indexOf(folder.path) > - 1;
         const arrow = folder.is_empty || folder.is_theme ?
             <span className='folder_arrow_placeholder'></span>
             :
@@ -76,7 +76,7 @@ export class Work_folder extends react.Component {
     };
 
     render() {
-        shared.ob.chosen_folder_path
+        shared.ob.chosen_folder_path;
 
         const work_folder_path = store.get('work_folder');
         const number_of_rows = wf_shared.ob.folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
