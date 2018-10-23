@@ -1,6 +1,7 @@
 'use strict';
 
 import * as shared from 'js/shared';
+import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
 import * as wf_shared from 'js/work_folder/shared';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
@@ -52,6 +53,8 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
                 }
             }
         }
+
+        expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folfder_in);
     }
 
     convert_color.convert_all();
