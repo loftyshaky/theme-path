@@ -45,35 +45,38 @@ watcher
     .on('unlinkDir', action(file_path => {
         console.log('File', file_path, 'has been removed');
         const removed_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == file_path);
-        const removed_folder_nest_level = wf_shared.ob.folders[removed_folder_i].nest_level;
 
-        wf_shared.ob.folders = r.remove(removed_folder_i, 1, wf_shared.ob.folders);
+        if (removed_folder_i > -1) {
+            const removed_folder_nest_level = wf_shared.ob.folders[removed_folder_i].nest_level;
 
-        //> get parent of removed folder index
-        let current_folder_i = removed_folder_i - 1;
+            wf_shared.ob.folders = r.remove(removed_folder_i, 1, wf_shared.ob.folders);
 
-        while (wf_shared.ob.folders[current_folder_i] && wf_shared.ob.folders[current_folder_i].nest_level == removed_folder_nest_level) {
-            current_folder_i--;
-        }
-        //< get parent of removed folder index
+            //> get parent of removed folder index
+            let current_folder_i = removed_folder_i - 1;
 
-        if (wf_shared.ob.folders[current_folder_i]) {
-            //> update folder state (theme / not theme /, empty / not empty, opened / closed)
-            const parent_of_removed_folder_i = current_folder_i;
-            const folder_info = wf_shared.get_info_about_folder(wf_shared.ob.folders[parent_of_removed_folder_i].path);
-
-            wf_shared.ob.folders[parent_of_removed_folder_i].is_theme = folder_info.is_theme;
-            wf_shared.ob.folders[parent_of_removed_folder_i].is_empty = folder_info.is_empty;
-
-            if (folder_info.is_empty) {
-                const parent_of_removed_folder_path = wf_shared.ob.folders[parent_of_removed_folder_i].path;
-                wf_shared.mut.opened_folders.splice
-
-                wf_shared.mut.opened_folders = r.without([parent_of_removed_folder_path], wf_shared.mut.opened_folders);
-
-                unwatch_folder(parent_of_removed_folder_path);
+            while (wf_shared.ob.folders[current_folder_i] && wf_shared.ob.folders[current_folder_i].nest_level == removed_folder_nest_level) {
+                current_folder_i--;
             }
-            //< update folder state (theme / not theme /, empty / not empty, opened / closed)
+            //< get parent of removed folder index
+
+            if (wf_shared.ob.folders[current_folder_i]) {
+                //> update folder state (theme / not theme /, empty / not empty, opened / closed)
+                const parent_of_removed_folder_i = current_folder_i;
+                const folder_info = wf_shared.get_info_about_folder(wf_shared.ob.folders[parent_of_removed_folder_i].path);
+
+                wf_shared.ob.folders[parent_of_removed_folder_i].is_theme = folder_info.is_theme;
+                wf_shared.ob.folders[parent_of_removed_folder_i].is_empty = folder_info.is_empty;
+
+                if (folder_info.is_empty) {
+                    const parent_of_removed_folder_path = wf_shared.ob.folders[parent_of_removed_folder_i].path;
+                    wf_shared.mut.opened_folders.splice
+
+                    wf_shared.mut.opened_folders = r.without([parent_of_removed_folder_path], wf_shared.mut.opened_folders);
+
+                    unwatch_folder(parent_of_removed_folder_path);
+                }
+                //< update folder state (theme / not theme /, empty / not empty, opened / closed)
+            }
         }
     }))
     .on('error', er => {
