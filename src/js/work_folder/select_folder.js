@@ -1,9 +1,9 @@
 'use strict';
 
 import * as shared from 'js/shared';
+import * as wf_shared from 'js/work_folder/shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
-import * as wf_shared from 'js/work_folder/shared';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 
 import { action, configure } from "mobx";
@@ -13,13 +13,14 @@ configure({ enforceActions: 'observed' });
 
 //> select folder and fill inputs with theme data
 export const select_folder = action((folder_path, children, nest_level, i_to_insert_folfder_in) => {
+    shared.ob.chosen_folder_path = folder_path;
+
     const folder_info = wf_shared.get_info_about_folder(folder_path);
 
     wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_theme = folder_info.is_theme;
     wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_empty = folder_info.is_empty;
 
-    shared.ob.chosen_folder_path = '/';
-    shared.ob.chosen_folder_path = folder_path;
+    wf_shared.rerender_work_folder();
 
     if (folder_info.is_theme) {
         reset_inputs_data();

@@ -83,8 +83,6 @@ export const expand_or_collapse_folder = action((mode, folder_path, nest_level, 
             wf_shared.mut.opened_folders.splice(wf_shared.mut.opened_folders.indexOf(folder_path), 1); // mark target folder as closed
             wf_shared.ob.folders = r.pipe(set_opened_folders_to_null, close_nulled)(wf_shared.ob.folders);
             //<1 close folders
-
-            watch.unwatch_folder(folder_path);
         }
     }
 });

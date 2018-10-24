@@ -58,7 +58,7 @@ export class Work_folder extends react.Component {
                     <div className='folder_inner'>
                         <span
                             className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
-                            onClick={select_folder.select_folder.bind(null, folder.path, folder.children)}
+                            onClick={select_folder.select_folder.bind(null, folder.path, folder.children, folder.nest_level + 1, index + 1)}
                         >
                             <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
                         </span>

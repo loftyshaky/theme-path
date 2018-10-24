@@ -1,12 +1,19 @@
 'use strict';
 
+import * as shared from 'js/shared';
 
 import { observable, configure } from "mobx";
 import * as r from 'ramda';
-const { readdirSync, statSync } = require('fs-extra');
+const { existsSync, readdirSync, statSync } = require('fs-extra');
 const { join } = require('path');
 
 configure({ enforceActions: 'observed' });
+
+export const rerender_work_folder = () => {
+    const previous_val = shared.ob.chosen_folder_path;;
+    shared.ob.chosen_folder_path = '';
+    shared.ob.chosen_folder_path = previous_val;
+};
 
 export const get_folders = folder_path => {
     const files = readdirSync(folder_path);
@@ -26,9 +33,15 @@ export const get_folders = folder_path => {
 export const get_info_about_folder = (folder_path) => {
     const folder_info = {};
 
-    folder_info.children = get_folders(folder_path);
-    folder_info.is_theme = folder_info.children.some(item => item.name == 'manifest.json');
-    folder_info.is_empty = !folder_info.children.some(item => statSync(item.path).isDirectory());
+    if (!existsSync(folder_path)) {
+        folder_info.is_theme = false;
+        folder_info.is_empty = true
+
+    } else {
+        folder_info.children = get_folders(folder_path);
+        folder_info.is_theme = folder_info.children.some(item => item.name == 'manifest.json');
+        folder_info.is_empty = !folder_info.children.some(item => statSync(item.path).isDirectory());
+    }
 
     return folder_info;
 };
