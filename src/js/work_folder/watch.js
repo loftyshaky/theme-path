@@ -35,18 +35,18 @@ watcher
             }
         }
     }))
-    .on('addDir', action(file_path => {
-        const folder_already_exist = wf_shared.ob.folders.findIndex(folder => folder.path == file_path) > -1;
+    .on('addDir', action(folder_path => {
+        const folder_already_exist = wf_shared.ob.folders.findIndex(folder => folder.path == folder_path) > -1;
 
         if (!folder_already_exist) {
-            const parent_folder_path = path.dirname(file_path);
+            const parent_folder_path = path.dirname(folder_path);
             const parent_folder_is_root = parent_folder_path == store.get('work_folder');
             const parent_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == parent_folder_path);
             const i_to_insert_folfder_in = parent_folder_is_root ? 0 : parent_folder_i + 1;
             const nest_level = parent_folder_is_root ? 0 : wf_shared.ob.folders[parent_folder_i].nest_level + 1;
             const number_of_folders = wf_shared.get_number_of_folders_to_work_with(i_to_insert_folfder_in, nest_level) + 1;
             const parent_folder_info = wf_shared.get_info_about_folder(parent_folder_path);
-            const folder_info = wf_shared.get_info_about_folder(file_path);
+            const folder_info = wf_shared.get_info_about_folder(folder_path);
             const parent_folder_is_opened = wf_shared.mut.opened_folders.indexOf(parent_folder_path) > -1;
 
             if (!parent_folder_is_root) {
@@ -57,8 +57,8 @@ watcher
             if (parent_folder_is_opened) {
                 const new_folder = {
                     key: x.unique_id(),
-                    name: path.basename(file_path),
-                    path: file_path,
+                    name: path.basename(folder_path),
+                    path: folder_path,
                     children: folder_info.children,
                     nest_level: nest_level,
                     is_theme: folder_info.is_theme,
@@ -73,8 +73,8 @@ watcher
             wf_shared.rerender_work_folder();
         }
     }))
-    .on('unlinkDir', action(file_path => {
-        const removed_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == file_path);
+    .on('unlinkDir', action(folder_path => {
+        const removed_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == folder_path);
 
         if (removed_folder_i > -1) {
             const removed_folder_nest_level = wf_shared.ob.folders[removed_folder_i].nest_level;
