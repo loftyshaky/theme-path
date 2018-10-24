@@ -2,16 +2,13 @@
 
 import x from 'x';
 
-import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as sort_folders from 'js/work_folder/sort_folders';
 import * as watch from 'js/work_folder/watch';
-import * as convert_color from 'js/convert_color';
-import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 
-import { observable, action, configure } from "mobx";
+import { action, configure } from "mobx";
 import * as r from 'ramda';
 const Store = require('electron-store');
 

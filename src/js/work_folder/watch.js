@@ -1,7 +1,6 @@
 'use strict';
 
 import x from 'x';
-import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
@@ -37,7 +36,6 @@ watcher
         }
     }))
     .on('addDir', action(file_path => {
-        console.log('File', file_path, 'has been added');
         const folder_already_exist = wf_shared.ob.folders.findIndex(folder => folder.path == file_path) > -1;
 
         if (!folder_already_exist || file_is_manifest) {
@@ -52,7 +50,6 @@ watcher
             const parent_folder_is_opened = wf_shared.mut.opened_folders.indexOf(parent_folder_path) > -1;
 
             if (!parent_folder_is_root) {
-                l(parent_folder_info.is_theme)
                 wf_shared.ob.folders[parent_folder_i].is_theme = parent_folder_info.is_theme;
                 wf_shared.ob.folders[parent_folder_i].is_empty = parent_folder_info.is_empty;
             }
@@ -77,8 +74,6 @@ watcher
         }
     }))
     .on('unlinkDir', action(file_path => {
-        console.log('File', file_path, 'has been removed');
-
         const removed_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == file_path);
 
         if (removed_folder_i > -1) {
