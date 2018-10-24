@@ -38,7 +38,7 @@ watcher
     .on('addDir', action(file_path => {
         const folder_already_exist = wf_shared.ob.folders.findIndex(folder => folder.path == file_path) > -1;
 
-        if (!folder_already_exist || file_is_manifest) {
+        if (!folder_already_exist) {
             const parent_folder_path = path.dirname(file_path);
             const parent_folder_is_root = parent_folder_path == store.get('work_folder');
             const parent_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == parent_folder_path);
