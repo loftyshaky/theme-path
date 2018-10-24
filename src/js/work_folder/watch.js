@@ -1,9 +1,11 @@
 'use strict';
 
 import x from 'x';
+import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
+import { reset_inputs_data } from 'js/inputs_data';
 
 import { action, configure } from "mobx";
 import * as r from 'ramda';
@@ -103,6 +105,12 @@ watcher
                     wf_shared.mut.opened_folders = r.without([parent_of_removed_folder_path], wf_shared.mut.opened_folders);
                 }
                 //< update folder state (theme / not theme /, empty / not empty, opened / closed)
+            }
+
+            if (folder_path == shared.ob.chosen_folder_path) {
+                shared.ob.chosen_folder_path = store.get('work_folder');
+                
+                reset_inputs_data();
             }
         }
     }))
