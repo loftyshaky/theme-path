@@ -1,3 +1,5 @@
+import * as watch from 'js/work_folder/watch';
+
 const Store = require('electron-store');
 const { dialog } = require('electron').remote;
 
