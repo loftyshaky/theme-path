@@ -3,6 +3,7 @@
 import x from 'x';
 import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/shared';
+import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
 
 import { action, configure } from "mobx";
@@ -15,13 +16,30 @@ const store = new Store();
 
 configure({ enforceActions: 'observed' });
 
-const watcher = chokidar.watch(null, { persistent: true, ignoreInitial: true, awaitWriteFinish: true, depth: 0 });
+const watcher = chokidar.watch(null, { persistent: true, ignoreInitial: true, awaitWriteFinish: true, usePolling: true, depth: 0 });
 
 watcher
+    .on('add', action(file_path => {
+        const file_is_manifest = path.basename(file_path) == 'manifest.json';
+
+        if (file_is_manifest) {
+            const parent_folder_path = path.dirname(file_path);
+            const parent_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == parent_folder_path);
+            const folder_to_remove_start_i = parent_folder_i + 1;
+
+            if (wf_shared.ob.folders[folder_to_remove_start_i]) {
+                expand_or_collapse.expand_or_collapse_folder('watcher', parent_folder_path, wf_shared.ob.folders[folder_to_remove_start_i].nest_level, folder_to_remove_start_i);
+
+                wf_shared.ob.folders[parent_folder_i].is_theme = true;
+
+                wf_shared.rerender_work_folder();
+            }
+        }
+    }))
     .on('addDir', action(file_path => {
         console.log('File', file_path, 'has been added');
         const folder_already_exist = wf_shared.ob.folders.findIndex(folder => folder.path == file_path) > -1;
-l
+
         if (!folder_already_exist || file_is_manifest) {
             const parent_folder_path = path.dirname(file_path);
             const parent_folder_is_root = parent_folder_path == store.get('work_folder');
