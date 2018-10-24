@@ -35,7 +35,7 @@ const close_all_folders = action(() => {
 //< on extension load / work_folder folder content change
 
 export const expand_or_collapse_folder = action((mode, folder_path, nest_level, i_to_insert_folfder_in) => {
-    if (mode != 'new_theme' || !select_folder.mut.chosen_folder_info.is_theme) {
+    if (mode != 'new_theme' || !wf_shared.mut.chosen_folder_info.is_theme) {
         const folder_is_opened = wf_shared.mut.opened_folders.indexOf(folder_path) != - 1;
 
         if (mode == 'new_theme') {

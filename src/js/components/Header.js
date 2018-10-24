@@ -10,6 +10,7 @@ import question_svg from 'svg/question';
 import list_svg from 'svg/list';
 
 import * as shared from 'js/shared';
+import * as wf_shared from 'js/work_folder/shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as select_folder from 'js/work_folder/select_folder';
@@ -36,7 +37,7 @@ export class Header extends react.Component {
             new_theme_or_rename.create_new_theme_or_rename_theme_folder(shared.ob.chosen_folder_path, 0, 0, true);
 
         } else {
-            expand_or_collapse.expand_or_collapse_folder('new_theme', shared.ob.chosen_folder_path, select_folder.mut.chosen_folder_info.nest_level, select_folder.mut.chosen_folder_info.i_to_insert_folfder_in);
+            expand_or_collapse.expand_or_collapse_folder('new_theme', shared.ob.chosen_folder_path, wf_shared.mut.chosen_folder_info.nest_level, wf_shared.mut.chosen_folder_info.i_to_insert_folfder_in);
         }
     };
 

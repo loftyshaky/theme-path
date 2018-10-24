@@ -57,6 +57,7 @@ fieldset {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    position: relative;
 }
 
 fieldset:not(.theme_metadata_fieldset) {
@@ -343,6 +344,10 @@ header span, header label, header .open_in_chrome_btn {
 /*< header */
 
 /*> work_folder */
+.work_folder_fieldset_w .legend {
+    color: white!important;
+}
+
 .work_folder_selector, .work_folder_message {
     margin-left: 12px;
 }
@@ -385,6 +390,7 @@ header span, header label, header .open_in_chrome_btn {
     min-width: 500px;
     width: 100%;
     box-sizing: border-box;
+    border-color: white!important;
 }
 
 .work_folder_fieldset > div {
@@ -675,8 +681,8 @@ header span, header label, header .open_in_chrome_btn {
 }
 /*< popup */
 
-/*> protecting screen */
-.protecting_screen {
+/*> protecting screens */
+.protecting_screen, .fieldset_protecting_screen {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -685,7 +691,12 @@ header span, header label, header .open_in_chrome_btn {
     top: 0;
     left: 0;
 }
-/*< protecting screen */
+
+.fieldset_protecting_screen {
+    position: absolute;
+    z-index: 1;
+}
+/*< protecting screens */
 
 /*> ordinary color inputs */
 .colors_and_tints_input_block, .ordinary_color_input {

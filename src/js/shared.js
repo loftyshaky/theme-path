@@ -1,7 +1,7 @@
 
 'use strict';
 
-import { observable, configure } from "mobx";
+import { action, observable, configure } from "mobx";
 const { readFileSync } = require('fs');
 const Store = require('electron-store');
 
@@ -29,6 +29,12 @@ export const get_message_key = val => {
     return val.replace(/__MSG_|__/g, '');
 };
 
+export const deselect_theme = action(() => {
+    ob.chosen_folder_path = store.get('work_folder');
+
+    reset_inputs_data();
+});
+
 //> varibles t
 export const sta = {
     yellow: '#fbff75',
@@ -43,3 +49,5 @@ export const mut = {
     manifest: null
 };
 //< varibles t
+
+const { reset_inputs_data } = require('js/inputs_data');

@@ -15,7 +15,9 @@ export class Tr extends react.Component {
         this.transitions = {
             gen: this.create_fade(this.normal_duration), // general
             // loading_screen: this.create_fade(400),
-            upload_box: this.create_tran(this.normal_duration, 'backgroundColor', '#5d7daf', '#3b6ab5')
+            upload_box: this.create_tran(this.normal_duration, 'backgroundColor', '#5d7daf', '#3b6ab5'),
+            fieldset: this.create_tran(this.normal_duration, 'borderColor', '', '#333333'),
+            legend: this.create_tran(this.normal_duration, 'color', '', '#474747'),
         };
 
         //> observables

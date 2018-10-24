@@ -1,3 +1,4 @@
+import * as shared from 'js/shared';
 import * as watch from 'js/work_folder/watch';
 
 const Store = require('electron-store');
@@ -14,6 +15,8 @@ export const choose_folder = (key, callback) => {
         watch.watch_folder(path[0]);
 
         store.set(key, path[0]);
+
+        shared.deselect_theme();
 
         callback();
 
