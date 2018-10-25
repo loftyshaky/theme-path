@@ -1,9 +1,14 @@
 'use strict';
 
+import * as settings from 'js/settings'
+
 import react from 'react';
 import { decorate, observable, action, configure } from "mobx";
 import { observer } from "mobx-react";
 import * as r from 'ramda';
+const Store = require('electron-store');
+
+const store = new Store();
 
 configure({ enforceActions: 'observed' });
 
@@ -12,17 +17,21 @@ export class Tr extends react.Component {
         super(props);
 
         this.normal_duration = 200;
-        this.transitions = {
-            gen: this.create_fade(this.normal_duration), // general
-            // loading_screen: this.create_fade(400),
-            upload_box: this.create_tran(this.normal_duration, 'backgroundColor', '#5d7daf', '#3b6ab5'),
-            fieldset: this.create_tran(this.normal_duration, 'borderColor', '', '#333333'),
-            legend: this.create_tran(this.normal_duration, 'color', '', '#474747'),
-        };
+        this.theme = store.get('theme');
+
+        this.create_transitions();
 
         //> observables
         this.display_style = {};
         //< observables
+    }
+
+    componentWillUpdate() {
+        if (this.theme != settings.ob.theme) {
+            this.theme = settings.ob.theme;
+
+            this.create_transitions();
+        }
     }
 
     componentWillMount() {
@@ -33,6 +42,15 @@ export class Tr extends react.Component {
         this.hide_component(true);
     }
 
+    create_transitions = () => {
+        this.transitions = {
+            gen: this.create_fade(this.normal_duration), // general
+            // loading_screen: this.create_fade(400),
+            upload_box: this.create_tran(this.normal_duration, 'backgroundColor', '', settings.ob.theme_vals[settings.ob.theme].upload_box),
+            fieldset: this.create_tran(this.normal_duration, 'borderColor', '', settings.ob.theme_vals[settings.ob.theme].fieldset),
+            legend: this.create_tran(this.normal_duration, 'color', '', settings.ob.theme_vals[settings.ob.theme].legend),
+        };
+    }
     //> choose component mode (shown or hidden)
     transit = (name, state) => {
         return state ? this.transitions[name]['active'] : this.transitions[name]['def']
@@ -105,6 +123,8 @@ export class Tr extends react.Component {
     }
 
     render() {
+        settings.ob.theme
+
         return (
             <this.props.tag
                 {...this.props.attr}

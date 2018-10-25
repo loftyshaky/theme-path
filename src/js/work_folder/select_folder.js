@@ -14,7 +14,7 @@ configure({ enforceActions: 'observed' });
 //> select folder and fill inputs with theme data
 export const select_folder = action((folder_path, children, nest_level, i_to_insert_folfder_in) => {
     shared.deselect_theme();
-    
+
     shared.ob.chosen_folder_path = folder_path;
 
     const folder_info = wf_shared.get_info_about_folder(folder_path);

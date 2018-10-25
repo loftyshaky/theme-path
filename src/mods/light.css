@@ -1,0 +1,110 @@
+* {
+    color: #212121;
+}
+
+::-webkit-scrollbar {
+    width: 17px;
+    background-color: #dddddd;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #3892ff;
+    background-clip: content-box;
+    border-left: 5px solid #dddddd;
+	border-right: 5px solid #dddddd;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0bc700;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: #eb36ff;
+}
+
+a, .upload_box_browse_label {
+    color: #3892ff!important;
+}
+
+a:hover, .upload_box_browse_label:hover {
+    color: #0bc700!important;
+}
+
+a:active, .upload_box_browse_label:active {
+    color: #eb36ff!important;
+}
+
+body, .btn, .option, .legend_line, .fieldset_w .cover, .popup {
+    background-color: white;
+}
+
+fieldset, textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title, .upload_box {
+    border-color: #212121;
+}
+
+.selected_folder, .btn:hover, .option:hover, .header_btn, .header_btn label, .current_theme_name, .header_btn:hover, .header_btn:hover label, .current_theme_name:hover {
+    color: white;
+}
+
+.work_folder_fieldset {
+    border-color: #212121!important;
+}
+
+.work_folder_fieldset_w .legend {
+    color: #212121!important;
+}
+
+hr {
+    background-color: #212121!important;
+}
+
+.header_btn:hover {
+    background-color: #212121;
+}
+
+svg {
+    fill: #212121;
+}
+
+.header_btn_icon svg, .header_btn:hover svg {
+    fill: white;
+}
+
+textarea:focus, .select_w:focus, .btn:focus, .popup {
+    box-shadow: 0 0 5px #3892ff;
+    border-color: #3892ff;
+}
+
+.popup {
+    box-shadow: 0 0 15px #3892ff;
+}
+
+.select_w:focus > .select_title {
+    box-shadow: 0px 1px 5px -1px #3892ff;
+    border-bottom-color: #3892ff;
+}
+
+.select_w:focus > .select_title:after {
+    border-color: #3892ff transparent;
+}
+
+.upload_box {
+    background-color: #fbff75;
+}
+
+.btn:hover, .option:hover {
+    background-color: #3892ff!important;
+}
+
+.btn:active {
+    background-color: #eb36ff!important;
+}
+
+.selected_folder {
+    background-color: #3892ff;
+    color: white;
+}
+
+.protecting_screen, .fieldset_protecting_screen {
+    background-color: rgba(255, 255, 255, 0.8);
+}

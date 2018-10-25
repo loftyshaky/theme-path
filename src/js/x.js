@@ -122,11 +122,11 @@ x.move_a_item = (a, from, to) => {
 //> load_css f
 x.load_css = (filename) => {
     let link;
-
+    
     if (!sb(document.head, '.' + filename)) {
         link = document.createElement("link");
         link.className = filename;
-        link.href = browser.extension.getURL(filename + '.css');
+        link.href = filename + '.css';
         link.setAttribute('rel', 'stylesheet');
         link.setAttribute('type', 'text/css');
         x.append(document.head, link);

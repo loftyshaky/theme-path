@@ -430,7 +430,7 @@ header span, header label, header .open_in_chrome_btn {
 }
 
 .folder_icon_theme svg {
-    fill: #4285f4;
+    fill: #3892ff;
 }
 
 .folder_arrow_placeholder {
@@ -485,6 +485,7 @@ header span, header label, header .open_in_chrome_btn {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #5d7daf;
 }
 
 .upload_btn {

@@ -3,7 +3,7 @@
 import x from 'x';
 
 import 'js/set_defaults';
-import * as settings from 'js/settings'
+import * as settings from 'js/settings';
 
 import { All } from 'components/All';
 
@@ -13,7 +13,8 @@ import react_dom from 'react-dom';
 import 'css/index.css';
 
 settings.load_setting();
-
+settings.load_theme();
+     
 //> render options page ui t
 react_dom.render(
   <All />,

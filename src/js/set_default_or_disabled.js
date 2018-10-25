@@ -1,12 +1,16 @@
 'use_strict';
 
 import * as shared from 'js/shared';
+import * as settings from 'js/settings';
 import * as change_val from 'js/change_val'
 import { inputs_data } from 'js/inputs_data';
 
 import { action, configure } from "mobx";
 import * as r from 'ramda';
+const Store = require('electron-store');
 const { existsSync, unlinkSync, writeFileSync } = require('fs');
+
+const store = new Store();
 
 configure({ enforceActions: 'observed' });
 
@@ -32,7 +36,7 @@ export const set_default_or_disabled = action((family, i, special_checkbox) => {
 
             change_val.change_val(family, i, [-1, -1, -1], null);
 
-            inputs_data.obj[family][i].val = shared.sta.black;
+            inputs_data.obj[family][i].val =  settings.ob.theme_vals[store.get('theme')].color_input_disabled;
 
         } else {
             inputs_data.obj[family][i].disable = false;
@@ -44,6 +48,7 @@ export const set_default_or_disabled = action((family, i, special_checkbox) => {
 });
 
 const set_default = (family, i) => {
+    const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;
     const key_to_delete = inputs_data.obj[family][i].name;
 
     delete shared.mut.manifest.theme[family][key_to_delete];
@@ -61,5 +66,5 @@ const set_default = (family, i) => {
 
     writeFileSync(shared.ob.chosen_folder_path + '\\manifest.json', new_json, 'utf8');
 
-    inputs_data.obj[family][i].color ? inputs_data.obj[family][i].color = shared.sta.yellow : inputs_data.obj[family][i].val = shared.sta.yellow
+    inputs_data.obj[family][i].color ? inputs_data.obj[family][i].color = color_input_default : inputs_data.obj[family][i].val = color_input_default
 };

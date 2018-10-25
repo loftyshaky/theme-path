@@ -2,6 +2,7 @@
 
 import * as shared from 'js/shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
+import * as settings from 'js/settings'
 import * as open_and_pack from 'js/open_and_pack';
 import { inputs_data } from 'js/inputs_data';
 import { action, configure } from "mobx";
@@ -45,6 +46,9 @@ export const change_val = action((family, i, val, img_extension, e) => {
             store.set('chrome_process_ids', {});
 
             open_and_pack.update_chrome_user_data_dirs_observable();
+     
+        } else if (key== 'theme') {
+            settings.load_theme();
         }
     }
 
