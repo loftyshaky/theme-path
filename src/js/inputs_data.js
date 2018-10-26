@@ -42,14 +42,16 @@ export let inputs_data = observable({
                 name: 'name',
                 family: 'theme_metadata',
                 type: 'textarea',
-                val: ''
+                val: '',
+                add_help: true
             },
             {
                 key: x.unique_id(),
                 name: 'description',
                 family: 'theme_metadata',
                 type: 'textarea',
-                val: ''
+                val: '',
+                add_help: true
             },
             {
                 key: x.unique_id(),
