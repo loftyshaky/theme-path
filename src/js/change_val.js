@@ -2,6 +2,7 @@
 
 import * as shared from 'js/shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
+import * as select_folder from 'js/work_folder/select_folder';
 import * as settings from 'js/settings'
 import * as open_and_pack from 'js/open_and_pack';
 import { inputs_data } from 'js/inputs_data';
@@ -31,12 +32,15 @@ export const change_val = action((family, i, val, img_extension, e) => {
             const default_locale = shared.find_from_name(inputs_data.obj[family], 'default_locale').val;
 
             if (locale == default_locale) {
-            new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
+                new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
             }
         }
 
     } else if (second_if_keys.indexOf(key) > -1) {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val, 'theme_metadata');
+
+    } else if (key == 'locale') {
+        select_folder.get_theme_name_or_descrption_inner(shared.ob.chosen_folder_path, new_val);
 
     } else if (third_if_keys.indexOf(family) > -1) {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val, family);
@@ -51,8 +55,8 @@ export const change_val = action((family, i, val, img_extension, e) => {
             store.set('chrome_process_ids', {});
 
             open_and_pack.update_chrome_user_data_dirs_observable();
-     
-        } else if (key== 'theme') {
+
+        } else if (key == 'theme') {
             settings.load_theme();
         }
     }

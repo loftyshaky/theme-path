@@ -30,22 +30,7 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
         shared.mut.manifest = shared.parse_json(folder_path + '/manifest.json');
         const default_locale = shared.mut.manifest.default_locale;
 
-        for (const [name, val] of Object.entries(shared.mut.manifest)) {
-            const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
-
-            if (item) {
-                const val_is_localized = shared.val_is_localized(val);
-
-                if (val_is_localized) {
-                    const message_key = shared.get_message_key(val);
-
-                    get_theme_name_or_descrption(name, message_key, default_locale, folder_path);
-
-                } else {
-                    set_val('theme_metadata', name, val);
-                }
-            }
-        }
+        get_theme_name_or_descrption_inner(folder_path, default_locale);
 
         set_val('theme_metadata', 'locale', default_locale);
 
@@ -70,19 +55,39 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
     }
 });
 
-const get_theme_name_or_descrption = (name, message_key, default_locale, folder_path) => {
-    const messages_path = folder_path + '/_locales/' + default_locale + '/messages.json';
+export const get_theme_name_or_descrption_inner = (folder_path, locale) => {
+    for (const [name, val] of Object.entries(shared.mut.manifest)) {
+        const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
+
+        if (item) {
+            const val_is_localized = shared.val_is_localized(val);
+
+            if (val_is_localized) {
+                const message_key = shared.get_message_key(val);
+
+                get_theme_name_or_descrption(name, message_key, locale, folder_path);
+
+            } else {
+                set_val('theme_metadata', name, val);
+            }
+        }
+    }
+};
+
+const get_theme_name_or_descrption = (name, message_key, locale, folder_path) => {
+    const messages_path = folder_path + '/_locales/' + locale + '/messages.json';
     const messages_file_exist = existsSync(messages_path);
+    let val = '';
 
     if (messages_file_exist) {
         const key_exist = shared.parse_json(messages_path)[message_key]; // key ex: description, name
 
         if (key_exist) {
-            const val = shared.parse_json(messages_path)[message_key].message;
-
-            set_val('theme_metadata', name, val);
+            val = shared.parse_json(messages_path)[message_key].message;
         }
     }
+
+    set_val('theme_metadata', name, val);
 };
 
 const set_val = (main_key, key, val) => {

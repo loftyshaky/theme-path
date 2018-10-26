@@ -20,7 +20,11 @@ export class Textarea extends react.Component {
         this.resize_textarea();
     }
 
-    componentDidUpdate() {
+    async componentDidUpdate() {
+        this.resize_textarea();
+
+        await x.delay(0);
+
         this.resize_textarea();
     }
 
