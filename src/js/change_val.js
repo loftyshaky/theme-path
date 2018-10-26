@@ -27,7 +27,12 @@ export const change_val = action((family, i, val, img_extension, e) => {
         set_name_or_description_prop(key, e.target.value);
 
         if (key === 'name') {
+            const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
+            const default_locale = shared.find_from_name(inputs_data.obj[family], 'default_locale').val;
+
+            if (locale == default_locale) {
             new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
+            }
         }
 
     } else if (second_if_keys.indexOf(key) > -1) {
