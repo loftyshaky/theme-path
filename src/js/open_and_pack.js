@@ -6,8 +6,7 @@ import { observable, action, configure } from "mobx";
 
 const kill = require('tree-kill');
 const zipLocal = require('zip-local');
-const lockFile = require('lockfile')
-const { readdirSync } = require('fs');
+const { existsSync, unlinkSync, readdirSync } = require('fs');
 const { exec } = require('child_process');
 const glob = require('glob');
 const Store = require('electron-store');
@@ -53,11 +52,15 @@ export const pack = type => {
         const package_name = shared.ob.chosen_folder_path.substring(shared.ob.chosen_folder_path.lastIndexOf("\\") + 1);
         const pak_path = shared.ob.chosen_folder_path + '\\' + 'Cached Theme.pak';
 
-        lockFile.unlock(pak_path, er => {
-            if (er) {
-                x.error(6);
+        try {
+            if (existsSync(pak_path)) {
+                unlinkSync(pak_path);
             }
-        });
+
+        } catch (er) {
+            x.error(6);
+            throw er;
+        }
 
         if (type == 'zip') {
             zipLocal.zip(shared.ob.chosen_folder_path, (er, zip) => {
@@ -74,11 +77,15 @@ export const pack = type => {
             const pem_files = glob.sync(directory_to_save_package_in + '\\' + '*.pem');
 
             for (const pem_file of pem_files) {
-                lockFile.unlock(pem_file, er => {
-                    if (er) {
-                        x.error(7);
+                try {
+                    if (existsSync(pem_file)) {
+                        unlinkSync(pem_file);
                     }
-                });
+
+                } catch (er) {
+                    x.error(7);
+                    throw er;
+                }
             }
             //< remove pems
 
