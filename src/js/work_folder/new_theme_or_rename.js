@@ -56,7 +56,15 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
                 } else if (mode == 'renaming_folder') {
                     const new_folder_path = path.join(parent_of_renamed_folder_path, folder_name_final);
 
-                    renameSync(source_folder_path, new_folder_path);
+                    try {
+                        if (existsSync(source_folder_path)) {
+                            renameSync(source_folder_path, new_folder_path);
+                        }
+
+                    } catch (er) {
+                        x.error(9, 'file_is_locked_alert');
+                        throw er;
+                    }
 
                     shared.ob.chosen_folder_path = new_folder_path;
 
@@ -73,7 +81,7 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
             break;
 
         } catch (er) {
-            console.error(er);
+            throw er;
         }
     }
 });

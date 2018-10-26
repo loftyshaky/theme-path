@@ -58,7 +58,7 @@ export const pack = type => {
             }
 
         } catch (er) {
-            x.error(6);
+            x.error(6, 'file_is_locked_alert');
             throw er;
         }
 
@@ -83,7 +83,7 @@ export const pack = type => {
                     }
 
                 } catch (er) {
-                    x.error(7);
+                    x.error(7, 'file_is_locked_alert');
                     throw er;
                 }
             }
