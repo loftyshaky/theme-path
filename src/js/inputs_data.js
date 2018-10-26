@@ -43,7 +43,9 @@ export let inputs_data = observable({
                 family: 'theme_metadata',
                 type: 'textarea',
                 val: '',
-                add_help: true
+                add_help: true,
+                counter: true,
+                char_limit: 45
             },
             {
                 key: x.unique_id(),
@@ -51,7 +53,9 @@ export let inputs_data = observable({
                 family: 'theme_metadata',
                 type: 'textarea',
                 val: '',
-                add_help: true
+                add_help: true,
+                counter: true,
+                char_limit: 132
             },
             {
                 key: x.unique_id(),

@@ -108,3 +108,13 @@ textarea:focus, .select_w:focus, .btn:focus, .popup {
 .protecting_screen, .fieldset_protecting_screen {
     background-color: rgba(255, 255, 255, 0.8);
 }
+
+/*> mods */
+.char_limit_exceeded_textarea {
+    background-color: #ff8e8e;
+}
+
+.char_limit_exceeded_counter {
+    color: #e40000;
+}
+/*< mods */

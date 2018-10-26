@@ -11,30 +11,51 @@ import { Color } from 'components/Color';
 
 import react from 'react';
 
-export const Input_block = props => {
-    const hr = props.hr ? <Hr name={props.name} /> : null;
+export class Input_block extends react.Component {
+    constructor(props) {
+        super(props);
 
-    return (
-        <react.Fragment>
-            {hr}
-            <div className={props.name == 'colors' || props.name == 'tints' ? 'colors_and_tints_input_block' : null}>
-                {
-                    inputs_data.obj[props.name].map((item, i) => {
-                        const Component = sta.components[item.type];
-                        const color_input_type = item.type == 'color' ? 'color' : null;
+        this.childs = [];
+    }
 
-                        return (
-                            <Component
-                                {...item}
-                                i={i}
-                                color_input_type={color_input_type}
-                                add_help={item.add_help} />
-                        );
-                    })
-                }
-            </div>
-        </react.Fragment>
-    )
+    //> call count_char method from </Textarea> instance when you change default locale in </Select>
+    count_char = () => {
+        for (const child of this.childs) {
+            if (child.count_char) {
+                child.count_char();
+            }
+        }
+    }
+    //< call count_char method from </Textarea> instance when you change default locale in </Select>
+
+    render() {
+        const hr = this.props.hr ? <Hr name={this.props.name} /> : null;
+
+        return (
+            <react.Fragment>
+                {hr}
+                <div className={this.props.name == 'colors' || this.props.name == 'tints' ? 'colors_and_tints_input_block' : null}>
+                    {
+                        inputs_data.obj[this.props.name].map((item, i) => {
+                            const Component = sta.components[item.type];
+                            const color_input_type = item.type == 'color' ? 'color' : null;
+
+                            return (
+                                <Component
+                                    {...item}
+                                    i={i}
+                                    color_input_type={color_input_type}
+                                    add_help={item.add_help}
+                                    ref={instance => { this.childs.push(this.child = instance); }}
+                                    count_char={this.count_char}
+                                />
+                            );
+                        })
+                    }
+                </div>
+            </react.Fragment>
+        );
+    }
 }
 
 //> varibles t

@@ -6,6 +6,7 @@ import * as select_folder from 'js/work_folder/select_folder';
 import * as settings from 'js/settings'
 import * as open_and_pack from 'js/open_and_pack';
 import { inputs_data } from 'js/inputs_data';
+
 import { action, configure } from "mobx";
 const { existsSync, mkdirSync, writeFileSync } = require('fs');
 const Store = require('electron-store');

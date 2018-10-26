@@ -24,6 +24,12 @@ export class Select extends react.Component {
         this.select = react.createRef();
     }
 
+    componentDidUpdate() {
+        if (this.props.name == 'default_locale') {
+            this.props.count_char();
+        }
+    }
+
     //> create one option element
     create_option = option => {
         return <li key={option.key} className='option' data-val={option.val} onClick={this.change_select_val}>{option.text}</li>

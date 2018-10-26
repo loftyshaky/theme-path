@@ -264,6 +264,15 @@ textarea, .select_w, .checkbox_checkmark_w {
     border-radius: 0!important;
 }
 
+.help, .counter {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.counter {
+    float: right;
+}
+
 svg {
     fill: white;
     display: block;
@@ -447,12 +456,12 @@ header span, header label, header .open_in_chrome_btn {
 /*< work_folder */
 
 /*> help */
-.help_link, .help_message {
-    font-size: 14px;
+.help {
+    display: inline-block;
 }
 
-.help_link {
-    margin-top: 5px;
+.help_link, .help_message {
+    font-size: 14px;
 }
 
 .select_input .help_link {
@@ -756,6 +765,14 @@ a:active, .upload_box_browse_label:active, .btn:active {
 .selected_folder {
     background-color: #fbff75;
     color: #212121;
+}
+
+.char_limit_exceeded_textarea {
+    background-color: #943737;
+}
+
+.char_limit_exceeded_counter {
+    color: #ff7878;
 }
 /*< mods */
 
