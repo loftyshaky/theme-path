@@ -168,5 +168,6 @@
   "error_alert": "An error occured. Error code: ",
   "invalid_image_type_alert": "Invalid image type.",
   "theme_folder_is_not_chosen_alert": "Choose folder with a theme.",
-  "chosen_folder_is_not_theme_alert": "Chosen folder is not a theme."
+  "chosen_folder_is_not_theme_alert": "Chosen folder is not a theme.",
+  "file_is_locked_alert": "File is locked."
 }
