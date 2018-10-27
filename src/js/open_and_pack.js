@@ -33,12 +33,12 @@ const run = callback => {
 };
 
 export const open_in_chrome = path => {
-    run(async () => {
-        kill(mut.chrome_process_ids[path]);
+    run(() => {
+        kill(mut.chrome_process_ids[path], 'SIGKILL', async er => {
+            const child_process = await exec('chrome.exe --start-maximized --user-data-dir="' + path + '" --load-extension="' + shared.ob.chosen_folder_path + '"', { cwd: store.get('chrome_dir') });
 
-        const child_process = await exec('chrome.exe --start-maximized --user-data-dir="' + path + '" --load-extension="' + shared.ob.chosen_folder_path + '"', { cwd: store.get('chrome_dir') });
-
-        mut.chrome_process_ids[path] = child_process.pid;
+            mut.chrome_process_ids[path] = child_process.pid;
+        });
     });
 };
 
