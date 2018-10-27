@@ -35,9 +35,16 @@ export const deselect_theme = action(() => {
     reset_inputs_data();
 });
 
+export const set_default_locale_theme_name = (name, val) => {
+    if (name == 'name') {
+        ob.default_locale_theme_name = val;
+    }
+};
+
 //> varibles t
 export const ob = observable({
-    chosen_folder_path: store.get('work_folder')
+    chosen_folder_path: store.get('work_folder'),
+    default_locale_theme_name: null,
 });
 
 export const mut = {

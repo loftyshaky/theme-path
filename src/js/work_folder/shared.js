@@ -59,12 +59,12 @@ export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
 export const ob = observable({
     folders: [],
     get fieldset_protecting_screen_is_visible() {
-         return shared.ob.chosen_folder_path == store.get('work_folder') || !mut.chosen_folder_info.is_theme;
+        return shared.ob.chosen_folder_path == store.get('work_folder') || !mut.chosen_folder_info.is_theme;
     }
 });
 
 export const mut = {
     opened_folders: [],
-    chosen_folder_info: {}
+    chosen_folder_info: {},
 };
 //< varibles t

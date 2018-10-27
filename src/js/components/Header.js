@@ -42,7 +42,6 @@ export class Header extends react.Component {
     };
 
     render() {
-        const theme_name = shared.find_from_name(inputs_data.obj.theme_metadata, 'name');
         const chrome_user_data_dirs = open_and_pack.ob.chrome_user_data_dirs.split(',');
         const chrome_user_data_dirs_final = chrome_user_data_dirs.length == 1 && chrome_user_data_dirs[0] == '' ? [] : chrome_user_data_dirs;
 
@@ -60,7 +59,7 @@ export class Header extends react.Component {
                         </label>
                     </button>
                     <span className='current_theme_name'>
-                        {theme_name.val}
+                        {shared.ob.default_locale_theme_name}
                     </span>
                 </span>
                 <span className='header_section header_right'>

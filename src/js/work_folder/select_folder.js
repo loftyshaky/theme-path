@@ -30,7 +30,7 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
         shared.mut.manifest = shared.parse_json(folder_path + '/manifest.json');
         const default_locale = shared.mut.manifest.default_locale;
 
-        get_theme_name_or_descrption_inner(folder_path, default_locale);
+        get_theme_name_or_descrption_inner(folder_path, default_locale, default_locale);
 
         set_val('theme_metadata', 'locale', default_locale);
 
@@ -55,7 +55,7 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
     }
 });
 
-export const get_theme_name_or_descrption_inner = (folder_path, locale) => {
+export const get_theme_name_or_descrption_inner = (folder_path, locale, default_locale) => {
     for (const [name, val] of Object.entries(shared.mut.manifest)) {
         const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
 
@@ -65,16 +65,20 @@ export const get_theme_name_or_descrption_inner = (folder_path, locale) => {
             if (val_is_localized) {
                 const message_key = shared.get_message_key(val);
 
-                get_theme_name_or_descrption(name, message_key, locale, folder_path);
+                get_theme_name_or_descrption(name, message_key, locale, default_locale, folder_path);
 
             } else {
                 set_val('theme_metadata', name, val);
+
+                if (locale == default_locale) {
+                    shared.set_default_locale_theme_name(name, val);
+                }
             }
         }
     }
 };
 
-const get_theme_name_or_descrption = (name, message_key, locale, folder_path) => {
+const get_theme_name_or_descrption = (name, message_key, locale, default_locale, folder_path) => {
     const messages_path = folder_path + '/_locales/' + locale + '/messages.json';
     const messages_file_exist = existsSync(messages_path);
     let val = '';
@@ -88,6 +92,10 @@ const get_theme_name_or_descrption = (name, message_key, locale, folder_path) =>
     }
 
     set_val('theme_metadata', name, val);
+
+    if (locale == default_locale) {
+        shared.set_default_locale_theme_name(name, val);
+    }
 };
 
 const set_val = (main_key, key, val) => {
@@ -97,4 +105,4 @@ const set_val = (main_key, key, val) => {
         item.val = key == 'ntp_logo_alternate' ? val.toString() : val;
     }
 };
-//< select folder and fill inputs with theme data
+//< select folder and fill inputs with theme data;

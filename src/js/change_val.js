@@ -19,6 +19,7 @@ export const change_val = action((family, i, val, img_extension, e) => {
     const new_val = val == 'is_not_select' ? e.target.value : val;
     const key = inputs_data.obj[family][i].name;
     const manifest_path = shared.ob.chosen_folder_path + '\\manifest.json';
+    const default_locale = shared.find_from_name(inputs_data.obj[family], 'default_locale').val;
     const first_if_keys = ['name', 'description'];
     const second_if_keys = ['version', 'default_locale'];
     const third_if_keys = ['colors', 'tints', 'properties'];
@@ -30,10 +31,11 @@ export const change_val = action((family, i, val, img_extension, e) => {
 
         if (key === 'name') {
             const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
-            const default_locale = shared.find_from_name(inputs_data.obj[family], 'default_locale').val;
 
             if (locale == default_locale) {
                 new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
+
+                shared.set_default_locale_theme_name(key, new_val);
             }
         }
 
@@ -41,7 +43,7 @@ export const change_val = action((family, i, val, img_extension, e) => {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val, 'theme_metadata');
 
     } else if (key == 'locale') {
-        select_folder.get_theme_name_or_descrption_inner(shared.ob.chosen_folder_path, new_val);
+        select_folder.get_theme_name_or_descrption_inner(shared.ob.chosen_folder_path, new_val, default_locale);
 
     } else if (third_if_keys.indexOf(family) > -1) {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val, family);
