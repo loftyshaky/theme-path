@@ -56,7 +56,7 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
 
             //>1 close folders
             const set_opened_folders_to_null = x.map_i((item, i) => {
-                const folder_is_eligible_for_deletion = i >= folder_to_remove_start_i && i <= folder_to_close_end_i && wf_shared.ob.folders[i].nest_level == nest_level;
+                const folder_is_eligible_for_deletion = i >= folder_to_remove_start_i && i <= folder_to_close_end_i && wf_shared.ob.folders[i].nest_level >= nest_level;
 
                 if (folder_is_eligible_for_deletion) {
                     //>2 mark target's child folders as closed
