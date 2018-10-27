@@ -180,6 +180,7 @@ textarea {
     resize: none;
     overflow-y: auto;
     max-height: 206px;
+    display: block;
 }
 
 textarea:focus, .select_w:focus, .btn:focus, .popup {
@@ -464,8 +465,8 @@ header span, header label, header .open_in_chrome_btn {
     font-size: 14px;
 }
 
-.select_input .help_link {
-    margin-top: 36px;
+.select_input .help {
+    margin-top: 33px;
 }
 
 .help_message {

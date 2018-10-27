@@ -90,9 +90,7 @@ export class Textarea extends react.Component {
                     onInput={change_val.change_val.bind(null, this.props.family, this.props.i, 'is_not_select', null)}
                     onChange={() => null}
                 ></textarea>
-                <span className='help'>
-                    <Help {...this.props} />
-                </span>
+                <Help {...this.props} />
                 {counter}
             </div>
         );
