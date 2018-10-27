@@ -31,6 +31,8 @@
   "locale_label_text": "Язык",
   "default_locale_label_text": "Язык по умолчанию",
 
+  "icon_label_text": "Иконка",
+
   "theme_ntp_background_label_text": "Фоновая картинка",
   "theme_toolbar_label_text": "Панель инструментов",
   "theme_frame_label_text": "Рама",

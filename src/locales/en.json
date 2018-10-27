@@ -30,6 +30,8 @@
 
   "locale_label_text": "Locale",
   "default_locale_label_text": "Default locale",
+
+  "icon_label_text": "Icon",
   
   "theme_ntp_background_label_text": "Background image",
   "theme_toolbar_label_text": "Toolbar",

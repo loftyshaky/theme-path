@@ -83,12 +83,14 @@ export const dehighlight_upload_box_on_drag_leave = action((family, i) => {
 //> variables
 const sta = {
     width: {
+        "icon": 128,
         "theme_ntp_background": screen.width,
         "theme_frame_overlay": 1100,
         "theme_frame_overlay_inactive": 1100,
         "theme_ntp_attribution": 100
     },
     height: {
+        "icon": 128,
         "theme_ntp_background": screen.height,
         "theme_ntp_attribution": 50
     }

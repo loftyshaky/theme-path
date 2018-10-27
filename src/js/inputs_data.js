@@ -31,6 +31,19 @@ export let inputs_data = observable({
             },
             {
                 key: x.unique_id(),
+                name: 'icon',
+                family: 'theme_metadata',
+                type: 'img_selector',
+                val: '',
+                highlight_upload_box: false,
+                color: color_input_default,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
+                default: true,
+                add_help: true
+            },
+            {
+                key: x.unique_id(),
                 name: 'locale',
                 family: 'theme_metadata',
                 type: 'select',
@@ -64,7 +77,7 @@ export let inputs_data = observable({
                 type: 'select',
                 val: '',
                 add_help: true
-            },
+            }
         ],
         images: [
             {
@@ -217,9 +230,6 @@ export let inputs_data = observable({
                 type: 'img_selector',
                 val: '',
                 highlight_upload_box: false,
-                color: color_input_default,
-                color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
                 default: true,
                 add_help: true
             }

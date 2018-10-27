@@ -7,6 +7,7 @@ import * as convert_color from 'js/convert_color';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 
 import { action, configure } from "mobx";
+var looksSame = require('looks-same');
 const { existsSync } = require('fs-extra');
 
 configure({ enforceActions: 'observed' });
@@ -41,6 +42,27 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
                 }
             }
         }
+
+        //> set icon default checkbox state 
+        if (shared.mut.manifest.icons && shared.mut.manifest.icons['128']) {
+            const icon_paths = shared.get_icon_paths();
+
+            if (existsSync(icon_paths.target)) {
+                looksSame(icon_paths.source, icon_paths.target, function (er, using_default_icon) {
+                    if (!using_default_icon) {
+                        uncheck_icon_input_default_checkbox();
+                    }
+
+                    if (er) {
+                        console.error(er);
+                    }
+                });
+
+            } else {
+                uncheck_icon_input_default_checkbox();
+            }
+        }
+        //< set icon default checkbox state 
 
         expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folfder_in);
     }
@@ -105,4 +127,10 @@ const set_val = (main_key, key, val) => {
         item.val = key == 'ntp_logo_alternate' ? val.toString() : val;
     }
 };
+
+const uncheck_icon_input_default_checkbox = action(() => {
+    const icon_item = shared.find_from_name(inputs_data.obj.theme_metadata, 'icon');
+
+    icon_item.default = false;
+});
 //< select folder and fill inputs with theme data;

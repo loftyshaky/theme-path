@@ -72,7 +72,7 @@ export const set_color_color_pickier_position = action((family, i, val) => {
 export const set_color_input_vizualization_color = action((family, i, color) => {
     const color_final = color.hex || color;
 
-    if (family == 'images') {
+    if (family == 'images' || inputs_data.obj[family][i].name == 'icon') {
         inputs_data.obj[family][i].color = color_final;
 
     } else {
@@ -83,10 +83,10 @@ export const set_color_input_vizualization_color = action((family, i, color) => 
 //> accept color when clicking OK t
 export const accept_color = action((family, i) => {
     const hex = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
+    const name = inputs_data.obj[family][i].name;
     let color;
 
-    if (family == 'images') {
-        const name = inputs_data.obj[family][i].name;
+    if (family == 'images' || name == 'icon') {
         color = hex;
 
         imgs.create_solid_color_image(name, color);

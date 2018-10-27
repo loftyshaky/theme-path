@@ -2,7 +2,8 @@
 'use strict';
 
 import { action, observable, configure } from "mobx";
-const { readFileSync } = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
+const { resolve } = require('path');
 const Store = require('electron-store');
 
 const store = new Store();
@@ -38,6 +39,32 @@ export const deselect_theme = action(() => {
 export const set_default_locale_theme_name = (name, val) => {
     if (name == 'name') {
         ob.default_locale_theme_name = val;
+    }
+};
+
+export const construct_icons_obj = json => {
+    if (!json.icons) {
+        json.icons = {};
+    }
+
+    if (!json['128']) {
+        json['128'] = {};
+    }
+};
+
+export const write_to_json = (json, json_path) => {
+    const new_json = JSON.stringify(json);
+
+    writeFileSync(json_path, new_json, 'utf8');
+};
+
+export const get_icon_paths = () => {
+    const default_icon_soure_path = resolve('resources', 'app', 'dist', 'new_theme', 'icon.png');
+    const default_icon_target_path = resolve(ob.chosen_folder_path, 'icon.png');
+
+    return {
+        source: default_icon_soure_path,
+        target: default_icon_target_path
     }
 };
 

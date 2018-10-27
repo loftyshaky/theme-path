@@ -48,7 +48,7 @@ export const change_val = action((family, i, val, img_extension, e) => {
     } else if (third_if_keys.indexOf(family) > -1) {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val, family);
 
-    } else if (family == 'images') {
+    } else if (family == 'images' || key == 'icon') {
         write_to_json(shared.mut.manifest, manifest_path, key, new_val + '.' + (img_extension ? img_extension : 'png'), family);
 
     } else if (family == 'settings') {
@@ -64,7 +64,7 @@ export const change_val = action((family, i, val, img_extension, e) => {
         }
     }
 
-    if (family == 'images' || third_if_keys.indexOf(family) > -1) {
+    if (family == 'images' || third_if_keys.indexOf(family) > -1 || key == 'icon') {
         inputs_data.obj[family][i].default = false;
     }
 
@@ -105,13 +105,20 @@ const set_name_or_description_prop = (key, new_val) => {
 
 const write_to_json = (json, json_path, key, new_val, family) => {
     if (family == 'theme_metadata') {
-        const writing_at_messages = json_path.indexOf('\\messages.json') > -1;
+        if (key !== 'icon') {
+            const writing_at_messages = json_path.indexOf('\\messages.json') > -1;
 
-        if (writing_at_messages) {
-            json[key] = { message: 'message' }; // ex: { "name": {"message": "Theme name" } }
+            if (writing_at_messages) {
+                json[key] = { message: 'message' }; // ex: { "name": {"message": "Theme name" } }
+            }
+
+            writing_at_messages ? json[key].message = new_val : json[key] = new_val; // write to messages.json or manifest.json
+
+        } else if (key == 'icon') {
+            shared.construct_icons_obj(json);
+
+            json.icons['128'] = new_val;
         }
-
-        writing_at_messages ? json[key].message = new_val : json[key] = new_val; // write to messages.json or manifest.json
 
     } else {
         if (!json.theme) {
@@ -125,9 +132,7 @@ const write_to_json = (json, json_path, key, new_val, family) => {
         json.theme[family][key] = key == 'ntp_logo_alternate' ? +new_val : new_val;
     }
 
-    const new_json = JSON.stringify(json);
-
-    writeFileSync(json_path, new_json, 'utf8');
+    shared.write_to_json(json, json_path);
 };
 
 const check_if_localisation_folders_exists_create_them_if_dont = (locale) => {

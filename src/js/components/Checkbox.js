@@ -21,7 +21,7 @@ export let Checkbox = props => {
                     type='checkbox'
                     id={checkbox_id}
                     checked={inputs_data.obj[props.family][props.i][props.special_checkbox]}
-                    onChange={set_default_or_disabled.set_default_or_disabled.bind(null, props.family, props.i, props.special_checkbox)}
+                    onChange={props.name != 'icon' ? set_default_or_disabled.set_default_or_disabled.bind(null, props.family, props.i, props.special_checkbox) : set_default_or_disabled.set_default_icon.bind(null, props.family, props.i)}
                 />
                 <span className='checkbox_checkmark_w'>
                     <Svg src={checkmark_svg} />

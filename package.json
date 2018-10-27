@@ -35,6 +35,7 @@
     "hex-to-rgb": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
     "jimp": "^0.5.4",
+    "looks-same": "^4.0.0",
     "mini-css-extract-plugin": "^0.4.2",
     "mobx": "^5.5.0",
     "mobx-react": "^5.2.8",

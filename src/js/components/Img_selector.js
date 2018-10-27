@@ -43,6 +43,11 @@ export class Img_selector extends react.Component {
     }
 
     render() {
+        const also_use_img_as = this.props.name != 'icon' ?
+            <span className='also_use_img_as' data-title='also_use_img_as_title'>
+                <Svg src={library_add_svg} />
+            </span>
+            : null
         return (
             <div className='input'>
                 <label
@@ -77,14 +82,13 @@ export class Img_selector extends react.Component {
                             ></label>
                         </span>
                     </Tr>
+
                     <Color
                         {...this.props}
                         color_input_type='img'
                         add_help={false}
                     />
-                    <span className='also_use_img_as' data-title='also_use_img_as_title'>
-                        <Svg src={library_add_svg} />
-                    </span>
+                  {also_use_img_as}
                     <Checkbox
                         {...this.props}
                         special_checkbox='default'
