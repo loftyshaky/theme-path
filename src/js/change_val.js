@@ -19,7 +19,7 @@ export const change_val = action((family, i, val, img_extension, e) => {
     const new_val = val == 'is_not_select' ? e.target.value : val;
     const key = inputs_data.obj[family][i].name;
     const manifest_path = shared.ob.chosen_folder_path + '\\manifest.json';
-    const default_locale = shared.find_from_name(inputs_data.obj[family], 'default_locale').val;
+    const default_locale = family == 'theme_metadata' ? shared.find_from_name(inputs_data.obj[family], 'default_locale').val : null;
     const first_if_keys = ['name', 'description'];
     const second_if_keys = ['version', 'default_locale'];
     const third_if_keys = ['colors', 'tints', 'properties'];
