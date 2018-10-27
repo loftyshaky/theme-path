@@ -29,7 +29,7 @@ const Link = props => {
         <a
             className={x.cls(['bottom_link', props.name + '_link'])}
             href={props.href}
-            target="_blank"
+            target='_blank'
             data-text={props.name + '_link_text'}
             data-href={!props.href ? props.name + '_link_href' : null}
         ></a>

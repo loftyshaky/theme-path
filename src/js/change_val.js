@@ -7,7 +7,8 @@ import * as settings from 'js/settings'
 import * as open_and_pack from 'js/open_and_pack';
 import { inputs_data } from 'js/inputs_data';
 
-import { action, configure } from "mobx";
+import { action, configure } from 'mobx';
+const { join, sep } = require('path');
 const { existsSync, mkdirSync, writeFileSync } = require('fs');
 const Store = require('electron-store');
 
@@ -18,7 +19,7 @@ configure({ enforceActions: 'observed' });
 export const change_val = (family, i, val, img_extension, e) => {
     const new_val = val == 'is_not_select' ? e.target.value : val;
     const name = inputs_data.obj[family][i].name;
-    const manifest_path = shared.ob.chosen_folder_path + '\\manifest.json';
+    const manifest_path = join(shared.ob.chosen_folder_path, 'manifest.json');
     const default_locale = family == 'theme_metadata' ? shared.find_from_name(inputs_data.obj[family], 'default_locale').val : null;
     const first_if_names = ['name', 'description'];
     const second_if_names = ['version', 'default_locale'];
@@ -81,7 +82,7 @@ const set_name_or_description_prop = (name, new_val) => {
     const val = shared.mut.manifest[name];
     const val_is_localized = shared.val_is_localized(val);
     const locale = shared.find_from_name(inputs_data.obj.theme_metadata, 'locale').val;
-    const messages_path = shared.ob.chosen_folder_path + '\\_locales\\' + locale + '\\messages.json';
+    const messages_path = join(shared.ob.chosen_folder_path, '_locales', locale, 'messages.json');
 
     check_if_localisation_folders_exists_create_them_if_dont(locale);
 
@@ -95,7 +96,7 @@ const set_name_or_description_prop = (name, new_val) => {
 
     } else {
         create_messages_file(messages_path);
-        write_to_json(shared.mut.manifest, shared.ob.chosen_folder_path + '\\manifest.json', name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
+        write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
         const messages = shared.parse_json(messages_path);
 
@@ -106,7 +107,7 @@ const set_name_or_description_prop = (name, new_val) => {
 const write_to_json = (json, json_path, name, new_val, family) => {
     if (family == 'theme_metadata') {
         if (name !== 'icon') {
-            const writing_at_messages = json_path.indexOf('\\messages.json') > -1;
+            const writing_at_messages = json_path.indexOf(sep + 'messages.json') > -1;
 
             if (writing_at_messages) {
                 json[name] = { message: 'message' }; // ex: { "name": {"message": "Theme name" } }
@@ -136,8 +137,8 @@ const write_to_json = (json, json_path, name, new_val, family) => {
 };
 
 const check_if_localisation_folders_exists_create_them_if_dont = (locale) => {
-    check_if_folder_exists_create_it_if_dont(shared.ob.chosen_folder_path + '\\_locales');
-    check_if_folder_exists_create_it_if_dont(shared.ob.chosen_folder_path + '\\_locales\\' + locale);
+    check_if_folder_exists_create_it_if_dont(join(shared.ob.chosen_folder_path, '_locales'));
+    check_if_folder_exists_create_it_if_dont(join(shared.ob.chosen_folder_path, '_locales', locale));
 };
 
 const check_if_folder_exists_create_it_if_dont = (folder_path) => {

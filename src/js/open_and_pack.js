@@ -2,10 +2,11 @@
 
 import x from 'x';
 import * as shared from 'js/shared';
-import { observable, action, configure } from "mobx";
+import { observable, action, configure } from 'mobx';
 
 const kill = require('tree-kill');
 const zipLocal = require('zip-local');
+const { join, sep } = require('path');
 const { existsSync, unlinkSync, readdirSync } = require('fs');
 const { exec } = require('child_process');
 const glob = require('glob');
@@ -48,9 +49,9 @@ export const update_chrome_user_data_dirs_observable = action(() => {
 
 export const pack = type => {
     run(async () => {
-        const directory_to_save_package_in = shared.ob.chosen_folder_path.substring(0, shared.ob.chosen_folder_path.lastIndexOf('\\'));
-        const package_name = shared.ob.chosen_folder_path.substring(shared.ob.chosen_folder_path.lastIndexOf("\\") + 1);
-        const pak_path = shared.ob.chosen_folder_path + '\\' + 'Cached Theme.pak';
+        const directory_to_save_package_in = shared.ob.chosen_folder_path.substring(0, shared.ob.chosen_folder_path.lastIndexOf(sep));
+        const package_name = shared.ob.chosen_folder_path.substring(shared.ob.chosen_folder_path.lastIndexOf(sep) + 1);
+        const pak_path = join(shared.ob.chosen_folder_path, 'Cached Theme.pak');
 
         try {
             if (existsSync(pak_path)) {
@@ -65,7 +66,7 @@ export const pack = type => {
         if (type == 'zip') {
             zipLocal.zip(shared.ob.chosen_folder_path, (er, zip) => {
                 if (!er) {
-                    zip.compress().save(directory_to_save_package_in + '\\' + package_name + '.zip');
+                    zip.compress().save(join(directory_to_save_package_in, package_name + '.zip'));
 
                 } else {
                     x.error(5);
@@ -74,7 +75,7 @@ export const pack = type => {
 
         } if (type == 'crx') {
             //> remove pems
-            const pem_files = glob.sync(directory_to_save_package_in + '\\' + '*.pem');
+            const pem_files = glob.sync(directory_to_save_package_in + sep + '*.pem');
 
             for (const pem_file of pem_files) {
                 try {

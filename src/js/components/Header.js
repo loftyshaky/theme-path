@@ -17,7 +17,7 @@ import * as open_and_pack from 'js/open_and_pack';
 import * as toogle_popup from 'js/toogle_popup';
 
 import react from 'react';
-import { observer } from "mobx-react";
+import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 const Store = require('electron-store');
 

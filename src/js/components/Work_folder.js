@@ -17,9 +17,9 @@ import arrow_right_svg from 'svg/arrow_right';
 import arrow_down_svg from 'svg/arrow_down';
 
 import react from 'react';
-import { observer } from "mobx-react";
+import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
-import { List, AutoSizer } from "react-virtualized";
+import { List, AutoSizer } from 'react-virtualized';
 const Store = require('electron-store');
 
 const store = new Store();
@@ -85,7 +85,7 @@ export class Work_folder extends react.Component {
         const work_folder_is_empty_message = wf_shared.ob.folders.length == 0 ? <div className='work_folder_message'>{x.message(work_folder_path == '' ? 'work_folder_is_not_specified_message_text' : 'work_folder_is_empty_message_text')}</div> : null;
 
         return (
-            <Fieldset name="work_folder">
+            <Fieldset name='work_folder'>
                 <div className={x.cls(['work_folder_selector', component_methods.ob.show_work_folder_selector ? '' : 'none'])}>
                     <button
                         className='btn choose_work_folder_btn'

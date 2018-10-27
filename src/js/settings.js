@@ -2,7 +2,7 @@
 
 import x from 'x';
 
-import { observable, action, configure } from "mobx";
+import { observable, action, configure } from 'mobx';
 const Store = require('electron-store');
 
 const store = new Store();

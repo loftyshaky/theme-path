@@ -3,7 +3,7 @@ import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
 import { inputs_data } from 'js/inputs_data';
 
-import { action, configure } from "mobx";
+import { action, configure } from 'mobx';
 import * as r from 'ramda';
 const hexToHsl = require('hex-to-hsl');
 const hexToRgb = require('hex-to-rgb');

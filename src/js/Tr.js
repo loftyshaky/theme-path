@@ -3,8 +3,8 @@
 import * as settings from 'js/settings'
 
 import react from 'react';
-import { decorate, observable, action, configure } from "mobx";
-import { observer } from "mobx-react";
+import { decorate, observable, action, configure } from 'mobx';
+import { observer } from 'mobx-react';
 import * as r from 'ramda';
 const Store = require('electron-store');
 

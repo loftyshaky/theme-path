@@ -3,7 +3,7 @@
 import x from 'x';
 import * as settings from 'js/settings';
 
-import { observable, action, configure } from "mobx";
+import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
 const Store = require('electron-store');
 

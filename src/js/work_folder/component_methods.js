@@ -2,7 +2,7 @@
 
 import * as shared from 'js/shared';
 
-import { observable, action, configure } from "mobx";
+import { observable, action, configure } from 'mobx';
 const Store = require('electron-store');
 
 const store = new Store();

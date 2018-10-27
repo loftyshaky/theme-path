@@ -1,7 +1,7 @@
 
 'use strict';
 
-import { action, observable, configure } from "mobx";
+import { action, observable, configure } from 'mobx';
 const { readFileSync, writeFileSync } = require('fs');
 const { resolve } = require('path');
 const Store = require('electron-store');

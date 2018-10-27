@@ -6,7 +6,7 @@ import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
 
-import { action, configure } from "mobx";
+import { action, configure } from 'mobx';
 import * as r from 'ramda';
 const chokidar = require('chokidar');
 const { basename, dirname } = require('path');

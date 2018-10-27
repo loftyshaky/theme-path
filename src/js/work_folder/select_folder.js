@@ -6,7 +6,7 @@ import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 
-import { action, configure } from "mobx";
+import { action, configure } from 'mobx';
 var looksSame = require('looks-same');
 const { existsSync } = require('fs-extra');
 

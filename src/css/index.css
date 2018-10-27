@@ -1,7 +1,7 @@
 /*> general */
 @font-face {
-    font-family: "Roboto";
-    src: url("../Roboto-Light.ttf");
+    font-family: 'Roboto';
+    src: url('../Roboto-Light.ttf');
 }
 
 * {
@@ -614,7 +614,7 @@ header span, header label, header .open_in_chrome_btn {
 }
 
 .select_title:after {
-    content: "";
+    content: '';
     width: 0;
     height: 0;
     position: absolute;

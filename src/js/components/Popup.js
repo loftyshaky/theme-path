@@ -8,7 +8,7 @@ import { Tr } from 'js/Tr';
 import { Hr } from 'components/Hr';
 
 import react from 'react';
-import { observer } from "mobx-react";
+import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 export let Popup = props => {

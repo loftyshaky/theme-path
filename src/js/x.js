@@ -22,7 +22,7 @@
 
 //^
 
-"use strict";
+'use strict';
 
 import * as r from 'ramda';
 
@@ -124,7 +124,7 @@ x.load_css = (filename) => {
     let link;
     
     if (!sb(document.head, '.' + filename)) {
-        link = document.createElement("link");
+        link = document.createElement('link');
         link.className = filename;
         link.href = filename + '.css';
         link.setAttribute('rel', 'stylesheet');

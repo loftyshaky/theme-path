@@ -33,10 +33,10 @@ export class All extends react.Component {
                 <Header />
                 <div className='fieldsets'>
                     <Work_folder />
-                    <Fieldset name="theme_metadata">
+                    <Fieldset name='theme_metadata'>
                         <Input_block name='theme_metadata' />
                     </Fieldset>
-                    <Fieldset name="theme">
+                    <Fieldset name='theme'>
                         <Input_block
                             name='images'
                             hr

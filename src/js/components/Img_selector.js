@@ -13,7 +13,7 @@ import library_add_svg from 'svg/library_add';
 
 import Svg from 'svg-inline-react';
 import react from 'react';
-import { observer } from "mobx-react";
+import { observer } from 'mobx-react';
 
 export class Img_selector extends react.Component {
     constructor(props) {

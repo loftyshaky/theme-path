@@ -9,8 +9,8 @@ import { inputs_data } from 'js/inputs_data';
 import { Help } from 'components/Help';
 
 import react from 'react';
-import { observer } from "mobx-react";
-import { observable, action, configure } from "mobx";
+import { observer } from 'mobx-react';
+import { observable, action, configure } from 'mobx';
 
 configure({ enforceActions: 'observed' });
 

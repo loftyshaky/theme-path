@@ -6,8 +6,9 @@ import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 
-import { observable, action, configure } from "mobx";
+import { observable, action, configure } from 'mobx';
 const Jimp = require('jimp');
+const { join } = require('path');
 const { createReadStream, createWriteStream, writeFileSync } = require('fs');
 
 configure({ enforceActions: 'observed' });
@@ -19,9 +20,9 @@ export const create_solid_color_image = (name, color) => {
     new Jimp(width, height, color, (err, img) => {
         img.getBase64(Jimp.AUTO, (er, data) => {
             try {
-                const base_64_data = data.replace(/^data:image\/png;base64,/, "");
+                const base_64_data = data.replace(/^data:image\/png;base64,/, '');
 
-                writeFileSync(shared.ob.chosen_folder_path + '\\' + name + '.png', base_64_data, 'base64');
+                writeFileSync(join(shared.ob.chosen_folder_path, name + '.png'), base_64_data, 'base64');
 
             } catch (er) {
                 console.error(er);
@@ -37,10 +38,10 @@ export const handle_files = async (file, family, i) => {
     const valid_file_types = ['image/gif', 'image/jpeg', 'image/png'];
 
     if (valid_file_types.indexOf(file[0].type) > -1) {
-        const img_extension = file[0].name.substring(file[0].name.lastIndexOf(".") + 1); // .png
+        const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
         const img_name = inputs_data.obj[family][i].name;
 
-        createReadStream(file[0].path).pipe(createWriteStream(shared.ob.chosen_folder_path + '\\' + img_name + '.' + img_extension)); // copy image
+        createReadStream(file[0].path).pipe(createWriteStream(join(shared.ob.chosen_folder_path, img_name + '.' + img_extension))); // copy image
 
         change_val.change_val(family, i, img_name, img_extension);
 
@@ -83,16 +84,16 @@ export const dehighlight_upload_box_on_drag_leave = action((family, i) => {
 //> variables
 const sta = {
     width: {
-        "icon": 128,
-        "theme_ntp_background": screen.width,
-        "theme_frame_overlay": 1100,
-        "theme_frame_overlay_inactive": 1100,
-        "theme_ntp_attribution": 100
+        'icon': 128,
+        'theme_ntp_background': screen.width,
+        'theme_frame_overlay': 1100,
+        'theme_frame_overlay_inactive': 1100,
+        'theme_ntp_attribution': 100
     },
     height: {
-        "icon": 128,
-        "theme_ntp_background": screen.height,
-        "theme_ntp_attribution": 50
+        'icon': 128,
+        'theme_ntp_background': screen.height,
+        'theme_ntp_attribution': 50
     }
 }
 

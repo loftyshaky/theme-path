@@ -10,7 +10,7 @@ import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
 import react from 'react';
-import { observer } from "mobx-react";
+import { observer } from 'mobx-react';
 import { ChromePicker } from 'react-color';
 
 export let Color = props => {

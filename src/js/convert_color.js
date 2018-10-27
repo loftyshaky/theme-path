@@ -2,7 +2,7 @@
 
 import * as change_val from 'js/change_val';
 import * as settings from 'js/settings';
-import { inputs_data } from "js/inputs_data";
+import { inputs_data } from 'js/inputs_data';
 
 import * as r from 'ramda';
 const Store = require('electron-store');

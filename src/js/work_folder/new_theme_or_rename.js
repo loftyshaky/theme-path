@@ -6,7 +6,7 @@ import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as sort_folders from 'js/work_folder/sort_folders';
 
-import { action, configure } from "mobx";
+import { action, configure } from 'mobx';
 import * as r from 'ramda';
 const { join, resolve, dirname } = require('path');
 const { existsSync, copySync, renameSync } = require('fs-extra');

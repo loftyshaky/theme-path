@@ -13,7 +13,7 @@ import { Help } from 'components/Help';
 import react from 'react';
 import * as r from 'ramda';
 
-import { observer } from "mobx-react";
+import { observer } from 'mobx-react';
 
 export class Select extends react.Component {
     constructor(props) {

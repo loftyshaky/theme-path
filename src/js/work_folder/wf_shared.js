@@ -2,7 +2,7 @@
 
 import * as shared from 'js/shared';
 
-import { observable, action, configure } from "mobx";
+import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
 const { existsSync, readdirSync, statSync } = require('fs-extra');
 const { join } = require('path');
@@ -22,7 +22,7 @@ export const get_folders = folder_path => {
     const files = readdirSync(folder_path);
 
     return files.map(file => {
-        const child_path = folder_path + '\\' + file;
+        const child_path = join(folder_path, file);
 
         return {
             name: file,

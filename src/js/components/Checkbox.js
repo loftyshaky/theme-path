@@ -7,7 +7,7 @@ import checkmark_svg from 'svg/checkmark';
 import { inputs_data } from 'js/inputs_data';
 
 import react from 'react';
-import { observer } from "mobx-react";
+import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 export let Checkbox = props => {
