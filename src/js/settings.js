@@ -9,7 +9,7 @@ const store = new Store();
 
 configure({ enforceActions: 'observed' });
 
-export const load_theme = () => {
+export const load_theme = action(() => {
     const theme_setting = store.get('theme');
     const selected_folder = s('.selected_folder');
 
@@ -25,7 +25,7 @@ export const load_theme = () => {
     if (selected_folder) {
         selected_folder.click();
     }
-};
+});
 
 export const load_setting = action(() => {
     const settings = inputs_data.obj.settings;

@@ -10,6 +10,10 @@ const store = new Store();
 
 configure({ enforceActions: 'observed' });
 
+export const set_chosen_folder_path = action((chosen_folder_path) => {
+   ob.chosen_folder_path = chosen_folder_path;
+});
+
 export const parse_json = file_path => {
     return JSON.parse(readFileSync(file_path, 'utf-8').trim());
 };
@@ -26,7 +30,7 @@ export const val_is_localized = val => {
     return val.indexOf('__MSG_') > -1;
 };
 
-export const get_message_key = val => {
+export const get_message_name = val => {
     return val.replace(/__MSG_|__/g, '');
 };
 
@@ -36,11 +40,11 @@ export const deselect_theme = action(() => {
     reset_inputs_data();
 });
 
-export const set_default_locale_theme_name = (name, val) => {
+export const set_default_locale_theme_name = action((name, val) => {
     if (name == 'name') {
         ob.default_locale_theme_name = val;
     }
-};
+});
 
 export const construct_icons_obj = json => {
     if (!json.icons) {

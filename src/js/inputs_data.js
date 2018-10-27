@@ -3,7 +3,7 @@
 import x from 'x';
 import * as settings from 'js/settings';
 
-import { observable, configure } from "mobx";
+import { observable, action, configure } from "mobx";
 import * as r from 'ramda';
 const Store = require('electron-store');
 
@@ -13,11 +13,11 @@ configure({ enforceActions: 'observed' });
 
 const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;
 
-export const reset_inputs_data = () => {
+export const reset_inputs_data = action(() => {
     inputs_data.obj = data_obj_default;
 
     settings.load_setting();
-}
+});
 
 export let inputs_data = observable({
     obj: {

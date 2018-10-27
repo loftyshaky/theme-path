@@ -3,12 +3,12 @@
 import x from 'x';
 
 import * as shared from 'js/shared';
-import * as wf_shared from 'js/work_folder/shared';
+import * as wf_shared from 'js/work_folder/wf_shared';
 import * as sort_folders from 'js/work_folder/sort_folders';
 
 import { action, configure } from "mobx";
 import * as r from 'ramda';
-const path = require('path');
+const { join, resolve, dirname } = require('path');
 const { existsSync, copySync, renameSync } = require('fs-extra');
 const Store = require('electron-store');
 
@@ -17,21 +17,21 @@ const store = new Store();
 configure({ enforceActions: 'observed' });
 
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
-export const create_new_theme_or_rename_theme_folder = action((folder_path, nest_level, i_to_insert_folfder_in, folder_is_opened, name_input_val) => {
+export const create_new_theme_or_rename_theme_folder = action((folder_path, nest_level, i_to_insert_folfder_in, folder_is_opened, name_input_val) => { // action( need to be here otherwise renamed folder will be deselected
     const mode = name_input_val ? 'renaming_folder' : 'creating_folder';
     const folder_name = mode == 'renaming_folder' ? name_input_val : x.message('new_theme_btn_label_text');
     const timne_id = Date.now();
-    const source_folder_path = mode == 'renaming_folder' ? folder_path : path.resolve('resources', 'app', 'dist', 'new_theme');
-    const parent_of_renamed_folder_path = path.dirname(folder_path);
+    const source_folder_path = mode == 'renaming_folder' ? folder_path : resolve('resources', 'app', 'dist', 'new_theme');
+    const parent_of_renamed_folder_path = dirname(folder_path);
 
     for (let i = 0; i < 22; i++) {
         const unique_identifier = i < 21 ? i : timne_id;
         const folder_name_final = folder_name + (i != 0 ? ' (' + unique_identifier + ')' : '');
 
         try {
-            if (!existsSync(path.join(folder_path, folder_name_final))) {
+            if (!existsSync(join(folder_path, folder_name_final))) {
                 if (mode == 'creating_folder') {
-                    const new_theme_path = path.join(folder_path, folder_name_final);
+                    const new_theme_path = join(folder_path, folder_name_final);
                     const root_folder_chosen = shared.ob.chosen_folder_path == store.get('work_folder');
                     const number_of_folders = wf_shared.get_number_of_folders_to_work_with(i_to_insert_folfder_in, nest_level) + 1;
 
@@ -50,11 +50,11 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
 
                         const folders_with_new_folder = r.insert(i_to_insert_folfder_in, new_theme, wf_shared.ob.folders);
 
-                        wf_shared.ob.folders = sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, number_of_folders, nest_level);
+                        wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, number_of_folders, nest_level));
                     }
 
                 } else if (mode == 'renaming_folder' && folder_name_final.length <= 255) {
-                    const new_folder_path = path.join(parent_of_renamed_folder_path, folder_name_final);
+                    const new_folder_path = join(parent_of_renamed_folder_path, folder_name_final);
 
                     try {
                         if (existsSync(source_folder_path)) {
@@ -63,10 +63,10 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
 
                     } catch (er) {
                         x.error(9, 'file_is_locked_alert');
-                        throw er;
+                        throw 'file_is_locked';
                     }
 
-                    shared.ob.chosen_folder_path = new_folder_path;
+                    shared.set_chosen_folder_path(new_folder_path);
 
                     const renamed_folder_i = wf_shared.ob.folders.findIndex(item => item.path == source_folder_path);
 
@@ -75,16 +75,20 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
                 }
 
             } else {
-                throw 'found folder with the same name';
+                throw 'Found folder with the same name.';
             }
 
             break;
 
         } catch (er) {
-            throw er;
+            console.error(er);
+
+            if (er == 'file_is_locked') {
+                break;
+            }
         }
     }
 });
 
 export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder(folder_path, null, null, null, name_input_val), 250);
-//< create new theme when clicking on "New theme" or rename theme folder when typing in name input
+//< create new theme when clicking on "New theme" or rename theme folder when typing in name input;

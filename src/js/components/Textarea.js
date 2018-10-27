@@ -54,21 +54,29 @@ export class Textarea extends react.Component {
         }
     }
 
-    count_char = action(() => {
+    count_char = () => {
         if (this.props.counter) {
             const number_of_chars = this.textarea.current.value.length;
             const locale = shared.find_from_name(inputs_data.obj[this.props.family], 'locale').val;
             const default_locale = shared.find_from_name(inputs_data.obj[this.props.family], 'default_locale').val;
 
-            this.ob.number_of_chars = this.textarea.current.value.length;
+            this.set_number_of_chars_val(this.textarea.current.value.length);
 
             if (number_of_chars > this.props.char_limit && locale == default_locale) {
-                this.ob.char_limit_exceeded = true;
+                this.set_char_limit_exceeded_bool(true);
 
             } else {
-                this.ob.char_limit_exceeded = false;
+                this.set_char_limit_exceeded_bool(false);
             }
         }
+    }
+
+    set_char_limit_exceeded_bool = action(bool => {
+        this.ob.char_limit_exceeded = bool;
+    })
+
+    set_number_of_chars_val = action(val => {
+        this.ob.number_of_chars = val;
     })
 
     render() {

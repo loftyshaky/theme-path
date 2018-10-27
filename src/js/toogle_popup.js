@@ -5,12 +5,15 @@ import * as r from 'ramda';
 
 configure({ enforceActions: 'observed' });
 
-export const toggle_popup = action(name => {
+export const toggle_popup = name => {
     const new_val = !ob.popup_visibility[name];
 
     close_all_popups();
+    set_popup_visibility_bool(name, new_val);
+};
 
-    ob.popup_visibility[name] = new_val;
+export const set_popup_visibility_bool = action((name, bool) => {
+    ob.popup_visibility[name] = bool;
 });
 
 export const close_all_popups = action(() => {

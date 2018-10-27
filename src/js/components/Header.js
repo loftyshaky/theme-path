@@ -10,13 +10,11 @@ import question_svg from 'svg/question';
 import list_svg from 'svg/list';
 
 import * as shared from 'js/shared';
-import * as wf_shared from 'js/work_folder/shared';
+import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
-import * as select_folder from 'js/work_folder/select_folder';
 import * as open_and_pack from 'js/open_and_pack';
 import * as toogle_popup from 'js/toogle_popup';
-import { inputs_data } from 'js/inputs_data';
 
 import react from 'react';
 import { observer } from "mobx-react";
@@ -64,10 +62,10 @@ export class Header extends react.Component {
                 </span>
                 <span className='header_section header_right'>
                     {
-                        chrome_user_data_dirs_final.map((path, i) => {
+                        chrome_user_data_dirs_final.map((folder_path, i) => {
                             return <Open_in_profiled_chrome_btn
                                 key={x.unique_id()}
-                                path={path.trim()}
+                                path={folder_path.trim()}
                                 no={i + 1}
                             />
                         })

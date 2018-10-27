@@ -1,7 +1,7 @@
 'use strict';
 
 import x from 'x';
-import * as wf_shared from 'js/work_folder/shared';
+import * as wf_shared from 'js/work_folder/wf_shared';
 import { Tr } from 'js/Tr';
 
 import react from 'react';

@@ -2,14 +2,14 @@
 
 import x from 'x';
 import * as shared from 'js/shared';
-import * as wf_shared from 'js/work_folder/shared';
+import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
 
 import { action, configure } from "mobx";
 import * as r from 'ramda';
 const chokidar = require('chokidar');
-const path = require('path');
+const { basename, dirname } = require('path');
 const Store = require('electron-store');
 
 const store = new Store();
@@ -20,10 +20,10 @@ const watcher = chokidar.watch(null, { persistent: true, ignoreInitial: true, aw
 
 watcher
     .on('add', action(file_path => {
-        const file_is_manifest = path.basename(file_path) == 'manifest.json';
+        const file_is_manifest = basename(file_path) == 'manifest.json';
 
         if (file_is_manifest) {
-            const parent_folder_path = path.dirname(file_path);
+            const parent_folder_path = dirname(file_path);
             const parent_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == parent_folder_path);
             const folder_to_remove_start_i = parent_folder_i + 1;
 
@@ -40,7 +40,7 @@ watcher
         const folder_already_exist = wf_shared.ob.folders.findIndex(folder => folder.path == folder_path) > -1;
 
         if (!folder_already_exist) {
-            const parent_folder_path = path.dirname(folder_path);
+            const parent_folder_path = dirname(folder_path);
             const parent_folder_is_root = parent_folder_path == store.get('work_folder');
             const parent_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path == parent_folder_path);
             const i_to_insert_folfder_in = parent_folder_is_root ? 0 : parent_folder_i + 1;
@@ -58,7 +58,7 @@ watcher
             if (parent_folder_is_opened) {
                 const new_folder = {
                     key: x.unique_id(),
-                    name: path.basename(folder_path),
+                    name: basename(folder_path),
                     path: folder_path,
                     children: folder_info.children,
                     nest_level: nest_level,
@@ -68,7 +68,7 @@ watcher
 
                 const folders_with_new_folder = r.insert(i_to_insert_folfder_in, new_folder, wf_shared.ob.folders);
 
-                wf_shared.ob.folders = sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, number_of_folders, nest_level);
+                wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, number_of_folders, nest_level));
             }
 
             wf_shared.rerender_work_folder();
@@ -80,7 +80,7 @@ watcher
         if (removed_folder_i > -1) {
             const removed_folder_nest_level = wf_shared.ob.folders[removed_folder_i].nest_level;
 
-            wf_shared.ob.folders = r.remove(removed_folder_i, 1, wf_shared.ob.folders);
+            wf_shared.set_folders(r.remove(removed_folder_i, 1, wf_shared.ob.folders));
 
             //> get parent of removed folder index
             let current_folder_i = removed_folder_i - 1;

@@ -3,12 +3,14 @@
 import x from 'x';
 
 import * as shared from 'js/shared';
-import * as wf_shared from 'js/work_folder/shared';
+import * as wf_shared from 'js/work_folder/wf_shared';
 import * as component_methods from 'js/work_folder/component_methods';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
+
 import { Fieldset } from 'components/Fieldset';
+
 import folder_svg from 'svg/folder';
 import folder_opened_svg from 'svg/folder_opened';
 import arrow_right_svg from 'svg/arrow_right';

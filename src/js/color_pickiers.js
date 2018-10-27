@@ -81,7 +81,7 @@ export const set_color_input_vizualization_color = action((family, i, color) => 
 });
 
 //> accept color when clicking OK t
-export const accept_color = action((family, i) => {
+export const accept_color = (family, i) => {
     const hex = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
     const name = inputs_data.obj[family][i].name;
     let color;
@@ -109,10 +109,10 @@ export const accept_color = action((family, i) => {
     }
 
     show_or_hide_color_pickier(family, i, false);
+    change_val.set_inputs_data_val(family, i, hex);
 
-    inputs_data.obj[family][i].val = hex;
     mut.current_color_pickier.el = null;
-});
+};
 //< accept color when clicking OK t
 
 //> varibles t

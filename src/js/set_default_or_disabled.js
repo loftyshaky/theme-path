@@ -5,7 +5,6 @@ import * as settings from 'js/settings';
 import * as change_val from 'js/change_val'
 import { inputs_data } from 'js/inputs_data';
 
-import { action, configure } from "mobx";
 import * as r from 'ramda';
 const Store = require('electron-store');
 const { existsSync, unlinkSync, copySync } = require('fs-extra');
@@ -13,11 +12,9 @@ const { join } = require('path');
 
 const store = new Store();
 
-configure({ enforceActions: 'observed' });
-
-export const set_default_icon = action((family, i) => {
+export const set_default_icon = (family, i) => {
     //> set default icon name
-    inputs_data.obj[family][i].default = true;
+    change_val.set_default_bool(family, i, true);
 
     shared.construct_icons_obj(shared.mut.manifest);
 
@@ -35,17 +32,17 @@ export const set_default_icon = action((family, i) => {
     //> restore default color_input_vizualization color
     const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;
 
-    inputs_data.obj[family][i].color = color_input_default;
+    change_val.set_inputs_data_color(family, i, color_input_default);
     //< restore default color_input_vizualization color
-});
+};
 
-export const set_default_or_disabled = action((family, i, special_checkbox) => {
+export const set_default_or_disabled = (family, i, special_checkbox) => {
     if (special_checkbox == 'default') {
         if (!inputs_data.obj[family][i].default) {
-            inputs_data.obj[family][i].default = true;
+            change_val.set_default_bool(family, i, true);
 
             if (family == 'tints') {
-                inputs_data.obj[family][i].disable = false;
+                change_val.set_disable_bool(family, i, false);
             }
 
             set_default(family, i, special_checkbox);
@@ -56,27 +53,28 @@ export const set_default_or_disabled = action((family, i, special_checkbox) => {
 
     } else if (special_checkbox == 'disable') {
         if (!inputs_data.obj[family][i].disable) {
-            inputs_data.obj[family][i].disable = true;
-            inputs_data.obj[family][i].default = false;
+            change_val.set_disable_bool(family, i, true);
+            change_val.set_default_bool(family, i, false);
 
             change_val.change_val(family, i, [-1, -1, -1], null);
 
-            inputs_data.obj[family][i].val = settings.ob.theme_vals[store.get('theme')].color_input_disabled;
+            change_val.set_inputs_data_val(family, i, settings.ob.theme_vals[store.get('theme')].color_input_disabled);
 
         } else {
-            inputs_data.obj[family][i].disable = false;
-            inputs_data.obj[family][i].default = true;
+            change_val.set_disable_bool(family, i, false);
+            change_val.set_disable_bool(family, i, false);
+            change_val.set_default_bool(family, i, true);
 
             set_default(family, i, 'default');
         }
     }
-});
+};
 
 const set_default = (family, i) => {
     const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;
-    const key_to_delete = inputs_data.obj[family][i].name;
+    const name_to_delete = inputs_data.obj[family][i].name;
 
-    delete shared.mut.manifest.theme[family][key_to_delete];
+    delete shared.mut.manifest.theme[family][name_to_delete];
 
     if (r.isEmpty(shared.mut.manifest.theme[family])) {
         delete shared.mut.manifest.theme[family];
@@ -90,5 +88,10 @@ const set_default = (family, i) => {
 
     shared.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
 
-    inputs_data.obj[family][i].color ? inputs_data.obj[family][i].color = color_input_default : inputs_data.obj[family][i].val = color_input_default
+    if (inputs_data.obj[family][i].color) {
+        change_val.set_inputs_data_color(family, i, color_input_default);
+
+    } else {
+        change_val.set_inputs_data_val(family, i, color_input_default);
+    }
 };

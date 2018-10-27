@@ -2,9 +2,8 @@
 
 import x from 'x';
 
-import * as wf_shared from 'js/work_folder/shared';
+import * as wf_shared from 'js/work_folder/wf_shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
-import * as select_folder from 'js/work_folder/select_folder';
 import * as sort_folders from 'js/work_folder/sort_folders';
 import * as watch from 'js/work_folder/watch';
 
@@ -31,10 +30,9 @@ const close_all_folders = action(() => {
     wf_shared.ob.folders.clear();
     wf_shared.mut.opened_folders = [];
 });
-
 //< on extension load / work_folder folder content change
 
-export const expand_or_collapse_folder = action((mode, folder_path, nest_level, i_to_insert_folfder_in) => {
+export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_insert_folfder_in) => {
     if (mode != 'new_theme' || !wf_shared.mut.chosen_folder_info.is_theme) {
         const folder_is_opened = wf_shared.mut.opened_folders.indexOf(folder_path) != - 1;
 
@@ -78,11 +76,12 @@ export const expand_or_collapse_folder = action((mode, folder_path, nest_level, 
             const close_nulled = r.filter(item => item);
 
             wf_shared.mut.opened_folders.splice(wf_shared.mut.opened_folders.indexOf(folder_path), 1); // mark target folder as closed
-            wf_shared.ob.folders = r.pipe(set_opened_folders_to_null, close_nulled)(wf_shared.ob.folders);
+
+            wf_shared.set_folders(r.pipe(set_opened_folders_to_null, close_nulled)(wf_shared.ob.folders));
             //<1 close folders
         }
     }
-});
+};
 
 const expand_folder = (folder_path, files, nest_level, i_to_insert_folfder_in) => {
     let expanded_folders = [];
@@ -116,7 +115,7 @@ const expand_folder = (folder_path, files, nest_level, i_to_insert_folfder_in) =
 
         const folders_with_new_folder = r.insertAll(i_to_insert_folfder_in, expanded_folders, wf_shared.ob.folders);
 
-        wf_shared.ob.folders = sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, expanded_folders.length, nest_level);
+        wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, expanded_folders.length, nest_level));
     }
 };
 
