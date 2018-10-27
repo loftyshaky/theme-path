@@ -53,7 +53,7 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
                         wf_shared.ob.folders = sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, number_of_folders, nest_level);
                     }
 
-                } else if (mode == 'renaming_folder') {
+                } else if (mode == 'renaming_folder' && folder_name_final.length <= 255) {
                     const new_folder_path = path.join(parent_of_renamed_folder_path, folder_name_final);
 
                     try {
