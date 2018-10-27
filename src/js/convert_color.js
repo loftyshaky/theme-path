@@ -37,7 +37,7 @@ export const convert_theme_color_props_to_color = action((family, i, val) => {
 
     } else if (family == 'tints') {
         inputs_data.obj[family][i].val = color_input_default;
-        
+
         if (val_is_arr) {
             if (val != '') {
                 const hsla_arr = val.map((number, i) => {
@@ -71,6 +71,10 @@ export const convert_theme_color_props_to_color = action((family, i, val) => {
                 }
             }
         }
+    } else if (family == 'theme_metadata') {
+        if (inputs_data.obj[family][i].type == 'img_selector') {
+            inputs_data.obj[family][i].color = color_input_default;
+        }
     }
 });
 
@@ -78,6 +82,7 @@ export const convert_all = () => {
     convert_family('images');
     convert_family('colors');
     convert_family('tints');
+    convert_family('theme_metadata');
 };
 
 const convert_family = (family) => {
