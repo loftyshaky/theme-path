@@ -2,7 +2,7 @@
 
 import x from 'x';
 
-import * as color_pickiers from 'js/color_pickiers';
+import * as settings_popup from 'js/settings_popup';
 
 import { Header } from 'components/Header';
 import { Fieldset } from 'components/Fieldset';
@@ -20,11 +20,11 @@ export class All extends react.Component {
     }
 
     componentDidMount() {
-        document.addEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
+        document.addEventListener('mousedown', settings_popup.show_or_hide_settings_popup);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
+        document.removeEventListener('mousedown', settings_popup.show_or_hide_settings_popup);
     }
 
     render() {

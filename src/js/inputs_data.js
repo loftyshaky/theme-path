@@ -38,7 +38,7 @@ export let inputs_data = observable({
                 highlight_upload_box: false,
                 color: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -90,7 +90,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -104,7 +105,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -118,7 +120,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -132,7 +135,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -146,7 +150,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -160,7 +165,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -174,7 +180,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -188,7 +195,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -202,7 +210,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -216,7 +225,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -230,7 +240,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -244,6 +255,8 @@ export let inputs_data = observable({
                 color: color_input_default,
                 color_pickier_is_visible: false,
                 use_as_is_visible: false,
+                color_pickier_position: 'top',
+                use_as_position: 'top',
                 default: true,
                 add_help: true
             }
@@ -256,7 +269,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -267,7 +280,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -278,7 +291,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -289,7 +302,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -300,7 +313,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -311,7 +324,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -322,7 +335,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -333,7 +346,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -344,7 +357,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -355,7 +368,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -366,7 +379,7 @@ export let inputs_data = observable({
                 type: 'color',
                 val: color_input_default,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             }
@@ -380,7 +393,7 @@ export let inputs_data = observable({
                 val: color_input_default,
                 disable: false,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -392,7 +405,7 @@ export let inputs_data = observable({
                 val: color_input_default,
                 disable: false,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -404,7 +417,7 @@ export let inputs_data = observable({
                 val: color_input_default,
                 disable: false,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -416,7 +429,7 @@ export let inputs_data = observable({
                 val: color_input_default,
                 disable: false,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -428,7 +441,7 @@ export let inputs_data = observable({
                 val: color_input_default,
                 disable: false,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             },
@@ -440,7 +453,7 @@ export let inputs_data = observable({
                 val: color_input_default,
                 disable: false,
                 color_pickier_is_visible: false,
-                color_pickiers_position: 'top',
+                color_pickier_position: 'top',
                 default: true,
                 add_help: true
             }
