@@ -1,3 +1,5 @@
+'use_strict';
+
 import x from 'x';
 import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
