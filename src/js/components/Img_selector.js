@@ -6,6 +6,7 @@ import { inputs_data } from 'js/inputs_data';
 import { Tr } from 'js/Tr';
 
 import { Color } from 'components/Color';
+import { Use_as } from 'components/Use_as';
 import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
@@ -43,9 +44,12 @@ export class Img_selector extends react.Component {
     }
 
     render() {
-        const also_use_img_as = this.props.name != 'icon' ?
-            <span className='also_use_img_as' data-title='also_use_img_as_title'>
-                <Svg src={library_add_svg} />
+        const use_as_btn = this.props.name != 'icon' ?
+            <span className='use_as_w'>
+                <button className='use_as_btn' data-title='use_as_title'>
+                    <Svg src={library_add_svg} />
+                </button>
+                <Use_as {...this.props} />
             </span>
             : null
         return (
@@ -82,13 +86,12 @@ export class Img_selector extends react.Component {
                             ></label>
                         </span>
                     </Tr>
-
                     <Color
                         {...this.props}
                         color_input_type='img'
                         add_help={false}
                     />
-                  {also_use_img_as}
+                    {use_as_btn}
                     <Checkbox
                         {...this.props}
                         special_checkbox='default'

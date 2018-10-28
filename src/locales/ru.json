@@ -23,7 +23,7 @@
   "default_checkbox_label_text": "Cтандарт",
   "disable_checkbox_label_text": "Отключить",
 
-  "also_use_img_as_title": "Также использовать эту картинку в качестве...",
+  "use_as_title": "Также использовать эту картинку в качестве...",
 
   "work_folder_is_not_specified_message_text": "Рабочая папка не выбрана.",
   "work_folder_is_empty_message_text": "Рабочая папка пуста.",

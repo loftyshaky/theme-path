@@ -14,7 +14,7 @@ export let Checkbox = props => {
     const checkbox_id = props.name + '_checkbox';
 
     return (
-        <span className='img_selector_checkbox_w'>
+        <span className='checkbox_w'>
             <label className='checkbox_label'>
                 <input
                     className='checkbox'
