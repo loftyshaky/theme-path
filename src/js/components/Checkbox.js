@@ -11,7 +11,7 @@ import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 export let Checkbox = props => {
-    const checkbox_id = props.name + '_checkbox';
+    const checkbox_id = x.unique_id();
 
     return (
         <span className='checkbox_w'>
