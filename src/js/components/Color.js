@@ -2,7 +2,7 @@
 
 import x from 'x';
 
-import * as settings_popup from 'js/settings_popup';
+import * as color_pickiers from 'js/color_pickiers';
 import { inputs_data } from 'js/inputs_data';
 import { Tr } from 'js/Tr';
 
@@ -39,7 +39,7 @@ export let Color = props => {
         : null;
 
     const color_pickier_state = inputs_data.obj[props.family][props.i].color_pickier_is_visible || false;
-    const color_pickier_position = inputs_data.obj[props.family][props.i].color_pickier_position || false;
+    const color_pickiers_position = inputs_data.obj[props.family][props.i].color_pickiers_position || false;
 
     return (
         <span className={x.cls(['input', props.color_input_type == 'img' ? 'tall_color_input' : 'ordinary_color_input'])}>
@@ -53,7 +53,7 @@ export let Color = props => {
                 >
                     <div
                         className='color_pickier_w'
-                        style={{ [color_pickier_position]: props.family == 'images' ? '40px' : '26px' }}>
+                        style={{ [color_pickiers_position]: props.family == 'images' ? '40px' : '26px' }}>
                         <Tr attr={{
                             className: 'color_pickier'
                         }}
@@ -64,10 +64,10 @@ export let Color = props => {
                             <ChromePicker
                                 color={color}
                                 disableAlpha={true}
-                                onChange={settings_popup.set_color_input_vizualization_color.bind(null, props.family, props.i)}
+                                onChange={color_pickiers.set_color_input_vizualization_color.bind(null, props.family, props.i)}
                             /><button
                                 className='color_ok_btn'
-                                onClick={settings_popup.accept_color.bind(null, props.family, props.i)}
+                                onClick={color_pickiers.accept_color.bind(null, props.family, props.i)}
 
                             >OK</button>
                         </Tr>

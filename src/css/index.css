@@ -239,6 +239,7 @@ textarea, .select_w, .checkbox_checkmark_w {
 .color_pickier_w {
     z-index: 2;
     position: absolute;
+    left: -95px;
 }
 
 .color_ok_btn {   
@@ -524,23 +525,11 @@ header span, header label, header .open_in_chrome_btn {
     height: 32px;
     display: block;
 }
-
-.color_input_vizualization, .use_as_w {
-    display: flex;
-    justify-content: center;
-}
-
 /*>1 use as list */
 .use_as_w {
     display: flex;
     align-items: center;
     position: relative;
-}
-
-.use_as_w2 {
-    position: absolute;
-    z-index: 1;
-    width: max-content;
 }
 
 .use_as_btn {
@@ -564,8 +553,12 @@ header span, header label, header .open_in_chrome_btn {
 }
 
 .use_as {
+    position: absolute;
+    top: 41px;
+    z-index: 1;
+    width: max-content;
+    left: -90px;
     padding-top: 34px;
-    display: block;
 }
 
 .use_as .checkbox_w {

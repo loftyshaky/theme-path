@@ -46,12 +46,7 @@ export class Img_selector extends react.Component {
     render() {
         const use_as_btn = this.props.name != 'icon' ?
             <span className='use_as_w'>
-                <button
-                 className='use_as_btn'
-                  data-title='use_as_title'
-                  data-family={this.props.family}
-                  data-i={this.props.i}
-                  >
+                <button className='use_as_btn' data-title='use_as_title'>
                     <Svg src={library_add_svg} />
                 </button>
                 <Use_as {...this.props} />
