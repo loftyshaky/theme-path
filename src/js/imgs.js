@@ -7,6 +7,7 @@ import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 
 import { observable, action, configure } from 'mobx';
+import * as r from 'ramda'
 const Jimp = require('jimp');
 const { join } = require('path');
 const { createReadStream, createWriteStream, writeFileSync } = require('fs');
@@ -35,11 +36,15 @@ export const create_solid_color_image = (name, color) => {
 
 //> image upload
 export const handle_files = async (file, family, i) => {
-    const valid_file_types = ['image/gif', 'image/jpeg', 'image/png'];
+    const img_name = inputs_data.obj[family][i].name;
+    const valid_file_types = r.cond([
+        [r.equals('theme_ntp_background'), () => ['image/png', 'image/jpeg', 'image/gif']],
+        [r.equals('icon'), () => ['image/png', 'image/jpeg']],
+        [r.T, () => ['image/png']]
+    ])(img_name);
 
     if (valid_file_types.indexOf(file[0].type) > -1) {
         const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
-        const img_name = inputs_data.obj[family][i].name;
 
         createReadStream(file[0].path).pipe(createWriteStream(join(shared.ob.chosen_folder_path, img_name + '.' + img_extension))); // copy image
 
