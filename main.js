@@ -6,9 +6,6 @@ const { existsSync } = require('fs');
 
 const { app, BrowserWindow, shell } = require('electron');
 
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
-const r = require('ramda');
-
 //--
 
 const dev = process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath) ? true : false; //> Keep a reference for dev mode
@@ -30,9 +27,8 @@ function create_window() {
   //< create the browser window.
 
   //> implementing Webpack
-  const index_path = r.ifElse( // and load the index.html of the app.
-    () => dev && process.argv.indexOf('--noDevServer') === -1,
-    () => {
+  const index_path = dev && process.argv.indexOf('--noDevServer') === -1 ?
+    (() => {
       const index_path = format({
         protocol: 'http:',
         host: 'localhost:8080',
@@ -41,15 +37,17 @@ function create_window() {
       });
 
       //> install react chrome extension
+      const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer'); // needs to be here, otherwise packaged app will not start
+
       installExtension(REACT_DEVELOPER_TOOLS)
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err));
       //< install react chrome extension
 
       return index_path;
-    },
-
-    () => {
+    })()
+    :
+    (() => {
       const index_path = format({
         protocol: 'file:',
         pathname: join(__dirname, runs_from_package ? '' : 'resources', runs_from_package ? '' : 'app', 'dist', 'index.html'),
@@ -57,8 +55,7 @@ function create_window() {
       });
 
       return index_path;
-    }
-  )();
+    })();
   //< implementing Webpack
 
   main_window.loadURL(index_path);
