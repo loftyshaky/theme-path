@@ -1,27 +1,3 @@
-//> console.log t
-
-//> selecting elements t
-
-//> notify about error f
-
-//> dom manipulation t
-
-//> matches f
-
-//> closest f
-
-//> move an array item t
-
-//> load_css f
-
-//> delay f
-
-//>1 unique_id f
-
-//> filter_classes f
-
-//^
-
 'use strict';
 
 import * as r from 'ramda';
@@ -29,14 +5,13 @@ import * as r from 'ramda';
 //--
 
 const loc = require('locales/en.json');
-
 const x = {};
 
-//> console.log t
+//> console.log
 window.l = console.log.bind(console);
-//< console.log t
+//< console.log
 
-//> selecting elements t
+//> selecting elements
 window.s = (selector) => { // $
     return document.querySelector(selector);
 }
@@ -52,17 +27,17 @@ window.sb = (base_element, selector) => { // $ with base element
 window.sab = (base_element, selector) => { // $ All with base element
     return base_element ? base_element.querySelectorAll(selector) : null;
 }
-//< selecting elements t
+//< selecting elements
 
-//> notify about error f
+//> notify about error
 x.error = (error_code, extra) => {
     const error_message = x.message('error_alert') + error_code + (extra ? '\n' + x.message(extra) : '');
 
     alert(error_message);
 }
-//< notify about error f
+//< notify about error
 
-//> dom manipulation t
+//> dom manipulation
 x.create = (el_type, class_name) => { // create element
     let el = document.createElement(el_type);
     el.className = class_name;
@@ -94,9 +69,8 @@ x.after = (el_to_insert_after, el_to_insert) => { // insert after
         el_to_insert_after.parentNode.insertBefore(el_to_insert, el_to_insert_after.nextElementSibling);
     }
 };
-//< dom manipulation t
+//< dom manipulation
 
-//> matches f
 x.matches = (el, selector) => {
     if (el && el.nodeType == 1) { // if not document
         return el.matches(selector);
@@ -105,26 +79,22 @@ x.matches = (el, selector) => {
         return false;
     }
 };
-//< matches f
 
-//> closest f
 x.closest = (el, selector) => {
     if (el && el.nodeType == 1) { // if not document
         return el.closest(selector);
     }
 };
-//< closest f
 
-//> move an array item t
+//> move an array item
 x.move_a_item = (a, from, to) => {
     a.splice(to, 0, a.splice(from, 1)[0]);
 };
-//< move an array item t
+//< move an array item
 
-//> load_css f
 x.load_css = (filename) => {
     let link;
-    
+
     if (!sb(document.head, '.' + filename)) {
         link = document.createElement('link');
         link.className = filename;
@@ -136,9 +106,7 @@ x.load_css = (filename) => {
 
     return link;
 };
-//< load_css f
 
-//> debounce f
 x.debounce = (f, wait, immediate, e) => {
     let timeout;
 
@@ -164,15 +132,11 @@ x.debounce = (f, wait, immediate, e) => {
         };
     };
 };
-//< debounce f
 
-//> delay f
 x.delay = delay => {
     return new Promise(resolve => window.setTimeout(() => resolve(), delay));
 };
-//< delay f
 
-//>1 unique_id f
 x.unique_id = () => {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const len = possible.length;
@@ -184,17 +148,14 @@ x.unique_id = () => {
 
     return unique_id;
 };
-//<1 unique_id f
 
-//> filter_classes f
 x.cls = classes => {
     const pipe_f = r.pipe(r.filter, r.values, r.join(' '));
 
     return pipe_f(item => item, classes);
 }
-//< filter_classes f
 
-//>1 localization t
+//> localization
 x.message = (message) => {
     return loc[message];
 }
@@ -213,8 +174,10 @@ x.localize = (base_element) => {
     localize_inner_cur('href', 'href');
     localize_inner_cur('title', 'title');
 }
-//<1 localization t
+//< localization
 
+//> ramda
 x.map_i = r.addIndex(r.map);
+//< ramda
 
 export default x;
