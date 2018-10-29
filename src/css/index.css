@@ -172,7 +172,7 @@ a:active, .upload_box_browse_label:active {
     background-color: #f493ff!important;
 }
 
-.btn:hover, .option:hover, .header_btn:hover, .header_btn:hover label {
+.btn:hover, .option:hover, .header_btn:hover, .header_btn:hover label, .header_btn:active, .header_btn:active label, .selected_folder {
     color: #212121;
 }
 
@@ -331,8 +331,16 @@ header span, header label, header .open_in_chrome_btn {
     background-color: white;
 }
 
-.header_btn:hover, .header_btn:hover svg, .header_btn:active svg  {
+.header_btn:hover, .header_btn:hover svg {
     fill: #212121;
+}
+
+.header_btn:active, .header_btn:active label {
+    color: #212121!important;
+}
+
+.header_btn:active svg {
+    fill: #212121!important;
 }
 
 .new_theme_btn {
@@ -754,7 +762,6 @@ a:active, .upload_box_browse_label:active, .btn:active {
 
 .selected_folder {
     background-color: #fbff75;
-    color: #212121;
 }
 
 .char_limit_exceeded_textarea {
