@@ -227,16 +227,16 @@ textarea, .select_w, .checkbox_checkmark_w {
     background-color: white;
     height: 18px;
     width: 30px;
-    display: inline-block;
     vertical-align: bottom;
     border: solid 1px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
 }
 
 .color_pickier_w {
     z-index: 2;
     position: absolute;
-    left: -95px;
 }
 
 .color_ok_btn {   
@@ -520,7 +520,6 @@ header span, header label, header .open_in_chrome_btn {
 
 .tall_color_input_vizualization {
     height: 32px;
-    display: block;
 }
 
 .also_use_img_as {
