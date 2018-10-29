@@ -1,14 +1,18 @@
+const { join, resolve } = require('path');
+const { spawn } = require('child_process');
+
 const webpack = require('webpack');
-const path = require('path');
 const merge = require('webpack-merge');
-const shared = require(path.join(__dirname, 'webpack.shared.js'));
-const { spawn } = require('child_process')
+
+//--
+
+const shared = require(join(__dirname, 'webpack.shared.js'));
 
 module.exports = merge(shared, {
     module: {
         rules: [
             {
-                test: /\.css$/, // loader CSS
+                test: /\.css$/,
                 use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
             },
         ]
@@ -23,7 +27,7 @@ module.exports = merge(shared, {
     devtool: 'cheap-module-eval-source-map',
 
     devServer: {
-        contentBase: path.resolve(__dirname, 'dist'),
+        contentBase: resolve(__dirname, 'dist'),
         stats: {
             colors: true,
             chunks: false,
@@ -36,8 +40,8 @@ module.exports = merge(shared, {
                 ['.'],
                 { shell: true, env: process.env, stdio: 'inherit' }
             )
-                .on('close', code => process.exit(0))
-                .on('error', spawnError => console.error(spawnError))
+                .on('close', () => process.exit(0))
+                .on('error', spawnError => console.error(spawnError));
         }
     }
 });
