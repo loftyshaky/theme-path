@@ -3,13 +3,15 @@
 import close_svg from 'svg/close';
 
 import * as toogle_popup from 'js/toogle_popup';
-import { Tr } from 'js/Tr';
 
+import { Tr } from 'js/Tr';
 import { Hr } from 'components/Hr';
 
-import react from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
+
+//--
 
 export let Popup = props => {
     return (

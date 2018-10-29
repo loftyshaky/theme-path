@@ -1,7 +1,6 @@
 'use strict';
 
 import x from 'x';
-
 import * as color_pickiers from 'js/color_pickiers';
 
 import { Header } from 'components/Header';
@@ -12,9 +11,11 @@ import { Settings } from 'components/Settings';
 import { Links } from 'components/Links';
 import { Protecting_screen } from 'components/Protecting_screen';
 
-import react from 'react';
+import React from 'react';
 
-export class All extends react.Component {
+//--
+
+export class All extends React.Component {
     constructor(props) {
         super(props);
     }

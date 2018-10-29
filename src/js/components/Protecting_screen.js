@@ -1,24 +1,26 @@
 'use strict';
 
-import { Tr } from 'js/Tr';
-
 import * as toogle_popup from 'js/toogle_popup';
 
-import react from 'react';
-import react_dom from 'react-dom';
+import { Tr } from 'js/Tr';
+
+import React from 'react';
+import { findDOMNode } from 'react-dom';
 import { observer } from 'mobx-react';
 
-export class Protecting_screen extends react.Component {
+//--
+
+export class Protecting_screen extends React.Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        react_dom.findDOMNode(this).addEventListener('click', toogle_popup.close_all_popups);
+        findDOMNode(this).addEventListener('click', toogle_popup.close_all_popups);
     }
 
     componentWillUnmount() {
-        react_dom.findDOMNode(this).removeEventListener('nv-event', toogle_popup.close_all_popups);
+        findDOMNode(this).removeEventListener('nv-event', toogle_popup.close_all_popups);
     }
 
     render() {

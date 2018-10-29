@@ -1,6 +1,5 @@
 'use strict';
 
-
 import { inputs_data } from 'js/inputs_data';
 
 import { Hr } from 'components/Hr';
@@ -9,9 +8,11 @@ import { Select } from 'components/Select';
 import { Img_selector } from 'components/Img_selector';
 import { Color } from 'components/Color';
 
-import react from 'react';
+import React from 'react';
 
-export class Input_block extends react.Component {
+//--
+
+export class Input_block extends React.Component {
     constructor(props) {
         super(props);
 
@@ -32,7 +33,7 @@ export class Input_block extends react.Component {
         const hr = this.props.hr ? <Hr name={this.props.name} /> : null;
 
         return (
-            <react.Fragment>
+            <React.Fragment>
                 {hr}
                 <div className={this.props.name == 'colors' || this.props.name == 'tints' ? 'colors_and_tints_input_block' : null}>
                     {
@@ -53,7 +54,7 @@ export class Input_block extends react.Component {
                         })
                     }
                 </div>
-            </react.Fragment>
+            </React.Fragment>
         );
     }
 }

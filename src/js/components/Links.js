@@ -4,7 +4,9 @@ import x from 'x';
 
 import { Popup } from 'components/Popup';
 
-import react from 'react';
+import React from 'react';
+
+//--
 
 export const Links = props => {
     return (

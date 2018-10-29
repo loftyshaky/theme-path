@@ -3,11 +3,12 @@
 import x from 'x';
 
 import { observable, action, configure } from 'mobx';
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
+
+//--
 
 export const load_theme = action(() => {
     const theme_setting = store.get('theme');

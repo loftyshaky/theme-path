@@ -2,17 +2,18 @@
 
 import * as settings from 'js/settings'
 
-import react from 'react';
+import React from 'react';
 import { decorate, observable, action, configure } from 'mobx';
 import { observer } from 'mobx-react';
 import * as r from 'ramda';
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
 
-export class Tr extends react.Component {
+//--
+
+export class Tr extends React.Component {
     constructor(props) {
         super(props);
 

@@ -2,10 +2,13 @@
 
 import x from 'x';
 import * as wf_shared from 'js/work_folder/wf_shared';
+
 import { Tr } from 'js/Tr';
 
-import react from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
+
+//--
 
 export let Fieldset = props => {
     const fieldset_protecting_screen = props.name !== 'work_folder' ?

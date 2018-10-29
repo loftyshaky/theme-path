@@ -2,6 +2,8 @@
 
 import * as r from 'ramda';
 
+//--
+
 export const sort_folders = (folders, start_i, number_of_folders, nest_level) => { // folders = all folders; number_of_folders = amount of folders at nest level + children
     const before_range = folders.slice(0, start_i);
     const after_range = folders.slice(start_i + number_of_folders, folders.length);

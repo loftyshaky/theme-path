@@ -3,7 +3,9 @@
 import { Popup } from 'components/Popup';
 import { Input_block } from 'components/Input_block';
 
-import react from 'react';
+import React from 'react';
+
+//--
 
 export const Settings = props => {
     return (

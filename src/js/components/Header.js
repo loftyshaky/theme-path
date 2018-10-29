@@ -1,7 +1,5 @@
 'use strict';
 
-import x from 'x';
-
 import plus_svg from 'svg/plus';
 import open_in_browser_svg from 'svg/open_in_browser';
 import archive_svg from 'svg/archive';
@@ -9,6 +7,7 @@ import gear_svg from 'svg/gear';
 import question_svg from 'svg/question';
 import list_svg from 'svg/list';
 
+import x from 'x';
 import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
@@ -16,14 +15,16 @@ import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as open_and_pack from 'js/open_and_pack';
 import * as toogle_popup from 'js/toogle_popup';
 
-import react from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
 
-export class Header extends react.Component {
+//--
+
+export class Header extends React.Component {
     constructor(props) {
         super(props);
     }

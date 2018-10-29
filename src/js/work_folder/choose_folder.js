@@ -1,10 +1,14 @@
+'use strict';
+
 import * as shared from 'js/shared';
 import * as watch from 'js/work_folder/watch';
 
-const Store = require('electron-store');
+import Store from 'electron-store';
 const { dialog } = require('electron').remote;
 
 const store = new Store();
+
+//--
 
 export const choose_folder = (key, callback) => {
     const folder_path = dialog.showOpenDialog({

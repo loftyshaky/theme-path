@@ -2,7 +2,9 @@
 
 import x from 'x';
 
-import react from 'react';
+import React from 'react';
+
+//--
 
 export const Hr = props => {
     return (

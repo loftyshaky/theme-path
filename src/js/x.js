@@ -26,6 +26,8 @@
 
 import * as r from 'ramda';
 
+//--
+
 const loc = require('locales/en.json');
 
 const x = {};

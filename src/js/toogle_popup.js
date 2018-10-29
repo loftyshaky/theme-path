@@ -5,6 +5,8 @@ import * as r from 'ramda';
 
 configure({ enforceActions: 'observed' });
 
+//--
+
 export const toggle_popup = name => {
     const new_val = !ob.popup_visibility[name];
 

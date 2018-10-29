@@ -1,9 +1,11 @@
 import x from 'x';
 
-const Store = require('electron-store');
+import Store from 'electron-store';
+import * as r from 'ramda';
+
 const store = new Store();
 
-import * as r from 'ramda';
+//--
 
 export const set_defaults = () => {
     store.set({

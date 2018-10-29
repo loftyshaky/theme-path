@@ -1,14 +1,17 @@
 'use strict';
 
+import checkmark_svg from 'svg/checkmark';
+
 import x from 'x';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
-import checkmark_svg from 'svg/checkmark';
 
 import { inputs_data } from 'js/inputs_data';
 
-import react from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
+
+//--
 
 export let Checkbox = props => {
     const checkbox_id = x.unique_id();

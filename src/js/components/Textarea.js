@@ -1,24 +1,25 @@
 'use strict';
 
 import x from 'x';
-
+import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
-import { inputs_data } from 'js/inputs_data';
 
 import { Help } from 'components/Help';
 
-import react from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, action, configure } from 'mobx';
 
 configure({ enforceActions: 'observed' });
 
-export class Textarea extends react.Component {
+//--
+
+export class Textarea extends React.Component {
     constructor(props) {
         super(props);
 
-        this.textarea = react.createRef();
+        this.textarea = React.createRef();
 
         this.ob = observable({
             number_of_chars: 0,

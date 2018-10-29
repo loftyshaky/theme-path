@@ -2,15 +2,17 @@
 
 import * as shared from 'js/shared';
 
+import { existsSync, readdirSync, statSync } from 'fs-extra';
+import { join } from 'path';
+
 import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
-const { existsSync, readdirSync, statSync } = require('fs-extra');
-const { join } = require('path');
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
+
+//--
 
 export const rerender_work_folder = action(() => {
     const previous_val = shared.ob.chosen_folder_path;;

@@ -4,17 +4,19 @@ import x from 'x';
 import * as shared from 'js/shared';
 import { observable, action, configure } from 'mobx';
 
-const kill = require('tree-kill');
-const zipLocal = require('zip-local');
-const { join, sep } = require('path');
-const { existsSync, unlinkSync, readdirSync } = require('fs');
-const { exec } = require('child_process');
-const glob = require('glob');
-const Store = require('electron-store');
+import { join, sep } from 'path';
+import { existsSync, unlinkSync, readdirSync } from 'fs-extra';
+import { exec } from 'child_process';
+import glob from 'glob';
+
+import kill from 'tree-kill';
+import zipLocal from 'zip-local';
+import Store from 'electron-store';
 
 configure({ enforceActions: 'observed' });
-
 const store = new Store();
+
+//--
 
 const run = callback => {
     if (shared.ob.chosen_folder_path != '') {

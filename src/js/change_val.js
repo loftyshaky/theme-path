@@ -1,20 +1,22 @@
 'use_strict';
 
+import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as settings from 'js/settings'
 import * as open_and_pack from 'js/open_and_pack';
-import { inputs_data } from 'js/inputs_data';
+
+import { join, sep } from 'path';
+import { existsSync, mkdirSync, writeFileSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
-const { join, sep } = require('path');
-const { existsSync, mkdirSync, writeFileSync } = require('fs');
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
+
+//--
 
 export const change_val = (family, i, val, img_extension, e) => {
     const new_val = val == 'is_not_select' ? e.target.value : val;

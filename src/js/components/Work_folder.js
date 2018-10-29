@@ -1,7 +1,11 @@
 'use strict';
 
-import x from 'x';
+import folder_svg from 'svg/folder';
+import folder_opened_svg from 'svg/folder_opened';
+import arrow_right_svg from 'svg/arrow_right';
+import arrow_down_svg from 'svg/arrow_down';
 
+import x from 'x';
 import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as component_methods from 'js/work_folder/component_methods';
@@ -11,24 +15,21 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 
 import { Fieldset } from 'components/Fieldset';
 
-import folder_svg from 'svg/folder';
-import folder_opened_svg from 'svg/folder_opened';
-import arrow_right_svg from 'svg/arrow_right';
-import arrow_down_svg from 'svg/arrow_down';
-
-import react from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 import { List, AutoSizer } from 'react-virtualized';
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
 
-export class Work_folder extends react.Component {
+//--
+
+export class Work_folder extends React.Component {
     constructor(props) {
         super(props);
 
-        this.list = react.createRef();
+        this.list = React.createRef();
     }
 
     show_or_hide_choose_work_folder_btn = scroll_info => {

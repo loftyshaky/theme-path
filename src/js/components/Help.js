@@ -1,6 +1,8 @@
 'use strict';
 
-import react from 'react';
+import React from 'react';
+
+//--
 
 export const Help = props => {
     return (

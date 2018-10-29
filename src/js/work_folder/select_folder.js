@@ -1,16 +1,19 @@
 'use strict';
 
+import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
-import { inputs_data, reset_inputs_data } from 'js/inputs_data';
+
+import { existsSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
-var looksSame = require('looks-same');
-const { existsSync } = require('fs-extra');
+import looksSame from 'looks-same';
 
 configure({ enforceActions: 'observed' });
+
+//--
 
 //> select folder and fill inputs with theme data
 export const select_folder = action((folder_path, children, nest_level, i_to_insert_folfder_in) => { // action( need to be here otherwise protecting screen will not lift 

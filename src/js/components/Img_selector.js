@@ -1,18 +1,20 @@
 'use strict';
 
 import x from 'x';
-import * as imgs from 'js/imgs';
 import { inputs_data } from 'js/inputs_data';
-import { Tr } from 'js/Tr';
+import * as imgs from 'js/imgs';
 
+import { Tr } from 'js/Tr';
 import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
-import react from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 
-export class Img_selector extends react.Component {
+//--
+
+export class Img_selector extends React.Component {
     constructor(props) {
         super(props);
     }

@@ -1,7 +1,6 @@
 'use strict';
 
 import x from 'x';
-
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as sort_folders from 'js/work_folder/sort_folders';
@@ -9,11 +8,12 @@ import * as watch from 'js/work_folder/watch';
 
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
+
+//--
 
 //> on extension load / work_folder folder content change
 export const create_top_level_folders = async () => {

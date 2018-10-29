@@ -1,17 +1,18 @@
 'use strict';
 
 import x from 'x';
-
-import * as color_pickiers from 'js/color_pickiers';
 import { inputs_data } from 'js/inputs_data';
-import { Tr } from 'js/Tr';
+import * as color_pickiers from 'js/color_pickiers';
 
+import { Tr } from 'js/Tr';
 import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
-import react from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { ChromePicker } from 'react-color';
+
+//--
 
 export let Color = props => {
     const color = inputs_data.obj[props.family][props.i].color || inputs_data.obj[props.family][props.i].val;

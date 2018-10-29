@@ -5,12 +5,15 @@ import * as settings from 'js/settings';
 import * as change_val from 'js/change_val'
 import { inputs_data } from 'js/inputs_data';
 
+import { join } from 'path';
+import { existsSync, unlinkSync, copySync } from 'fs-extra';
+
 import * as r from 'ramda';
-const Store = require('electron-store');
-const { existsSync, unlinkSync, copySync } = require('fs-extra');
-const { join } = require('path');
+import Store from 'electron-store';
 
 const store = new Store();
+
+//--
 
 export const set_default_icon = (family, i) => {
     //> set default icon name

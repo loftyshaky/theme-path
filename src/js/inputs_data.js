@@ -5,11 +5,12 @@ import * as settings from 'js/settings';
 
 import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
+
+//--
 
 const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;
 

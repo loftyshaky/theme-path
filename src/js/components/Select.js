@@ -1,27 +1,27 @@
 'use strict';
 
 import x from 'x';
-
+import { inputs_data } from 'js/inputs_data';
+import { selects_options } from 'js/selects_options';
 import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
-import { selects_options } from 'js/selects_options';
-import { inputs_data } from 'js/inputs_data';
 
 import { Help } from 'components/Help';
 
-import react from 'react';
+import React from 'react';
 import * as r from 'ramda';
-
 import { observer } from 'mobx-react';
 
-export class Select extends react.Component {
+//--
+
+export class Select extends React.Component {
     constructor(props) {
         super(props);
 
-        this.input = react.createRef();
-        this.select_w = react.createRef();
-        this.select = react.createRef();
+        this.input = React.createRef();
+        this.select_w = React.createRef();
+        this.select = React.createRef();
     }
 
     componentDidUpdate() {

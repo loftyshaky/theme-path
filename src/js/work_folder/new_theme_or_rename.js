@@ -1,20 +1,21 @@
 'use strict';
 
 import x from 'x';
-
 import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as sort_folders from 'js/work_folder/sort_folders';
 
+import { join, resolve, dirname } from 'path';
+import { existsSync, copySync, renameSync } from 'fs-extra';
+
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
-const { join, resolve, dirname } = require('path');
-const { existsSync, copySync, renameSync } = require('fs-extra');
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
+
+//--
 
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
 export const create_new_theme_or_rename_theme_folder = action((folder_path, nest_level, i_to_insert_folfder_in, folder_is_opened, name_input_val) => { // action( need to be here otherwise renamed folder will be deselected

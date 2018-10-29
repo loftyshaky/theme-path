@@ -6,15 +6,17 @@ import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
 
+import { basename, dirname } from 'path';
+
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
-const chokidar = require('chokidar');
-const { basename, dirname } = require('path');
-const Store = require('electron-store');
+import chokidar from 'chokidar';
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
+
+//--
 
 const watcher = chokidar.watch(null, { persistent: true, ignoreInitial: true, awaitWriteFinish: true, usePolling: true, depth: 0 });
 

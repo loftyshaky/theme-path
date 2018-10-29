@@ -1,16 +1,18 @@
 'use_strict';
 
 import x from 'x';
+import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
-import { inputs_data } from 'js/inputs_data';
 
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
-const hexToHsl = require('hex-to-hsl');
-const hexToRgb = require('hex-to-rgb');
+import hexToHsl from 'hex-to-hsl';
+import hexToRgb from 'hex-to-rgb';
 
 configure({ enforceActions: 'observed' });
+
+//--
 
 export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualization = e => {
     const color_ok_btn_clicked = x.matches(e.target, '.color_ok_btn');

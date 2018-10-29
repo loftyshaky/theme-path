@@ -3,11 +3,12 @@
 import * as shared from 'js/shared';
 
 import { observable, action, configure } from 'mobx';
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
+
+//--
 
 export const select_root_folder = action(() => {
     shared.ob.chosen_folder_path = store.get('work_folder');

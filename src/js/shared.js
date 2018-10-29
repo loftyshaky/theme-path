@@ -1,17 +1,19 @@
 
 'use strict';
 
+import { resolve } from 'path';
+import { readFileSync, writeFileSync } from 'fs-extra';
+
 import { action, observable, configure } from 'mobx';
-const { readFileSync, writeFileSync } = require('fs');
-const { resolve } = require('path');
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
-
 configure({ enforceActions: 'observed' });
 
+//--
+
 export const set_chosen_folder_path = action((chosen_folder_path) => {
-   ob.chosen_folder_path = chosen_folder_path;
+    ob.chosen_folder_path = chosen_folder_path;
 });
 
 export const parse_json = file_path => {

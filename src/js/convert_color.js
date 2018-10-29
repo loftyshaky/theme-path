@@ -1,13 +1,15 @@
 'use strict';
 
+import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
 import * as settings from 'js/settings';
-import { inputs_data } from 'js/inputs_data';
 
 import * as r from 'ramda';
-const Store = require('electron-store');
+import Store from 'electron-store';
 
 const store = new Store();
+
+//--
 
 export const convert_theme_color_props_to_color = (family, i, val) => {
     const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;

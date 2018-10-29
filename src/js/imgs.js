@@ -6,13 +6,16 @@ import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 
+import { join } from 'path';
+import { createReadStream, createWriteStream, writeFileSync } from 'fs-extra';
+
 import { observable, action, configure } from 'mobx';
 import * as r from 'ramda'
-const Jimp = require('jimp');
-const { join } = require('path');
-const { createReadStream, createWriteStream, writeFileSync } = require('fs');
+import Jimp from 'jimp';
 
 configure({ enforceActions: 'observed' });
+
+//--
 
 export const create_solid_color_image = (name, color) => {
     const width = sta.width[name] ? sta.width[name] : 1;
