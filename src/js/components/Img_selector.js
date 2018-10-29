@@ -9,9 +9,6 @@ import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
-import library_add_svg from 'svg/library_add';
-
-import Svg from 'svg-inline-react';
 import react from 'react';
 import { observer } from 'mobx-react';
 
@@ -43,11 +40,6 @@ export class Img_selector extends react.Component {
     }
 
     render() {
-        const also_use_img_as = this.props.name != 'icon' ?
-            <span className='also_use_img_as' data-title='also_use_img_as_title'>
-                <Svg src={library_add_svg} />
-            </span>
-            : null
         return (
             <div className='input'>
                 <label
@@ -88,7 +80,6 @@ export class Img_selector extends react.Component {
                         color_input_type='img'
                         add_help={false}
                     />
-                  {also_use_img_as}
                     <Checkbox
                         {...this.props}
                         special_checkbox='default'
