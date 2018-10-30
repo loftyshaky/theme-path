@@ -35,7 +35,7 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
                     const new_theme_path = join(folder_path, folder_name_final);
                     const root_folder_chosen = shared.ob.chosen_folder_path == store.get('work_folder');
                     const number_of_folders = wf_shared.get_number_of_folders_to_work_with(i_to_insert_folfder_in, nest_level) + 1;
-                    alert(__dirname)
+
                     copySync(source_folder_path, new_theme_path);
 
                     if (root_folder_chosen || folder_is_opened) {

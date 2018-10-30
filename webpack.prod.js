@@ -3,8 +3,6 @@ const { join } = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const mini_css_extract_plugin = require("mini-css-extract-plugin");
-const clean_webpack_plugin = require('clean-webpack-plugin');
-const write_file_webpack_plugin = require('write-file-webpack-plugin'); // needed to create dist folder and its content on npm start after it was deleted by clean_webpack_plugin
 
 //--
 
@@ -24,9 +22,7 @@ module.exports = merge(shared, {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
-        new mini_css_extract_plugin(),
-        new clean_webpack_plugin(['resources']),
-        new write_file_webpack_plugin()
+        new mini_css_extract_plugin()
     ],
 
     stats: {

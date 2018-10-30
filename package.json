@@ -4,9 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev": "webpack-dev-server --host 0.0.0.0 --config=./webpack.dev.js --mode development",
+    "dev": "webpack-dev-server --mode development --host 0.0.0.0 --config=./webpack.dev.js",
     "prod": "webpack --mode production --config webpack.prod.js && electron --noDevServer .",
-    "build": "webpack --config webpack.prod.js --mode production --runs_from_package",
+    "build": "webpack --mode production --config webpack.prod.js --packing",
     "pack": "npm run build && electron-packager ./ --out=./prods --platform=all --icon=icons/icon --ignore=/.vscode --ignore=/icons --ignore=/node_modules --ignore=/src --ignore=/.babelrc --ignore=/package-lock.json --ignore=/webpack.dev.js --ignore=/webpack.prod.js --ignore=/webpack.shared.js --ignore=/.gitignore"
   },
   "license": "ISC",

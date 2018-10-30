@@ -27,7 +27,7 @@ function create_window() {
   //< create the browser window.
 
   //> implementing Webpack
-  const index_path = dev && process.argv.indexOf('--noDevServer') === -1 ?
+  const index_path = dev && process.argv.indexOf('--noDevServer') == -1 ?
     (() => {
       const index_path = format({
         protocol: 'http:',
