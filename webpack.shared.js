@@ -4,7 +4,7 @@ const html_webpack_plugin = require('html-webpack-plugin');
 const copy_webpack_plugin = require('copy-webpack-plugin');
 const clean_webpack_plugin = require('clean-webpack-plugin');
 //--
-const output_dir = process.argv.indexOf('--packing') > -1 ? 'dist' : join('resources', 'app', 'dist');
+const output_dir = process.argv.indexOf('--packing') > -1 ? 'bundle' : join('resources', 'app', 'bundle');
 
 module.exports = {
     entry: {
@@ -44,7 +44,7 @@ module.exports = {
             { from: join(__dirname, 'src', 'Roboto-Light.ttf'), to: join(__dirname, output_dir) },
             { from: join(__dirname, 'src', 'new_theme'), to: join(__dirname, output_dir, 'new_theme') }
         ]),
-        new clean_webpack_plugin(['dist', 'resources'])
+        new clean_webpack_plugin(['bundle', 'resources'])
     ],
 
     resolve: {

@@ -50,7 +50,7 @@ function create_window() {
     (() => {
       const index_path = format({
         protocol: 'file:',
-        pathname: join(__dirname, runs_from_package ? '' : 'resources', runs_from_package ? '' : 'app', 'dist', 'index.html'),
+        pathname: join(__dirname, runs_from_package ? '' : 'resources', runs_from_package ? '' : 'app', 'bundle', 'index.html'),
         slashes: true
       });
 

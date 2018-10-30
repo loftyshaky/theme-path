@@ -22,7 +22,7 @@ export const create_new_theme_or_rename_theme_folder = action((folder_path, nest
     const mode = name_input_val ? 'renaming_folder' : 'creating_folder';
     const folder_name = mode == 'renaming_folder' ? name_input_val : x.message('new_theme_btn_label_text');
     const timne_id = Date.now();
-    const source_folder_path = mode == 'renaming_folder' ? folder_path : join('.', 'resources', 'app', 'dist', 'new_theme');
+    const source_folder_path = mode == 'renaming_folder' ? folder_path : join('.', 'resources', 'app', 'bundle', 'new_theme');
     const parent_of_renamed_folder_path = dirname(folder_path);
 
     for (let i = 0; i < 22; i++) {

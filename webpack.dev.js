@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const write_file_webpack_plugin = require('write-file-webpack-plugin'); // needed to create dist folder and its content on npm start after it was deleted by clean_webpack_plugin
+const write_file_webpack_plugin = require('write-file-webpack-plugin'); // needed to create bundle folder and its content on npm start after it was deleted by clean_webpack_plugin
 
 
 //--

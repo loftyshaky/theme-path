@@ -1,13 +1,40 @@
 {
-  "name": "theme-creator",
+  "name": "chrome-theme-creator",
   "version": "0.0.1",
-  "description": "",
+  "description": "App for creating Chrome themes.",
+  "author": "loftyshaky",
   "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --host 0.0.0.0 --config=./webpack.dev.js",
     "prod": "webpack --mode production --config webpack.prod.js && electron --noDevServer .",
-    "build": "webpack --mode production --config webpack.prod.js --packing",
-    "pack": "npm run build && electron-packager ./ --out=./prods --platform=all --icon=icons/icon --ignore=/.vscode --ignore=/icons --ignore=/node_modules --ignore=/src --ignore=/.babelrc --ignore=/package-lock.json --ignore=/webpack.dev.js --ignore=/webpack.prod.js --ignore=/webpack.shared.js --ignore=/.gitignore"
+    "pack": "npm run bundle && build --dir",
+    "dist": "npm run bundle && build",
+    "bundle": "webpack --mode production --config webpack.prod.js --packing",
+    "builddir": "build --dir",
+    "build": "build"
+  },
+  "build": {
+    "appId": "theme-creator|loftyshaky@gmail.com",
+    "productName": "Theme Creator",
+    "asar": true,
+    "files": {
+      "filter": [
+        "bundle",
+        "main.js",
+        "package.json"
+      ]
+    },
+    "extraResources": {
+      "from": "src",
+      "to": "app/bundle",
+      "filter": [
+        "new_theme"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "license": "ISC",
   "devDependencies": {
@@ -25,8 +52,8 @@
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "electron": "^2.0.8",
+    "electron-builder": "^20.29.0",
     "electron-devtools-installer": "^2.2.4",
-    "electron-packager": "^12.1.1",
     "electron-store": "^2.0.0",
     "file-loader": "^2.0.0",
     "fs-extra": "^7.0.0",

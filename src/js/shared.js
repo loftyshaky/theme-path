@@ -65,7 +65,7 @@ export const write_to_json = (json, json_path) => {
 };
 
 export const get_icon_paths = () => {
-    const default_icon_soure_path = resolve('resources', 'app', 'dist', 'new_theme', 'icon.png');
+    const default_icon_soure_path = resolve('resources', 'app', 'bundle', 'new_theme', 'icon.png');
     const default_icon_target_path = resolve(ob.chosen_folder_path, 'icon.png');
 
     return {
