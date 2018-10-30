@@ -15,7 +15,7 @@
   },
   "build": {
     "appId": "theme-creator|loftyshaky@gmail.com",
-    "productName": "Theme Creator",
+    "productName": "Chrome Theme Creator",
     "asar": true,
     "files": {
       "filter": [
