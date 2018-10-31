@@ -56,7 +56,7 @@ module.exports = {
             css: join(__dirname, 'src', 'css'),
             svg: join(__dirname, 'src', 'svg'),
         },
-        extensions: ['.js', 'css', '.svg', '.png', '.gif']
+        extensions: ['.js', '.css', '.svg', '.png', '.gif']
     },
 
     target: 'electron-renderer'
