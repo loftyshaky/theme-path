@@ -1,7 +1,3 @@
-'use strict';
-
-import * as shared from 'js/shared';
-
 import { existsSync, readdirSync, statSync } from 'fs-extra';
 import { join } from 'path';
 
@@ -9,13 +5,15 @@ import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
 import Store from 'electron-store';
 
+import * as shared from 'js/shared';
+
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
 //--
 
 export const rerender_work_folder = action(() => {
-    const previous_val = shared.ob.chosen_folder_path;;
+    const previous_val = shared.ob.chosen_folder_path;
     shared.ob.chosen_folder_path = '';
     shared.ob.chosen_folder_path = previous_val;
 });
@@ -29,22 +27,22 @@ export const get_folders = folder_path => {
         return {
             name: file,
             path: child_path,
-            is_directory: statSync(join(folder_path, file)).isDirectory()
-        }
-    })
-}
+            is_directory: statSync(join(folder_path, file)).isDirectory(),
+        };
+    });
+};
 
 
-export const get_info_about_folder = (folder_path) => {
+export const get_info_about_folder = folder_path => {
     const folder_info = {};
 
     if (!existsSync(folder_path)) {
         folder_info.is_theme = false;
-        folder_info.is_empty = true
+        folder_info.is_empty = true;
 
     } else {
         folder_info.children = get_folders(folder_path);
-        folder_info.is_theme = folder_info.children.some(item => item.name == 'manifest.json');
+        folder_info.is_theme = folder_info.children.some(item => item.name === 'manifest.json');
         folder_info.is_empty = !folder_info.children.some(item => statSync(item.path).isDirectory());
     }
 
@@ -53,7 +51,10 @@ export const get_info_about_folder = (folder_path) => {
 
 export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
     const close_preceding_folder = r.drop(start_i);
-    const get_last_folder_to_close_i = r.findIndex(item => item.nest_level < nest_level || item == ob.folders[ob.folders.length - 1]);
+    const get_last_folder_to_close_i = r.findIndex(
+        item => item.nest_level < nest_level
+            || item === ob.folders[ob.folders.length - 1],
+    );
     return r.pipe(close_preceding_folder, get_last_folder_to_close_i)(ob.folders);
 };
 
@@ -61,8 +62,8 @@ export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
 export const ob = observable({
     folders: [],
     get fieldset_protecting_screen_is_visible() {
-        return shared.ob.chosen_folder_path == store.get('work_folder') || !mut.chosen_folder_info.is_theme;
-    }
+        return shared.ob.chosen_folder_path === store.get('work_folder') || !mut.chosen_folder_info.is_theme;
+    },
 });
 
 export const set_folders = action(val => {

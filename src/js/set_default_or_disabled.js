@@ -1,15 +1,15 @@
 'use_strict';
 
-import * as shared from 'js/shared';
-import * as settings from 'js/settings';
-import * as change_val from 'js/change_val'
-import { inputs_data } from 'js/inputs_data';
-
 import { join } from 'path';
 import { existsSync, unlinkSync, copySync } from 'fs-extra';
 
 import * as r from 'ramda';
 import Store from 'electron-store';
+
+import * as shared from 'js/shared';
+import * as settings from 'js/settings';
+import * as change_val from 'js/change_val';
+import { inputs_data } from 'js/inputs_data';
 
 const store = new Store();
 
@@ -21,7 +21,7 @@ export const set_default_icon = (family, i) => {
 
     shared.construct_icons_obj(shared.mut.manifest);
 
-    shared.mut.manifest.icons['128'] = 'icon.png'
+    shared.mut.manifest.icons['128'] = 'icon.png';
 
     shared.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
     //< set default icon name
@@ -33,28 +33,28 @@ export const set_default_icon = (family, i) => {
     //< copy default icon
 
     //> restore default color_input_vizualization color
-    const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;
+    const { color_input_default } = settings.ob.theme_vals[store.get('theme')];
 
     change_val.set_inputs_data_color(family, i, color_input_default);
     //< restore default color_input_vizualization color
 };
 
 export const set_default_or_disabled = (family, i, special_checkbox) => {
-    if (special_checkbox == 'default') {
+    if (special_checkbox === 'default') {
         if (!inputs_data.obj[family][i].default) {
             change_val.set_default_bool(family, i, true);
 
-            if (family == 'tints') {
+            if (family === 'tints') {
                 change_val.set_disable_bool(family, i, false);
             }
 
             set_default(family, i, special_checkbox);
         }
 
-    } else if (special_checkbox == 'select') {
+    } else if (special_checkbox === 'select') {
         set_default(family, i, special_checkbox);
 
-    } else if (special_checkbox == 'disable') {
+    } else if (special_checkbox === 'disable') {
         if (!inputs_data.obj[family][i].disable) {
             change_val.set_disable_bool(family, i, true);
             change_val.set_default_bool(family, i, false);
@@ -74,7 +74,7 @@ export const set_default_or_disabled = (family, i, special_checkbox) => {
 };
 
 const set_default = (family, i) => {
-    const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;
+    const { color_input_default } = settings.ob.theme_vals[store.get('theme')];
     const name_to_delete = inputs_data.obj[family][i].name;
 
     delete shared.mut.manifest.theme[family][name_to_delete];

@@ -1,4 +1,6 @@
-'use strict';
+import React from 'react';
+import * as r from 'ramda';
+import { observer } from 'mobx-react';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -9,75 +11,78 @@ import * as set_default_or_disabled from 'js/set_default_or_disabled';
 
 import { Help } from 'components/Help';
 
-import React from 'react';
-import * as r from 'ramda';
-import { observer } from 'mobx-react';
-
 //--
 
 export class Select extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.input = React.createRef();
-        this.select_w = React.createRef();
-        this.select = React.createRef();
-    }
-
     componentDidUpdate() {
-        if (this.props.name == 'default_locale') {
-            this.props.count_char();
+        const { name, count_char } = this.props;
+
+        if (name === 'default_locale') {
+            count_char();
         }
     }
 
     //> create one option element
-    create_option = option => {
-        return <li key={option.key} className='option' data-val={option.val} onClick={this.change_select_val}>{option.text}</li>
-    }
+    create_option = option => (
+        /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/role-has-required-aria-props */
+        <li
+            key={option.key}
+            className="option"
+            role="option"
+            data-val={option.val}
+            onClick={this.change_select_val}
+        >
+            {option.text}
+        </li>
+    );
     //< create one option element
 
     //> change option val when selecting option
     change_select_val = e => {
-        const val = e.target.dataset.val
+        const { family, i } = this.props;
+        const { val } = e.target.dataset;
 
-        change_val.change_val(this.props.family, this.props.i, val, null);
+        change_val.change_val(family, i, val, null);
 
         this.hide_options();
 
-        if (val == 'default') {
-            set_default_or_disabled.set_default_or_disabled(this.props.family, this.props.i, 'select');
+        if (val === 'default') {
+            set_default_or_disabled.set_default_or_disabled(family, i, 'select');
         }
     }
     //< change option val when selecting option
 
     //> hide options when clicking on option or select_title
     hide_options = async () => {
-        if (document.activeElement == this.select_w.current) {
+        if (document.activeElement === this.select_w) {
             await x.delay(0);
 
-            this.select_w.current.blur();
+            this.select_w.blur();
         }
     }
     //< hide options when clicking on option or select_title
 
     //> hide options when clicking on option or select_title / scroll select options into view when oipening select
     on_mouse_down = async () => {
-        if (document.activeElement == this.select_w.current) {
+        const { family } = this.props;
+
+        if (document.activeElement === this.select_w) {
             await x.delay(0);
 
-            this.select_w.current.blur();
+            this.select_w.blur();
 
-        } else if (this.props.family != 'settings') {
+        } else if (family !== 'settings') {
             await x.delay(0);
 
-            const fieldset_w = x.closest(this.input.current, '.fieldset_w');
-            const fieldset = x.closest(this.input.current, 'fieldset');
-            const fieldset_style = window.getComputedStyle(fieldset);
-            const fieldset_div = x.closest(this.input.current, 'fieldset > div');
+            const fieldset_w = x.closest(this.input, '.fieldset_w');
+            const fieldset = x.closest(this.input, 'fieldset');
+            const fieldset_div = x.closest(this.input, 'fieldset > div');
             const fieldset_div_visible_height = fieldset_div.clientHeight;
-            const margin_top_of_fieldset_plus_its_border = parseInt(window.getComputedStyle(fieldset_w).marginTop) + parseInt(window.getComputedStyle(fieldset).borderWidth);
-            const select_w_margin_bottom = parseInt(window.getComputedStyle(this.select_w.current).marginBottom);
-            let select_w_rect_bottom = this.select_w.current.getBoundingClientRect().bottom;
+            const fieldset_margin_top = parseInt(window.getComputedStyle(fieldset_w).marginTop);
+            const fieldset_border_width = parseInt(window.getComputedStyle(fieldset).borderWidth);
+            const margin_top_of_fieldset_plus_its_border = fieldset_margin_top + fieldset_border_width;
+            const select_w_margin_bottom = parseInt(window.getComputedStyle(this.select_w).marginBottom);
+            let select_w_rect_bottom = this.select_w.getBoundingClientRect().bottom;
             let while_loop_runned_at_least_once = false;
             let scroll_top_modifier = 0;
 
@@ -95,8 +100,9 @@ export class Select extends React.Component {
     //< hide options when clicking on option or select_title / scroll select options into view when oipening select
 
     render() {
-        const options = selects_options[this.props.name != 'default_locale' ? this.props.name : 'locale'];
-        const val = inputs_data.obj[this.props.family][this.props.i].val;
+        const { name, family, i } = this.props;
+        const { val } = inputs_data.obj[family][i];
+        const options = selects_options[name !== 'default_locale' ? name : 'locale'];
         const selected_option = shared.find_from_val(options, val);
 
         const selected_option_text = r.ifElse(
@@ -104,36 +110,39 @@ export class Select extends React.Component {
 
             () => selected_option.text,
             () => {
-                if (options[0].val == 'default') {
+                if (options[0].val === 'default') {
                     return shared.find_from_val(options, options[0].val).text;
                 }
-            }
+                return false;
+            },
         )();
 
         return (
             <div
-                className='input select_input'
-                ref={this.input}
+                className="input select_input"
+                ref={input => { this.input = input; }}
             >
                 <div>
                     <label
-                        className='input_label'
-                        data-text={this.props.name + '_label_text'}
-                    ></label>
+                        className="input_label"
+                        data-text={`${name}_label_text`}
+                    />
                     <div
-                        className='select_w settings_input'
-                        tabIndex='0'
-                        ref={this.select_w}
+                        className="select_w settings_input"
+                        role="button"
+                        tabIndex="0"
+                        ref={select_w => { this.select_w = select_w; }}
                     >
                         <div
-                            className='select_title'
+                            className="select_title"
+                            role="presentation"
                             onMouseDown={this.on_mouse_down}
                         >
                             {selected_option_text}
                         </div>
                         <ul
-                            className='select'
-                            ref={this.select}
+                            className="select"
+                            ref={select => { this.select = select; }}
                         >
                             {options.map(this.create_option)}
                         </ul>
@@ -145,4 +154,4 @@ export class Select extends React.Component {
     }
 }
 
-Select = observer(Select);
+observer(Select);

@@ -1,9 +1,9 @@
 'use_strict';
 
-import x from 'x';
-
 import { observable, action, configure } from 'mobx';
 import Store from 'electron-store';
+
+import x from 'x';
 
 const store = new Store();
 configure({ enforceActions: 'observed' });
@@ -14,10 +14,10 @@ export const load_theme = action(() => {
     const theme_setting = store.get('theme');
     const selected_folder = s('.selected_folder');
 
-    if (theme_setting == 'light') {
+    if (theme_setting === 'light') {
         x.load_css(theme_setting);
 
-    } else if (theme_setting == 'dark') {
+    } else if (theme_setting === 'dark') {
         x.remove(s('.light'));
     }
 
@@ -29,11 +29,12 @@ export const load_theme = action(() => {
 });
 
 export const load_setting = action(() => {
-    const settings = inputs_data.obj.settings;
+    const { settings } = inputs_data.obj;
 
-    for (const item of settings) {
-        item.val = store.get(item.name);
-    }
+    settings.forEach(item => {
+        const new_item = item;
+        new_item.val = store.get(item.name);
+    });
 
     open_and_pack.update_chrome_user_data_dirs_observable();
 });
@@ -47,16 +48,16 @@ export const ob = observable({
             fieldset: '#333333',
             legend: '#474747',
             color_input_default: '#fbff75',
-            color_input_disabled: '#212121'
+            color_input_disabled: '#212121',
         },
         light: {
             upload_box: '#ffd375',
             fieldset: '#d3d3d3',
             legend: '#d3d3d3',
             color_input_default: '#3892ff',
-            color_input_disabled: 'white'
-        }
-    }
+            color_input_disabled: 'white',
+        },
+    },
 });
 
 //< variables

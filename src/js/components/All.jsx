@@ -1,6 +1,5 @@
-'use strict';
+import React from 'react';
 
-import x from 'x';
 import * as color_pickiers from 'js/color_pickiers';
 
 import { Header } from 'components/Header';
@@ -11,47 +10,47 @@ import { Settings } from 'components/Settings';
 import { Links } from 'components/Links';
 import { Protecting_screen } from 'components/Protecting_screen';
 
-import React from 'react';
-
 //--
 
 export class All extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
-        document.addEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
+        document.addEventListener(
+            'mousedown',
+            color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization,
+        );
     }
 
     componentWillUnmount() {
-        document.removeEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
+        document.removeEventListener(
+            'mousedown',
+            color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization,
+        );
     }
 
     render() {
         return (
-            <div className='all'>
+            <div className="all">
                 <Header />
-                <div className='fieldsets'>
+                <div className="fieldsets">
                     <Work_folder />
-                    <Fieldset name='theme_metadata'>
-                        <Input_block name='theme_metadata' />
+                    <Fieldset name="theme_metadata">
+                        <Input_block name="theme_metadata" />
                     </Fieldset>
-                    <Fieldset name='theme'>
+                    <Fieldset name="theme">
                         <Input_block
-                            name='images'
+                            name="images"
                             hr
                         />
                         <Input_block
-                            name='colors'
+                            name="colors"
                             hr
                         />
                         <Input_block
-                            name='tints'
+                            name="tints"
                             hr
                         />
                         <Input_block
-                            name='properties'
+                            name="properties"
                             hr
                         />
                     </Fieldset>

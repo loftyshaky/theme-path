@@ -1,17 +1,16 @@
 'use_strict';
 
-import x from 'x';
+import { join } from 'path';
+import { copySync, writeFileSync } from 'fs-extra';
 
+import { observable, action, configure } from 'mobx';
+import * as r from 'ramda';
+import Jimp from 'jimp';
+
+import x from 'x';
 import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
-
-import { join } from 'path';
-import { createReadStream, createWriteStream, writeFileSync } from 'fs-extra';
-
-import { observable, action, configure } from 'mobx';
-import * as r from 'ramda'
-import Jimp from 'jimp';
 
 configure({ enforceActions: 'observed' });
 
@@ -21,17 +20,26 @@ export const create_solid_color_image = (name, color) => {
     const width = sta.width[name] ? sta.width[name] : 1;
     const height = sta.height[name] ? sta.height[name] : 200;
 
-    new Jimp(width, height, color, (err, img) => {
-        img.getBase64(Jimp.AUTO, (er, data) => {
+    new Jimp(width, height, color, (er, img) => { // eslint-disable-line no-new
+        if (er) {
+            x.error(11);
+            console.error(er);
+        }
+
+        img.getBase64(Jimp.AUTO, (er2, data) => {
+            if (er2) {
+                x.error(12);
+                console.error(er2);
+            }
+
             try {
                 const base_64_data = data.replace(/^data:image\/png;base64,/, '');
 
-                writeFileSync(join(shared.ob.chosen_folder_path, name + '.png'), base_64_data, 'base64');
+                writeFileSync(join(shared.ob.chosen_folder_path, `${name}.png`), base_64_data, 'base64');
 
-            } catch (er) {
-                console.error(er);
-
+            } catch (er3) {
                 x.error(1);
+                console.error(er3);
             }
         });
     });
@@ -43,13 +51,13 @@ export const handle_files = async (file, family, i) => {
     const valid_file_types = r.cond([
         [r.equals('theme_ntp_background'), () => ['image/png', 'image/jpeg', 'image/gif']],
         [r.equals('icon'), () => ['image/png', 'image/jpeg']],
-        [r.T, () => ['image/png']]
+        [r.T, () => ['image/png']],
     ])(img_name);
 
     if (valid_file_types.indexOf(file[0].type) > -1) {
         const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
 
-        createReadStream(file[0].path).pipe(createWriteStream(join(shared.ob.chosen_folder_path, img_name + '.' + img_extension))); // copy image
+        copySync(file[0].path, join(shared.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
 
         change_val.change_val(family, i, img_name, img_extension);
 
@@ -67,7 +75,7 @@ export const reset_upload_btn_val = action(() => {
 export const prevent_default_dnd_actions = e => {
     e.stopPropagation();
     e.preventDefault();
-}
+};
 
 export const dehighlight_upload_box_on_drop = action((family, i) => {
     mut.drag_counter = 0;
@@ -83,7 +91,7 @@ export const highlight_upload_box_on_drag_enter = action((family, i) => {
 export const dehighlight_upload_box_on_drag_leave = action((family, i) => {
     mut.drag_counter--;
 
-    if (mut.drag_counter == 0) {
+    if (mut.drag_counter === 0) {
         inputs_data.obj[family][i].highlight_upload_box = false;
     }
 });
@@ -92,24 +100,24 @@ export const dehighlight_upload_box_on_drag_leave = action((family, i) => {
 //> variables
 const sta = {
     width: {
-        'icon': 128,
-        'theme_ntp_background': screen.width,
-        'theme_frame_overlay': 1100,
-        'theme_frame_overlay_inactive': 1100,
-        'theme_ntp_attribution': 100
+        icon: 128,
+        theme_ntp_background: window.screen.width,
+        theme_frame_overlay: 1100,
+        theme_frame_overlay_inactive: 1100,
+        theme_ntp_attribution: 100,
     },
     height: {
-        'icon': 128,
-        'theme_ntp_background': screen.height,
-        'theme_ntp_attribution': 50
-    }
-}
+        icon: 128,
+        theme_ntp_background: window.screen.height,
+        theme_ntp_attribution: 50,
+    },
+};
 
 const mut = {
-    drag_counter: 0
-}
+    drag_counter: 0,
+};
 
 export const ob = observable({
-    file_input_value: ''
+    file_input_value: '',
 });
 //< variables

@@ -1,89 +1,86 @@
-'use strict';
-
 import * as r from 'ramda';
 
 //--
-
 const loc = require('locales/en.json');
+
 const x = {};
 
 //> console.log
-window.l = console.log.bind(console);
+window.l = console.log.bind(console); // eslint-disable-line no-console
 //< console.log
 
 //> selecting elements
-window.s = (selector) => { // $
-    return document.querySelector(selector);
-}
+window.s = selector => document.querySelector(selector); // $
 
-window.sa = (selector) => { // $ All
-    return document.querySelectorAll(selector);
-}
+window.sa = selector => document.querySelectorAll(selector); // $ All
 
-window.sb = (base_element, selector) => { // $ with base element
-    return base_element ? base_element.querySelector(selector) : null;
-}
+window.sb = (base_element, selector) => ( // $ with base element
+    base_element ? base_element.querySelector(selector) : null
+);
 
-window.sab = (base_element, selector) => { // $ All with base element
-    return base_element ? base_element.querySelectorAll(selector) : null;
-}
+window.sab = (base_element, selector) => ( // $ All with base element
+    base_element ? base_element.querySelectorAll(selector) : null
+);
+
 //< selecting elements
 
 //> notify about error
 x.error = (error_code, extra) => {
-    const error_message = x.message('error_alert') + error_code + (extra ? '\n' + x.message(extra) : '');
+    const error_message = x.message('error_alert') + error_code + (extra ? `\n${x.message(extra)}` : '');
 
     alert(error_message);
-}
+};
 //< notify about error
 
 //> dom manipulation
 x.create = (el_type, class_name) => { // create element
-    let el = document.createElement(el_type);
+    const el = document.createElement(el_type);
     el.className = class_name;
 
     return el;
 };
 
 x.append = (el, child) => { // append child
-    if (el && el.nodeType == 1) { // if not document
+    if (el && el.nodeType === 1) { // if not document
         el.appendChild(child);
     }
 };
 
 x.remove = el => { // remove child
-    if (el && el.nodeType == 1) { // if not document
+    if (el && el.nodeType === 1) { // if not document
         el.parentNode.removeChild(el);
     }
 };
 
 
 x.before = (el_to_insert_before, el_to_insert) => { // insert before
-    if (el_to_insert_before && el_to_insert.nodeType == 1) { // if not document
+    if (el_to_insert_before && el_to_insert.nodeType === 1) { // if not document
         el_to_insert_before.parentNode.insertBefore(el_to_insert, el_to_insert_before);
     }
 };
 
 x.after = (el_to_insert_after, el_to_insert) => { // insert after
-    if (el_to_insert_after && el_to_insert.nodeType == 1) { // if not document
+    if (el_to_insert_after && el_to_insert.nodeType === 1) { // if not document
         el_to_insert_after.parentNode.insertBefore(el_to_insert, el_to_insert_after.nextElementSibling);
     }
 };
 //< dom manipulation
 
 x.matches = (el, selector) => {
-    if (el && el.nodeType == 1) { // if not document
+    if (el && el.nodeType === 1) { // if not document
         return el.matches(selector);
 
-    } else {
-        return false;
     }
+
+    return false;
 };
 
 x.closest = (el, selector) => {
-    if (el && el.nodeType == 1) { // if not document
+    if (el && el.nodeType === 1) { // if not document
         return el.closest(selector);
     }
+
+    return false;
 };
 
 //> move an array item
@@ -92,13 +89,13 @@ x.move_a_item = (a, from, to) => {
 };
 //< move an array item
 
-x.load_css = (filename) => {
+x.load_css = filename => {
     let link;
 
-    if (!sb(document.head, '.' + filename)) {
+    if (!sb(document.head, `.${filename}`)) {
         link = document.createElement('link');
         link.className = filename;
-        link.href = filename + '.css';
+        link.href = `${filename}.css`;
         link.setAttribute('rel', 'stylesheet');
         link.setAttribute('type', 'text/css');
         x.append(document.head, link);
@@ -107,35 +104,34 @@ x.load_css = (filename) => {
     return link;
 };
 
-x.debounce = (f, wait, immediate, e) => {
+x.debounce = (f, wait, immediate) => {
     let timeout;
 
-    return function () {
-        var context = this, args = arguments;
+    return function () { // eslint-disable-line func-names
+        const context = this;
+        const args = arguments; // eslint-disable-line prefer-rest-params
 
-        var later = () => {
+        const later = () => {
             timeout = null;
 
             if (!immediate) {
-                f.apply(context, args)
-            };
+                f.apply(context, args);
+            }
         };
 
-        let call_now = immediate && !timeout;
+        const call_now = immediate && !timeout;
 
         clearTimeout(timeout);
 
         timeout = setTimeout(later, wait);
 
         if (call_now) {
-            f.apply(context, args)
-        };
+            f.apply(context, args);
+        }
     };
 };
 
-x.delay = delay => {
-    return new Promise(resolve => window.setTimeout(() => resolve(), delay));
-};
+x.delay = delay => new Promise(resolve => window.setTimeout(() => resolve(), delay));
 
 x.unique_id = () => {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -153,19 +149,20 @@ x.cls = classes => {
     const pipe_f = r.pipe(r.filter, r.values, r.join(' '));
 
     return pipe_f(item => item, classes);
-}
+};
 
 //> localization
-x.message = (message) => {
-    return loc[message];
-}
+x.message = message => loc[message];
 
-x.localize = (base_element) => {
-    const localize_inner = (item_key, loc_key, what_browser) => {
-        const arr = sab(base_element, '[data-' + loc_key + ']');
+x.localize = base_element => {
+    const localize_inner = (item_key, loc_key) => {
+        const arr = sab(base_element, `[data-${loc_key}]`);
 
-        arr.forEach(item => item[item_key] = x.message(item.dataset[loc_key]));
-    }
+        arr.forEach(item => {
+            const new_item = item;
+            new_item[item_key] = x.message(item.dataset[loc_key]);
+        });
+    };
 
     const localize_inner_cur = r.curry(localize_inner)(r.__, r.__, '');
 
@@ -173,7 +170,7 @@ x.localize = (base_element) => {
     localize_inner_cur('placeholder', 'placeholder');
     localize_inner_cur('href', 'href');
     localize_inner_cur('title', 'title');
-}
+};
 //< localization
 
 //> ramda

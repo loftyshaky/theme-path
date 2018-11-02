@@ -1,9 +1,8 @@
-'use strict';
+import Store from 'electron-store';
 
 import * as shared from 'js/shared';
 import * as watch from 'js/work_folder/watch';
 
-import Store from 'electron-store';
 const { dialog } = require('electron').remote;
 
 const store = new Store();
@@ -12,7 +11,7 @@ const store = new Store();
 
 export const choose_folder = (key, callback) => {
     const folder_path = dialog.showOpenDialog({
-        properties: ['openDirectory']
+        properties: ['openDirectory'],
     });
 
     if (folder_path) { // if not cancelled folder chosing
@@ -23,9 +22,5 @@ export const choose_folder = (key, callback) => {
         shared.deselect_theme();
 
         callback();
-
-        if (key == 'work_folder') {
-
-        }
     }
 };

@@ -1,12 +1,15 @@
-'use strict';
-
-import * as settings from 'js/settings'
-
 import React from 'react';
-import { decorate, observable, action, configure } from 'mobx';
+import {
+    decorate,
+    observable,
+    action,
+    configure,
+} from 'mobx';
 import { observer } from 'mobx-react';
 import * as r from 'ramda';
 import Store from 'electron-store';
+
+import * as settings from 'js/settings';
 
 const store = new Store();
 configure({ enforceActions: 'observed' });
@@ -27,16 +30,16 @@ export class Tr extends React.Component {
         //< observables
     }
 
+    componentWillMount() {
+        this.hide_component(false);
+    }
+
     componentWillUpdate() {
-        if (this.theme != settings.ob.theme) {
+        if (this.theme !== settings.ob.theme) {
             this.theme = settings.ob.theme;
 
             this.create_transitions();
         }
-    }
-
-    componentWillMount() {
-        this.hide_component(false);
     }
 
     componentDidUpdate() {
@@ -44,42 +47,43 @@ export class Tr extends React.Component {
     }
 
     create_transitions = () => {
+        const { upload_box, fieldset, legend } = settings.ob.theme_vals[settings.ob.theme];
+
         this.transitions = {
             gen: this.create_fade(this.normal_duration), // general
             // loading_screen: this.create_fade(400),
-            upload_box: this.create_tran(this.normal_duration, 'backgroundColor', '', settings.ob.theme_vals[settings.ob.theme].upload_box),
-            fieldset: this.create_tran(this.normal_duration, 'borderColor', '', settings.ob.theme_vals[settings.ob.theme].fieldset),
-            legend: this.create_tran(this.normal_duration, 'color', '', settings.ob.theme_vals[settings.ob.theme].legend),
+            upload_box: this.create_tran(this.normal_duration, 'backgroundColor', '', upload_box),
+            fieldset: this.create_tran(this.normal_duration, 'borderColor', '', fieldset),
+            legend: this.create_tran(this.normal_duration, 'color', '', legend),
         };
     }
+
     //> choose component mode (shown or hidden)
-    transit = (name, state) => {
-        return state ? this.transitions[name]['active'] : this.transitions[name]['def']
-    };
+    transit = (name, state) => (state ? this.transitions[name].active : this.transitions[name].def);
     //< choose component mode (shown or hidden)
 
     //> hide component when it faded out or show component when it starting fading in
     hide_component = (called_from_component_did_update, tr_end_callbacks) => {
-        const component_is_active = this.props.state;
+        const { state: component_is_active, name } = this.props;
         const component_is_visible = this.display_style.visibility;
-        const component_uses_fading_transition = 'opacity' in this.transitions[this.props.name]['active'];
+        const component_uses_fading_transition = 'opacity' in this.transitions[name].active;
 
         if (!called_from_component_did_update && !component_is_active && component_uses_fading_transition) {
             if (!component_is_active) {
                 this.display_style = {
                     position: 'fixed',
-                    visibility: 'hidden'
+                    visibility: 'hidden',
                 };
             }
 
-        } else if (this.props.state) {
+        } else if (component_is_active) {
             if (component_is_visible) {
                 this.display_style = {};
             }
         }
 
         if (tr_end_callbacks && !component_is_active) {
-            tr_end_callbacks.forEach((f) => f(e));
+            tr_end_callbacks.forEach(f => f());
         }
     }
     //< hide component when it faded out or show component when it starting fading in
@@ -89,12 +93,12 @@ export class Tr extends React.Component {
         const fade = {
             def: {
                 opacity: 0,
-                transition: 'opacity ' + duration + 'ms ease-out'
+                transition: `opacity ${duration}ms ease-out`,
             },
             active: {
                 opacity: opacity || 1,
-                transition: 'opacity ' + duration + 'ms ease-out'
-            }
+                transition: `opacity ${duration}ms ease-out`,
+            },
         };
 
         return fade;
@@ -106,34 +110,38 @@ export class Tr extends React.Component {
         const tran = {
             def: {
                 [type]: def,
-                transition: this.camel_case_to_dash(type) + ' ' + duration + 'ms ease-out'
+                transition: `${this.camel_case_to_dash(type)} ${duration}ms ease-out`,
             },
 
             active: {
                 [type]: active,
-                transition: this.camel_case_to_dash(type) + ' ' + duration + 'ms ease-out'
-            }
+                transition: `${this.camel_case_to_dash(type)} ${duration}ms ease-out`,
+            },
         };
 
         return tran;
     };
     //< create other transitions
 
-    camel_case_to_dash = str => {
-        return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-    }
+    camel_case_to_dash = str => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
     render() {
-        settings.ob.theme
+        const {
+            attr,
+            name,
+            state,
+            tr_end_callbacks,
+            children,
+        } = this.props;
 
         return (
             <this.props.tag
-                {...this.props.attr}
+                {...attr}
                 ref={this.tr}
-                style={r.merge(this.transit(this.props.name, this.props.state), this.display_style)}
-                onTransitionEnd={this.hide_component.bind(null, false, this.props.tr_end_callbacks)}
+                style={r.merge(this.transit(name, state), this.display_style)}
+                onTransitionEnd={this.hide_component.bind(null, false, tr_end_callbacks)}
             >
-                {this.props.children}
+                {children}
             </this.props.tag>
         );
     }
@@ -142,7 +150,7 @@ export class Tr extends React.Component {
 decorate(Tr, {
     display_style: observable,
 
-    hide_component: action
+    hide_component: action,
 });
 
-Tr = observer(Tr);
+observer(Tr);

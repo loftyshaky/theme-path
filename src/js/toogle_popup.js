@@ -28,10 +28,10 @@ export const ob = observable({
     popup_visibility: {
         settings: false,
         help: false,
-        links: false
+        links: false,
     },
     get proptecting_screen_is_visible() {
         return r.values(ob.popup_visibility).some(val => val);
-    }
+    },
 });
 //< variables

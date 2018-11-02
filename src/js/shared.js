@@ -1,40 +1,27 @@
-
-'use strict';
+import { action, observable, configure } from 'mobx';
+import Store from 'electron-store';
 
 import { resolve } from 'path';
 import { readFileSync, writeFileSync } from 'fs-extra';
-
-import { action, observable, configure } from 'mobx';
-import Store from 'electron-store';
 
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
 //--
 
-export const set_chosen_folder_path = action((chosen_folder_path) => {
+export const set_chosen_folder_path = action(chosen_folder_path => {
     ob.chosen_folder_path = chosen_folder_path;
 });
 
-export const parse_json = file_path => {
-    return JSON.parse(readFileSync(file_path, 'utf-8').trim());
-};
+export const parse_json = file_path => JSON.parse(readFileSync(file_path, 'utf-8').trim());
 
-export const find_from_name = (array, name) => {
-    return array.find(item => item.name === name);
-};
+export const find_from_name = (array, name) => array.find(item => item.name === name);
 
-export const find_from_val = (array, val) => {
-    return array.find(item => item.val === val);
-};
+export const find_from_val = (array, val) => array.find(item => item.val === val);
 
-export const val_is_localized = val => {
-    return val.indexOf('__MSG_') > -1;
-};
+export const val_is_localized = val => val.indexOf('__MSG_') > -1;
 
-export const get_message_name = val => {
-    return val.replace(/__MSG_|__/g, '');
-};
+export const get_message_name = val => val.replace(/__MSG_|__/g, '');
 
 export const deselect_theme = action(() => {
     ob.chosen_folder_path = store.get('work_folder');
@@ -43,18 +30,20 @@ export const deselect_theme = action(() => {
 });
 
 export const set_default_locale_theme_name = action((name, val) => {
-    if (name == 'name') {
+    if (name === 'name') {
         ob.default_locale_theme_name = val;
     }
 });
 
 export const construct_icons_obj = json => {
+    const new_json = json;
+
     if (!json.icons) {
-        json.icons = {};
+        new_json.icons = {};
     }
 
     if (!json['128']) {
-        json['128'] = {};
+        new_json['128'] = {};
     }
 };
 
@@ -70,8 +59,8 @@ export const get_icon_paths = () => {
 
     return {
         source: default_icon_soure_path,
-        target: default_icon_target_path
-    }
+        target: default_icon_target_path,
+    };
 };
 
 //> varibles t
@@ -81,7 +70,7 @@ export const ob = observable({
 });
 
 export const mut = {
-    manifest: null
+    manifest: null,
 };
 //< varibles t
 

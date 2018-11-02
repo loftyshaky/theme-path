@@ -1,18 +1,16 @@
-'use strict';
-
-import x from 'x';
-import * as settings from 'js/settings';
-
 import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
 import Store from 'electron-store';
+
+import x from 'x';
+import * as settings from 'js/settings';
 
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
 //--
 
-const color_input_default = settings.ob.theme_vals[store.get('theme')].color_input_default;
+const { color_input_default } = settings.ob.theme_vals[store.get('theme')];
 
 export const reset_inputs_data = action(() => {
     inputs_data.obj = data_obj_default;
@@ -20,7 +18,7 @@ export const reset_inputs_data = action(() => {
     settings.load_setting();
 });
 
-export let inputs_data = observable({
+export const inputs_data = observable({
     obj: {
         theme_metadata: [
             {
@@ -28,7 +26,7 @@ export let inputs_data = observable({
                 name: 'version',
                 family: 'theme_metadata',
                 type: 'textarea',
-                val: ''
+                val: '',
             },
             {
                 key: x.unique_id(),
@@ -41,7 +39,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -49,7 +47,7 @@ export let inputs_data = observable({
                 family: 'theme_metadata',
                 type: 'select',
                 val: '',
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -59,7 +57,7 @@ export let inputs_data = observable({
                 val: '',
                 add_help: true,
                 counter: true,
-                char_limit: 45
+                char_limit: 45,
             },
             {
                 key: x.unique_id(),
@@ -69,7 +67,7 @@ export let inputs_data = observable({
                 val: '',
                 add_help: true,
                 counter: true,
-                char_limit: 132
+                char_limit: 132,
             },
             {
                 key: x.unique_id(),
@@ -77,8 +75,8 @@ export let inputs_data = observable({
                 family: 'theme_metadata',
                 type: 'select',
                 val: '',
-                add_help: true
-            }
+                add_help: true,
+            },
         ],
         images: [
             {
@@ -92,7 +90,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -105,7 +103,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -118,7 +116,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -131,7 +129,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -144,7 +142,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -157,7 +155,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -170,7 +168,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -183,7 +181,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -196,7 +194,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -209,7 +207,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -222,7 +220,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -232,8 +230,8 @@ export let inputs_data = observable({
                 val: '',
                 highlight_upload_box: false,
                 default: true,
-                add_help: true
-            }
+                add_help: true,
+            },
         ],
         colors: [
             {
@@ -245,7 +243,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -256,7 +254,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -267,7 +265,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -278,7 +276,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -289,7 +287,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -300,7 +298,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -311,7 +309,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -322,7 +320,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -333,7 +331,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -344,7 +342,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -355,8 +353,8 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
-            }
+                add_help: true,
+            },
         ],
         tints: [
             {
@@ -369,7 +367,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -381,7 +379,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -393,7 +391,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -405,7 +403,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -417,7 +415,7 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -429,8 +427,8 @@ export let inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
-                add_help: true
-            }
+                add_help: true,
+            },
         ],
         properties: [
             {
@@ -439,7 +437,7 @@ export let inputs_data = observable({
                 family: 'properties',
                 type: 'select',
                 val: '',
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -447,7 +445,7 @@ export let inputs_data = observable({
                 family: 'properties',
                 type: 'select',
                 val: '',
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -455,8 +453,8 @@ export let inputs_data = observable({
                 family: 'properties',
                 type: 'select',
                 val: '',
-                add_help: true
-            }
+                add_help: true,
+            },
         ],
         settings: [
             {
@@ -464,7 +462,7 @@ export let inputs_data = observable({
                 name: 'theme',
                 family: 'settings',
                 type: 'select',
-                val: ''
+                val: '',
             },
             {
                 key: x.unique_id(),
@@ -472,7 +470,7 @@ export let inputs_data = observable({
                 family: 'settings',
                 type: 'textarea',
                 val: '',
-                add_help: true
+                add_help: true,
             },
             {
                 key: x.unique_id(),
@@ -480,10 +478,10 @@ export let inputs_data = observable({
                 family: 'settings',
                 type: 'textarea',
                 val: '',
-                add_help: true
-            }
-        ]
-    }
+                add_help: true,
+            },
+        ],
+    },
 });
 
 const data_obj_default = r.clone(inputs_data.obj);

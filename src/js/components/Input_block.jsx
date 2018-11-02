@@ -1,4 +1,4 @@
-'use strict';
+import React from 'react';
 
 import { inputs_data } from 'js/inputs_data';
 
@@ -7,8 +7,6 @@ import { Textarea } from 'components/Textarea';
 import { Select } from 'components/Select';
 import { Img_selector } from 'components/Img_selector';
 import { Color } from 'components/Color';
-
-import React from 'react';
 
 //--
 
@@ -21,25 +19,26 @@ export class Input_block extends React.Component {
 
     //> call count_char method from </Textarea> instance when you change default locale in </Select>
     count_char = () => {
-        for (const child of this.childs) {
+        this.childs.forEach(child => {
             if (child.count_char) {
                 child.count_char();
             }
-        }
+        });
     }
     //< call count_char method from </Textarea> instance when you change default locale in </Select>
 
     render() {
-        const hr = this.props.hr ? <Hr name={this.props.name} /> : null;
+        const { name, hr } = this.props;
+        const hr_el = hr ? <Hr name={name} /> : null;
 
         return (
             <React.Fragment>
-                {hr}
-                <div className={this.props.name == 'colors' || this.props.name == 'tints' ? 'colors_and_tints_input_block' : null}>
+                {hr_el}
+                <div className={name === 'colors' || name === 'tints' ? 'colors_and_tints_input_block' : null}>
                     {
-                        inputs_data.obj[this.props.name].map((item, i) => {
+                        inputs_data.obj[name].map((item, i) => {
                             const Component = sta.components[item.type];
-                            const color_input_type = item.type == 'color' ? 'color' : null;
+                            const color_input_type = item.type === 'color' ? 'color' : null;
 
                             return (
                                 <Component
@@ -59,13 +58,13 @@ export class Input_block extends React.Component {
     }
 }
 
-//> varibles t
+//> varibles
 const sta = {
     components: {
         textarea: Textarea,
         select: Select,
         img_selector: Img_selector,
-        color: Color
-    }
-}
-//< varibles t
+        color: Color,
+    },
+};
+//< varibles

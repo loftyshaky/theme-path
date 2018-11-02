@@ -1,9 +1,5 @@
 'use_strict';
 
-import x from 'x';
-import * as shared from 'js/shared';
-import { observable, action, configure } from 'mobx';
-
 import { join, sep } from 'path';
 import { existsSync, unlinkSync, readdirSync } from 'fs-extra';
 import { exec } from 'child_process';
@@ -13,15 +9,19 @@ import kill from 'tree-kill';
 import zipLocal from 'zip-local';
 import Store from 'electron-store';
 
+import x from 'x';
+import * as shared from 'js/shared';
+import { observable, action, configure } from 'mobx';
+
 configure({ enforceActions: 'observed' });
 const store = new Store();
 
 //--
 
 const run = callback => {
-    if (shared.ob.chosen_folder_path != '') {
+    if (shared.ob.chosen_folder_path !== '') {
         const files = readdirSync(shared.ob.chosen_folder_path);
-        const folder_is_theme = files.find(file => file == 'manifest.json');
+        const folder_is_theme = files.find(file => file === 'manifest.json');
 
         if (folder_is_theme) {
             callback();
@@ -38,7 +38,11 @@ const run = callback => {
 export const open_in_chrome = folder_path => {
     run(() => {
         kill(mut.chrome_process_ids[folder_path], 'SIGKILL', async er => {
-            const child_process = await exec('chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="' + folder_path + '" --load-extension="' + shared.ob.chosen_folder_path + '"', { cwd: store.get('chrome_dir') });
+            if (er) {
+                console.error(er);
+            }
+
+            const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') }); // eslint-disable-line max-len
 
             mut.chrome_process_ids[folder_path] = child_process.pid;
         });
@@ -51,7 +55,10 @@ export const update_chrome_user_data_dirs_observable = action(() => {
 
 export const pack = type => {
     run(async () => {
-        const directory_to_save_package_in = shared.ob.chosen_folder_path.substring(0, shared.ob.chosen_folder_path.lastIndexOf(sep));
+        const directory_to_save_package_in = shared.ob.chosen_folder_path.substring(
+            0,
+            shared.ob.chosen_folder_path.lastIndexOf(sep),
+        );
         const package_name = shared.ob.chosen_folder_path.substring(shared.ob.chosen_folder_path.lastIndexOf(sep) + 1);
         const pak_path = join(shared.ob.chosen_folder_path, 'Cached Theme.pak');
 
@@ -65,21 +72,21 @@ export const pack = type => {
             throw er;
         }
 
-        if (type == 'zip') {
+        if (type === 'zip') {
             zipLocal.zip(shared.ob.chosen_folder_path, (er, zip) => {
                 if (!er) {
-                    zip.compress().save(join(directory_to_save_package_in, package_name + '.zip'));
+                    zip.compress().save(join(directory_to_save_package_in, `${package_name}.zip`));
 
                 } else {
                     x.error(5);
                 }
             });
 
-        } if (type == 'crx') {
+        } if (type === 'crx') {
             //> remove pems
-            const pem_files = glob.sync(directory_to_save_package_in + sep + '*.pem');
+            const pem_files = glob.sync(`${directory_to_save_package_in + sep}*.pem`);
 
-            for (const pem_file of pem_files) {
+            pem_files.forEach(pem_file => {
                 try {
                     if (existsSync(pem_file)) {
                         unlinkSync(pem_file);
@@ -89,20 +96,20 @@ export const pack = type => {
                     x.error(7, 'file_is_locked_alert');
                     throw er;
                 }
-            }
+            });
             //< remove pems
 
-            exec('chrome.exe --pack-extension="' + shared.ob.chosen_folder_path + '"', { cwd: store.get('chrome_dir') });
+            exec(`chrome.exe --pack-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') });
         }
     });
 };
 
 //> variables
 const mut = {
-    chrome_process_ids: {}
+    chrome_process_ids: {},
 };
 
 export const ob = observable({
-    chrome_user_data_dirs: null
+    chrome_user_data_dirs: null,
 });
 //< variables
