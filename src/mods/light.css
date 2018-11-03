@@ -109,10 +109,6 @@ textarea:focus, .select_w:focus, .btn:focus, .popup {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
-.err {
-    border-top: 1px solid #212121;
-}
-
 /*> mods */
 .char_limit_exceeded_textarea {
     background-color: #ff8e8e;
