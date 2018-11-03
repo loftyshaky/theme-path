@@ -166,7 +166,10 @@
   "option_zh_CN_text": "Китайский (Китай)",
   "option_zh_TW_text": "Китайский (Тайвань)",
 
-  "error_alert": "Произошла ошибка. Код ошибки: ",
+  "an_error_occured_msg": "Произошла ошибка.",
+  "error_code_label": "Код ошибки: ",
+  "error_type_label": "Тип: ",
+  "error_msg_label": "Сообщение: ",
   "invalid_image_type_alert": "Недопустимый тип изображения",
   "theme_folder_is_not_chosen_alert": "Выберите папку с темой.",
   "chosen_folder_is_not_theme_alert": "Выбранная папка не является темой.",

@@ -70,6 +70,8 @@ module.exports = {
     },
 
     globals: {
+        'er': false,
+        't': false,
         'l': false,
         's': false,
         'sa': false,

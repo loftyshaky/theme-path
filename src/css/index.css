@@ -18,11 +18,11 @@
     background-color: #3c3c3c;
 }
 
-::-webkit-scrollbar-thumb{
-    background-color: #fbff75;
+::-webkit-scrollbar-thumb {
     background-clip: content-box;
     border-left: 5px solid #3c3c3c;
-	border-right: 5px solid #3c3c3c;
+    border-right: 5px solid #3c3c3c;
+    background-color: #fbff75;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -141,7 +141,7 @@ hr {
     margin-right: 6px;
 }
 
-.help_link, .folder_arrow, .folder_icon, .folder_name, .work_folder_path {
+.help_link, .folder_arrow, .folder_icon, .folder_name, .work_folder_path, .er_close_btn {
     border: none;
     background-color: transparent;
     padding: 0;
@@ -763,13 +763,59 @@ a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
 }
 /*< transition */
 
+/*> error */
+.er {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    background-color: #da4747;
+    width: 100%;
+    z-index: 2147483647;
+}
+
+.er_msg {
+    white-space: pre-wrap;
+    text-align: center;
+    padding: 10px;
+    padding-top: 35px;
+}
+
+
+.er_close_btn {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}
+
+.er_close_btn svg {
+    height: 20px;
+    width: 20px;
+}
+
+.er_msg {
+    color: white;
+}
+
+.er_close_btn svg {
+     fill: white
+}
+/*< error */
+
 /*> mods */
 .none {
     display: none;
 }
 
-.selected_folder {
+.selected_folder, .er_highlighted {
     background-color: #fbff75;
+}
+
+.er_highlighted .er_msg {
+    color: #212121;
+}   
+
+.er_highlighted .er_close_btn svg {
+    fill: #212121
 }
 
 .char_limit_exceeded_textarea {

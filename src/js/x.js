@@ -26,7 +26,7 @@ window.sab = (base_element, selector) => ( // $ All with base element
 
 //> notify about error
 x.error = (error_code, extra) => {
-    const error_message = x.message('error_alert') + error_code + (extra ? `\n${x.message(extra)}` : '');
+    const error_message = x.message('an_error_occured_msg') + error_code + (extra ? `\n${x.message(extra)}` : '');
 
     alert(error_message);
 };
