@@ -799,6 +799,13 @@ a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
 .er_close_btn svg {
      fill: white
 }
+
+.reload_ui_btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 /*< error */
 
 /*> mods */

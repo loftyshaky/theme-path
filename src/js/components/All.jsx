@@ -2,6 +2,7 @@ import React from 'react';
 
 import * as color_pickiers from 'js/color_pickiers';
 
+import { Error_boundary } from 'components/Error_boundary';
 import { Header } from 'components/Header';
 import { Fieldset } from 'components/Fieldset';
 import { Work_folder } from 'components/Work_folder';
@@ -39,36 +40,38 @@ export class All extends React.Component {
 
     render() {
         return (
-            <div className="all">
-                <Header />
-                <div className="fieldsets">
-                    <Work_folder />
-                    <Fieldset name="theme_metadata">
-                        <Input_block name="theme_metadata" />
-                    </Fieldset>
-                    <Fieldset name="theme">
-                        <Input_block
-                            name="images"
-                            hr
-                        />
-                        <Input_block
-                            name="colors"
-                            hr
-                        />
-                        <Input_block
-                            name="tints"
-                            hr
-                        />
-                        <Input_block
-                            name="properties"
-                            hr
-                        />
-                    </Fieldset>
+            <Error_boundary>
+                <div className="all">
+                    <Header />
+                    <div className="fieldsets">
+                        <Work_folder />
+                        <Fieldset name="theme_metadata">
+                            <Input_block name="theme_metadata" />
+                        </Fieldset>
+                        <Fieldset name="theme">
+                            <Input_block
+                                name="images"
+                                hr
+                            />
+                            <Input_block
+                                name="colors"
+                                hr
+                            />
+                            <Input_block
+                                name="tints"
+                                hr
+                            />
+                            <Input_block
+                                name="properties"
+                                hr
+                            />
+                        </Fieldset>
+                    </div>
+                    <Protecting_screen />
+                    <Settings />
+                    <Links />
                 </div>
-                <Protecting_screen />
-                <Settings />
-                <Links />
-            </div>
+            </Error_boundary>
         );
     }
 }

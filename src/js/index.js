@@ -3,13 +3,13 @@ import 'css/index.css';
 import React from 'react';
 import { render } from 'react-dom';
 
-import 'js/err';
+import 'js/error';
 
-import { Err } from 'components/Err';
+import { Error } from 'components/Error';
 
 //--
 
 render(
-    <Err />, // eslint-disable-line react/jsx-filename-extension
+    <Error />, // eslint-disable-line react/jsx-filename-extension
     s('#err'),
 );

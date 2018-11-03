@@ -172,6 +172,7 @@
   "error_type_label": "Type: ",
   "error_msg_label": "Message: ",
 
+  "cant_render_ui_er": "Can't render user interface",
   "invalid_img_type_er": "Invalid image type",
   "theme_folder_is_not_chosen_er": "Theme folder is not chosen",
   "chosen_folder_is_not_theme_er": "Chosen folder is not a theme",
@@ -179,5 +180,7 @@
   "zip_is_locked_er": "Can't delete *.zip file because it's locked",
   "crx_is_locked_er": "Can't delete *.crx file because it's locked",
   "pem_is_locked_er": "Can't delete *.pem file because it's locked",
-  "folder_is_locked_er": "Folder is locked"
+  "folder_is_locked_er": "Folder is locked",
+
+  "reload_ui_btn_text": "Reload"
 }

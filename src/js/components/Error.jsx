@@ -3,13 +3,13 @@ import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 import x from 'x';
-import * as err from 'js/err';
+import * as error from 'js/error';
 
 import close_svg from 'svg/close';
 
 //--
 
-export class Err extends React.Component {
+export class Error extends React.Component {
     componentDidMount() {
         try {
             window.addEventListener('load', () => {
@@ -26,19 +26,19 @@ export class Err extends React.Component {
             <div
                 className={x.cls([
                     'err',
-                    err.ob.er_is_visible ? '' : 'none',
-                    err.ob.er_is_highlighted ? 'er_highlighted' : '',
+                    error.ob.er_is_visible ? '' : 'none',
+                    error.ob.er_is_highlighted ? 'er_highlighted' : '',
                 ])}
                 role="none"
-                onMouseDown={err.clear_all_timeouts}
+                onMouseDown={error.clear_all_timeouts}
             >
                 <div className="er_msg">
-                    {err.ob.er_msg}
+                    {error.ob.er_msg}
                 </div>
                 <button
                     className="er_close_btn"
                     type="button"
-                    onClick={err.change_er_state.bind(null, 'er_is_visible', false)}
+                    onClick={error.change_er_state.bind(null, 'er_is_visible', false)}
                 >
                     <Svg src={close_svg} />
                 </button>
@@ -47,4 +47,4 @@ export class Err extends React.Component {
     }
 }
 
-observer(Err);
+observer(Error);

@@ -48,12 +48,18 @@ export const change_er_state = action((name, bool) => {
     ob[name] = bool;
 });
 
+
+export const set_component_has_er = action(bool => {
+    ob.component_has_er = bool;
+});
+
 const change_er_persistence = action(persistent => {
     ob.er_is_persistent = persistent || false;
 });
 
 //> variables
 export const ob = observable({
+    component_has_er: false,
     er_is_visible: false,
     er_is_highlighted: false,
     er_is_persistent: false,
