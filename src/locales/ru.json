@@ -170,8 +170,13 @@
   "error_code_label": "Код ошибки: ",
   "error_type_label": "Тип: ",
   "error_msg_label": "Сообщение: ",
-  "invalid_image_type_alert": "Недопустимый тип изображения",
-  "theme_folder_is_not_chosen_alert": "Выберите папку с темой.",
-  "chosen_folder_is_not_theme_alert": "Выбранная папка не является темой.",
-  "file_is_locked_alert": "Файл занят другим процессом."
+
+  "invalid_img_type_er": "Недопустимый тип изображения",
+  "theme_folder_is_not_chosen_er": "Папка с темой не выбранна",
+  "chosen_folder_is_not_theme_er": "Выбранная папка не является темой",
+  "pak_is_locked_er": "Не удалось удалить файл Cached Theme.pak потому что он занят другим процессом",
+  "pem_is_locked_er": "Не удалось удалить файл *.pem потому что он занят другим процессом",
+  "zip_is_locked_er": "Не удалось удалить файл *.zip потому что он занят другим процессом",
+  "crx_is_locked_er": "Не удалось удалить файл *.crx потому что он занят другим процессом",
+  "folder_is_locked_er": "Папка занята другим процессом"
 }

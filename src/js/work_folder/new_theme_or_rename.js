@@ -81,8 +81,8 @@ export const create_new_theme_or_rename_theme_folder = action((
                         }
 
                     } catch (er) {
-                        x.error(9, 'file_is_locked_alert');
-                        throw 'file_is_locked'; // eslint-disable-line no-throw-literal
+                        err(er, 9, 'folder_is_locked');
+                        t('folder_is_locked'); // eslint-disable-line no-throw-literal
                     }
 
                     shared.set_chosen_folder_path(new_folder_path);
@@ -94,16 +94,18 @@ export const create_new_theme_or_rename_theme_folder = action((
                 }
 
             } else {
-                throw 'Found folder with the same name.'; // eslint-disable-line no-throw-literal
+                err(er_obj('Found folder with the same name or named empty'), 9, null, true);
+                t('found_folder_with_the_same_name_or_named_empty'); // eslint-disable-line no-throw-literal
             }
 
             break;
 
         } catch (er) {
-            console.error(er);
-
-            if (er === 'file_is_locked') {
+            if (er.message === 'folder_is_locked') {
                 break;
+
+            } else if (er.message !== 'found_folder_with_the_same_name_or_named_empty') {
+                err(er, 20);
             }
         }
     }

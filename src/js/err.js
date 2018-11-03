@@ -4,12 +4,12 @@ import x from 'x';
 
 configure({ enforceActions: 'observed' });
 
-window.er = action((er_obj, er_code, silent, persistent) => {
+window.err = action((er_obj, er_code, mgs, silent, persistent) => {
     if (!silent) {
-        const er_code_msg = x.message(`er_msg_${er_code}`);
-        const er_code_msg_final = er_code_msg ? ` ${er_code_msg}` : '';
+        const er_msg = x.message(`${mgs}_er`);
+        const er_msg_final = er_msg ? ` ${er_msg}.` : '';
 
-        ob.er_msg = `${x.message('an_error_occured_msg') + er_code_msg_final}\n${x.message('error_code_label') + er_code}\n${x.message('error_type_label') + er_obj.name}\n${x.message('error_msg_label') + er_obj.message}`; // eslint-disable-line max-len
+        ob.er_msg = `${x.message('an_error_occured_msg') + er_msg_final}\n${x.message('error_code_label') + er_code}\n${x.message('error_type_label') + er_obj.name}\n${x.message('error_msg_label') + er_obj.message}`; // eslint-disable-line max-len
 
         change_er_state('er_is_visible', true);
         change_er_state('er_is_highlighted', true);
@@ -18,18 +18,20 @@ window.er = action((er_obj, er_code, silent, persistent) => {
         clear_all_timeouts();
 
         if (!persistent) {
-            run_timeout('er_is_visible', 10000);
+            run_timeout('er_is_visible', 20000);
         }
 
         run_timeout('er_is_highlighted', 200);
     }
-    //l(er_obj.name, er_obj.message, er_obj.constructor)
-    throw new Error(er_obj.stack);
+
+    console.error(er_obj.stack); // eslint-disable-line no-console
 });
 
 window.t = msg => {
     throw new Error(msg);
 };
+
+window.er_obj = msg => new Error(msg);
 
 const run_timeout = (name, delay) => {
     mut[`${name}_timeout`] = window.setTimeout(() => {

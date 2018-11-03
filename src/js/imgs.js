@@ -7,7 +7,6 @@ import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
 import Jimp from 'jimp';
 
-import x from 'x';
 import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
@@ -22,14 +21,12 @@ export const create_solid_color_image = (name, color) => {
 
     new Jimp(width, height, color, (er, img) => { // eslint-disable-line no-new
         if (er) {
-            x.error(11);
-            console.error(er);
+            err(er, 11);
         }
 
         img.getBase64(Jimp.AUTO, (er2, data) => {
             if (er2) {
-                x.error(12);
-                console.error(er2);
+                err(er2, 12);
             }
 
             try {
@@ -38,8 +35,7 @@ export const create_solid_color_image = (name, color) => {
                 writeFileSync(join(shared.ob.chosen_folder_path, `${name}.png`), base_64_data, 'base64');
 
             } catch (er3) {
-                x.error(1);
-                console.error(er3);
+                err(er3, 1);
             }
         });
     });
@@ -47,22 +43,27 @@ export const create_solid_color_image = (name, color) => {
 
 //> image upload
 export const handle_files = async (file, family, i) => {
-    const img_name = inputs_data.obj[family][i].name;
-    const valid_file_types = r.cond([
-        [r.equals('theme_ntp_background'), () => ['image/png', 'image/jpeg', 'image/gif']],
-        [r.equals('icon'), () => ['image/png', 'image/jpeg']],
-        [r.T, () => ['image/png']],
-    ])(img_name);
+    try {
+        const img_name = inputs_data.obj[family][i].name;
+        const valid_file_types = r.cond([
+            [r.equals('theme_ntp_background'), () => ['image/png', 'image/jpeg', 'image/gif']],
+            [r.equals('icon'), () => ['image/png', 'image/jpeg']],
+            [r.T, () => ['image/png']],
+        ])(img_name);
 
-    if (valid_file_types.indexOf(file[0].type) > -1) {
-        const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
+        if (valid_file_types.indexOf(file[0].type) > -1) {
+            const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
 
-        copySync(file[0].path, join(shared.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
+            copySync(file[0].path, join(shared.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
 
-        change_val.change_val(family, i, img_name, img_extension);
+            change_val.change_val(family, i, img_name, img_extension);
 
-    } else {
-        x.error(2, 'invalid_image_type_alert');
+        } else {
+            err(er_obj('Invalid image type'), 2, 'invalid_img_type');
+        }
+
+    } catch (er) {
+        err(er, 14);
     }
 };
 //< image upload

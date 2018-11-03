@@ -55,11 +55,6 @@ module.exports = {
             'error',
             'as-needed',
         ],
-        'no-console': ['error',
-            {
-                allow: ['error'],
-            },
-        ],
         'no-underscore-dangle': [
             'error',
             {
@@ -70,8 +65,9 @@ module.exports = {
     },
 
     globals: {
-        'er': false,
+        'err': false,
         't': false,
+        'er_obj': false,
         'l': false,
         's': false,
         'sa': false,

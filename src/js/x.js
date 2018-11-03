@@ -24,14 +24,6 @@ window.sab = (base_element, selector) => ( // $ All with base element
 
 //< selecting elements
 
-//> notify about error
-x.error = (error_code, extra) => {
-    const error_message = x.message('an_error_occured_msg') + error_code + (extra ? `\n${x.message(extra)}` : '');
-
-    alert(error_message);
-};
-//< notify about error
-
 //> dom manipulation
 x.create = (el_type, class_name) => { // create element
     const el = document.createElement(el_type);

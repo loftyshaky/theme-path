@@ -9,7 +9,6 @@ import kill from 'tree-kill';
 import zipLocal from 'zip-local';
 import Store from 'electron-store';
 
-import x from 'x';
 import * as shared from 'js/shared';
 import { observable, action, configure } from 'mobx';
 
@@ -19,19 +18,24 @@ const store = new Store();
 //--
 
 const run = callback => {
-    if (shared.ob.chosen_folder_path !== '') {
-        const files = readdirSync(shared.ob.chosen_folder_path);
-        const folder_is_theme = files.find(file => file === 'manifest.json');
+    try {
+        if (shared.ob.chosen_folder_path !== store.get('work_folder')) {
+            const files = readdirSync(shared.ob.chosen_folder_path);
+            const folder_is_theme = files.find(file => file === 'manifest.json');
 
-        if (folder_is_theme) {
-            callback();
+            if (folder_is_theme) {
+                callback();
+
+            } else {
+                err(er_obj('Chosen folder is not a theme'), 4, 'chosen_folder_is_not_theme');
+            }
 
         } else {
-            x.error(4, 'chosen_folder_is_not_theme_alert');
+            err(er_obj('Theme folder is not chosen'), 3, 'theme_folder_is_not_chosen');
         }
 
-    } else {
-        x.error(3, 'theme_folder_is_not_chosen_alert');
+    } catch (er) {
+        err(er, 16);
     }
 };
 
@@ -39,7 +43,7 @@ export const open_in_chrome = folder_path => {
     run(() => {
         kill(mut.chrome_process_ids[folder_path], 'SIGKILL', async er => {
             if (er) {
-                console.error(er);
+                err(er, 15, null, true);
             }
 
             const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') }); // eslint-disable-line max-len
@@ -55,51 +59,79 @@ export const update_chrome_user_data_dirs_observable = action(() => {
 
 export const pack = type => {
     run(async () => {
-        const directory_to_save_package_in = shared.ob.chosen_folder_path.substring(
-            0,
-            shared.ob.chosen_folder_path.lastIndexOf(sep),
-        );
-        const package_name = shared.ob.chosen_folder_path.substring(shared.ob.chosen_folder_path.lastIndexOf(sep) + 1);
-        const pak_path = join(shared.ob.chosen_folder_path, 'Cached Theme.pak');
-
         try {
-            if (existsSync(pak_path)) {
-                unlinkSync(pak_path);
+            const directory_to_save_package_in = shared.ob.chosen_folder_path.substring(
+                0,
+                shared.ob.chosen_folder_path.lastIndexOf(sep),
+            );
+            const package_name = shared.ob.chosen_folder_path.substring(
+                shared.ob.chosen_folder_path.lastIndexOf(sep) + 1,
+            );
+            const pak_path = join(shared.ob.chosen_folder_path, 'Cached Theme.pak');
+
+            try {
+                if (existsSync(pak_path)) {
+                    unlinkSync(pak_path);
+                }
+
+            } catch (er) {
+                err(er, 6, 'pak_is_locked');
             }
 
-        } catch (er) {
-            x.error(6, 'file_is_locked_alert');
-            throw er;
-        }
+            if (type === 'zip') {
+                const zip_path = join(directory_to_save_package_in, `${package_name}.zip`);
 
-        if (type === 'zip') {
-            zipLocal.zip(shared.ob.chosen_folder_path, (er, zip) => {
-                if (!er) {
-                    zip.compress().save(join(directory_to_save_package_in, `${package_name}.zip`));
-
-                } else {
-                    x.error(5);
-                }
-            });
-
-        } if (type === 'crx') {
-            //> remove pems
-            const pem_files = glob.sync(`${directory_to_save_package_in + sep}*.pem`);
-
-            pem_files.forEach(pem_file => {
                 try {
-                    if (existsSync(pem_file)) {
-                        unlinkSync(pem_file);
+                    if (existsSync(zip_path)) {
+                        unlinkSync(zip_path);
                     }
 
                 } catch (er) {
-                    x.error(7, 'file_is_locked_alert');
-                    throw er;
+                    err(er, 18, 'zip_is_locked');
                 }
-            });
-            //< remove pems
 
-            exec(`chrome.exe --pack-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') });
+
+                zipLocal.zip(shared.ob.chosen_folder_path, (er, zip) => {
+                    if (!er) {
+                        zip.compress().save(zip_path);
+
+                    } else {
+                        err(er, 5);
+                    }
+                });
+
+            } if (type === 'crx') {
+                const crx_path = join(directory_to_save_package_in, `${package_name}.crx`);
+
+                try {
+                    if (existsSync(crx_path)) {
+                        unlinkSync(crx_path);
+                    }
+
+                } catch (er) {
+                    err(er, 19, 'crx_is_locked');
+                }
+
+                //> remove pems
+                const pem_files = glob.sync(`${directory_to_save_package_in + sep}*.pem`);
+
+                pem_files.forEach(pem_file => {
+                    try {
+                        if (existsSync(pem_file)) {
+                            unlinkSync(pem_file);
+                        }
+
+                    } catch (er) {
+                        err(er, 7, 'pem_is_locked');
+                    }
+                });
+                //< remove pems
+
+                exec(`chrome.exe --pack-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') });
+            }
+
+        } catch (er) {
+            err(er, 17);
         }
     });
 };

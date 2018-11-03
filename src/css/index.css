@@ -764,7 +764,7 @@ a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
 /*< transition */
 
 /*> error */
-.er {
+.err {
     position: fixed;
     bottom: 0px;
     left: 0;

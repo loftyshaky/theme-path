@@ -135,8 +135,7 @@ watcher
         }
     }))
     .on('error', er => {
-        x.error(8);
-        console.error(er);
+        err(er, 8);
     });
 
 export const watch_folder = folder_path => {
