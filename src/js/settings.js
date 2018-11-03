@@ -11,32 +11,42 @@ configure({ enforceActions: 'observed' });
 //--
 
 export const load_theme = action(() => {
-    const theme_setting = store.get('theme');
-    const selected_folder = s('.selected_folder');
+    try {
+        const theme_setting = store.get('theme');
+        const selected_folder = s('.selected_folder');
 
-    if (theme_setting === 'light') {
-        x.load_css(theme_setting);
+        if (theme_setting === 'light') {
+            x.load_css(theme_setting);
 
-    } else if (theme_setting === 'dark') {
-        x.remove(s('.light'));
-    }
+        } else if (theme_setting === 'dark') {
+            x.remove(s('.light'));
+        }
 
-    ob.theme = theme_setting;
+        ob.theme = theme_setting;
 
-    if (selected_folder) {
-        selected_folder.click();
+        if (selected_folder) {
+            selected_folder.click();
+        }
+
+    } catch (er) {
+        err(er, 54);
     }
 });
 
 export const load_setting = action(() => {
-    const { settings } = inputs_data.obj;
+    try {
+        const { settings } = inputs_data.obj;
 
-    settings.forEach(item => {
-        const new_item = item;
-        new_item.val = store.get(item.name);
-    });
+        settings.forEach(item => {
+            const new_item = item;
+            new_item.val = store.get(item.name);
+        });
 
-    open_and_pack.update_chrome_user_data_dirs_observable();
+        open_and_pack.update_chrome_user_data_dirs_observable();
+
+    } catch (er) {
+        err(er, 55);
+    }
 });
 
 //> variables

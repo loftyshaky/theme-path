@@ -9,11 +9,21 @@ import { Tr } from 'components/Tr';
 
 export class Protecting_screen extends React.Component {
     componentDidMount() {
-        this.protecting_screen.addEventListener('click', toogle_popup.close_all_popups);
+        try {
+            this.protecting_screen.addEventListener('click', toogle_popup.close_all_popups);
+
+        } catch (er) {
+            err(er, 104);
+        }
     }
 
     componentWillUnmount() {
-        this.protecting_screen.removeEventListener('nv-event', toogle_popup.close_all_popups);
+        try {
+            this.protecting_screen.removeEventListener('nv-event', toogle_popup.close_all_popups);
+
+        } catch (er) {
+            err(er, 105);
+        }
     }
 
     render() {

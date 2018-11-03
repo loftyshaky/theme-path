@@ -13,29 +13,49 @@ import { Help } from 'components/Help';
 
 export class Img_selector extends React.Component {
     componentDidMount() {
-        window.addEventListener('drop', imgs.prevent_default_dnd_actions);
-        window.addEventListener('dragover', imgs.prevent_default_dnd_actions);
+        try {
+            window.addEventListener('drop', imgs.prevent_default_dnd_actions);
+            window.addEventListener('dragover', imgs.prevent_default_dnd_actions);
+
+        } catch (er) {
+            err(er, 99);
+        }
     }
 
     componentWillUnmount() {
-        window.removeEventListener('drop', imgs.prevent_default_dnd_actions);
-        window.removeEventListener('dragover', imgs.prevent_default_dnd_actions);
+        try {
+            window.removeEventListener('drop', imgs.prevent_default_dnd_actions);
+            window.removeEventListener('dragover', imgs.prevent_default_dnd_actions);
+
+        } catch (er) {
+            err(er, 100);
+        }
     }
 
     //> browse_handle_files f
     browse_handle_files = e => {
-        const { family, i } = this.props;
+        try {
+            const { family, i } = this.props;
 
-        imgs.handle_files(e.target.files, family, i);
-        imgs.reset_upload_btn_val();
+            imgs.handle_files(e.target.files, family, i);
+            imgs.reset_upload_btn_val();
+
+        } catch (er) {
+            err(er, 101);
+        }
     }
     //< browse_handle_files f
 
     drop_handle_files = e => {
-        const { family, i } = this.props;
+        try {
+            const { family, i } = this.props;
 
-        imgs.dehighlight_upload_box_on_drop(family, i);
-        imgs.handle_files(e.dataTransfer.files, family, i);
+            imgs.dehighlight_upload_box_on_drop(family, i);
+            imgs.handle_files(e.dataTransfer.files, family, i);
+
+        } catch (er) {
+            err(er, 102);
+        }
     }
 
     render() {

@@ -11,9 +11,14 @@ import close_svg from 'svg/close';
 
 export class Err extends React.Component {
     componentDidMount() {
-        window.addEventListener('load', () => {
-            require('js/init_All'); // eslint-disable-line global-require
-        });
+        try {
+            window.addEventListener('load', () => {
+                require('js/init_All'); // eslint-disable-line global-require
+            });
+
+        } catch (er) {
+            err(er, 97);
+        }
     }
 
     render() {

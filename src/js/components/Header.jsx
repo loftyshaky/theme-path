@@ -24,18 +24,23 @@ const store = new Store();
 
 export class Header extends React.Component {
     expand_or_collapse_folder = async () => {
-        const root_folder_chosen = shared.ob.chosen_folder_path === store.get('work_folder');
+        try {
+            const root_folder_chosen = shared.ob.chosen_folder_path === store.get('work_folder');
 
-        if (root_folder_chosen) {
-            new_theme_or_rename.create_new_theme_or_rename_theme_folder(shared.ob.chosen_folder_path, 0, 0, true);
+            if (root_folder_chosen) {
+                new_theme_or_rename.create_new_theme_or_rename_theme_folder(shared.ob.chosen_folder_path, 0, 0, true);
 
-        } else {
-            expand_or_collapse.expand_or_collapse_folder(
-                'new_theme',
-                shared.ob.chosen_folder_path,
-                wf_shared.mut.chosen_folder_info.nest_level,
-                wf_shared.mut.chosen_folder_info.i_to_insert_folfder_in,
-            );
+            } else {
+                expand_or_collapse.expand_or_collapse_folder(
+                    'new_theme',
+                    shared.ob.chosen_folder_path,
+                    wf_shared.mut.chosen_folder_info.nest_level,
+                    wf_shared.mut.chosen_folder_info.i_to_insert_folfder_in,
+                );
+            }
+
+        } catch (er) {
+            err(er, 98);
         }
     };
 

@@ -8,19 +8,33 @@ configure({ enforceActions: 'observed' });
 //--
 
 export const toggle_popup = name => {
-    const new_val = !ob.popup_visibility[name];
+    try {
+        const new_val = !ob.popup_visibility[name];
 
-    close_all_popups();
-    set_popup_visibility_bool(name, new_val);
+        close_all_popups();
+        set_popup_visibility_bool(name, new_val);
+
+    } catch (er) {
+        err(er, 67);
+    }
 };
 
 export const set_popup_visibility_bool = action((name, bool) => {
-    ob.popup_visibility[name] = bool;
+    try {
+        ob.popup_visibility[name] = bool;
+
+    } catch (er) {
+        err(er, 68);
+    }
 });
 
 export const close_all_popups = action(() => {
-    ob.popup_visibility = r.map(() => false, ob.popup_visibility);
+    try {
+        ob.popup_visibility = r.map(() => false, ob.popup_visibility);
 
+    } catch (er) {
+        err(er, 69);
+    }
 });
 
 //> variables

@@ -22,8 +22,23 @@ export const Color = observer(props => {
     const { color_pickiers_position } = inputs_data.obj[family][i] || false;
     const color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
 
-    const on_change = picked_color => color_pickiers.set_color_input_vizualization_color(family, i, picked_color);
-    const on_click = picked_color => color_pickiers.accept_color(family, i, picked_color);
+    const on_change = picked_color => {
+        try {
+            color_pickiers.set_color_input_vizualization_color(family, i, picked_color);
+
+        } catch (er) {
+            err(er, 95);
+        }
+    };
+
+    const on_click = picked_color => {
+        try {
+            color_pickiers.accept_color(family, i, picked_color);
+
+        } catch (er) {
+            err(er, 96);
+        }
+    };
 
     const label = color_input_type === 'color' ? (
         <label

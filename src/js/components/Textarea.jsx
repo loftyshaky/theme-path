@@ -39,44 +39,64 @@ export class Textarea extends React.Component {
     }
 
     set_char_limit_exceeded_bool = action(bool => {
-        this.ob.char_limit_exceeded = bool;
+        try {
+            this.ob.char_limit_exceeded = bool;
+
+        } catch (er) {
+            err(er, 110);
+        }
     })
 
     set_number_of_chars_val = action(val => {
-        this.ob.number_of_chars = val;
+        try {
+            this.ob.number_of_chars = val;
+
+        } catch (er) {
+            err(er, 111);
+        }
     })
 
     resize_textarea = async () => {
-        this.textarea.style.height = '';
+        try {
+            this.textarea.style.height = '';
 
-        const scrool_height = this.textarea.scrollHeight;
+            const scrool_height = this.textarea.scrollHeight;
 
-        this.textarea.style.height = `${scrool_height + 2}px`;
+            this.textarea.style.height = `${scrool_height + 2}px`;
 
-        if (scrool_height > 204) {
-            this.textarea.style.overflow = 'visible';
+            if (scrool_height > 204) {
+                this.textarea.style.overflow = 'visible';
 
-        } else {
-            this.textarea.style.overflow = ''; // in css hidden
+            } else {
+                this.textarea.style.overflow = ''; // in css hidden
+            }
+
+        } catch (er) {
+            err(er, 112);
         }
     }
 
     count_char = () => {
-        const { family, counter, char_limit } = this.props;
+        try {
+            const { family, counter, char_limit } = this.props;
 
-        if (counter) {
-            const number_of_chars = this.textarea.value.length;
-            const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
-            const default_locale = shared.find_from_name(inputs_data.obj[family], 'default_locale').val;
+            if (counter) {
+                const number_of_chars = this.textarea.value.length;
+                const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
+                const default_locale = shared.find_from_name(inputs_data.obj[family], 'default_locale').val;
 
-            this.set_number_of_chars_val(this.textarea.value.length);
+                this.set_number_of_chars_val(this.textarea.value.length);
 
-            if (number_of_chars > char_limit && locale === default_locale) {
-                this.set_char_limit_exceeded_bool(true);
+                if (number_of_chars > char_limit && locale === default_locale) {
+                    this.set_char_limit_exceeded_bool(true);
 
-            } else {
-                this.set_char_limit_exceeded_bool(false);
+                } else {
+                    this.set_char_limit_exceeded_bool(false);
+                }
             }
+
+        } catch (er) {
+            err(er, 113);
         }
     }
 

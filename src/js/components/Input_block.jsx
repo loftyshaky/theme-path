@@ -19,11 +19,16 @@ export class Input_block extends React.Component {
 
     //> call count_char method from </Textarea> instance when you change default locale in </Select>
     count_char = () => {
-        this.childs.forEach(child => {
-            if (child.count_char) {
-                child.count_char();
-            }
-        });
+        try {
+            this.childs.forEach(child => {
+                if (child.count_char) {
+                    child.count_char();
+                }
+            });
+
+        } catch (er) {
+            err(er, 103);
+        }
     }
     //< call count_char method from </Textarea> instance when you change default locale in </Select>
 

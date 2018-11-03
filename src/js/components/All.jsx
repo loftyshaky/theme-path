@@ -14,17 +14,27 @@ import { Protecting_screen } from 'components/Protecting_screen';
 
 export class All extends React.Component {
     componentDidMount() {
-        document.addEventListener(
-            'mousedown',
-            color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization,
-        );
+        try {
+            document.addEventListener(
+                'mousedown',
+                color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization,
+            );
+
+        } catch (er) {
+            err(er, 93);
+        }
     }
 
     componentWillUnmount() {
-        document.removeEventListener(
-            'mousedown',
-            color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization,
-        );
+        try {
+            document.removeEventListener(
+                'mousedown',
+                color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization,
+            );
+
+        } catch (er) {
+            err(er, 94);
+        }
     }
 
     render() {

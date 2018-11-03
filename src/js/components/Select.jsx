@@ -15,10 +15,16 @@ import { Help } from 'components/Help';
 
 export class Select extends React.Component {
     componentDidUpdate() {
-        const { name, count_char } = this.props;
+        try {
+            const { name, count_char } = this.props;
 
-        if (name === 'default_locale') {
-            count_char();
+            if (name === 'default_locale') {
+                count_char();
+            }
+
+
+        } catch (er) {
+            err(er, 106);
         }
     }
 
@@ -39,62 +45,77 @@ export class Select extends React.Component {
 
     //> change option val when selecting option
     change_select_val = e => {
-        const { family, i } = this.props;
-        const { val } = e.target.dataset;
+        try {
+            const { family, i } = this.props;
+            const { val } = e.target.dataset;
 
-        change_val.change_val(family, i, val, null);
+            change_val.change_val(family, i, val, null);
 
-        this.hide_options();
+            this.hide_options();
 
-        if (val === 'default') {
-            set_default_or_disabled.set_default_or_disabled(family, i, 'select');
+            if (val === 'default') {
+                set_default_or_disabled.set_default_or_disabled(family, i, 'select');
+            }
+
+        } catch (er) {
+            err(er, 107);
         }
     }
     //< change option val when selecting option
 
     //> hide options when clicking on option or select_title
     hide_options = async () => {
-        if (document.activeElement === this.select_w) {
-            await x.delay(0);
+        try {
+            if (document.activeElement === this.select_w) {
+                await x.delay(0);
 
-            this.select_w.blur();
+                this.select_w.blur();
+            }
+
+        } catch (er) {
+            err(er, 108);
         }
     }
     //< hide options when clicking on option or select_title
 
     //> hide options when clicking on option or select_title / scroll select options into view when oipening select
     on_mouse_down = async () => {
-        const { family } = this.props;
+        try {
+            const { family } = this.props;
 
-        if (document.activeElement === this.select_w) {
-            await x.delay(0);
+            if (document.activeElement === this.select_w) {
+                await x.delay(0);
 
-            this.select_w.blur();
+                this.select_w.blur();
 
-        } else if (family !== 'settings') {
-            await x.delay(0);
+            } else if (family !== 'settings') {
+                await x.delay(0);
 
-            const fieldset_w = x.closest(this.input, '.fieldset_w');
-            const fieldset = x.closest(this.input, 'fieldset');
-            const fieldset_div = x.closest(this.input, 'fieldset > div');
-            const fieldset_div_visible_height = fieldset_div.clientHeight;
-            const fieldset_margin_top = parseInt(window.getComputedStyle(fieldset_w).marginTop);
-            const fieldset_border_width = parseInt(window.getComputedStyle(fieldset).borderWidth);
-            const margin_top_of_fieldset_plus_its_border = fieldset_margin_top + fieldset_border_width;
-            const select_w_margin_bottom = parseInt(window.getComputedStyle(this.select_w).marginBottom);
-            let select_w_rect_bottom = this.select_w.getBoundingClientRect().bottom;
-            let while_loop_runned_at_least_once = false;
-            let scroll_top_modifier = 0;
+                const fieldset_w = x.closest(this.input, '.fieldset_w');
+                const fieldset = x.closest(this.input, 'fieldset');
+                const fieldset_div = x.closest(this.input, 'fieldset > div');
+                const fieldset_div_visible_height = fieldset_div.clientHeight;
+                const fieldset_margin_top = parseInt(window.getComputedStyle(fieldset_w).marginTop);
+                const fieldset_border_width = parseInt(window.getComputedStyle(fieldset).borderWidth);
+                const margin_top_of_fieldset_plus_its_border = fieldset_margin_top + fieldset_border_width;
+                const select_w_margin_bottom = parseInt(window.getComputedStyle(this.select_w).marginBottom);
+                let select_w_rect_bottom = this.select_w.getBoundingClientRect().bottom;
+                let while_loop_runned_at_least_once = false;
+                let scroll_top_modifier = 0;
 
-            while (select_w_rect_bottom - margin_top_of_fieldset_plus_its_border > fieldset_div_visible_height) {
-                while_loop_runned_at_least_once = true;
-                scroll_top_modifier++;
-                select_w_rect_bottom--;
+                while (select_w_rect_bottom - margin_top_of_fieldset_plus_its_border > fieldset_div_visible_height) {
+                    while_loop_runned_at_least_once = true;
+                    scroll_top_modifier++;
+                    select_w_rect_bottom--;
+                }
+
+                if (while_loop_runned_at_least_once) {
+                    fieldset_div.scrollTop = fieldset_div.scrollTop + scroll_top_modifier + select_w_margin_bottom;
+                }
             }
 
-            if (while_loop_runned_at_least_once) {
-                fieldset_div.scrollTop = fieldset_div.scrollTop + scroll_top_modifier + select_w_margin_bottom;
-            }
+        } catch (er) {
+            err(er, 109);
         }
     }
     //< hide options when clicking on option or select_title / scroll select options into view when oipening select

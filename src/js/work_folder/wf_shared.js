@@ -13,49 +13,76 @@ configure({ enforceActions: 'observed' });
 //--
 
 export const rerender_work_folder = action(() => {
-    const previous_val = shared.ob.chosen_folder_path;
-    shared.ob.chosen_folder_path = '';
-    shared.ob.chosen_folder_path = previous_val;
+    try {
+        const previous_val = shared.ob.chosen_folder_path;
+        shared.ob.chosen_folder_path = '';
+        shared.ob.chosen_folder_path = previous_val;
+
+    } catch (er) {
+        err(er, 89);
+    }
 });
 
 export const get_folders = folder_path => {
-    const files = readdirSync(folder_path);
+    try {
+        const files = readdirSync(folder_path);
 
-    return files.map(file => {
-        const child_path = join(folder_path, file);
+        return files.map(file => {
+            const child_path = join(folder_path, file);
 
-        return {
-            name: file,
-            path: child_path,
-            is_directory: statSync(join(folder_path, file)).isDirectory(),
-        };
-    });
+            return {
+                name: file,
+                path: child_path,
+                is_directory: statSync(join(folder_path, file)).isDirectory(),
+            };
+        });
+
+    } catch (er) {
+        err(er, 90);
+    }
+
+    return undefined;
 };
 
 
 export const get_info_about_folder = folder_path => {
-    const folder_info = {};
+    try {
+        const folder_info = {};
 
-    if (!existsSync(folder_path)) {
-        folder_info.is_theme = false;
-        folder_info.is_empty = true;
+        if (!existsSync(folder_path)) {
+            folder_info.is_theme = false;
+            folder_info.is_empty = true;
 
-    } else {
-        folder_info.children = get_folders(folder_path);
-        folder_info.is_theme = folder_info.children.some(item => item.name === 'manifest.json');
-        folder_info.is_empty = !folder_info.children.some(item => statSync(item.path).isDirectory());
+        } else {
+            folder_info.children = get_folders(folder_path);
+            folder_info.is_theme = folder_info.children.some(item => item.name === 'manifest.json');
+            folder_info.is_empty = !folder_info.children.some(item => statSync(item.path).isDirectory());
+        }
+
+        return folder_info;
+
+    } catch (er) {
+        err(er, 91);
     }
 
-    return folder_info;
+    return undefined;
 };
 
 export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
-    const close_preceding_folder = r.drop(start_i);
-    const get_last_folder_to_close_i = r.findIndex(
-        item => item.nest_level < nest_level
-            || item === ob.folders[ob.folders.length - 1],
-    );
-    return r.pipe(close_preceding_folder, get_last_folder_to_close_i)(ob.folders);
+    try {
+        const close_preceding_folder = r.drop(start_i);
+        const get_last_folder_to_close_i = r.findIndex(
+            item => item.nest_level < nest_level
+                || item === ob.folders[ob.folders.length - 1],
+        );
+
+        return r.pipe(close_preceding_folder, get_last_folder_to_close_i)(ob.folders);
+
+    } catch (er) {
+        err(er, 92);
+    }
+
+    return undefined;
 };
 
 //> varibles t

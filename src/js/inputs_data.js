@@ -13,9 +13,14 @@ configure({ enforceActions: 'observed' });
 const { color_input_default } = settings.ob.theme_vals[store.get('theme')];
 
 export const reset_inputs_data = action(() => {
-    inputs_data.obj = data_obj_default;
+    try {
+        inputs_data.obj = data_obj_default;
 
-    settings.load_setting();
+        settings.load_setting();
+
+    } catch (er) {
+        err(er, 45);
+    }
 });
 
 export const inputs_data = observable({

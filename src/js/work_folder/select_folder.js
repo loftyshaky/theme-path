@@ -49,13 +49,13 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
                 const icon_paths = shared.get_icon_paths();
 
                 if (existsSync(icon_paths.target)) {
-                    looksSame(icon_paths.source, icon_paths.target, (er, using_default_icon) => {
-                        if (!using_default_icon) {
-                            uncheck_icon_input_default_checkbox();
+                    looksSame(icon_paths.source, icon_paths.target, (er2, using_default_icon) => {
+                        if (er2) {
+                            err(er2, 82);
                         }
 
-                        if (er) {
-                            console.error(er);
+                        if (!using_default_icon) {
+                            uncheck_icon_input_default_checkbox();
                         }
                     });
 
@@ -77,65 +77,85 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
             i_to_insert_folfder_in,
         };
 
-    } catch (e) {
-        er(e, 13);
+    } catch (er) {
+        err(er, 13);
     }
 });
 
 export const get_theme_name_or_descrption_inner = (folder_path, locale, default_locale) => {
-    Object.entries(shared.mut.manifest).forEach(([name, val]) => {
-        const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
+    try {
+        Object.entries(shared.mut.manifest).forEach(([name, val]) => {
+            const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
 
-        if (item) {
-            const val_is_localized = shared.val_is_localized(val);
+            if (item) {
+                const val_is_localized = shared.val_is_localized(val);
 
-            if (val_is_localized) {
-                const message_name = shared.get_message_name(val);
+                if (val_is_localized) {
+                    const message_name = shared.get_message_name(val);
 
-                get_theme_name_or_descrption(name, message_name, locale, default_locale, folder_path);
+                    get_theme_name_or_descrption(name, message_name, locale, default_locale, folder_path);
 
-            } else {
-                set_val('theme_metadata', name, val);
+                } else {
+                    set_val('theme_metadata', name, val);
 
-                if (locale === default_locale) {
-                    shared.set_default_locale_theme_name(name, val);
+                    if (locale === default_locale) {
+                        shared.set_default_locale_theme_name(name, val);
+                    }
                 }
             }
-        }
-    });
+        });
+
+    } catch (er) {
+        err(er, 78);
+    }
 };
 
 const get_theme_name_or_descrption = (name, message_name, locale, default_locale, folder_path) => {
-    const messages_path = `${folder_path}/_locales/${locale}/messages.json`;
-    const messages_file_exist = existsSync(messages_path);
-    let val = '';
+    try {
+        const messages_path = `${folder_path}/_locales/${locale}/messages.json`;
+        const messages_file_exist = existsSync(messages_path);
+        let val = '';
 
-    if (messages_file_exist) {
-        const name_exist = shared.parse_json(messages_path)[message_name]; // name ex: description, name
+        if (messages_file_exist) {
+            const name_exist = shared.parse_json(messages_path)[message_name]; // name ex: description, name
 
-        if (name_exist) {
-            val = shared.parse_json(messages_path)[message_name].message;
+            if (name_exist) {
+                val = shared.parse_json(messages_path)[message_name].message;
+            }
         }
-    }
 
-    set_val('theme_metadata', name, val);
+        set_val('theme_metadata', name, val);
 
-    if (locale === default_locale) {
-        shared.set_default_locale_theme_name(name, val);
+        if (locale === default_locale) {
+            shared.set_default_locale_theme_name(name, val);
+        }
+
+    } catch (er) {
+        err(er, 79);
     }
 };
 
 const set_val = action((family, name, val) => {
-    const item = shared.find_from_name(inputs_data.obj[family], name);
+    try {
+        const item = shared.find_from_name(inputs_data.obj[family], name);
 
-    if (item) {
-        item.val = name === 'ntp_logo_alternate' ? val.toString() : val;
+        if (item) {
+            item.val = name === 'ntp_logo_alternate' ? val.toString() : val;
+        }
+
+    } catch (er) {
+        err(er, 80);
     }
 });
 
 const uncheck_icon_input_default_checkbox = action(() => {
-    const icon_item = shared.find_from_name(inputs_data.obj.theme_metadata, 'icon');
+    try {
+        const icon_item = shared.find_from_name(inputs_data.obj.theme_metadata, 'icon');
 
-    icon_item.default = false;
+        icon_item.default = false;
+
+    } catch (er) {
+        err(er, 81);
+    }
 });
 //< select folder and fill inputs with theme data;

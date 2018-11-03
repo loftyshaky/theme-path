@@ -46,15 +46,25 @@ export const open_in_chrome = folder_path => {
                 err(er, 15, null, true);
             }
 
-            const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') }); // eslint-disable-line max-len
+            try {
+                const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') }); // eslint-disable-line max-len
 
-            mut.chrome_process_ids[folder_path] = child_process.pid;
+                mut.chrome_process_ids[folder_path] = child_process.pid;
+
+            } catch (er2) {
+                err(er2, 46);
+            }
         });
     });
 };
 
 export const update_chrome_user_data_dirs_observable = action(() => {
-    ob.chrome_user_data_dirs = store.get('chrome_user_data_dirs');
+    try {
+        ob.chrome_user_data_dirs = store.get('chrome_user_data_dirs');
+
+    } catch (er) {
+        err(er, 47);
+    }
 });
 
 export const pack = type => {
