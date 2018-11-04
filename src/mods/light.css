@@ -38,7 +38,7 @@ body, .btn, .option, .legend_line, .fieldset_w .cover, .popup {
     background-color: white;
 }
 
-fieldset, textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title, .upload_box {
+textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title, .upload_box {
     border-color: #212121;
 }
 
@@ -48,10 +48,6 @@ fieldset, textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title, .uplo
 
 .work_folder_fieldset {
     border-color: #212121!important;
-}
-
-.work_folder_fieldset_w .legend {
-    color: #212121!important;
 }
 
 hr {
@@ -88,10 +84,6 @@ textarea:focus, .select_w:focus, .btn:focus, .popup {
     border-color: #3892ff transparent;
 }
 
-.upload_box {
-    background-color: #fbff75;
-}
-
 .btn:hover, .option:hover {
     background-color: #3892ff!important;
 }
@@ -118,3 +110,29 @@ textarea:focus, .select_w:focus, .btn:focus, .popup {
     color: #e40000;
 }
 /*< mods */
+
+/*> Tr mods */
+.upload_box_background_unactive {
+    background-color: #fbff75;
+}
+
+.upload_box_background_active {
+    background-color: #ffd375;
+}
+
+.fieldset_border_color_unactive {
+    border-color: #212121;
+}
+
+.fieldset_border_color_active {
+    border-color: #d3d3d3;
+}
+
+.legend_color_unactive {
+    color: #212121;
+}
+
+.legend_color_active {
+    color: #d3d3d3;
+}
+/*< Tr mods */

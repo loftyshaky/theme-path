@@ -54,16 +54,10 @@ export const ob = observable({
     theme: store.get('theme'),
     theme_vals: {
         dark: {
-            upload_box: '#3b6ab5',
-            fieldset: '#333333',
-            legend: '#474747',
             color_input_default: '#fbff75',
             color_input_disabled: '#212121',
         },
         light: {
-            upload_box: '#ffd375',
-            fieldset: '#d3d3d3',
-            legend: '#d3d3d3',
             color_input_default: '#3892ff',
             color_input_disabled: 'white',
         },

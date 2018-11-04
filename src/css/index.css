@@ -222,7 +222,7 @@ textarea, .select_title, .option  {
     margin-right: 12px;
 }
 
-fieldset, textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title {
+textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title {
     border: 1px solid white;
 }
 
@@ -370,10 +370,6 @@ header span, header label, header .open_in_chrome_btn {
 /*< header */
 
 /*> work_folder */
-.work_folder_fieldset_w .legend {
-    color: white!important;
-}
-
 .work_folder_selector, .work_folder_message {
     margin-left: 12px;
 }
@@ -774,16 +770,16 @@ header span, header label, header .open_in_chrome_btn {
 }
 /*< error */
 
-/*> transition */
-.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .selected_folder {
+/*> transitions */
+.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend {
     transition: all 0.2s ease-out;
 }
 
-.checkbox_checkmark_w svg, .protecting_screen {
+.checkbox_checkmark_w svg, .protecting_screen, .fieldset_protecting_screen, .popup {
     transition-property: opacity;
 }
 
-a, .help_link, .upload_box_browse_label {
+a, .help_link, .upload_box_browse_label, .legend {
     transition-property: color;
 }
 
@@ -795,7 +791,11 @@ textarea, .select_w, .select_title {
     transition-property: border-color, box-shadow;
 }
 
-.color_input_vizualization {
+fieldset {
+    transition-property: border-color;
+}
+
+.color_input_vizualization, .upload_box {
     transition-property: background-color;
 }
 
@@ -806,7 +806,7 @@ textarea, .select_w, .select_title {
 a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
     transition: none;
 }
-/*< transition */
+/*< transitions */
 
 /*> mods */
 .none {
@@ -833,6 +833,40 @@ a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
     color: #ff7878;
 }
 /*< mods */
+
+/*> Tr mods */
+.opacity_0 {
+    opacity: 0;
+}
+
+.opacity_1 {
+    opacity: 1;
+}
+
+.upload_box_background_unactive {
+    background-color: #5d7daf;
+}
+
+.upload_box_background_active {
+    background-color: #3b6ab5;
+}
+
+.fieldset_border_color_unactive {
+    border: 1px solid white;
+}
+
+.fieldset_border_color_active {
+    border: 1px solid #333333;
+}
+
+.legend_color_unactive {
+    color: white;
+}
+
+.legend_color_active {
+    color: #474747;
+}
+/*< Tr mods */
 
 .help_message {
     display: none;
