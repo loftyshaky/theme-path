@@ -729,40 +729,6 @@ header span, header label, header .open_in_chrome_btn {
 }
 /*< ordinary color inputs */
 
-/*> transition */
-.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .selected_folder {
-    transition: all 0.2s ease-out;
-}
-
-.checkbox_checkmark_w svg, .protecting_screen {
-    transition-property: opacity;
-}
-
-a, .help_link, .upload_box_browse_label {
-    transition-property: color;
-}
-
-.btn {
-    transition-property: color, background-color, border-color, box-shadow;
-}
-
-textarea, .select_w, .select_title {
-    transition-property: border-color, box-shadow;
-}
-
-.color_input_vizualization {
-    transition-property: background-color;
-}
-
-.selected_folder {
-    transition-property: background-color, color;
-}
-
-a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
-    transition: none;
-}
-/*< transition */
-
 /*> error */
 .err {
     position: fixed;
@@ -807,6 +773,40 @@ a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
     transform: translate(-50%, -50%);
 }
 /*< error */
+
+/*> transition */
+.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .selected_folder {
+    transition: all 0.2s ease-out;
+}
+
+.checkbox_checkmark_w svg, .protecting_screen {
+    transition-property: opacity;
+}
+
+a, .help_link, .upload_box_browse_label {
+    transition-property: color;
+}
+
+.btn {
+    transition-property: color, background-color, border-color, box-shadow;
+}
+
+textarea, .select_w, .select_title {
+    transition-property: border-color, box-shadow;
+}
+
+.color_input_vizualization {
+    transition-property: background-color;
+}
+
+.selected_folder {
+    transition-property: background-color, color;
+}
+
+a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
+    transition: none;
+}
+/*< transition */
 
 /*> mods */
 .none {
