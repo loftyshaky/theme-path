@@ -370,6 +370,10 @@ header span, header label, header .open_in_chrome_btn {
 /*< header */
 
 /*> work_folder */
+.work_folder_fieldset_w .legend {
+    color: white!important;
+}
+
 .work_folder_selector, .work_folder_message {
     margin-left: 12px;
 }

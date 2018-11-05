@@ -50,6 +50,11 @@ textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title, .upload_box {
     border-color: #212121!important;
 }
 
+
+.work_folder_fieldset_w .legend {
+    color: #212121!important;
+}
+
 hr {
     background-color: #212121!important;
 }
