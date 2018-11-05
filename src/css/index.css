@@ -775,11 +775,11 @@ header span, header label, header .open_in_chrome_btn {
 /*< error */
 
 /*> transitions */
-.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend {
+.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier {
     transition: all 0.2s ease-out;
 }
 
-.checkbox_checkmark_w svg, .protecting_screen, .fieldset_protecting_screen, .popup {
+.checkbox_checkmark_w svg, .protecting_screen, .fieldset_protecting_screen, .popup, .color_pickier {
     transition-property: opacity;
 }
 
