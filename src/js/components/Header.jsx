@@ -28,7 +28,7 @@ export class Header extends React.Component {
             const root_folder_chosen = shared.ob.chosen_folder_path === store.get('work_folder');
 
             if (root_folder_chosen) {
-                new_theme_or_rename.create_new_theme_or_rename_theme_folder(shared.ob.chosen_folder_path, 0, 0, true);
+                new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', shared.ob.chosen_folder_path, 0, 0, true);
 
             } else {
                 expand_or_collapse.expand_or_collapse_folder(

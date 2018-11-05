@@ -180,6 +180,7 @@
   "zip_is_locked_er": "Can't delete *.zip file because it's locked",
   "crx_is_locked_er": "Can't delete *.crx file because it's locked",
   "pem_is_locked_er": "Can't delete *.pem file because it's locked",
+  "locale_is_locked_er": "Can't delete locale folder because it's locked",
   "folder_is_locked_er": "Folder is locked",
 
   "reload_ui_btn_text": "Reload"

@@ -1,7 +1,12 @@
 'use_strict';
 
 import { join, sep } from 'path';
-import { existsSync, mkdirSync, writeFileSync } from 'fs-extra';
+import {
+    existsSync,
+    mkdirSync,
+    writeFileSync,
+    removeSync,
+} from 'fs-extra';
 
 import { action, configure } from 'mobx';
 import Store from 'electron-store';
@@ -35,15 +40,17 @@ export const change_val = (family, i, val, img_extension, e) => {
         if (first_if_names.indexOf(name) > -1) {
             set_name_or_description_prop(name, e.target.value);
 
-            if (name === 'name') {
-                const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
+            const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
 
+            if (name === 'name') {
                 if (locale === default_locale) {
                     new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
 
                     shared.set_default_locale_theme_name(name, new_val);
                 }
             }
+
+            delete_locale_folder(locale, family);
 
         } else if (second_if_names.indexOf(name) > -1) {
             write_to_json(shared.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
@@ -205,6 +212,27 @@ const create_messages_file = messages_path => {
         err(er, 26);
     }
 };
+
+//> delete locale folder when both name and description is ''
+const delete_locale_folder = async (locale, family) => {
+    try {
+        const name = shared.find_from_name(inputs_data.obj[family], 'name').val;
+        const description = shared.find_from_name(inputs_data.obj[family], 'description').val;
+
+        if (name === '' && description === '') {
+            try {
+                removeSync(join(shared.ob.chosen_folder_path, '_locales', locale));
+
+            } catch (er) {
+                err(er, 123, 'locale_is_locked');
+            }
+        }
+
+    } catch (er) {
+        err(er, 122);
+    }
+};
+//< delete locale folder when both name and description is ''
 
 export const set_inputs_data_val = action((family, i, val) => {
     try {

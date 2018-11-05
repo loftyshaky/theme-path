@@ -17,6 +17,7 @@ configure({ enforceActions: 'observed' });
 
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
 export const create_new_theme_or_rename_theme_folder = action((
+    mode,
     folder_path,
     nest_level,
     i_to_insert_folfder_in,
@@ -24,7 +25,6 @@ export const create_new_theme_or_rename_theme_folder = action((
     name_input_val,
 ) => { // action( need to be here otherwise renamed folder will be deselected
     try {
-        const mode = name_input_val ? 'renaming_folder' : 'creating_folder';
         const folder_name = mode === 'renaming_folder' ? name_input_val : x.message('new_theme_btn_label_text');
         const timne_id = Date.now();
         const source_folder_path = mode === 'renaming_folder'
@@ -119,6 +119,7 @@ export const create_new_theme_or_rename_theme_folder = action((
 });
 
 export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder(
+    'renaming_folder',
     folder_path,
     null,
     null,

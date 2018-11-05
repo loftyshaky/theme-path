@@ -47,6 +47,7 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
 
             if (mode === 'new_theme') {
                 new_theme_or_rename.create_new_theme_or_rename_theme_folder(
+                    'creating_folder',
                     folder_path,
                     nest_level,
                     i_to_insert_folfder_in,
