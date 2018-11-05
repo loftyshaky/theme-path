@@ -27,6 +27,7 @@
 
   "work_folder_is_not_specified_message_text": "Рабочая папка не выбрана.",
   "work_folder_is_empty_message_text": "Рабочая папка пуста.",
+  "work_folder_is_theme_message_text": "Рабочая папка является темой.",
 
   "locale_label_text": "Язык",
   "default_locale_label_text": "Язык по умолчанию",
@@ -181,6 +182,7 @@
   "crx_is_locked_er": "Не удалось удалить файл *.crx потому что он занят другим процессом",
   "locale_is_locked_er": "Не удалось удалить папку локализациии потому что она занята другим процессом",
   "folder_is_locked_er": "Папка занята другим процессом",
+  "cant_create_theme_in_theme_er": "Нельзя создать тему в теме",
 
   "reload_ui_btn_text": "Перезагрузить"
 }

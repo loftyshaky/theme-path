@@ -1,13 +1,18 @@
 import { existsSync, readdirSync, statSync } from 'fs-extra';
 import { join } from 'path';
 
-import { observable, action, configure } from 'mobx';
+import {
+    decorate,
+    observable,
+    action,
+    computed,
+    configure,
+} from 'mobx';
 import * as r from 'ramda';
-import Store from 'electron-store';
 
 import * as shared from 'js/shared';
+import * as choose_folder from 'js/work_folder/choose_folder';
 
-const store = new Store();
 configure({ enforceActions: 'observed' });
 
 //--
@@ -87,11 +92,25 @@ export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
 
 //> varibles t
 export const ob = observable({
+    chosen_folder_info: {},
     folders: [],
-    get fieldset_protecting_screen_is_visible() {
-        return shared.ob.chosen_folder_path === store.get('work_folder') || !mut.chosen_folder_info.is_theme;
-    },
 });
+
+export const com = {
+    get fieldset_protecting_screen_is_visible() {
+        const work_folder_path = choose_folder.ob.work_folder;
+
+        if (work_folder_path === shared.ob.chosen_folder_path) {
+            const work_folder_info = get_info_about_folder(work_folder_path);
+
+            return !work_folder_info.is_theme;
+
+        }
+
+        return !ob.chosen_folder_info.is_theme; // if any folder in work folder selected
+    },
+};
+
 
 export const set_folders = action(val => {
     ob.folders = val;
@@ -99,6 +118,9 @@ export const set_folders = action(val => {
 
 export const mut = {
     opened_folders: [],
-    chosen_folder_info: {},
 };
 //< varibles t
+
+decorate(com, {
+    fieldset_protecting_screen_is_visible: computed,
+});

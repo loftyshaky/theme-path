@@ -10,6 +10,7 @@ import zipLocal from 'zip-local';
 import Store from 'electron-store';
 
 import * as shared from 'js/shared';
+import * as wf_shared from 'js/work_folder/wf_shared';
 import { observable, action, configure } from 'mobx';
 
 configure({ enforceActions: 'observed' });
@@ -19,7 +20,7 @@ const store = new Store();
 
 const run = callback => {
     try {
-        if (shared.ob.chosen_folder_path !== store.get('work_folder')) {
+        if (wf_shared.ob.chosen_folder_info.is_theme) {
             const files = readdirSync(shared.ob.chosen_folder_path);
             const folder_is_theme = files.find(file => file === 'manifest.json');
 

@@ -3,15 +3,14 @@ import { basename, dirname } from 'path';
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
 import chokidar from 'chokidar';
-import Store from 'electron-store';
 
 import x from 'x';
 import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
+import * as choose_folder from 'js/work_folder/choose_folder';
 
-const store = new Store();
 configure({ enforceActions: 'observed' });
 
 //--
@@ -56,7 +55,7 @@ watcher
 
             if (!folder_already_exist) {
                 const parent_folder_path = dirname(folder_path);
-                const parent_folder_is_root = parent_folder_path === store.get('work_folder');
+                const parent_folder_is_root = parent_folder_path === choose_folder.ob.work_folder;
                 const parent_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path === parent_folder_path);
                 const i_to_insert_folfder_in = parent_folder_is_root ? 0 : parent_folder_i + 1;
                 const nest_level = parent_folder_is_root ? 0 : wf_shared.ob.folders[parent_folder_i].nest_level + 1;

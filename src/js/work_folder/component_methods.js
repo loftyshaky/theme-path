@@ -1,16 +1,15 @@
 import { observable, action, configure } from 'mobx';
-import Store from 'electron-store';
 
 import * as shared from 'js/shared';
+import * as choose_folder from 'js/work_folder/choose_folder';
 
-const store = new Store();
 configure({ enforceActions: 'observed' });
 
 //--
 
 export const select_root_folder = action(() => {
     try {
-        shared.ob.chosen_folder_path = store.get('work_folder');
+        shared.ob.chosen_folder_path = choose_folder.ob.work_folder;
 
     } catch (er) {
         err(er, 71);

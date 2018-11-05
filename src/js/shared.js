@@ -1,10 +1,10 @@
 import { action, observable, configure } from 'mobx';
-import Store from 'electron-store';
 
 import { resolve } from 'path';
 import { readFileSync, writeFileSync } from 'fs-extra';
 
-const store = new Store();
+import * as choose_folder from 'js/work_folder/choose_folder';
+
 configure({ enforceActions: 'observed' });
 
 //--
@@ -75,7 +75,7 @@ export const get_message_name = val => {
 
 export const deselect_theme = action(() => {
     try {
-        ob.chosen_folder_path = store.get('work_folder');
+        ob.chosen_folder_path = choose_folder.ob.work_folder;
 
         reset_inputs_data();
 
@@ -142,7 +142,7 @@ export const get_icon_paths = () => {
 
 //> varibles t
 export const ob = observable({
-    chosen_folder_path: store.get('work_folder'),
+    chosen_folder_path: choose_folder.ob.work_folder,
     default_locale_theme_name: null,
 });
 

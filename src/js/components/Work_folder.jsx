@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import * as r from 'ramda';
 import Svg from 'svg-inline-react';
 import { List, AutoSizer } from 'react-virtualized';
-import Store from 'electron-store';
 
 import x from 'x';
 import * as shared from 'js/shared';
@@ -19,11 +19,28 @@ import folder_opened_svg from 'svg/folder_opened';
 import arrow_right_svg from 'svg/arrow_right';
 import arrow_down_svg from 'svg/arrow_down';
 
-const store = new Store();
-
 //--
 
 export class Work_folder extends React.Component {
+
+    componentDidMount() {
+        expand_or_collapse.create_top_level_folders();
+
+        this.select_work_folder_if_its_theme();
+    }
+
+    componentDidUpdate() {
+        this.select_work_folder_if_its_theme();
+    }
+
+    select_work_folder_if_its_theme = () => {
+        const work_folder_info = wf_shared.get_info_about_folder(choose_folder.ob.work_folder);
+
+        if (work_folder_info.is_theme) {
+            select_folder.select_folder(true, choose_folder.ob.work_folder);
+        }
+    }
+
     show_or_hide_choose_work_folder_btn = scroll_info => {
         component_methods.show_or_hide_choose_work_folder_btn(scroll_info);
     };
@@ -66,6 +83,7 @@ export class Work_folder extends React.Component {
                             type="button"
                             onClick={select_folder.select_folder.bind(
                                 null,
+                                false,
                                 folder.path,
                                 folder.children,
                                 folder.nest_level + 1,
@@ -82,6 +100,7 @@ export class Work_folder extends React.Component {
                             type="button"
                             onClick={select_folder.select_folder.bind(
                                 null,
+                                false,
                                 folder.path,
                                 folder.children,
                                 folder.nest_level + 1,
@@ -98,15 +117,27 @@ export class Work_folder extends React.Component {
     };
 
     render() {
-        const work_folder_path = store.get('work_folder');
         const number_of_rows = wf_shared.ob.folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
+        const message_key = r.ifElse(
+            () => choose_folder.ob.work_folder === '',
+            () => 'work_folder_is_not_specified_message_text',
+            () => {
+                const work_folder_info = wf_shared.get_info_about_folder(choose_folder.ob.work_folder);
+
+                if (work_folder_info.is_theme) {
+                    return 'work_folder_is_theme_message_text';
+                }
+
+                return 'work_folder_is_empty_message_text';
+            },
+        )();
+
+
         const work_folder_is_empty_message = wf_shared.ob.folders.length === 0
             ? (
                 <div className="work_folder_message">
                     {
-                        x.message(work_folder_path === ''
-                            ? 'work_folder_is_not_specified_message_text'
-                            : 'work_folder_is_empty_message_text')
+                        x.message(message_key)
                     }
                 </div>
             )
@@ -125,21 +156,20 @@ export class Work_folder extends React.Component {
                         data-text="choose_folder_btn_text"
                         onClick={choose_folder.choose_folder.bind(
                             null,
-                            'work_folder',
                             expand_or_collapse.create_top_level_folders,
                         )}
                     />
                     <button
                         className={x.cls([
                             'work_folder_path',
-                            shared.ob.chosen_folder_path === store.get('work_folder') ? 'selected_folder'
+                            shared.ob.chosen_folder_path === choose_folder.ob.work_folder ? 'selected_folder'
                                 : null,
                         ])}
                         type="button"
-                        title={work_folder_path}
+                        title={choose_folder.ob.work_folder}
                         onClick={component_methods.select_root_folder}
                     >
-                        {work_folder_path}
+                        {choose_folder.ob.work_folder}
                     </button>
                 </div>
                 {work_folder_is_empty_message}

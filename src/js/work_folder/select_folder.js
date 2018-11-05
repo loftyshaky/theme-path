@@ -14,17 +14,22 @@ configure({ enforceActions: 'observed' });
 //--
 
 //> select folder and fill inputs with theme data
-export const select_folder = action((folder_path, children, nest_level, i_to_insert_folfder_in) => { // action( need to be here otherwise protecting screen will not lift
+export const select_folder = action((is_work_folder, folder_path, children, nest_level, i_to_insert_folfder_in) => { // action( need to be here otherwise protecting screen will not lift
     try {
-        shared.deselect_theme();
+        if (!is_work_folder) {
+            shared.deselect_theme();
+        }
+
         shared.set_chosen_folder_path(folder_path);
 
         const folder_info = wf_shared.get_info_about_folder(folder_path);
 
-        wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_theme = folder_info.is_theme;
-        wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_empty = folder_info.is_empty;
+        if (!is_work_folder) {
+            wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_theme = folder_info.is_theme;
+            wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_empty = folder_info.is_empty;
 
-        wf_shared.rerender_work_folder();
+            wf_shared.rerender_work_folder();
+        }
 
         if (folder_info.is_theme) {
             reset_inputs_data();
@@ -65,16 +70,18 @@ export const select_folder = action((folder_path, children, nest_level, i_to_ins
             }
             //< set icon default checkbox state
 
-            expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folfder_in);
+            if (!is_work_folder) {
+                expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folfder_in);
+            }
         }
 
         convert_color.convert_all();
 
-        wf_shared.mut.chosen_folder_info = {
-            children,
+        wf_shared.ob.chosen_folder_info = {
+            children: children || null,
             is_theme: folder_info.is_theme,
-            nest_level,
-            i_to_insert_folfder_in,
+            nest_level: nest_level || null,
+            i_to_insert_folfder_in: i_to_insert_folfder_in || null,
         };
 
     } catch (er) {

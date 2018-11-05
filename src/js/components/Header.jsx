@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
-import Store from 'electron-store';
 
 import x from 'x';
 import * as shared from 'js/shared';
@@ -10,6 +9,7 @@ import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as open_and_pack from 'js/open_and_pack';
 import * as toogle_popup from 'js/toogle_popup';
+import * as choose_folder from 'js/work_folder/choose_folder';
 
 import plus_svg from 'svg/plus';
 import open_in_browser_svg from 'svg/open_in_browser';
@@ -18,24 +18,28 @@ import gear_svg from 'svg/gear';
 import question_svg from 'svg/question';
 import list_svg from 'svg/list';
 
-const store = new Store();
-
 //--
 
 export class Header extends React.Component {
     expand_or_collapse_folder = async () => {
         try {
-            const root_folder_chosen = shared.ob.chosen_folder_path === store.get('work_folder');
+            const root_folder_chosen = shared.ob.chosen_folder_path === choose_folder.ob.work_folder;
 
             if (root_folder_chosen) {
-                new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', shared.ob.chosen_folder_path, 0, 0, true);
+                new_theme_or_rename.create_new_theme_or_rename_theme_folder(
+                    'creating_folder',
+                    shared.ob.chosen_folder_path,
+                    0,
+                    0,
+                    true,
+                );
 
             } else {
                 expand_or_collapse.expand_or_collapse_folder(
                     'new_theme',
                     shared.ob.chosen_folder_path,
-                    wf_shared.mut.chosen_folder_info.nest_level,
-                    wf_shared.mut.chosen_folder_info.i_to_insert_folfder_in,
+                    wf_shared.ob.chosen_folder_info.nest_level,
+                    wf_shared.ob.chosen_folder_info.i_to_insert_folfder_in,
                 );
             }
 
