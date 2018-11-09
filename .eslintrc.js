@@ -1,6 +1,7 @@
 module.exports = {
     rules: {
         'camelcase': 0,
+         'max-len': 0,
         'import/no-extraneous-dependencies': 0,
         'padded-blocks': 0,
         'spaced-comment': 0,
@@ -37,14 +38,6 @@ module.exports = {
             'error',
             {
                 'variables': false,
-            },
-        ],
-        'max-len': [
-            'error',
-            {
-                'code': 120,
-                'ignoreComments': true,
-                'ignoreTrailingComments': true
             },
         ],
         'arrow-parens': [
