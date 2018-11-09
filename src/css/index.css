@@ -467,6 +467,10 @@ header span, header label, header .open_in_chrome_btn {
     padding: 3px 6px 3px 6px;
 }
 
+.work_folder_path:empty {
+    padding: 0;
+}
+
 .ReactVirtualized__Grid {
     overflow: auto!important;
 }

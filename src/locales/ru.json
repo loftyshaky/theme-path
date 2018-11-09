@@ -183,6 +183,7 @@
   "locale_is_locked_er": "Не удалось удалить папку локализациии потому что она занята другим процессом",
   "folder_is_locked_er": "Папка занята другим процессом",
   "cant_create_theme_in_theme_er": "Нельзя создать тему в теме",
+  "work_folder_doesnt_exist_er": "Рабочая папка не существует.",
 
   "reload_ui_btn_text": "Перезагрузить"
 }

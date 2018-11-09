@@ -8,6 +8,7 @@ import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
+import * as choose_folder from 'js/work_folder/choose_folder';
 
 configure({ enforceActions: 'observed' });
 
@@ -16,73 +17,80 @@ configure({ enforceActions: 'observed' });
 //> select folder and fill inputs with theme data
 export const select_folder = action((is_work_folder, folder_path, children, nest_level, i_to_insert_folfder_in) => { // action( need to be here otherwise protecting screen will not lift
     try {
-        if (!is_work_folder) {
-            shared.deselect_theme();
-        }
-
-        shared.set_chosen_folder_path(folder_path);
-
-        const folder_info = wf_shared.get_info_about_folder(folder_path);
-
-        if (!is_work_folder) {
-            wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_theme = folder_info.is_theme;
-            wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_empty = folder_info.is_empty;
-
-            wf_shared.rerender_work_folder();
-        }
-
-        if (folder_info.is_theme) {
-            reset_inputs_data();
-
-            shared.mut.manifest = shared.parse_json(`${folder_path}/manifest.json`);
-            const { default_locale } = shared.mut.manifest;
-
-            get_theme_name_or_descrption_inner(folder_path, default_locale, default_locale);
-
-            set_val('theme_metadata', 'locale', default_locale);
-
-            if (shared.mut.manifest.theme) {
-                Object.entries(shared.mut.manifest.theme).forEach(([family, family_obj]) => {
-                    Object.entries(family_obj).forEach(([name, val]) => {
-                        set_val(family, name, val);
-                    });
-                });
+        if (choose_folder.reset_work_folder(false)) {
+            if (!is_work_folder) {
+                shared.deselect_theme();
             }
 
-            //> set icon default checkbox state
-            if (shared.mut.manifest.icons && shared.mut.manifest.icons['128']) {
-                const icon_paths = shared.get_icon_paths();
+            shared.set_chosen_folder_path(folder_path);
 
-                if (existsSync(icon_paths.target)) {
-                    looksSame(icon_paths.source, icon_paths.target, (er2, using_default_icon) => {
-                        if (er2) {
-                            err(er2, 82);
-                        }
-
-                        if (!using_default_icon) {
-                            uncheck_icon_input_default_checkbox();
-                        }
-                    });
-
-                } else {
-                    uncheck_icon_input_default_checkbox();
-                }
-            }
-            //< set icon default checkbox state
+            const folder_info = wf_shared.get_info_about_folder(folder_path);
 
             if (!is_work_folder) {
-                expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folfder_in);
+                wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_theme = folder_info.is_theme;
+                wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_empty = folder_info.is_empty;
+
+                wf_shared.rerender_work_folder();
             }
+
+            if (folder_info.is_theme) {
+                reset_inputs_data();
+
+                shared.mut.manifest = shared.parse_json(`${folder_path}/manifest.json`);
+                const { default_locale } = shared.mut.manifest;
+
+                get_theme_name_or_descrption_inner(folder_path, default_locale, default_locale);
+
+                set_val('theme_metadata', 'locale', default_locale);
+
+                if (shared.mut.manifest.theme) {
+                    Object.entries(shared.mut.manifest.theme).forEach(([family, family_obj]) => {
+                        Object.entries(family_obj).forEach(([name, val]) => {
+                            set_val(family, name, val);
+                        });
+                    });
+                }
+
+                //> set icon default checkbox state
+                if (shared.mut.manifest.icons && shared.mut.manifest.icons['128']) {
+                    const icon_paths = shared.get_icon_paths();
+
+                    if (existsSync(icon_paths.target)) {
+                        looksSame(icon_paths.source, icon_paths.target, (er2, using_default_icon) => {
+                            if (er2) {
+                                err(er2, 82);
+                            }
+
+                            if (!using_default_icon) {
+                                uncheck_icon_input_default_checkbox();
+                            }
+                        });
+
+                    } else {
+                        uncheck_icon_input_default_checkbox();
+                    }
+                }
+                //< set icon default checkbox state
+
+                if (!is_work_folder) {
+                    expand_or_collapse.expand_or_collapse_folder(
+                        'select',
+                        folder_path,
+                        nest_level,
+                        i_to_insert_folfder_in,
+                    );
+                }
+            }
+
+            convert_color.convert_all();
+
+            wf_shared.ob.chosen_folder_info = {
+                children: children || null,
+                is_theme: folder_info.is_theme,
+                nest_level: nest_level || null,
+                i_to_insert_folfder_in: i_to_insert_folfder_in || null,
+            };
         }
-
-        convert_color.convert_all();
-
-        wf_shared.ob.chosen_folder_info = {
-            children: children || null,
-            is_theme: folder_info.is_theme,
-            nest_level: nest_level || null,
-            i_to_insert_folfder_in: i_to_insert_folfder_in || null,
-        };
 
     } catch (er) {
         err(er, 13);

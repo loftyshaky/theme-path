@@ -9,7 +9,9 @@ configure({ enforceActions: 'observed' });
 
 export const select_root_folder = action(() => {
     try {
-        shared.ob.chosen_folder_path = choose_folder.ob.work_folder;
+        if (choose_folder.reset_work_folder(false)) {
+            shared.ob.chosen_folder_path = choose_folder.ob.work_folder;
+        }
 
     } catch (er) {
         err(er, 71);

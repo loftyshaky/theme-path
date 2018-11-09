@@ -10,6 +10,7 @@ import * as shared from 'js/shared';
 import * as settings from 'js/settings';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
+import * as choose_folder from 'js/work_folder/choose_folder';
 
 const store = new Store();
 
@@ -46,39 +47,41 @@ export const set_default_icon = (family, i) => {
 
 export const set_default_or_disabled = (family, i, special_checkbox) => {
     try {
-        if (special_checkbox === 'default') {
-            if (!inputs_data.obj[family][i].default) {
-                change_val.set_default_bool(family, i, true);
+        if (choose_folder.reset_work_folder(false)) {
+            if (special_checkbox === 'default') {
+                if (!inputs_data.obj[family][i].default) {
+                    change_val.set_default_bool(family, i, true);
 
-                if (family === 'tints') {
-                    change_val.set_disable_bool(family, i, false);
+                    if (family === 'tints') {
+                        change_val.set_disable_bool(family, i, false);
+                    }
+
+                    set_default(family, i, special_checkbox);
                 }
 
+            } else if (special_checkbox === 'select') {
                 set_default(family, i, special_checkbox);
-            }
 
-        } else if (special_checkbox === 'select') {
-            set_default(family, i, special_checkbox);
+            } else if (special_checkbox === 'disable') {
+                if (!inputs_data.obj[family][i].disable) {
+                    change_val.set_disable_bool(family, i, true);
+                    change_val.set_default_bool(family, i, false);
 
-        } else if (special_checkbox === 'disable') {
-            if (!inputs_data.obj[family][i].disable) {
-                change_val.set_disable_bool(family, i, true);
-                change_val.set_default_bool(family, i, false);
+                    change_val.change_val(family, i, [-1, -1, -1], null);
 
-                change_val.change_val(family, i, [-1, -1, -1], null);
+                    change_val.set_inputs_data_val(
+                        family,
+                        i,
+                        settings.ob.theme_vals[store.get('theme')].color_input_disabled,
+                    );
 
-                change_val.set_inputs_data_val(
-                    family,
-                    i,
-                    settings.ob.theme_vals[store.get('theme')].color_input_disabled,
-                );
+                } else {
+                    change_val.set_disable_bool(family, i, false);
+                    change_val.set_disable_bool(family, i, false);
+                    change_val.set_default_bool(family, i, true);
 
-            } else {
-                change_val.set_disable_bool(family, i, false);
-                change_val.set_disable_bool(family, i, false);
-                change_val.set_default_bool(family, i, true);
-
-                set_default(family, i, 'default');
+                    set_default(family, i, 'default');
+                }
             }
         }
 

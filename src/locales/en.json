@@ -184,6 +184,7 @@
   "locale_is_locked_er": "Can't delete locale folder because it's locked",
   "folder_is_locked_er": "Folder is locked",
   "cant_create_theme_in_theme_er": "Can't create a theme in a theme",
+  "work_folder_doesnt_exist_er": "Work folder doesn't exist",
 
   "reload_ui_btn_text": "Reload"
 }

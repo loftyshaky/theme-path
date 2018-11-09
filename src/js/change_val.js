@@ -14,6 +14,7 @@ import Store from 'electron-store';
 import { inputs_data } from 'js/inputs_data';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as select_folder from 'js/work_folder/select_folder';
+import * as choose_folder from 'js/work_folder/choose_folder';
 import * as settings from 'js/settings';
 import * as open_and_pack from 'js/open_and_pack';
 import * as shared from 'js/shared';
@@ -25,67 +26,77 @@ configure({ enforceActions: 'observed' });
 //--
 export const change_val = (family, i, val, img_extension, e) => {
     try {
-        const new_val = val === 'is_not_select' ? e.target.value : val;
-        const { name } = inputs_data.obj[family][i];
-        const manifest_path = join(shared.ob.chosen_folder_path, 'manifest.json');
-        const default_locale = family === 'theme_metadata'
-            ? shared.find_from_name(inputs_data.obj[family], 'default_locale').val
-            : null;
-        const first_if_names = ['name', 'description'];
-        const second_if_names = ['version', 'default_locale'];
-        const third_if_names = ['colors', 'tints', 'properties'];
+        const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
-        set_inputs_data_val(family, i, new_val);
+        if (choose_folder.reset_work_folder(true) || theme_families.indexOf(family) === -1) {
+            const new_val = val === 'is_not_select' ? e.target.value : val;
+            const { name } = inputs_data.obj[family][i];
+            const manifest_path = join(shared.ob.chosen_folder_path, 'manifest.json');
+            const default_locale = family === 'theme_metadata'
+                ? shared.find_from_name(inputs_data.obj[family], 'default_locale').val
+                : null;
+            const first_if_names = ['name', 'description'];
+            const second_if_names = ['version', 'default_locale'];
+            const third_if_names = ['colors', 'tints', 'properties'];
 
-        if (first_if_names.indexOf(name) > -1) {
-            set_name_or_description_prop(name, e.target.value);
+            set_inputs_data_val(family, i, new_val);
 
-            const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
+            if (first_if_names.indexOf(name) > -1) {
+                set_name_or_description_prop(name, e.target.value);
 
-            if (name === 'name') {
-                if (locale === default_locale) {
-                    new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
+                const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
 
-                    shared.set_default_locale_theme_name(name, new_val);
+                if (name === 'name') {
+                    if (locale === default_locale) {
+                        new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
+
+                        shared.set_default_locale_theme_name(name, new_val);
+                    }
+                }
+
+                delete_locale_folder(locale, family);
+
+            } else if (second_if_names.indexOf(name) > -1) {
+                write_to_json(shared.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
+
+            } else if (name === 'locale') {
+                select_folder.get_theme_name_or_descrption_inner(shared.ob.chosen_folder_path, new_val, default_locale);
+
+            } else if (third_if_names.indexOf(family) > -1) {
+                write_to_json(shared.mut.manifest, manifest_path, name, new_val, family);
+
+            } else if (family === 'images' || name === 'icon') {
+                write_to_json(
+                    shared.mut.manifest,
+                    manifest_path,
+                    name,
+                    `${new_val}.${(img_extension || 'png')}`,
+                    family,
+                );
+
+            } else if (family === 'settings') {
+                store.set(name, new_val);
+
+                if (name === 'chrome_user_data_dirs') {
+                    store.set('chrome_process_ids', {});
+
+                    open_and_pack.update_chrome_user_data_dirs_observable();
+
+                } else if (name === 'theme') {
+                    settings.load_theme();
                 }
             }
 
-            delete_locale_folder(locale, family);
-
-        } else if (second_if_names.indexOf(name) > -1) {
-            write_to_json(shared.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
-
-        } else if (name === 'locale') {
-            select_folder.get_theme_name_or_descrption_inner(shared.ob.chosen_folder_path, new_val, default_locale);
-
-        } else if (third_if_names.indexOf(family) > -1) {
-            write_to_json(shared.mut.manifest, manifest_path, name, new_val, family);
-
-        } else if (family === 'images' || name === 'icon') {
-            write_to_json(shared.mut.manifest, manifest_path, name, `${new_val}.${(img_extension || 'png')}`, family);
-
-        } else if (family === 'settings') {
-            store.set(name, new_val);
-
-            if (name === 'chrome_user_data_dirs') {
-                store.set('chrome_process_ids', {});
-
-                open_and_pack.update_chrome_user_data_dirs_observable();
-
-            } else if (name === 'theme') {
-                settings.load_theme();
+            if (family === 'images' || third_if_names.indexOf(family) > -1 || name === 'icon') {
+                set_default_bool(family, i, false);
             }
-        }
 
-        if (family === 'images' || third_if_names.indexOf(family) > -1 || name === 'icon') {
-            set_default_bool(family, i, false);
-        }
+            if (family === 'tints') {
+                const not_disabling = val.some(item => item > -1);
 
-        if (family === 'tints') {
-            const not_disabling = val.some(item => item > -1);
-
-            if (not_disabling) {
-                set_disable_bool(family, i, false);
+                if (not_disabling) {
+                    set_disable_bool(family, i, false);
+                }
             }
         }
 

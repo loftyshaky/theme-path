@@ -28,7 +28,7 @@ export const create_top_level_folders = async () => {
     }
 };
 
-const close_all_folders = action(() => {
+export const close_all_folders = action(() => {
     try {
         wf_shared.ob.folders.clear();
         wf_shared.mut.opened_folders = [];
@@ -41,7 +41,8 @@ const close_all_folders = action(() => {
 
 export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_insert_folfder_in) => {
     try {
-        if (mode !== 'new_theme' || !wf_shared.ob.chosen_folder_info.is_theme) {
+        if (choose_folder.reset_work_folder(false)
+            && (mode !== 'new_theme' || !wf_shared.ob.chosen_folder_info.is_theme)) {
             const folder_is_opened = wf_shared.mut.opened_folders.indexOf(folder_path) !== -1;
 
             if (mode === 'new_theme') {
