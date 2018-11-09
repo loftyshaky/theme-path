@@ -54,13 +54,7 @@ export class Work_folder extends React.Component {
                 <button
                     className="folder_arrow"
                     type="button"
-                    onClick={expand_or_collapse.expand_or_collapse_folder.bind(
-                        null,
-                        'arrow',
-                        folder.path,
-                        folder.nest_level + 1,
-                        index + 1,
-                    )}
+                    onClick={expand_or_collapse.expand_or_collapse_folder.bind(null, 'arrow', folder.path, folder.nest_level + 1, index + 1)}
                 >
                     <Svg src={folder_is_opened ? arrow_down_svg : arrow_right_svg} />
                 </button>
@@ -81,14 +75,7 @@ export class Work_folder extends React.Component {
                         <button
                             className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
                             type="button"
-                            onClick={select_folder.select_folder.bind(
-                                null,
-                                false,
-                                folder.path,
-                                folder.children,
-                                folder.nest_level + 1,
-                                index + 1,
-                            )}
+                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, index + 1)}
                         >
                             <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
                         </button>
@@ -98,14 +85,7 @@ export class Work_folder extends React.Component {
                                 folder.path === shared.ob.chosen_folder_path ? 'selected_folder' : null,
                             ])}
                             type="button"
-                            onClick={select_folder.select_folder.bind(
-                                null,
-                                false,
-                                folder.path,
-                                folder.children,
-                                folder.nest_level + 1,
-                                index + 1,
-                            )}
+                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, index + 1)}
                             title={folder.name}
                         >
                             {folder.name}

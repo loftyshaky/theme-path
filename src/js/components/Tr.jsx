@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    toJS,
-    decorate,
-    observable,
-    action,
-    configure,
-} from 'mobx';
+import { toJS, decorate, observable, action, configure } from 'mobx';
 import { observer } from 'mobx-react';
 import Store from 'electron-store';
 
@@ -117,13 +111,7 @@ export class Tr extends React.Component {
     //< create other transitions
 
     render() {
-        const {
-            attr,
-            name,
-            state,
-            tr_end_callbacks,
-            children,
-        } = this.props;
+        const { attr, name, state, tr_end_callbacks, children } = this.props;
         const class_name = `${attr.className} ${this.transit(name, state)}`;
         const display_style = toJS(this.display_style);
 

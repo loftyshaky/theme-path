@@ -58,11 +58,7 @@ export const convert_theme_color_props_to_color = (family, i, val) => {
                     const every_number_in_hsla_arr_is_minus_1 = hsla_arr.every(number => number.indexOf('-1') > -1);
 
                     if (every_number_in_hsla_arr_is_minus_1) {
-                        change_val.set_inputs_data_val(
-                            family,
-                            i,
-                            settings.ob.theme_vals[store.get('theme')].color_input_disabled,
-                        );
+                        change_val.set_inputs_data_val(family, i, settings.ob.theme_vals[store.get('theme')].color_input_disabled);
                         change_val.set_default_bool(family, i, false);
                         change_val.set_disable_bool(family, i, true);
 

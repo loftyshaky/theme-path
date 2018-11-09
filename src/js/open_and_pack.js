@@ -48,7 +48,7 @@ export const open_in_chrome = folder_path => {
             }
 
             try {
-                const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') }); // eslint-disable-line max-len
+                const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') });
 
                 mut.chrome_process_ids[folder_path] = child_process.pid;
 
@@ -75,9 +75,7 @@ export const pack = type => {
                 0,
                 shared.ob.chosen_folder_path.lastIndexOf(sep),
             );
-            const package_name = shared.ob.chosen_folder_path.substring(
-                shared.ob.chosen_folder_path.lastIndexOf(sep) + 1,
-            );
+            const package_name = shared.ob.chosen_folder_path.substring(shared.ob.chosen_folder_path.lastIndexOf(sep) + 1);
             const pak_path = join(shared.ob.chosen_folder_path, 'Cached Theme.pak');
 
             try {

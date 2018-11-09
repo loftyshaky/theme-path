@@ -69,11 +69,7 @@ export const set_default_or_disabled = (family, i, special_checkbox) => {
 
                     change_val.change_val(family, i, [-1, -1, -1], null);
 
-                    change_val.set_inputs_data_val(
-                        family,
-                        i,
-                        settings.ob.theme_vals[store.get('theme')].color_input_disabled,
-                    );
+                    change_val.set_inputs_data_val(family, i, settings.ob.theme_vals[store.get('theme')].color_input_disabled);
 
                 } else {
                     change_val.set_disable_bool(family, i, false);

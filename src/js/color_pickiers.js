@@ -30,11 +30,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
 
                     show_or_hide_color_pickier(mut.current_color_pickier.family, mut.current_color_pickier.i, false);
 
-                    set_color_input_vizualization_color(
-                        mut.current_color_pickier.family,
-                        mut.current_color_pickier.i,
-                        mut.current_color_pickier.color,
-                    );
+                    set_color_input_vizualization_color(mut.current_color_pickier.family, mut.current_color_pickier.i, mut.current_color_pickier.color);
                 }
             }
             //< try to hide color pickier when clicking outside of color pickier t
@@ -47,7 +43,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                 const { family } = e.target.dataset;
                 const { i } = e.target.dataset;
                 const color_pickier_hidden = !inputs_data.obj[family][i].color_pickier_is_visible;
-                const clicked_on_same_color_input_vizualization_second_time = previously_opened_color_pickier === color_pickier; // eslint-disable-line max-len
+                const clicked_on_same_color_input_vizualization_second_time = previously_opened_color_pickier === color_pickier;
 
                 if (color_pickier_hidden && !clicked_on_same_color_input_vizualization_second_time) {
                     const body_margin_bottom = parseInt(window.getComputedStyle(s('body')).marginBottom);
@@ -56,13 +52,12 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                     mut.current_color_pickier.el = color_pickier;
                     mut.current_color_pickier.family = family;
                     mut.current_color_pickier.i = i;
-                    mut.current_color_pickier.color = inputs_data.obj[family][i].color
-                        || inputs_data.obj[family][i].val;
+                    mut.current_color_pickier.color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
 
                     show_or_hide_color_pickier(family, i, true);
                     set_color_color_pickier_position(family, i, 'top');
 
-                    const color_pickier_is_fully_visible = color_pickier.getBoundingClientRect().bottom <= window.innerHeight - margin_bottom_of_body_plus_fieldset_border_width; // eslint-disable-line max-len
+                    const color_pickier_is_fully_visible = color_pickier.getBoundingClientRect().bottom <= window.innerHeight - margin_bottom_of_body_plus_fieldset_border_width;
 
                     if (!color_pickier_is_fully_visible) {
                         set_color_color_pickier_position(family, i, 'bottom');

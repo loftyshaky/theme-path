@@ -13,15 +13,9 @@ export const sort_folders = (folders, start_i, number_of_folders, nest_level) =>
         let sort_range_sorted = sort_range_nested_removed.sort((a, b) => a.name.localeCompare(b.name));
 
         Object.keys(extracted_folders).forEach(folder_path => {
-            const folder_i_to_append_children_to = sort_range_sorted.findIndex(
-                folder => folder.path === folder_path,
-            ) + 1;
+            const folder_i_to_append_children_to = sort_range_sorted.findIndex(folder => folder.path === folder_path) + 1;
 
-            sort_range_sorted = r.insertAll(
-                folder_i_to_append_children_to,
-                extracted_folders[folder_path],
-                sort_range_sorted,
-            );
+            sort_range_sorted = r.insertAll(folder_i_to_append_children_to, extracted_folders[folder_path], sort_range_sorted);
         });
 
         return [].concat(before_range, sort_range_sorted, after_range);

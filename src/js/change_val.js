@@ -1,12 +1,7 @@
 'use_strict';
 
 import { join, sep } from 'path';
-import {
-    existsSync,
-    mkdirSync,
-    writeFileSync,
-    removeSync,
-} from 'fs-extra';
+import { existsSync, mkdirSync, writeFileSync, removeSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
 import Store from 'electron-store';
@@ -32,9 +27,7 @@ export const change_val = (family, i, val, img_extension, e) => {
             const new_val = val === 'is_not_select' ? e.target.value : val;
             const { name } = inputs_data.obj[family][i];
             const manifest_path = join(shared.ob.chosen_folder_path, 'manifest.json');
-            const default_locale = family === 'theme_metadata'
-                ? shared.find_from_name(inputs_data.obj[family], 'default_locale').val
-                : null;
+            const default_locale = family === 'theme_metadata' ? shared.find_from_name(inputs_data.obj[family], 'default_locale').val : null;
             const first_if_names = ['name', 'description'];
             const second_if_names = ['version', 'default_locale'];
             const third_if_names = ['colors', 'tints', 'properties'];
@@ -66,13 +59,7 @@ export const change_val = (family, i, val, img_extension, e) => {
                 write_to_json(shared.mut.manifest, manifest_path, name, new_val, family);
 
             } else if (family === 'images' || name === 'icon') {
-                write_to_json(
-                    shared.mut.manifest,
-                    manifest_path,
-                    name,
-                    `${new_val}.${(img_extension || 'png')}`,
-                    family,
-                );
+                write_to_json(shared.mut.manifest, manifest_path, name, `${new_val}.${(img_extension || 'png')}`, family);
 
             } else if (family === 'settings') {
                 store.set(name, new_val);
@@ -124,13 +111,7 @@ const set_name_or_description_prop = (name, new_val) => {
 
         } else {
             create_messages_file(messages_path);
-            write_to_json(
-                shared.mut.manifest,
-                join(shared.ob.chosen_folder_path, 'manifest.json'),
-                name,
-                sta.msg_dict[name],
-                'theme_metadata',
-            ); // set message link (__MSG_name__ or __MSG_description__)
+            write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
             const messages = shared.parse_json(messages_path);
 

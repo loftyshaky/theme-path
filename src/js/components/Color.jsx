@@ -12,12 +12,7 @@ import { Help } from 'components/Help';
 //--
 
 export const Color = observer(props => {
-    const {
-        name,
-        family,
-        i,
-        color_input_type,
-    } = props;
+    const { name, family, i, color_input_type } = props;
     const { color_pickier_is_visible } = inputs_data.obj[family][i] || false;
     const { color_pickiers_position } = inputs_data.obj[family][i] || false;
     const color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
@@ -67,10 +62,7 @@ export const Color = observer(props => {
             <span className="ordinary_color_input_inner">
                 {label}
                 <span
-                    className={x.cls([
-                        'color_input_vizualization',
-                        color_input_type === 'img' ? 'tall_color_input_vizualization' : null,
-                    ])}
+                    className={x.cls(['color_input_vizualization', color_input_type === 'img' ? 'tall_color_input_vizualization' : null])}
                     data-family={family}
                     data-i={i}
                     style={{ backgroundColor: color }}

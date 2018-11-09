@@ -73,12 +73,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 //< set icon default checkbox state
 
                 if (!is_work_folder) {
-                    expand_or_collapse.expand_or_collapse_folder(
-                        'select',
-                        folder_path,
-                        nest_level,
-                        i_to_insert_folfder_in,
-                    );
+                    expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folfder_in);
                 }
             }
 
