@@ -4,12 +4,12 @@ import x from 'x';
 
 configure({ enforceActions: 'observed' });
 
-window.err = action((er_obj, er_code, mgs, silent, persistent) => {
-    if (!silent) {
-        const er_msg = x.message(`${mgs}_er`);
+window.err = action((er_obj, er_code, msg, silent, persistent, exit) => {
+    if (!er_obj.silent && !silent) {
+        const er_msg = x.message(`${er_obj.msg || msg}_er`);
         const er_msg_final = er_msg ? ` ${er_msg}.` : '';
 
-        ob.er_msg = `${x.message('an_error_occured_msg') + er_msg_final}\n${x.message('error_code_label') + er_code}\n${x.message('error_type_label') + er_obj.name}\n${x.message('error_msg_label') + er_obj.message}`; // eslint-disable-line max-len
+        ob.er_msg = `${x.message('an_error_occured_msg') + er_msg_final}\n${x.message('error_code_label') + (er_obj.er_code || er_code)}\n${x.message('error_type_label') + er_obj.name}\n${x.message('error_msg_label') + er_obj.message}`; // eslint-disable-line max-len
 
         change_er_state('er_is_visible', true);
         change_er_state('er_is_highlighted', true);
@@ -17,14 +17,26 @@ window.err = action((er_obj, er_code, mgs, silent, persistent) => {
         change_er_persistence(persistent);
         clear_all_timeouts();
 
-        if (!persistent) {
+        if (!er_obj.persistent && !persistent) {
             run_timeout('er_is_visible', 20000);
         }
 
         run_timeout('er_is_highlighted', 200);
     }
 
-    console.error(er_obj.stack); // eslint-disable-line no-console
+    if (er_obj.exit || exit) {
+        const updated_er_obj = er_obj;
+        updated_er_obj.er_code = er_obj.er_code || er_code;
+        updated_er_obj.msg = er_obj.msg || msg;
+        updated_er_obj.silent = er_obj.silent || silent;
+        updated_er_obj.persistent = er_obj.persistent || persistent;
+        updated_er_obj.exit = er_obj.exit || exit;
+
+        throw updated_er_obj;
+
+    } else {
+        console.error(er_obj.stack); // eslint-disable-line no-console
+    }
 });
 
 window.t = msg => {
