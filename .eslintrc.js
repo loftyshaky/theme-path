@@ -1,7 +1,8 @@
 module.exports = {
     rules: {
         'camelcase': 0,
-         'max-len': 0,
+        'max-len': 0,
+        'object-curly-newline': 0,
         'import/no-extraneous-dependencies': 0,
         'padded-blocks': 0,
         'spaced-comment': 0,
