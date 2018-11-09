@@ -13,6 +13,8 @@ import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import { observable, action, configure } from 'mobx';
 
+import * as choose_folder from 'js/work_folder/choose_folder';
+
 configure({ enforceActions: 'observed' });
 const store = new Store();
 
@@ -20,19 +22,21 @@ const store = new Store();
 
 const run = callback => {
     try {
-        if (wf_shared.ob.chosen_folder_info.is_theme) {
-            const files = readdirSync(shared.ob.chosen_folder_path);
-            const folder_is_theme = files.find(file => file === 'manifest.json');
+        if (choose_folder.reset_work_folder(false)) {
+            if (wf_shared.ob.chosen_folder_info.is_theme) {
+                const files = readdirSync(shared.ob.chosen_folder_path);
+                const folder_is_theme = files.find(file => file === 'manifest.json');
 
-            if (folder_is_theme) {
-                callback();
+                if (folder_is_theme) {
+                    callback();
+
+                } else {
+                    err(er_obj('Chosen folder is not a theme'), 4, 'chosen_folder_is_not_theme');
+                }
 
             } else {
-                err(er_obj('Chosen folder is not a theme'), 4, 'chosen_folder_is_not_theme');
+                err(er_obj('Theme folder is not chosen'), 3, 'theme_folder_is_not_chosen');
             }
-
-        } else {
-            err(er_obj('Theme folder is not chosen'), 3, 'theme_folder_is_not_chosen');
         }
 
     } catch (er) {
