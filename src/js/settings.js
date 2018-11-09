@@ -13,7 +13,6 @@ configure({ enforceActions: 'observed' });
 export const load_theme = action(() => {
     try {
         const theme_setting = store.get('theme');
-        const selected_folder = s('.selected_folder');
 
         if (theme_setting === 'light') {
             x.load_css(theme_setting);
@@ -23,10 +22,6 @@ export const load_theme = action(() => {
         }
 
         ob.theme = theme_setting;
-
-        if (selected_folder) {
-            selected_folder.click();
-        }
 
     } catch (er) {
         err(er, 54);

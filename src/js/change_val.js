@@ -23,7 +23,7 @@ export const change_val = (family, i, val, img_extension, e) => {
     try {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
-        if (choose_folder.reset_work_folder(true) || theme_families.indexOf(family) === -1) {
+        if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
             const new_val = val === 'is_not_select' ? e.target.value : val;
             const { name } = inputs_data.obj[family][i];
             const manifest_path = join(shared.ob.chosen_folder_path, 'manifest.json');
