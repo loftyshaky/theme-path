@@ -9,7 +9,7 @@
 	font-family: Roboto;
 }
 
-* {
+*, .legend_color_unactive, .er_msg, .header_btn:hover:focus, .header_btn:hover:focus label {
     color: white;
 }
 
@@ -118,7 +118,6 @@ hr {
     width: 100%;
     border: none;
     height: 1px;
-    background-color: white;
     margin-bottom: 6px;
 }
 
@@ -145,8 +144,20 @@ hr {
     border: none;
     background-color: transparent;
     padding: 0;
-    outline: none;
     cursor: pointer;
+}
+
+.folder_arrow, .folder_icon, .folder_name, .work_folder_path, .er_close_btn, body.using_mouse .help_link {
+    outline: none;
+}
+
+body.using_mouse .help_link:focus {
+    margin-left: 0;
+}
+
+.help_link:focus {
+    outline: 1px solid #3892ff;
+    margin-left: 1px;
 }
 
 a, .help_link {
@@ -172,6 +183,10 @@ a:active, .help_link:active, .upload_box_browse_label:active {
     white-space: nowrap;
 }
 
+body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus {
+    box-shadow: none;
+}
+
 .btn:hover, .option:hover, .header_btn:active {
     background-color: #fbff75!important;
 }
@@ -191,7 +206,7 @@ textarea {
     display: block;
 }
 
-textarea:focus, .select_w:focus, .btn:focus, .popup {
+textarea:focus, .select_w:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus {
     outline: none;
     box-shadow: 0 0 5px #fbff75;
     border: 1px solid #fbff75;
@@ -222,7 +237,11 @@ textarea, .select_title, .option  {
     margin-right: 12px;
 }
 
-textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title {
+hr, .color_input_vizualization, .color_ok_btn, .header_btn:hover, body.using_mouse .header_btn:hover:focus, body.using_mouse .color_ok_btn:focus  {
+    background-color: white;
+}
+
+textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .select_w, .checkbox_checkmark_w, .select_title {
     border: 1px solid white;
 }
 
@@ -232,7 +251,6 @@ textarea, .select_w, .checkbox_checkmark_w {
 
 .color_input_vizualization {
     position: relative;
-    background-color: white;
     height: 18px;
     width: 30px;
     vertical-align: bottom;
@@ -252,7 +270,6 @@ textarea, .select_w, .checkbox_checkmark_w {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 8px 16px;
     border: none;
-    background-color: white;
     font-size: 14px;
     height: 21px;
     cursor: pointer;
@@ -260,9 +277,8 @@ textarea, .select_w, .checkbox_checkmark_w {
     vertical-align: top;
 }
 
-.color_ok_btn:hover {
-    color: white;
-    background-color: #4285f4;
+.color_ok_btn:hover, .color_ok_btn:focus, body.using_mouse .color_ok_btn:hover:focus, .header_btn:focus {
+    background-color: #3892ff;
 }
 
 .flexbox-fix input, .color_ok_btn {
@@ -283,9 +299,12 @@ textarea, .select_w, .checkbox_checkmark_w {
 }
 
 svg {
-    fill: white;
     display: block;
     cursor: pointer;
+}
+
+svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
+    fill: white
 }
 /*< general */
 
@@ -335,15 +354,11 @@ header span, header label, header .open_in_chrome_btn {
     cursor: pointer;
 }
 
-.header_btn:hover {
-    background-color: white;
-}
-
-.header_btn:hover, .header_btn:hover svg {
+.header_btn:hover, .header_btn:hover svg, body.using_mouse .header_btn:hover:focus svg {
     fill: #212121;
 }
 
-.header_btn:active, .header_btn:active label {
+.header_btn:active, .header_btn:active label, body.using_mouse .header_btn:hover:focus, body.using_mouse .header_btn:hover:focus label {
     color: #212121!important;
 }
 
@@ -396,11 +411,19 @@ header span, header label, header .open_in_chrome_btn {
     margin-left: 10px;
 }
 
-.work_folder_path, .folder_name, .folder_inner{
+.work_folder_path, .folder_name, .folder_inner {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
+}
+
+.work_folder_path:focus, .folder_name:focus {
+    box-shadow: inset 0 0 0 1px #fbff75;
+}
+
+body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
+    box-shadow: none;
 }
 
 .work_folder_message {
@@ -448,6 +471,10 @@ header span, header label, header .open_in_chrome_btn {
 .folder_arrow svg {
     width: 18px;
     height: 18px;
+}
+
+.folder_arrow:focus svg {
+    fill:#fbff75;
 }
 
 .folder_icon svg {
@@ -536,6 +563,14 @@ header span, header label, header .open_in_chrome_btn {
 .upload_box_browse_label {
     cursor: pointer;
     font-weight: bold;
+}
+
+.upload_box_browse_label:focus {
+    outline: 1px solid #fbff75;
+}
+
+body.using_mouse .upload_box_browse_label:focus {
+    outline: none;
 }
 
 .tall_color_input_vizualization {
@@ -762,14 +797,6 @@ header span, header label, header .open_in_chrome_btn {
     width: 20px;
 }
 
-.er_msg {
-    color: white;
-}
-
-.er_close_btn svg {
-     fill: white
-}
-
 .reload_ui_btn {
     position: absolute;
     top: 50%;
@@ -778,8 +805,12 @@ header span, header label, header .open_in_chrome_btn {
 }
 /*< error */
 
+body.using_mouse .header_btn:focus {
+    background-color: transparent;
+}
+
 /*> transitions */
-.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier {
+.checkbox_checkmark_w, .checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier {
     transition: all 0.2s ease-out;
 }
 
@@ -791,11 +822,11 @@ a, .help_link, .upload_box_browse_label, .legend {
     transition-property: color;
 }
 
-.btn {
+.btn, .color_input_vizualization {
     transition-property: color, background-color, border-color, box-shadow;
 }
 
-textarea, .select_w, .select_title {
+textarea, .select_w, .select_title, .checkbox_checkmark_w {
     transition-property: border-color, box-shadow;
 }
 
@@ -803,7 +834,7 @@ fieldset {
     transition-property: border-color;
 }
 
-.color_input_vizualization, .upload_box {
+.upload_box {
     transition-property: background-color;
 }
 
@@ -865,10 +896,6 @@ a:active, .help_link:active, .upload_box_browse_label:active, .btn:active {
 
 .fieldset_border_color_active {
     border: 1px solid #333333;
-}
-
-.legend_color_unactive {
-    color: white;
 }
 
 .legend_color_active {

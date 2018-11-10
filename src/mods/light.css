@@ -38,7 +38,7 @@ body, .btn, .option, .legend_line, .fieldset_w .cover, .popup {
     background-color: white;
 }
 
-textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title, .upload_box {
+textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .select_w, .checkbox_checkmark_w, .select_title, .upload_box {
     border-color: #212121;
 }
 
@@ -49,7 +49,6 @@ textarea, .btn, .select_w, .checkbox_checkmark_w, .select_title, .upload_box {
 .work_folder_fieldset {
     border-color: #212121!important;
 }
-
 
 .work_folder_fieldset_w .legend {
     color: #212121!important;
@@ -71,7 +70,15 @@ svg {
     fill: white;
 }
 
-textarea:focus, .select_w:focus, .btn:focus, .popup {
+.work_folder_path:focus, .folder_name:focus {
+    box-shadow: inset 0 0 0 1px #3892ff;
+}
+
+.folder_arrow:focus svg {
+    fill:#3892ff;
+}
+
+textarea:focus, .select_w:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualization:focus, .popup {
     box-shadow: 0 0 5px #3892ff;
     border-color: #3892ff;
 }
@@ -98,8 +105,15 @@ textarea:focus, .select_w:focus, .btn:focus, .popup {
 }
 
 .selected_folder {
-    background-color: #3892ff;
     color: white;
+}
+
+.selected_folder, .header_btn:focus {
+    background-color: #3892ff;
+}
+
+.upload_box_browse_label:focus {
+    outline: 1px solid #3892ff;
 }
 
 .protecting_screen, .fieldset_protecting_screen {

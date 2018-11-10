@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 
 import { inputs_data } from 'js/inputs_data';
 import * as imgs from 'js/imgs';
+import * as enter_click from 'js/enter_click';
 
 import { Tr } from 'components/Tr';
 import { Color } from 'components/Color';
@@ -96,7 +97,9 @@ export class Img_selector extends React.Component {
                             <label
                                 className="upload_box_browse_label"
                                 htmlFor={`${name}_file`}
+                                tabIndex="0"
                                 data-text="upload_box_label_text"
+                                onKeyUp={enter_click.simulate_click_on_enter}
                             />
                         </span>
                     </Tr>

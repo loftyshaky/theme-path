@@ -4,6 +4,7 @@ import Svg from 'svg-inline-react';
 
 import x from 'x';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
+import * as enter_click from 'js/enter_click';
 import { inputs_data } from 'js/inputs_data';
 
 import checkmark_svg from 'svg/checkmark';
@@ -33,7 +34,12 @@ export const Checkbox = observer(props => {
                             : set_default_or_disabled.set_default_icon.bind(null, family, i)
                     }
                 />
-                <span className="checkbox_checkmark_w">
+                <span
+                    className="checkbox_checkmark_w"
+                    role="button"
+                    tabIndex="0"
+                    onKeyUp={enter_click.simulate_click_on_enter}
+                >
                     <Svg src={checkmark_svg} />
                 </span>
             </label>

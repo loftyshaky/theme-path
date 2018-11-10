@@ -5,6 +5,7 @@ import { ChromePicker } from 'react-color';
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as color_pickiers from 'js/color_pickiers';
+import * as enter_click from 'js/enter_click';
 
 import { Tr } from 'components/Tr';
 import { Checkbox } from 'components/Checkbox';
@@ -63,9 +64,12 @@ export const Color = observer(props => {
                 {label}
                 <span
                     className={x.cls(['color_input_vizualization', color_input_type === 'img' ? 'tall_color_input_vizualization' : null])}
+                    role="button"
+                    tabIndex="0"
                     data-family={family}
                     data-i={i}
                     style={{ backgroundColor: color }}
+                    onKeyUp={enter_click.open_color_pickier_on_enter}
                 >
                     <div
                         className="color_pickier_w"
