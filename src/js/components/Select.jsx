@@ -47,14 +47,19 @@ export class Select extends React.Component {
     }
     //< change option val when selecting option
 
+    on_menu_open = async () => {
+        await x.delay(0);
+
+        this.transit_menu();
+        this.scroll_select_menu_into_view();
+    }
+
     //> hide options when clicking on option or select_title / scroll select options into view when oipening select
-    scroll_select_menu_into_view = async () => {
+    scroll_select_menu_into_view = () => {
         try {
             const { family } = this.props;
 
             if (family !== 'settings') {
-                await x.delay(0);
-
                 const select_menu = s('.select__menu');
 
                 const fieldset_w = x.closest(this.input, '.fieldset_w');
@@ -85,6 +90,10 @@ export class Select extends React.Component {
         }
     }
     //< hide options when click
+
+    transit_menu = () => {
+        x.add_cls(s('.select__menu'), 'select__menu_is_focused');
+    }
 
     render() {
         const { name, family, i } = this.props;
@@ -121,7 +130,7 @@ export class Select extends React.Component {
                         classNamePrefix="select"
                         backspaceRemovesValue={false}
                         onChange={this.change_select_val}
-                        onMenuOpen={this.scroll_select_menu_into_view}
+                        onMenuOpen={this.on_menu_open}
                     />
                     <Help {...this.props} />
                 </div>

@@ -83,7 +83,7 @@ svg {
     border-color: #212121!important;
 }
 
-.select__control--is-focused, .select__menu {
+.select__control--is-focused, .select__menu_is_focused {
     box-shadow: 0 0 5px #3892ff!important;
     border-color: #3892ff!important;
 }
