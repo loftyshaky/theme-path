@@ -1,9 +1,10 @@
 'use_strict';
 
 import { join, sep } from 'path';
-import { existsSync, mkdirSync, writeFileSync, removeSync } from 'fs-extra';
+import { existsSync, mkdirSync, writeFileSync, removeSync, readdirSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
+import * as r from 'ramda';
 import Store from 'electron-store';
 
 import { inputs_data } from 'js/inputs_data';
@@ -47,10 +48,15 @@ export const change_val = (family, i, val, img_extension, e) => {
                     }
                 }
 
-                delete_locale_folder(locale, family);
+                delete_locale_folder(locale, default_locale, family);
 
             } else if (second_if_names.indexOf(name) > -1) {
                 write_to_json(shared.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
+
+                if (name === 'default_locale') {
+                    add_locale_folder(new_val);
+                    delete_unused_locale_folders(new_val);
+                }
 
             } else if (name === 'locale') {
                 select_folder.get_theme_name_or_descrption_inner(shared.ob.chosen_folder_path, new_val, default_locale);
@@ -90,11 +96,11 @@ export const change_val = (family, i, val, img_extension, e) => {
     }
 };
 
-const set_name_or_description_prop = (name, new_val) => {
+const set_name_or_description_prop = (name, new_val, forced_locale) => {
     try {
         const val = shared.mut.manifest[name];
         const val_is_localized = shared.val_is_localized(val);
-        const locale = shared.find_from_name(inputs_data.obj.theme_metadata, 'locale').val;
+        const locale = forced_locale || shared.find_from_name(inputs_data.obj.theme_metadata, 'locale').val;
         const messages_path = join(shared.ob.chosen_folder_path, '_locales', locale, 'messages.json');
 
         check_if_localisation_folders_exists_create_them_if_dont(locale);
@@ -204,12 +210,12 @@ const create_messages_file = messages_path => {
 };
 
 //> delete locale folder when both name and description is ''
-const delete_locale_folder = async (locale, family) => {
+const delete_locale_folder = async (locale, default_locale, family) => {
     try {
         const name = shared.find_from_name(inputs_data.obj[family], 'name').val;
         const description = shared.find_from_name(inputs_data.obj[family], 'description').val;
 
-        if (name === '' && description === '') {
+        if (name === '' && description === '' && locale !== default_locale) {
             try {
                 removeSync(join(shared.ob.chosen_folder_path, '_locales', locale));
 
@@ -223,6 +229,96 @@ const delete_locale_folder = async (locale, family) => {
     }
 };
 //< delete locale folder when both name and description is ''
+
+//> delete locale folders with empty name and description
+const delete_unused_locale_folders = new_default_locale => {
+    try {
+        const locale_folders = readdirSync(join(shared.ob.chosen_folder_path, '_locales'));
+
+        locale_folders.forEach(locale_folder => {
+            if (locale_folder !== new_default_locale) {
+                const messages_path = join(shared.ob.chosen_folder_path, '_locales', locale_folder, 'messages.json');
+
+                const remove_locale_folder = r.ifElse(
+                    () => existsSync(messages_path),
+                    () => {
+                        const messages_json = shared.parse_json(messages_path);
+
+                        const name_exist = check_if_name_or_description_exist('name', messages_json);
+                        const description_exist = check_if_name_or_description_exist('name', messages_json);
+
+                        if (!name_exist && !description_exist) {
+                            return true;
+                        }
+
+                        return false;
+                    },
+                    () => true,
+                )();
+
+                if (remove_locale_folder) {
+                    try {
+                        removeSync(join(shared.ob.chosen_folder_path, '_locales', locale_folder));
+
+                    } catch (er) {
+                        err(er, 131, 'folder_is_locked');
+                    }
+                }
+            }
+        });
+
+    } catch (er) {
+        err(er, 130);
+    }
+};
+//< delete locale folders with empty name and description
+
+const check_if_name_or_description_exist = (name, message_json) => {
+    try {
+        const val = shared.mut.manifest[name];
+        const val_is_localized = shared.val_is_localized(val);
+
+        if (val_is_localized) {
+            const message_name = shared.get_message_name(val);
+            if (!message_json) {
+                return false;
+            }
+
+            if (!message_json[message_name]) {
+                return false;
+
+            }
+
+            if (!message_json[message_name].message) {
+                return false;
+
+            }
+
+            if (message_json[message_name].message === '') {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+
+    } catch (er) {
+        err(er, 132);
+
+        return false;
+    }
+};
+
+const add_locale_folder = new_default_locale => {
+    try {
+        set_name_or_description_prop('name', '', new_default_locale);
+        set_name_or_description_prop('description', '', new_default_locale);
+
+    } catch (er) {
+        err(er, 129, 'folder_is_locked');
+    }
+};
 
 export const set_inputs_data_val = action((family, i, val) => {
     try {

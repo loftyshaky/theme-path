@@ -23,7 +23,7 @@ export const parse_json = file_path => {
         return JSON.parse(readFileSync(file_path, 'utf-8').trim());
 
     } catch (er) {
-        err(er, 57);
+        err(er, 57, null, true);
     }
 
     return undefined;
