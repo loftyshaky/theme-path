@@ -38,7 +38,7 @@ body, .btn, .option, .legend_line, .fieldset_w .cover, .popup {
     background-color: white;
 }
 
-textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .select_w, .checkbox_checkmark_w, .select_title, .upload_box {
+textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .upload_box {
     border-color: #212121;
 }
 
@@ -50,7 +50,7 @@ textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmar
     border-color: #212121!important;
 }
 
-.work_folder_fieldset_w .legend {
+.work_folder_fieldset_w .legend, .select__single-value, .select__placeholder, .select__option--is-selected, .select__option--is-selected.select__option--is-focused, .select__menu-notice {
     color: #212121!important;
 }
 
@@ -78,22 +78,52 @@ svg {
     fill:#3892ff;
 }
 
-textarea:focus, .select_w:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualization:focus, .popup {
+/*> selects */
+.select__control {
+    border-color: #212121!important;
+}
+
+.select__control--is-focused, .select__menu {
+    box-shadow: 0 0 5px #3892ff!important;
+    border-color: #3892ff!important;
+}
+
+.select__control--is-focused .select__dropdown-indicator svg {
+    fill: #fbff75;
+}
+
+.select__option, .select__menu-notice {
+    background-color: white!important;
+}
+
+.select__indicator-separator {
+    background-color: #212121!important;
+}
+
+.select__option--is-focused, .select__control--is-focused .select__indicator-separator {
+    background-color: #3892ff!important;
+}
+
+.select__control--is-focused .select__dropdown-indicator svg {
+    fill: #3892ff;
+}
+
+.select__option--is-focused {
+    color: white!important;
+}
+
+.select__option--is-selected {
+    background-color: #fbff75!important;
+}
+/*< selects */
+
+textarea:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualization:focus, .popup {
     box-shadow: 0 0 5px #3892ff;
     border-color: #3892ff;
 }
 
 .popup {
     box-shadow: 0 0 15px #3892ff;
-}
-
-.select_w:focus > .select_title {
-    box-shadow: 0px 1px 5px -1px #3892ff;
-    border-bottom-color: #3892ff;
-}
-
-.select_w:focus > .select_title:after {
-    border-color: #3892ff transparent;
 }
 
 .btn:hover, .option:hover {

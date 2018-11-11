@@ -38,7 +38,7 @@ body {
     overflow-x: hidden;
 }
 
-body, .btn, .option, .legend_line, .fieldset_w .cover, .popup {
+body, .btn, .legend_line, .fieldset_w .cover, .popup {
     background-color: #212121;
 } 
 
@@ -187,7 +187,7 @@ body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.
     box-shadow: none;
 }
 
-.btn:hover, .option:hover, .header_btn:active {
+.btn:hover, .option:hover, .header_btn:active, .select__option--is-focused {
     background-color: #fbff75!important;
 }
 
@@ -206,7 +206,7 @@ textarea {
     display: block;
 }
 
-textarea:focus, .select_w:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus {
+textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus {
     outline: none;
     box-shadow: 0 0 5px #fbff75;
     border: 1px solid #fbff75;
@@ -217,7 +217,7 @@ textarea, .btn {
     overflow: hidden;
 }
 
-textarea, .select_title, .option  {
+textarea, .option  {
     width: 100%;
     box-sizing: border-box;
     padding-left: 5px;
@@ -241,11 +241,11 @@ hr, .color_input_vizualization, .color_ok_btn, .header_btn:hover, body.using_mou
     background-color: white;
 }
 
-textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .select_w, .checkbox_checkmark_w, .select_title {
+textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w {
     border: 1px solid white;
 }
 
-textarea, .select_w, .checkbox_checkmark_w {
+textarea, .checkbox_checkmark_w {
     background-color: transparent;
 }
 
@@ -512,10 +512,6 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     font-size: 14px;
 }
 
-.select_input .help {
-    margin-top: 33px;
-}
-
 .help_message {
     margin-top: 4px;
 }
@@ -621,88 +617,66 @@ body.using_mouse .upload_box_browse_label:focus {
 /*<1 checkboxes */
 
 /*> selects */
-.select_input {
-    height: 50px;
-    position: relative;
-    display: table;
-    width: 100%;
+.select__control {
+    height: 28px;
+    min-height: unset!important;
+    background-color: transparent!important;
+    border-color: white!important;
 }
 
-.select_w:focus {
-    z-index: 2;
+.select__control--is-focused, .select__menu {
+    box-shadow: 0 0 5px #fbff75!important;
+    border: 1px solid #fbff75!important;
 }
 
-.select_w {
-    border-bottom: none;
-    box-shadow: none;
-    user-select: none;
-    -moz-user-select: none;
-    position: absolute;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 10px;
+.select__control--is-focused .select__dropdown-indicator svg {
+    fill: #fbff75;
 }
 
-.select_w:focus > .select_title {
-    box-shadow: 0px 1px 5px -1px #fbff75;
-    border-bottom: 1px solid #fbff75;
+.select__control--is-focused .select__indicator-separator {
+    background-color: #fbff75!important;
 }
 
-.select_w > .select {
-    display: none;
+.select__control, .select__menu {
+    border-radius: 0!important;
 }
 
-.select_w:focus > .select {
-    position: static;
-    display: block;
+.select__indicator-separator {
+    background-color: white!important;
 }
 
-.select_title:after {
-    content: '';
-    width: 0;
-    height: 0;
-    position: absolute;
-    right: 8px;
-    top: 11px;
-    border-width: 6px 6px 0 6px;
-    border-style: solid;
-    border-color: white transparent;
+.select__single-value {
+    top: 13px!important;
 }
 
-.select_w:focus > .select_title:after {
-    border-color: #fbff75 transparent;
+.select__single-value, .select__placeholder, .select__option--is-selected, .select__option--is-selected.select__option--is-focused, .select__menu-notice {
+    color: white!important;
 }
 
-.select_title {
-    height: 27px;
-    line-height: 26px;
-    cursor: pointer;
-    z-index: 1;
-    position: relative;
-    border-width: 0 0 1px 0;
+.select__value-container {
+    padding: 0 3px!important;
 }
 
-.select {
-    list-style-type: none;
-    margin: 0;
-    width: 100%;
-    max-height: 300px;
-    overflow: auto;
-    box-sizing: border-box;
-    margin: auto;
-    padding-left: 1px;
-    padding-right: 1px;
+.select__menu-list {
+    padding: 0!important;
+    max-height: 308px!important;
 }
 
-.option {
-    min-height: 25px;
-    line-height: 24px;
-    border-bottom: none;
-    border-right: none;
-    border-left: none;
-    cursor: default;
-    margin-left: -1px;
-    width: calc(100% + 2px);
+.select__option {
+    padding: 3px 5px 5px 5px!important;
+}
+
+.select__option, .select__menu-notice {
+    background-color: #212121!important;
+}
+
+.select__option--is-focused {
+    background-color: #fbff75!important;
+    color: #212121!important;
+}
+
+.select__option--is-selected {
+    background-color: #3892ff!important;
 }
 /*< selects */
 
@@ -810,7 +784,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w, .checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .select_w, .select_title, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier {
+.checkbox_checkmark_w, .checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier {
     transition: all 0.2s ease-out;
 }
 
@@ -826,7 +800,7 @@ a, .help_link, .upload_box_browse_label, .legend {
     transition-property: color, background-color, border-color, box-shadow;
 }
 
-textarea, .select_w, .select_title, .checkbox_checkmark_w {
+textarea, .checkbox_checkmark_w {
     transition-property: border-color, box-shadow;
 }
 

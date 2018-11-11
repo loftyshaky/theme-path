@@ -42,7 +42,7 @@ export const find_from_name = (array, name) => {
 
 export const find_from_val = (array, val) => {
     try {
-        return array.find(item => item.val === val);
+        return array.find(item => (item.val || item.value) === val);
 
     } catch (er) {
         err(er, 59);

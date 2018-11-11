@@ -1,6 +1,7 @@
 import React from 'react';
 import * as r from 'ramda';
 import { observer } from 'mobx-react';
+import ReactSelect from 'react-select';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -28,32 +29,15 @@ export class Select extends React.Component {
         }
     }
 
-    //> create one option element
-    create_option = option => (
-        /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/role-has-required-aria-props */
-        <li
-            key={option.key}
-            className="option"
-            role="option"
-            data-val={option.val}
-            onClick={this.change_select_val}
-        >
-            {option.text}
-        </li>
-    );
-    //< create one option element
-
     //> change option val when selecting option
-    change_select_val = e => {
+    change_select_val = selected_option => {
         try {
             const { family, i } = this.props;
-            const { val } = e.target.dataset;
+            const { value } = selected_option;
 
-            change_val.change_val(family, i, val, null);
+            change_val.change_val(family, i, value, null);
 
-            this.hide_options();
-
-            if (val === 'default') {
+            if (value === 'default') {
                 set_default_or_disabled.set_default_or_disabled(family, i, 'select');
             }
 
@@ -63,33 +47,15 @@ export class Select extends React.Component {
     }
     //< change option val when selecting option
 
-    //> hide options when clicking on option or select_title
-    hide_options = async () => {
-        try {
-            if (document.activeElement === this.select_w) {
-                await x.delay(0);
-
-                this.select_w.blur();
-            }
-
-        } catch (er) {
-            err(er, 108);
-        }
-    }
-    //< hide options when clicking on option or select_title
-
     //> hide options when clicking on option or select_title / scroll select options into view when oipening select
-    on_mouse_down = async () => {
+    scroll_select_menu_into_view = async () => {
         try {
             const { family } = this.props;
 
-            if (document.activeElement === this.select_w) {
+            if (family !== 'settings') {
                 await x.delay(0);
 
-                this.select_w.blur();
-
-            } else if (family !== 'settings') {
-                await x.delay(0);
+                const select_menu = s('.select__menu');
 
                 const fieldset_w = x.closest(this.input, '.fieldset_w');
                 const fieldset = x.closest(this.input, 'fieldset');
@@ -98,8 +64,8 @@ export class Select extends React.Component {
                 const fieldset_margin_top = parseInt(window.getComputedStyle(fieldset_w).marginTop);
                 const fieldset_border_width = parseInt(window.getComputedStyle(fieldset).borderWidth);
                 const margin_top_of_fieldset_plus_its_border = fieldset_margin_top + fieldset_border_width;
-                const select_w_margin_bottom = parseInt(window.getComputedStyle(this.select_w).marginBottom);
-                let select_w_rect_bottom = this.select_w.getBoundingClientRect().bottom;
+                const select_w_margin_bottom = parseInt(window.getComputedStyle(select_menu).marginBottom);
+                let select_w_rect_bottom = select_menu.getBoundingClientRect().bottom;
                 let while_loop_runned_at_least_once = false;
                 let scroll_top_modifier = 0;
 
@@ -118,7 +84,7 @@ export class Select extends React.Component {
             err(er, 109);
         }
     }
-    //< hide options when clicking on option or select_title / scroll select options into view when oipening select
+    //< hide options when click
 
     render() {
         const { name, family, i } = this.props;
@@ -126,14 +92,15 @@ export class Select extends React.Component {
         const options = selects_options[name !== 'default_locale' ? name : 'locale'];
         const selected_option = shared.find_from_val(options, val);
 
-        const selected_option_text = r.ifElse(
+        const selected_option_final = r.ifElse(
             () => selected_option,
 
-            () => selected_option.text,
+            () => selected_option,
             () => {
-                if (options[0].val === 'default') {
-                    return shared.find_from_val(options, options[0].val).text;
+                if (options[0].value === 'default') {
+                    return options[0];
                 }
+
                 return false;
             },
         )();
@@ -148,26 +115,14 @@ export class Select extends React.Component {
                         className="input_label"
                         data-text={`${name}_label_text`}
                     />
-                    <div
-                        className="select_w settings_input"
-                        role="button"
-                        tabIndex="0"
-                        ref={select_w => { this.select_w = select_w; }}
-                    >
-                        <div
-                            className="select_title"
-                            role="presentation"
-                            onMouseDown={this.on_mouse_down}
-                        >
-                            {selected_option_text}
-                        </div>
-                        <ul
-                            className="select"
-                            ref={select => { this.select = select; }}
-                        >
-                            {options.map(this.create_option)}
-                        </ul>
-                    </div>
+                    <ReactSelect
+                        value={selected_option_final}
+                        options={options}
+                        classNamePrefix="select"
+                        backspaceRemovesValue={false}
+                        onChange={this.change_select_val}
+                        onMenuOpen={this.scroll_select_menu_into_view}
+                    />
                     <Help {...this.props} />
                 </div>
             </div>
