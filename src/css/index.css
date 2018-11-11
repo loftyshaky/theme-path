@@ -622,6 +622,7 @@ body.using_mouse .upload_box_browse_label:focus {
     min-height: unset!important;
     background-color: transparent!important;
     border-color: white!important;
+    cursor: pointer!important;
 }
 
 .select__control--is-focused, .select__menu {
