@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { existsSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
@@ -36,7 +37,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
             if (folder_info.is_theme) {
                 reset_inputs_data();
 
-                shared.mut.manifest = shared.parse_json(`${folder_path}/manifest.json`);
+                shared.mut.manifest = shared.parse_json(join(folder_path, 'manifest.json'));
                 const { default_locale } = shared.mut.manifest;
 
                 get_theme_name_or_descrption_inner(folder_path, default_locale, default_locale);
@@ -122,7 +123,7 @@ export const get_theme_name_or_descrption_inner = (folder_path, locale, default_
 
 const get_theme_name_or_descrption = (name, message_name, locale, default_locale, folder_path) => {
     try {
-        const messages_path = `${folder_path}/_locales/${locale}/messages.json`;
+        const messages_path = join(folder_path, '_locales', locale, 'messages.json');
         const messages_file_exist = existsSync(messages_path);
         let val = '';
 
