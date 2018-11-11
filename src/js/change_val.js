@@ -65,8 +65,6 @@ export const change_val = (family, i, val, img_extension, e) => {
                 store.set(name, new_val);
 
                 if (name === 'chrome_user_data_dirs') {
-                    store.set('chrome_process_ids', {});
-
                     open_and_pack.update_chrome_user_data_dirs_observable();
 
                 } else if (name === 'theme') {
