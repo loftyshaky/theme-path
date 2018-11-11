@@ -113,6 +113,13 @@ fieldset:not(.work_folder_fieldset) > div {
     z-index: -1;
 }
 
+.hr_and_help {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
 hr {
     display: inline-block;
     width: 100%;
@@ -127,7 +134,6 @@ hr {
     width: 75%;
     margin: auto;
     margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .hr:first-child {

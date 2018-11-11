@@ -51,18 +51,22 @@ export class All extends React.Component {
                             <Input_block
                                 name="images"
                                 hr
+                                add_help
                             />
                             <Input_block
                                 name="colors"
                                 hr
+                                add_help
                             />
                             <Input_block
                                 name="tints"
                                 hr
+                                add_help
                             />
                             <Input_block
                                 name="properties"
                                 hr
+                                add_help
                             />
                         </Fieldset>
                     </div>

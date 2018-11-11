@@ -7,6 +7,7 @@ import { Textarea } from 'components/Textarea';
 import { Select } from 'components/Select';
 import { Img_selector } from 'components/Img_selector';
 import { Color } from 'components/Color';
+import { Help } from 'components/Help';
 
 //--
 
@@ -38,7 +39,10 @@ export class Input_block extends React.Component {
 
         return (
             <React.Fragment>
-                {hr_el}
+                <div className="hr_and_help">
+                    {hr_el}
+                    <Help {...this.props} />
+                </div>
                 <div className={name === 'colors' || name === 'tints' ? 'colors_and_tints_input_block' : null}>
                     {
                         inputs_data.obj[name].map((item, i) => {
