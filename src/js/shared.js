@@ -1,7 +1,7 @@
 import { action, observable, configure } from 'mobx';
 
 import { resolve } from 'path';
-import { readFileSync, writeFileSync } from 'fs-extra';
+import { readFileSync, writeJsonSync } from 'fs-extra';
 
 import * as choose_folder from 'js/work_folder/choose_folder';
 
@@ -114,9 +114,7 @@ export const construct_icons_obj = json => {
 
 export const write_to_json = (json, json_path) => {
     try {
-        const new_json = JSON.stringify(json);
-
-        writeFileSync(json_path, new_json, 'utf8');
+        writeJsonSync(json_path, json, { spaces: 4 });
 
     } catch (er) {
         err(er, 65);
