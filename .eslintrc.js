@@ -77,6 +77,7 @@ module.exports = {
                 'paths': [
                     'src',
                     'src/js',
+                    'src/locales',
                 ],
                 'extensions': [
                     '.js',
