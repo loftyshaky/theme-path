@@ -86,7 +86,7 @@ export const change_val = (family, i, val, img_extension, e) => {
                 const not_disabling = val.some(item => item > -1);
 
                 if (not_disabling) {
-                    set_disable_bool(family, i, false);
+                    set_disabled_bool(family, i, false);
                 }
             }
         }
@@ -347,9 +347,9 @@ export const set_default_bool = action((family, i, bool) => {
     }
 });
 
-export const set_disable_bool = action((family, i, bool) => {
+export const set_disabled_bool = action((family, i, bool) => {
     try {
-        inputs_data.obj[family][i].disable = bool;
+        inputs_data.obj[family][i].disabled = bool;
 
     } catch (er) {
         err(er, 30);

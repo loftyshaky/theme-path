@@ -51,10 +51,10 @@ export const Color = observer(props => {
         />
     ) : null;
 
-    const disable_checkbox = family === 'tints' ? (
+    const disabled_checkbox = family === 'tints' ? (
         <Checkbox
             {...props}
-            special_checkbox="disable"
+            special_checkbox="disabled"
         />
     ) : null;
 
@@ -98,7 +98,7 @@ export const Color = observer(props => {
                         </Tr>
                     </div>
                 </span>
-                {disable_checkbox}
+                {disabled_checkbox}
                 {default_checkbox}
             </span>
             <Help {...props} />

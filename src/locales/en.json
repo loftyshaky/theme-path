@@ -21,7 +21,7 @@
   "upload_box_label_text": "Choose Image",
 
   "default_checkbox_label_text": "Default",
-  "disable_checkbox_label_text": "Disable",
+  "disabled_checkbox_label_text": "Disabled",
 
   "also_use_img_as_title": "Also use the image as...",
 
@@ -201,7 +201,7 @@
   "colors_button_background_help_text": "Specifies the background color of the window control buttons (minimize, maximize, close).",
   "colors_ntp_text_help_text": "Specifies the color of the background area of shortcuts on hover. Can be only white or black.",
 
-  "tints_help_text": "Tint elements change the hue, saturation and lightness of images. To disable specefic tint element click \"Disable\" checkbox.",
+  "tints_help_text": "Tint elements change the hue, saturation and lightness of images. To disable specefic tint element click \"Disabled\" checkbox.",
   "tints_frame_help_text": "Specifies a color tint for the frame area. Whatever image you've created for the frame area will be tinted with a color that you specify here.",
   "tints_frame_inactive_help_text": "Specifies a color tint for the frame area when the window is inactive/out of focus.",
   "tints_frame_incognito_help_text": "Specifies a color tint for the frame area in incognito mode.",

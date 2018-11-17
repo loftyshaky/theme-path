@@ -53,7 +53,7 @@ export const set_default_or_disabled = (family, i, special_checkbox) => {
                     change_val.set_default_bool(family, i, true);
 
                     if (family === 'tints') {
-                        change_val.set_disable_bool(family, i, false);
+                        change_val.set_disabled_bool(family, i, false);
                     }
 
                     set_default(family, i, special_checkbox);
@@ -62,9 +62,9 @@ export const set_default_or_disabled = (family, i, special_checkbox) => {
             } else if (special_checkbox === 'select') {
                 set_default(family, i, special_checkbox);
 
-            } else if (special_checkbox === 'disable') {
-                if (!inputs_data.obj[family][i].disable) {
-                    change_val.set_disable_bool(family, i, true);
+            } else if (special_checkbox === 'disabled') {
+                if (!inputs_data.obj[family][i].disabled) {
+                    change_val.set_disabled_bool(family, i, true);
                     change_val.set_default_bool(family, i, false);
 
                     change_val.change_val(family, i, [-1, -1, -1], null);
@@ -72,8 +72,8 @@ export const set_default_or_disabled = (family, i, special_checkbox) => {
                     change_val.set_inputs_data_val(family, i, settings.ob.theme_vals[store.get('theme')].color_input_disabled);
 
                 } else {
-                    change_val.set_disable_bool(family, i, false);
-                    change_val.set_disable_bool(family, i, false);
+                    change_val.set_disabled_bool(family, i, false);
+                    change_val.set_disabled_bool(family, i, false);
                     change_val.set_default_bool(family, i, true);
 
                     set_default(family, i, 'default');
