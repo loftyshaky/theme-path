@@ -23,6 +23,9 @@ function create_window() {
     //> create the browser window.
     main_window = new BrowserWindow({
         show: false,
+        webPreferences: {
+            nativeWindowOpen: true,
+        },
     });
     //< create the browser window.
 

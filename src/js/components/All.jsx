@@ -10,6 +10,7 @@ import { Work_folder } from 'components/Work_folder';
 import { Input_block } from 'components/Input_block';
 import { Settings } from 'components/Settings';
 import { Links } from 'components/Links';
+import { Help_viewer } from 'components/Help_viewer';
 import { Protecting_screen } from 'components/Protecting_screen';
 
 //--
@@ -73,6 +74,7 @@ export class All extends React.Component {
                     <Protecting_screen />
                     <Settings />
                     <Links />
+                    <Help_viewer />
                 </div>
             </Error_boundary>
         );

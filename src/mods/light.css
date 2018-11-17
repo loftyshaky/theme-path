@@ -42,7 +42,7 @@ textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmar
     border-color: #212121;
 }
 
-.selected_folder, .btn:hover, .option:hover, .header_btn, .header_btn label, .current_theme_name, .header_btn:hover, .header_btn:hover label, .current_theme_name:hover {
+.selected_folder, .btn:hover, .option:hover, .header_btn, .header_btn label, .current_theme_name, .header_btn:hover, .header_btn:hover label, .current_theme_name:hover, .help_viewer_message {
     color: white;
 }
 
@@ -66,7 +66,7 @@ svg {
     fill: #212121;
 }
 
-.header_btn_icon svg, .header_btn:hover svg {
+.header_btn_icon svg, .header_btn:hover svg, .help_viewer .close_btn svg {
     fill: white;
 }
 

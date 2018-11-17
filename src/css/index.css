@@ -38,7 +38,7 @@ body {
     overflow-x: hidden;
 }
 
-body, .btn, .legend_line, .fieldset_w .cover, .popup {
+body, .btn, .legend_line, .fieldset_w .cover, .popup, .help_viewer_expanded_img_w, .help_viewer_w {
     background-color: #212121;
 } 
 
@@ -525,6 +525,82 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 .help_message {
     margin-bottom: 0;
 }
+
+.help_viewer_expanded_img_w {
+    cursor: zoom-out;
+}
+
+.help_viewer_expanded_img_w, .help_viewer_expanded_img {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.help_viewer_expanded_img_w, .help_viewer_w {
+    top: 0;
+    right: 0;
+}
+
+.help_viewer_expanded_img_w, .help_viewer_w {
+    z-index: 3;
+}
+
+.help_viewer_w {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.help_viewer {
+    padding-top: 100%;
+    padding-bottom: 100%;
+    width: 100%;
+}
+
+.help_viewer .close_btn {
+    top: 12px;
+    right: 12px;
+}
+
+.help_viewer .close_btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+.help_viewer_inner_w {
+    width: 60%;
+    margin: auto;
+}
+
+.help_viewer_message {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.help_viewer_message, .help_viewer_name {
+    padding: 10px;
+    padding-top: 0;
+}
+
+.help_viewer_message:last-child {
+    padding-bottom: 0;
+}
+
+.help_viewer_name {
+    color: #fbff75;
+    padding-bottom: 4px;
+}
+
+.help_viewer_img {
+    width: 100%;
+    cursor: zoom-in;
+}
 /*< help */
 
 /*> imgage selector inputs */
@@ -794,7 +870,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu {
+.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w {
     transition: all 0.2s ease-out;
 }
 
@@ -806,7 +882,7 @@ body.using_mouse .header_btn:focus {
     transition-property: border-color, box-shadow!important;
 }
 
-.checkbox_checkmark_w svg, .protecting_screen, .fieldset_protecting_screen, .popup, .color_pickier {
+.checkbox_checkmark_w svg, .protecting_screen, .fieldset_protecting_screen, .popup, .color_pickier, .help_viewer_w, .help_viewer_expanded_img_w {
     transition-property: opacity;
 }
 

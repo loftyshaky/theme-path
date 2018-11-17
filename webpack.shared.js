@@ -45,6 +45,7 @@ module.exports = {
             { from: join(__dirname, 'src', 'mods'), to: join(__dirname, output_dir) },
             { from: join(__dirname, 'src', 'Roboto-Light.ttf'), to: join(__dirname, output_dir) },
             { from: join(__dirname, 'src', 'new_theme'), to: join(__dirname, output_dir, 'new_theme') },
+            { from: join(__dirname, 'src', 'help_imgs'), to: join(__dirname, output_dir, 'help_imgs') },
         ]),
         new Clean_webpack_plugin(['bundle', 'resources']),
     ],

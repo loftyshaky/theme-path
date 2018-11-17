@@ -1,9 +1,11 @@
 import React from 'react';
 
+import * as help_viewer from 'js/help_viewer';
+
 //--
 
 export const Help = props => {
-    const { add_help, name } = props;
+    const { add_help, family, name } = props;
 
     return (
         add_help ? (
@@ -13,12 +15,8 @@ export const Help = props => {
                     type="button"
                     data-help-message={`${name}_help_message`}
                     data-text="help_link_text"
+                    onClick={help_viewer.open_help_viewer.bind(null, family, name)}
                 />
-                <span
-                    className="help_message"
-                    data-text={`${name}_help_message_text`}
-                />
-
             </span>
         )
             : null
