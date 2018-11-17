@@ -894,7 +894,7 @@ a, .help_link, .upload_box_browse_label, .legend {
     transition-property: color, background-color, border-color, box-shadow;
 }
 
-textarea {
+.using_mouse textarea {
     transition-property: border-color, box-shadow;
 }
 
