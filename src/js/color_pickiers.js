@@ -118,7 +118,7 @@ export const accept_color = (family, i) => {
 
             imgs.create_solid_color_image(name, color);
 
-            change_val.change_val(family, i, `${name}.png`, null);
+            change_val.change_val(family, i, name, null);
 
         } else if (family === 'colors') {
             color = hexToRgb(hex);

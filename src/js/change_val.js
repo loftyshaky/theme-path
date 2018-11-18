@@ -32,8 +32,9 @@ export const change_val = (family, i, val, img_extension, e) => {
             const first_if_names = ['name', 'description'];
             const second_if_names = ['version', 'default_locale'];
             const third_if_names = ['colors', 'tints', 'properties'];
+            const img_extension_final = `.${img_extension || 'png'}`;
 
-            set_inputs_data_val(family, i, new_val);
+            set_inputs_data_val(family, i, new_val + img_extension_final);
 
             if (first_if_names.indexOf(name) > -1) {
                 set_name_or_description_prop(name, e.target.value);
@@ -65,7 +66,7 @@ export const change_val = (family, i, val, img_extension, e) => {
                 write_to_json(shared.mut.manifest, manifest_path, name, new_val, family);
 
             } else if (family === 'images' || name === 'icon') {
-                write_to_json(shared.mut.manifest, manifest_path, name, `${new_val}.${(img_extension || 'png')}`, family);
+                write_to_json(shared.mut.manifest, manifest_path, name, new_val + img_extension_final, family);
 
             } else if (family === 'settings') {
                 store.set(name, new_val);
