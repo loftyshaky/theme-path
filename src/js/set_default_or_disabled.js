@@ -100,7 +100,12 @@ const set_default = (family, i) => {
         const img_to_delete_path = join(shared.ob.chosen_folder_path, inputs_data.obj[family][i].val);
 
         if (existsSync(img_to_delete_path)) {
-            unlinkSync(img_to_delete_path);
+            try {
+                unlinkSync(img_to_delete_path);
+
+            } catch (er) {
+                err(er, 139, 'img_is_locked');
+            }
         }
 
         shared.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
