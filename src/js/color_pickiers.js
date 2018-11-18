@@ -118,7 +118,7 @@ export const accept_color = (family, i) => {
 
             imgs.create_solid_color_image(name, color);
 
-            change_val.change_val(family, i, name, null);
+            change_val.change_val(family, i, `${name}.png`, null);
 
         } else if (family === 'colors') {
             color = hexToRgb(hex);
@@ -136,7 +136,10 @@ export const accept_color = (family, i) => {
         }
 
         show_or_hide_color_pickier(family, i, false);
-        change_val.set_inputs_data_val(family, i, hex);
+
+        if (family !== 'images') {
+            change_val.set_inputs_data_val(family, i, hex);
+        }
 
         mut.current_color_pickier.el = null;
 
