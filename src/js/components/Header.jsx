@@ -9,9 +9,12 @@ import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as open_and_pack from 'js/open_and_pack';
 import * as toogle_popup from 'js/toogle_popup';
+import * as show_or_open_folder from 'js/show_or_open_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
 import plus_svg from 'svg/plus';
+import arrow_up_2 from 'svg/arrow_up_2';
+import eye from 'svg/eye';
 import open_in_browser_svg from 'svg/open_in_browser';
 import archive_svg from 'svg/archive';
 import gear_svg from 'svg/gear';
@@ -81,20 +84,34 @@ export class Header extends React.Component {
                             />
                         ))
                     }
-                    <Open_in_chrome_btn />
+                    <Btn
+                        name="open_in_chrome"
+                        on_click={() => open_and_pack.open_in_chrome('')}
+                        svg={open_in_browser_svg}
+                    />
+                    <Btn
+                        name="show_folder"
+                        on_click={show_or_open_folder.show_folder}
+                        svg={arrow_up_2}
+                    />
+                    <Btn
+                        name="open_folder"
+                        on_click={show_or_open_folder.open_folder}
+                        svg={eye}
+                    />
                     <Pack_btn name="zip" />
                     <Pack_btn name="crx" />
-                    <Btn
+                    <Popup_btn
                         name="settings"
                         svg={gear_svg}
                     />
 
-                    <Btn
+                    <Popup_btn
                         name="help"
                         svg={question_svg}
                     />
 
-                    <Btn
+                    <Popup_btn
                         name="links"
                         svg={list_svg}
                     />
@@ -119,18 +136,22 @@ const Open_in_profiled_chrome_btn = props => {
     );
 };
 
-const Open_in_chrome_btn = () => (
-    <button
-        className="header_btn header_btn_icon"
-        type="button"
-        data-title="open_in_chrome_btn_title"
-        onClick={open_and_pack.open_in_chrome.bind(null, '')}
-    >
-        <Svg src={open_in_browser_svg} />
-    </button>
-);
-
 const Btn = props => {
+    const { name, on_click, svg } = props;
+
+    return (
+        <button
+            className="header_btn header_btn_icon"
+            type="button"
+            data-title={`${name}_btn_title`}
+            onClick={on_click}
+        >
+            <Svg src={svg} />
+        </button>
+    );
+};
+
+const Popup_btn = props => {
     const { name, svg } = props;
 
     return (

@@ -97,6 +97,8 @@
   "new_theme_btn_label_text": "New theme",
   "pack_as_zip_btn_title": "Pack as ZIP",
   "pack_as_crx_btn_title": "Pack as CRX",
+  "show_folder_btn_title": "Show folder",
+  "open_folder_btn_title": "Open folder",
   "open_in_chrome_btn_title": "Open in Chrome",
   "settings_btn_title": "Settings",
   "help_btn_title": "Help",
