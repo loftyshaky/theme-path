@@ -6,7 +6,6 @@ import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as color_pickiers from 'js/color_pickiers';
 import * as enter_click from 'js/enter_click';
-import * as wf_shared from 'js/work_folder/wf_shared';
 
 import { Tr } from 'components/Tr';
 import { Checkbox } from 'components/Checkbox';
@@ -18,9 +17,11 @@ export const Color = observer(props => {
     const { color_pickier_is_visible } = inputs_data.obj[family][i] || false;
     const { color_pickiers_position } = inputs_data.obj[family][i] || false;
     const color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
+    color_pickiers.mut.current_pickied_color.hex = color;
 
     const on_change = picked_color => {
         try {
+            color_pickiers.mut.current_pickied_color = picked_color;
             color_pickiers.set_color_input_vizualization_color(family, i, picked_color);
 
         } catch (er) {
@@ -28,9 +29,9 @@ export const Color = observer(props => {
         }
     };
 
-    const on_click = picked_color => {
+    const on_click = () => {
         try {
-            color_pickiers.accept_color(family, i, picked_color);
+            color_pickiers.accept_color(family, i);
 
         } catch (er) {
             err(er, 96);
@@ -66,7 +67,7 @@ export const Color = observer(props => {
                 <span
                     className={x.cls(['color_input_vizualization', color_input_type === 'img' ? 'tall_color_input_vizualization' : null])}
                     role="button"
-                    tabIndex={wf_shared.com2.inputs_disabled_1}
+                    tabIndex="0"
                     data-family={family}
                     data-i={i}
                     style={{ backgroundColor: color }}
@@ -86,7 +87,7 @@ export const Color = observer(props => {
                         >
                             <ChromePicker
                                 color={color}
-                                disableAlpha
+                                disableAlpha={family !== 'images'}
                                 onChange={on_change}
                             />
                             <button

@@ -15,14 +15,18 @@ configure({ enforceActions: 'observed' });
 
 //--
 
-export const create_solid_color_image = (name, color) => {
+export const create_solid_color_image = (name, family, hex, alpha) => {
     try {
         const width = sta.width[name] ? sta.width[name] : 1;
         const height = sta.height[name] ? sta.height[name] : 200;
 
-        new Jimp(width, height, color, (er, img) => { // eslint-disable-line no-new
+        new Jimp(width, height, hex, (er, img) => { // eslint-disable-line no-new
             if (er) {
                 err(er, 11);
+            }
+
+            if (family === 'images') {
+                img.opacity(alpha); // appply alpha
             }
 
             img.getBase64(Jimp.AUTO, (er2, data) => {

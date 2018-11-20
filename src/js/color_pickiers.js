@@ -74,6 +74,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
 
 export const show_or_hide_color_pickier = action((family, i, bool) => {
     try {
+        mut.current_pickied_color.rgb.a = 1;
         inputs_data.obj[family][i].color_pickier_is_visible = bool;
 
     } catch (er) {
@@ -92,13 +93,11 @@ export const set_color_color_pickier_position = action((family, i, val) => {
 
 export const set_color_input_vizualization_color = action((family, i, color) => {
     try {
-        const color_final = color.hex || color;
-
         if (family === 'images' || inputs_data.obj[family][i].name === 'icon') {
-            inputs_data.obj[family][i].color = color_final;
+            inputs_data.obj[family][i].color = color.rgb ? `rgba(${r.values(color.rgb).join(',')})` : color;
 
         } else {
-            inputs_data.obj[family][i].val = color_final;
+            inputs_data.obj[family][i].val = color.hex || color;
         }
 
     } catch (er) {
@@ -109,14 +108,12 @@ export const set_color_input_vizualization_color = action((family, i, color) => 
 //> accept color when clicking OK t
 export const accept_color = (family, i) => {
     try {
-        const hex = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
+        const { hex } = mut.current_pickied_color;
         const { name } = inputs_data.obj[family][i];
         let color;
 
         if (family === 'images' || name === 'icon') {
-            color = hex;
-
-            imgs.create_solid_color_image(name, color);
+            imgs.create_solid_color_image(name, family, hex, mut.current_pickied_color.rgb.a);
 
             change_val.change_val(family, i, name, null);
 
@@ -150,7 +147,12 @@ export const accept_color = (family, i) => {
 //< accept color when clicking OK t
 
 //> varibles
-const mut = {
+export const mut = {
+    current_pickied_color: {
+        rgb: {
+            a: 1, // alpha
+        },
+    },
     current_color_pickier: {
         el: null,
         family: '',
