@@ -65,7 +65,6 @@ export class Img_selector extends React.Component {
             name,
             family,
             i,
-            add_help,
         } = this.props;
 
         return (
