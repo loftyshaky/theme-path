@@ -1,66 +1,34 @@
 import * as r from 'ramda';
 
+import x from 'x';
+import * as wf_shared from 'js/work_folder/wf_shared';
+
 //--
 
-export const sort_folders = (folders, start_i, number_of_folders, nest_level) => { // folders = all folders; number_of_folders = amount of folders at nest level + children
-    try {
-        const before_range = folders.slice(0, start_i);
-        const after_range = folders.slice(start_i + number_of_folders, folders.length);
-        const sort_range = folders.slice(start_i, start_i + number_of_folders);
-        const sort_range_nested_removed = sort_range.filter(folder => folder.nest_level === nest_level);
-        const extracted_folders = extract_nested_folders_from_sort_range({}, sort_range, nest_level);
+export const sort_folders = (folders, added_folder_path, start_i, nest_level) => {
+    const only_one_folder = folders.length === 1; // total number of folders with added folder is one
+    const new_folders = r.ifElse(
+        () => only_one_folder,
+        () => folders,
 
-        let sort_range_sorted = sort_range_nested_removed.sort((a, b) => a.name.localeCompare(b.name));
+        () => {
+            const number_of_folders = wf_shared.get_number_of_folders_to_work_with(start_i, nest_level) + 1; // get number of folders from the first folder (and including it) in folder tree where added folder will be contained till the last folder (and including it) in this tree
+            const folders_of_nest_level_folder_inserted_in = folders.filter((folder, i) => folder.path === added_folder_path || (i >= start_i && i <= start_i + number_of_folders && folder.nest_level === nest_level)); // remove all folders with nest level !== inserted folder nest level
+            const sorted_folders = sort_folders_inner(folders_of_nest_level_folder_inserted_in); // sort folders of nest level of added folder
+            const added_folder_sorted_i = sorted_folders.findIndex(folder => folder.path === added_folder_path); // get index of added folder
+            const sorted_folders_without_added_folder = r.reject(folder => folder.path === added_folder_path, sorted_folders); // remove added folder from sorted_folders array
+            const previous_folder = sorted_folders_without_added_folder[added_folder_sorted_i - 1]; // attempt to get folder before added folder from sorted_folders_without_added_folder array
+            const added_folder_relative = previous_folder || sorted_folders_without_added_folder[0]; // if previous folder doesn't exist in sorted_folders_without_added_folder select first folder from sorted_folders_without_added_folder
+            const added_folder_relative_i = folders.findIndex(folder => folder.path === added_folder_relative.path);
+            const added_folder_is_first_folder_in_sorted_folder = !previous_folder; // in_sorted_folder = inside sorted_folders_without_added_folder
+            const insert_i = added_folder_is_first_folder_in_sorted_folder ? added_folder_relative_i - 1 : folders.findIndex((folder, i) => i > added_folder_relative_i && folder.nest_level <= nest_level) - 1; // ? select previous folder to added_folder_relative : select the first folder (from all folders, that is folders array) after added_folder_relative with equal nest_level to nest_level or below nest_level than nest_level
+            const new_folders_inner = x.move(0, insert_i, folders);
 
-        Object.keys(extracted_folders).forEach(folder_path => {
-            const folder_i_to_append_children_to = sort_range_sorted.findIndex(folder => folder.path === folder_path) + 1;
+            return new_folders_inner;
+        },
+    )();
 
-            sort_range_sorted = r.insertAll(folder_i_to_append_children_to, extracted_folders[folder_path], sort_range_sorted);
-        });
-
-        return [].concat(before_range, sort_range_sorted, after_range);
-
-    } catch (er) {
-        err(er, 83);
-    }
-
-    return undefined;
+    return new_folders;
 };
 
-const extract_nested_folders_from_sort_range = (extracted_folders, sort_range, nest_level) => {
-    try {
-        const nest_start_i = sort_range.findIndex(folder => folder.nest_level > nest_level);
-        const nested_folder_found = nest_start_i > -1;
-
-        if (nested_folder_found) {
-            const range_parent_path = sort_range[nest_start_i - 1].path;
-
-            let new_sort_range = r.drop(nest_start_i, sort_range);
-            let new_extracted_folders;
-
-            const nest_end_i = new_sort_range.findIndex(folder => folder.nest_level === nest_level);
-            const nested_folder_end_found = nest_end_i > -1;
-
-            if (nested_folder_end_found) {
-                new_extracted_folders[range_parent_path] = sort_range.slice(0, nest_end_i);
-
-                new_sort_range = r.drop(nest_end_i, sort_range);
-
-            } else {
-                new_extracted_folders[range_parent_path] = sort_range;
-
-                new_sort_range = [];
-            }
-
-            return extract_nested_folders_from_sort_range(new_extracted_folders, new_sort_range, nest_level);
-
-        }
-
-        return extracted_folders;
-
-    } catch (er) {
-        err(er, 84);
-    }
-
-    return undefined;
-};
+export const sort_folders_inner = folders => r.sort((a, b) => a.name.localeCompare(b.name), folders);

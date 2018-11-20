@@ -128,9 +128,9 @@ const expand_folder = (folder_path, files, nest_level, i_to_insert_folfder_in) =
                 wf_shared.mut.opened_folders.push(folder_path); // mark target folder as opened
             }
 
-            const folders_with_new_folder = r.insertAll(i_to_insert_folfder_in, expanded_folders, wf_shared.ob.folders);
+            const folders_with_new_folder = r.insertAll(i_to_insert_folfder_in, sort_folders.sort_folders_inner(expanded_folders), wf_shared.ob.folders);
 
-            wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, expanded_folders.length, nest_level));
+            wf_shared.set_folders(folders_with_new_folder);
         }
 
     } catch (er) {

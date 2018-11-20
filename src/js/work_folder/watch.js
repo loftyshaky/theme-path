@@ -42,16 +42,14 @@ watcher
     }))
     .on('addDir', action(folder_path => {
         try {
-            const parent_folder_path = dirname(folder_path);
-            const added_folder_is_in_work_folder = parent_folder_path === choose_folder.ob.work_folder;
             const folder_already_exist = wf_shared.ob.folders.findIndex(folder => folder.path === folder_path) > -1;
 
-            if (added_folder_is_in_work_folder && !folder_already_exist) {
+            if (!folder_already_exist) {
+                const parent_folder_path = dirname(folder_path);
                 const parent_folder_is_root = parent_folder_path === choose_folder.ob.work_folder;
                 const parent_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path === parent_folder_path);
-                const i_to_insert_folfder_in = parent_folder_is_root ? 0 : parent_folder_i + 1;
+                const start_i = parent_folder_is_root ? 0 : parent_folder_i + 1;
                 const nest_level = parent_folder_is_root ? 0 : wf_shared.ob.folders[parent_folder_i].nest_level + 1;
-                const number_of_folders = wf_shared.get_number_of_folders_to_work_with(i_to_insert_folfder_in, nest_level) + 1;
                 const parent_folder_info = wf_shared.get_info_about_folder(parent_folder_path);
                 const folder_info = wf_shared.get_info_about_folder(folder_path);
                 const parent_folder_is_opened = wf_shared.mut.opened_folders.indexOf(parent_folder_path) > -1;
@@ -72,9 +70,9 @@ watcher
                         is_empty: folder_info.is_empty,
                     };
 
-                    const folders_with_new_folder = r.insert(i_to_insert_folfder_in, new_folder, wf_shared.ob.folders);
+                    const folders_with_new_folder = r.insert(0, new_folder, wf_shared.ob.folders);
 
-                    wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, number_of_folders, nest_level));
+                    wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, folder_path, start_i, nest_level));
                 }
 
                 wf_shared.rerender_work_folder();

@@ -75,6 +75,8 @@ x.closest = (el, selector) => {
     return false;
 };
 
+x.move = (from, to, arr) => r.insert(to, r.nth(from, arr), r.remove(from, 1, arr));
+
 x.remove_cls = (el, cls_name) => {
     if (el && el.nodeType === 1) { // if not document
         el.classList.remove(cls_name);

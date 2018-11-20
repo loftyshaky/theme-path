@@ -15,7 +15,7 @@ configure({ enforceActions: 'observed' });
 //--
 
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
-export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, nest_level, i_to_insert_folfder_in, folder_is_opened, name_input_val) => { // action( need to be here otherwise renamed folder will be deselected
+export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, nest_level, start_i, folder_is_opened, name_input_val) => { // action( need to be here otherwise renamed folder will be deselected
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (mode === 'renaming_folder' || (mode === 'creating_folder' && !wf_shared.ob.chosen_folder_info.is_theme)) {
@@ -33,7 +33,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                             if (mode === 'creating_folder') {
                                 const new_theme_path = join(folder_path, folder_name_final);
                                 const root_folder_chosen = shared.ob.chosen_folder_path === choose_folder.ob.work_folder;
-                                const number_of_folders = wf_shared.get_number_of_folders_to_work_with(i_to_insert_folfder_in, nest_level) + 1;
+
 
                                 copySync(source_folder_path, new_theme_path);
 
@@ -48,9 +48,9 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                         is_empty: false,
                                     };
 
-                                    const folders_with_new_folder = r.insert(i_to_insert_folfder_in, new_theme, wf_shared.ob.folders);
+                                    const folders_with_new_folder = r.insert(0, new_theme, wf_shared.ob.folders);
 
-                                    wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, i_to_insert_folfder_in, number_of_folders, nest_level));
+                                    wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, new_theme_path, start_i, nest_level));
                                 }
 
                             } else if (mode === 'renaming_folder' && folder_name_final.length <= 255) {
