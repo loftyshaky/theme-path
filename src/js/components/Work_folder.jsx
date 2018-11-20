@@ -54,6 +54,7 @@ export class Work_folder extends React.Component {
                 <button
                     className="folder_arrow"
                     type="button"
+                    disabled={wf_shared.com2.inputs_disabled_4}
                     onClick={expand_or_collapse.expand_or_collapse_folder.bind(null, 'arrow', folder.path, folder.nest_level + 1, index + 1)}
                 >
                     <Svg src={folder_is_opened ? arrow_down_svg : arrow_right_svg} />
@@ -83,7 +84,7 @@ export class Work_folder extends React.Component {
                         <button
                             className={x.cls(['folder_name', folder.path === shared.ob.chosen_folder_path ? 'selected_folder' : null])}
                             type="button"
-                            tabIndex="0"
+                            tabIndex={wf_shared.com2.inputs_disabled_3}
                             onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, index + 1)}
                             title={folder.name}
                         >
@@ -133,6 +134,7 @@ export class Work_folder extends React.Component {
                         className="btn choose_work_folder_btn"
                         type="button"
                         data-text="choose_folder_btn_text"
+                        disabled={wf_shared.com2.inputs_disabled_4}
                         onClick={choose_folder.choose_folder.bind(
                             null,
                             expand_or_collapse.create_top_level_folders,
@@ -141,7 +143,7 @@ export class Work_folder extends React.Component {
                     <button
                         className={x.cls(['work_folder_path', shared.ob.chosen_folder_path === choose_folder.ob.work_folder ? 'selected_folder' : null])}
                         type="button"
-                        tabIndex="0"
+                        tabIndex={wf_shared.com2.inputs_disabled_3}
                         title={choose_folder.ob.work_folder}
                         onClick={component_methods.select_root_folder}
                     >

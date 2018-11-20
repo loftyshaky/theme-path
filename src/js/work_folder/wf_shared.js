@@ -6,6 +6,7 @@ import * as r from 'ramda';
 
 import * as shared from 'js/shared';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as toogle_popup from 'js/toogle_popup';
 
 configure({ enforceActions: 'observed' });
 
@@ -102,6 +103,20 @@ export const com = {
     },
 };
 
+export const com2 = {
+    get inputs_disabled_1() {
+        return com.fieldset_protecting_screen_is_visible || toogle_popup.ob.proptecting_screen_is_visible ? -1 : 0;
+    },
+    get inputs_disabled_2() {
+        return (com.fieldset_protecting_screen_is_visible || toogle_popup.ob.proptecting_screen_is_visible) || false;
+    },
+    get inputs_disabled_3() {
+        return toogle_popup.ob.proptecting_screen_is_visible ? -1 : 0;
+    },
+    get inputs_disabled_4() {
+        return toogle_popup.ob.proptecting_screen_is_visible;
+    },
+};
 
 export const set_folders = action(val => {
     ob.folders = val;
@@ -114,4 +129,9 @@ export const mut = {
 
 decorate(com, {
     fieldset_protecting_screen_is_visible: computed,
+});
+
+decorate(com2, {
+    inputs_disabled_1: computed,
+    inputs_disabled_2: computed,
 });

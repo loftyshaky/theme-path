@@ -6,6 +6,7 @@ import x from 'x';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as enter_click from 'js/enter_click';
 import { inputs_data } from 'js/inputs_data';
+import * as wf_shared from 'js/work_folder/wf_shared';
 
 import checkmark_svg from 'svg/checkmark';
 
@@ -37,7 +38,7 @@ export const Checkbox = observer(props => {
                 <span
                     className="checkbox_checkmark_w"
                     role="button"
-                    tabIndex="0"
+                    tabIndex={wf_shared.com2.inputs_disabled_1}
                     onKeyUp={enter_click.simulate_click_on_enter}
                 >
                     <Svg src={checkmark_svg} />

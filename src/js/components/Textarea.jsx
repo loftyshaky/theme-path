@@ -6,6 +6,7 @@ import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
+import * as wf_shared from 'js/work_folder/wf_shared';
 
 import { Help } from 'components/Help';
 
@@ -129,6 +130,7 @@ export class Textarea extends React.Component {
                     className={this.ob.char_limit_exceeded ? 'char_limit_exceeded_textarea' : ''}
                     ref={textarea => { this.textarea = textarea; }}
                     value={val}
+                    disabled={wf_shared.com2.inputs_disabled_2 && family !== 'settings'}
                     onInput={change_val.change_val.bind(null, family, i, 'is_not_select', null)}
                     onChange={() => null}
                 />
