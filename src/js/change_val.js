@@ -32,9 +32,10 @@ export const change_val = (family, i, val, img_extension, e) => {
             const first_if_names = ['name', 'description'];
             const second_if_names = ['version', 'default_locale'];
             const third_if_names = ['colors', 'tints', 'properties'];
+            const fourth_if_names = ['images', 'icon'];
             const img_extension_final = `.${img_extension || 'png'}`;
 
-            set_inputs_data_val(family, i, new_val + img_extension_final);
+            set_inputs_data_val(family, i, fourth_if_names.indexOf(family) > -1 ? new_val + img_extension_final : new_val);
 
             if (first_if_names.indexOf(name) > -1) {
                 set_name_or_description_prop(name, e.target.value);
@@ -65,7 +66,7 @@ export const change_val = (family, i, val, img_extension, e) => {
             } else if (third_if_names.indexOf(family) > -1) {
                 write_to_json(shared.mut.manifest, manifest_path, name, new_val, family);
 
-            } else if (family === 'images' || name === 'icon') {
+            } else if (fourth_if_names.indexOf(family) > -1) {
                 write_to_json(shared.mut.manifest, manifest_path, name, new_val + img_extension_final, family);
 
             } else if (family === 'settings') {
