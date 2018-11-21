@@ -46,7 +46,9 @@ const run = callback => {
 
 export const open_in_chrome = (folder_path, e) => {
     try {
-        const incognito = e.button !== 0 ? ' --incognito' : '';
+        const left_button_clicked = e.button === 0;
+        const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
+        const incognito = !left_button_clicked ? ' --incognito' : '';
 
         run(() => {
             kill(mut.chrome_process_ids[folder_path], 'SIGKILL', async er => {
@@ -55,7 +57,7 @@ export const open_in_chrome = (folder_path, e) => {
                 }
 
                 try {
-                    const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"${incognito}`, { cwd: store.get('chrome_dir') });
+                    const child_process = await exec(`chrome.exe ${new_tab_url} ${new_tab_url} ${new_tab_url} --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"${incognito}`, { cwd: store.get('chrome_dir') });
 
                     mut.chrome_process_ids[folder_path] = child_process.pid;
 
