@@ -44,23 +44,30 @@ const run = callback => {
     }
 };
 
-export const open_in_chrome = folder_path => {
-    run(() => {
-        kill(mut.chrome_process_ids[folder_path], 'SIGKILL', async er => {
-            if (er) {
-                err(er, 15, null, true);
-            }
+export const open_in_chrome = (folder_path, e) => {
+    try {
+        const incognito = e.button !== 0 ? ' --incognito' : '';
 
-            try {
-                const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') });
+        run(() => {
+            kill(mut.chrome_process_ids[folder_path], 'SIGKILL', async er => {
+                if (er) {
+                    err(er, 15, null, true);
+                }
 
-                mut.chrome_process_ids[folder_path] = child_process.pid;
+                try {
+                    const child_process = await exec(`chrome.exe chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html chrome-search://local-ntp/local-ntp.html --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"${incognito}`, { cwd: store.get('chrome_dir') });
 
-            } catch (er2) {
-                err(er2, 46);
-            }
+                    mut.chrome_process_ids[folder_path] = child_process.pid;
+
+                } catch (er2) {
+                    err(er2, 46);
+                }
+            });
         });
-    });
+
+    } catch (er) {
+        err(er, 145);
+    }
 };
 
 export const update_chrome_user_data_dirs_observable = action(() => {

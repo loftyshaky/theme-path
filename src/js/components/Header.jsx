@@ -129,7 +129,7 @@ const Open_in_profiled_chrome_btn = props => {
             className="header_btn open_in_chrome_btn"
             type="button"
             title={`${x.message('open_in_chrome_btn_title')} - ${path}`}
-            onClick={open_and_pack.open_in_chrome.bind(null, path)}
+            onMouseUp={open_and_pack.open_in_chrome.bind(null, path)}
         >
             {no}
         </button>
