@@ -471,7 +471,7 @@ export const inputs_data = observable({
             },
             {
                 key: x.unique_id(),
-                name: 'chrome_dir',
+                name: 'chrome_exe_path',
                 family: 'settings',
                 type: 'textarea',
                 val: '',

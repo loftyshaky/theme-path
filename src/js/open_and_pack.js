@@ -1,13 +1,15 @@
 'use_strict';
 
 import { join, sep } from 'path';
+import { homedir, platform } from 'os';
 import { existsSync, unlinkSync, readdirSync } from 'fs-extra';
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import glob from 'glob';
 
 import kill from 'tree-kill';
 import zipLocal from 'zip-local';
 import Store from 'electron-store';
+import getChrome from 'get-chrome';
 
 import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
@@ -48,18 +50,30 @@ export const open_in_chrome = (folder_path, e) => {
     try {
         const left_button_clicked = e.button === 0;
         const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
-        const incognito = !left_button_clicked ? ' --incognito' : '';
+        const chrome_path = store.get('chrome_exe_path') ? store.get('chrome_exe_path').trim() : getChrome(platform());
+        const user_data_path = folder_path.trim() || join(homedir(), 'Chrome Theme Creator Chrome Preview Directory');
+        const incognito = !left_button_clicked ? ' --incognito' : '--x';
 
         run(() => {
-            kill(mut.chrome_process_ids[folder_path], 'SIGKILL', async er => {
+            kill(mut.chrome_process_ids[user_data_path], 'SIGKILL', async er => {
                 if (er) {
                     err(er, 15, null, true);
                 }
 
                 try {
-                    const child_process = await exec(`chrome.exe ${new_tab_url} ${new_tab_url} ${new_tab_url} --start-maximized --user-data-dir="${folder_path}" --load-extension="${shared.ob.chosen_folder_path}"${incognito}`, { cwd: store.get('chrome_dir') });
+                    const child_process = await execFile(chrome_path,
+                        [
+                            new_tab_url,
+                            new_tab_url,
+                            new_tab_url,
+                            incognito,
+                            '--start-maximized',
+                            '--no-first-run', // without this canary chrome will not start if Chrome Theme Creator Chrome Preview Directory doesn't exist
+                            `--user-data-dir=${user_data_path}`,
+                            `--load-extension=${shared.ob.chosen_folder_path}`,
+                        ]);
 
-                    mut.chrome_process_ids[folder_path] = child_process.pid;
+                    mut.chrome_process_ids[user_data_path] = child_process.pid;
 
                 } catch (er2) {
                     err(er2, 46);
@@ -149,7 +163,7 @@ export const pack = type => {
                 });
                 //< remove pems
 
-                exec(`chrome.exe --pack-extension="${shared.ob.chosen_folder_path}"`, { cwd: store.get('chrome_dir') });
+                execFile(getChrome(platform()), [`--pack-extension=${shared.ob.chosen_folder_path}`]);
             }
 
         } catch (er) {

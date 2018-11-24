@@ -65,7 +65,7 @@
   "ntp_logo_alternate_label_text": "Логотип Google",
 
   "theme_label_text": "Тема",
-  "chrome_dir_label_text": "Путь Chrome",
+  "chrome_exe_path_label_text": "Путь к исполняемому файлу Chrome",
   "chrome_user_data_dirs_label_text": "Пути к папкам пользователей Chrome",
 
 
@@ -214,8 +214,8 @@
   "properties_ntp_background_repeat_help_text": "Контролирует повторение фонового изображения.",
   "properties_ntp_logo_alternate_help_text": "Определяет цвет логотипа \"Google\" на странице новой вкладки.",
 
-  "settings_chrome_dir_help_text": "Путь к папке в которой находиться chrome.exe. Используется при предпросмотре темы.",
-  "settings_chrome_user_data_dirs_help_text": "Пути к пользовательским папкам, разделяемые запятой. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре.",
+  "settings_chrome_exe_path_help_text": "Путь к исполняемому файлу Chrome. Используется при предпросмотре темы. Пример: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+  "settings_chrome_user_data_dirs_help_text": "Пути к пользовательским папкам, разделяемые запятой. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
 
 
   "an_error_occured_msg": "Произошла ошибка.",

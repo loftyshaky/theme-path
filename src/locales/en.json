@@ -65,7 +65,7 @@
   "ntp_logo_alternate_label_text": "Google logo",
 
   "theme_label_text": "Theme",
-  "chrome_dir_label_text": "Path to Chrome",
+  "chrome_exe_path_label_text": "Path to Chrome executable",
   "chrome_user_data_dirs_label_text": "Paths to Chrome user data folders",
 
   "option_default_text": "Default",
@@ -214,8 +214,8 @@
   "properties_ntp_background_repeat_help_text": "Controls the repeat of the background image.",
   "properties_ntp_logo_alternate_help_text": "Specifies the color of the Google logo in new tab.",
 
-  "settings_chrome_dir_help_text": "Path to the folder where chrome.exe is located. Used to preview a theme.",
-  "settings_chrome_user_data_dirs_help_text": "Paths to Chrome user data folders separated by commas. Used to preview a theme. If folder doesnt exist it will be created on first preview.",
+  "settings_chrome_exe_path_help_text": "Path to Chrome executable. Used to preview a theme. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+  "settings_chrome_user_data_dirs_help_text": "Paths to Chrome user data folders separated by commas. Used to preview a theme. If folder doesnt exist it will be created on first preview. Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
 
 
   "an_error_occured_msg": "An error occured.",
