@@ -86,7 +86,7 @@ export class Header extends React.Component {
                     }
                     <Btn
                         name="open_in_chrome"
-                        on_click={() => open_and_pack.open_in_chrome('')}
+                        on_click={e => open_and_pack.open_in_chrome('', e)}
                         svg={open_in_browser_svg}
                     />
                     <Btn
@@ -144,7 +144,7 @@ const Btn = props => {
             className="header_btn header_btn_icon"
             type="button"
             data-title={`${name}_btn_title`}
-            onClick={on_click}
+            {...(name === 'open_in_chrome' ? { onMouseUp: on_click } : { onClick: on_click })}
         >
             <Svg src={svg} />
         </button>
