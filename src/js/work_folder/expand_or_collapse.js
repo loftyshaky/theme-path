@@ -2,6 +2,7 @@ import { action, configure } from 'mobx';
 import * as r from 'ramda';
 
 import x from 'x';
+import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as sort_folders from 'js/work_folder/sort_folders';
@@ -76,6 +77,10 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
                             wf_shared.mut.opened_folders.splice(wf_shared.mut.opened_folders.indexOf(item.path), 1);
                         }
                         //<2 mark target folder's child folders as closed
+
+                        if (item.path === shared.ob.chosen_folder_path) {
+                            shared.deselect_theme();
+                        }
 
                         return null;
 
