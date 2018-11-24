@@ -37,6 +37,14 @@ export const close_all_popups = action(() => {
     }
 });
 
+export const close_all_popups_by_keyboard = e => {
+    const esc_pressed = e.keyCode === 27;
+
+    if (esc_pressed) {
+        close_all_popups();
+    }
+};
+
 //> variables
 export const ob = observable({
     popup_visibility: {

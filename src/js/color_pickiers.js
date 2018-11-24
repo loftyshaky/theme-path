@@ -26,11 +26,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                 const clicked_outside_of_color_pickier = !mut.current_color_pickier.el.contains(e.target);
 
                 if (clicked_outside_of_color_pickier) {
-                    mut.current_color_pickier.el = null;
-
-                    show_or_hide_color_pickier(mut.current_color_pickier.family, mut.current_color_pickier.i, false);
-
-                    set_color_input_vizualization_color(mut.current_color_pickier.family, mut.current_color_pickier.i, mut.current_color_pickier.color);
+                    close_color_pickier();
                 }
             }
             //< try to hide color pickier when clicking outside of color pickier t
@@ -145,6 +141,38 @@ export const accept_color = (family, i) => {
     }
 };
 //< accept color when clicking OK t
+
+const close_color_pickier = () => {
+    const any_color_pickier_is_opened = mut.current_color_pickier.el;
+
+    if (any_color_pickier_is_opened) {
+        mut.current_color_pickier.el = null;
+
+        show_or_hide_color_pickier(mut.current_color_pickier.family, mut.current_color_pickier.i, false);
+
+        set_color_input_vizualization_color(mut.current_color_pickier.family, mut.current_color_pickier.i, mut.current_color_pickier.color);
+    }
+};
+
+export const close_or_open_color_pickier_by_keyboard = e => {
+    const { family, i } = mut.current_color_pickier;
+    const any_color_pickier_is_opened = mut.current_color_pickier.el;
+    const enter_pressed = e.keyCode === 13;
+    const esc_pressed = e.keyCode === 27;
+
+    if (enter_pressed && any_color_pickier_is_opened) {
+        document.activeElement.blur(); // prevent color_input_vizualization focus
+    }
+
+    if (enter_pressed) {
+        if (any_color_pickier_is_opened) {
+            accept_color(family, i);
+        }
+
+    } else if (esc_pressed) {
+        close_color_pickier();
+    }
+};
 
 //> varibles
 export const mut = {
