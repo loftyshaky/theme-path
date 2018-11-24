@@ -18,7 +18,6 @@ import eye from 'svg/eye';
 import open_in_browser_svg from 'svg/open_in_browser';
 import archive_svg from 'svg/archive';
 import gear_svg from 'svg/gear';
-import question_svg from 'svg/question';
 import list_svg from 'svg/list';
 
 //--
@@ -104,11 +103,6 @@ export class Header extends React.Component {
                     <Popup_btn
                         name="settings"
                         svg={gear_svg}
-                    />
-
-                    <Popup_btn
-                        name="help"
-                        svg={question_svg}
                     />
 
                     <Popup_btn

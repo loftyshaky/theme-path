@@ -49,7 +49,6 @@ export const close_all_popups_by_keyboard = e => {
 export const ob = observable({
     popup_visibility: {
         settings: false,
-        help: false,
         links: false,
     },
     get proptecting_screen_is_visible() {
