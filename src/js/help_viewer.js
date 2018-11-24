@@ -96,6 +96,19 @@ export const deactivate_all = () => {
     }
 };
 
+export const close_help_viewer_by_keyboard = e => {
+    const esc_pressed = e.keyCode === 27;
+
+    if (esc_pressed) {
+        if (ob.help_viewer_expanded_img_is_visible) {
+            show_help_viewer_expanded_img(false);
+
+        } else if (ob.help_viewer_is_visible) {
+            show_help_viewer(false);
+        }
+    }
+};
+
 //> variables
 export const ob = observable({
     help_viewer_is_none: false,
