@@ -8,7 +8,7 @@ import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as open_and_pack from 'js/open_and_pack';
-import * as toogle_popup from 'js/toogle_popup';
+import * as toggle_popup from 'js/toggle_popup';
 import * as show_or_open_folder from 'js/show_or_open_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
@@ -159,7 +159,7 @@ const Popup_btn = props => {
             className={x.cls(['header_btn header_btn_icon', `${name}_btn`])}
             type="button"
             data-title={`${name}_btn_title`}
-            onClick={toogle_popup.toggle_popup.bind(null, name)}
+            onClick={toggle_popup.toggle_popup.bind(null, name)}
         >
             <Svg src={svg} />
         </button>

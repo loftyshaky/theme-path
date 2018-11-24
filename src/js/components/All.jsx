@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as color_pickiers from 'js/color_pickiers';
 import * as tab_focus from 'js/tab_focus';
-import * as toogle_popup from 'js/toogle_popup';
+import * as toggle_popup from 'js/toggle_popup';
 
 import { Error_boundary } from 'components/Error_boundary';
 import { Header } from 'components/Header';
@@ -24,7 +24,7 @@ export class All extends React.Component {
             document.body.addEventListener('keydown', tab_focus.prevent_el_focus_on_esc);
             document.body.addEventListener('keydown', tab_focus.set_using_mouse_cls.bind(null, 'remove_cls'));
             document.body.addEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
-            document.body.addEventListener('keydown', toogle_popup.close_all_popups_by_keyboard);
+            document.body.addEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
 
         } catch (er) {
             err(er, 93);
@@ -38,7 +38,7 @@ export class All extends React.Component {
             document.body.removeEventListener('keydown', tab_focus.prevent_el_focus_on_esc);
             document.body.removeEventListener('keydown', tab_focus.set_using_mouse_cls.bind(null, 'remove_cls'));
             document.body.removeEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
-            document.body.removeEventListener('keydown', toogle_popup.close_all_popups_by_keyboard);
+            document.body.removeEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
 
         } catch (er) {
             err(er, 94);

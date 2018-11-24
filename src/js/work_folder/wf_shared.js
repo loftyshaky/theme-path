@@ -6,7 +6,7 @@ import * as r from 'ramda';
 
 import * as shared from 'js/shared';
 import * as choose_folder from 'js/work_folder/choose_folder';
-import * as toogle_popup from 'js/toogle_popup';
+import * as toggle_popup from 'js/toggle_popup';
 
 configure({ enforceActions: 'observed' });
 
@@ -105,16 +105,16 @@ export const com = {
 
 export const com2 = {
     get inputs_disabled_1() {
-        return com.fieldset_protecting_screen_is_visible || toogle_popup.ob.proptecting_screen_is_visible ? -1 : 0;
+        return com.fieldset_protecting_screen_is_visible || toggle_popup.ob.proptecting_screen_is_visible ? -1 : 0;
     },
     get inputs_disabled_2() {
-        return (com.fieldset_protecting_screen_is_visible || toogle_popup.ob.proptecting_screen_is_visible) || false;
+        return (com.fieldset_protecting_screen_is_visible || toggle_popup.ob.proptecting_screen_is_visible) || false;
     },
     get inputs_disabled_3() {
-        return toogle_popup.ob.proptecting_screen_is_visible ? -1 : 0;
+        return toggle_popup.ob.proptecting_screen_is_visible ? -1 : 0;
     },
     get inputs_disabled_4() {
-        return toogle_popup.ob.proptecting_screen_is_visible;
+        return toggle_popup.ob.proptecting_screen_is_visible;
     },
 };
 

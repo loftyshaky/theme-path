@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import * as toogle_popup from 'js/toogle_popup';
+import * as toggle_popup from 'js/toggle_popup';
 
 import { Tr } from 'components/Tr';
 
@@ -10,7 +10,7 @@ import { Tr } from 'components/Tr';
 export class Protecting_screen extends React.Component {
     componentDidMount() {
         try {
-            this.protecting_screen.addEventListener('click', toogle_popup.close_all_popups);
+            this.protecting_screen.addEventListener('click', toggle_popup.close_all_popups);
 
         } catch (er) {
             err(er, 104);
@@ -19,7 +19,7 @@ export class Protecting_screen extends React.Component {
 
     componentWillUnmount() {
         try {
-            this.protecting_screen.removeEventListener('nv-event', toogle_popup.close_all_popups);
+            this.protecting_screen.removeEventListener('nv-event', toggle_popup.close_all_popups);
 
         } catch (er) {
             err(er, 105);
@@ -37,7 +37,7 @@ export class Protecting_screen extends React.Component {
                     }}
                     tag="div"
                     name="gen"
-                    state={toogle_popup.ob.proptecting_screen_is_visible}
+                    state={toggle_popup.ob.proptecting_screen_is_visible}
                 />
             </div>
         );
