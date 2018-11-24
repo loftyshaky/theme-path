@@ -27,7 +27,7 @@ export class Textarea extends React.Component {
     }
 
     componentDidMount() {
-        this.resize_textarea();
+        this.resize_textarea(true);
     }
 
     async componentDidUpdate() {
@@ -57,9 +57,14 @@ export class Textarea extends React.Component {
         }
     })
 
-    resize_textarea = async () => {
+    resize_textarea = async mount => {
         try {
+
             this.textarea.style.height = '';
+
+            if (mount) {
+                this.textarea.style.overflow = 'visible'; // needs to be here to resize settings textareas properly on mount
+            }
 
             const scrool_height = this.textarea.scrollHeight;
 
