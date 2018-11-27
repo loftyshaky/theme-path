@@ -14,6 +14,7 @@ module.exports = {
         'jsx-a11y/label-has-associated-control': 0,
         'jsx-a11y/label-has-for': 0,
         'react/jsx-one-expression-per-line': 0,
+        'react/no-multi-comp': 0,
         'jsx-a11y/anchor-is-valid': ['error',
             {
                 'components': ['Link']
