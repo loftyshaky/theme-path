@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
-import x from 'x';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as enter_click from 'js/enter_click';
 import { inputs_data } from 'js/inputs_data';
@@ -13,13 +12,8 @@ import checkmark_svg from 'svg/checkmark';
 //--
 
 export const Checkbox = observer(props => {
-    const checkbox_id = x.unique_id();
-    const {
-        name,
-        family,
-        i,
-        special_checkbox,
-    } = props;
+    const { name, family, i, special_checkbox } = props;
+    const checkbox_id = inputs_data.obj[family][i].key;
 
     return (
         <span className="img_selector_checkbox_w">
