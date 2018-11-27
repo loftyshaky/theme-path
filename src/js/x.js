@@ -56,6 +56,12 @@ x.after = (el_to_insert_after, el_to_insert) => { // insert after
         el_to_insert_after.parentNode.insertBefore(el_to_insert, el_to_insert_after.nextElementSibling);
     }
 };
+
+x.as_first = (el_to_insert_first, el_to_insert) => { // insert as the first child
+    if (el_to_insert_first && el_to_insert.nodeType === 1) { // if not document
+        el_to_insert_first.insertBefore(el_to_insert, el_to_insert_first.firstElementChild);
+    }
+};
 //< dom manipulation
 
 x.matches = (el, selector) => {
