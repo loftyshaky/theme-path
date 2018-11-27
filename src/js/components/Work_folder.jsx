@@ -22,15 +22,26 @@ import arrow_down_svg from 'svg/arrow_down';
 //--
 
 export class Work_folder extends React.Component {
+    constructor(props) {
+        super(props);
 
-    componentDidMount() {
+        this.set_ref = this.set_ref.bind(this);
+    }
+
+    async componentDidMount() {
         expand_or_collapse.create_top_level_folders();
 
         this.select_work_folder_if_its_theme();
+
+        x.as_first(s('.ReactVirtualized__List'), this.work_folder_selector_w);
     }
 
     componentDidUpdate() {
         this.select_work_folder_if_its_theme();
+    }
+
+    set_ref(work_folder_selector_w) {
+        this.work_folder_selector_w = work_folder_selector_w;
     }
 
     select_work_folder_if_its_theme = () => {
@@ -40,10 +51,6 @@ export class Work_folder extends React.Component {
             select_folder.select_folder(true, choose_folder.ob.work_folder);
         }
     }
-
-    show_or_hide_choose_work_folder_btn = scroll_info => {
-        component_methods.show_or_hide_choose_work_folder_btn(scroll_info);
-    };
 
     render_row = ({ index, key, style }) => {
         const folder = wf_shared.ob.folders[index];
@@ -98,6 +105,38 @@ export class Work_folder extends React.Component {
 
     render() {
         const number_of_rows = wf_shared.ob.folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
+        shared.ob.chosen_folder_path; // eslint-disable-line no-unused-expressions
+
+        return (
+            <Fieldset name="work_folder">
+                <Work_folder_selector set_ref={this.set_ref} />
+                <AutoSizer>
+                    {({ width, height }) => (
+                        <List
+                            width={width}
+                            height={height}
+                            rowHeight={32}
+                            rowRenderer={this.render_row}
+                            rowCount={number_of_rows}
+                            tabIndex={null}
+                            style={{
+                                padding: '22px 12px 12px 8px',
+                                boxSizing: 'border-box',
+                                overflow: 'auto!important',
+                            }}
+                        />
+                    )}
+                </AutoSizer>
+            </Fieldset>
+        );
+    }
+}
+
+
+class Work_folder_selector extends React.Component {
+    render() {
+        const { set_ref } = this.props;
+
         const message_key = r.ifElse(
             () => choose_folder.ob.work_folder === '',
             () => 'work_folder_is_not_specified_message_text',
@@ -112,7 +151,6 @@ export class Work_folder extends React.Component {
             },
         )();
 
-
         const work_folder_is_empty_message = wf_shared.ob.folders.length === 0
             ? (
                 <div className="work_folder_message">
@@ -124,12 +162,11 @@ export class Work_folder extends React.Component {
             : null;
 
         return (
-            <Fieldset name="work_folder">
-                <div className={x.cls([
-                    'work_folder_selector',
-                    component_methods.ob.show_work_folder_selector ? '' : 'none',
-                ])}
-                >
+            <div
+                className="work_folder_selector_w"
+                ref={set_ref}
+            >
+                <div className="work_folder_selector">
                     <button
                         className="btn choose_work_folder_btn"
                         type="button"
@@ -151,27 +188,10 @@ export class Work_folder extends React.Component {
                     </button>
                 </div>
                 {work_folder_is_empty_message}
-                <AutoSizer>
-                    {({ width, height }) => (
-                        <List
-                            width={width}
-                            height={height}
-                            rowHeight={32}
-                            rowRenderer={this.render_row}
-                            rowCount={number_of_rows}
-                            tabIndex={null}
-                            onScroll={this.show_or_hide_choose_work_folder_btn}
-                            style={{
-                                padding: '60px 12px 12px 8px',
-                                boxSizing: 'border-box',
-                                overflow: 'auto!important',
-                            }}
-                        />
-                    )}
-                </AutoSizer>
-            </Fieldset>
+            </div>
         );
     }
 }
 
 observer(Work_folder);
+observer(Work_folder_selector);

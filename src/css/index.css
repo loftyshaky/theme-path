@@ -395,15 +395,11 @@ header span, header label, header .open_in_chrome_btn {
     color: white!important;
 }
 
-.work_folder_selector, .work_folder_message {
-    margin-left: 12px;
+.work_folder_selector_w {
+    margin-left: 4px;
 }
 
 .work_folder_selector {
-    position: absolute;
-    top: 22px;
-    z-index: 1;
-    width: calc(100% - 24px);
     display: flex;
     margin-bottom: 10px;
     align-items: center;
@@ -430,11 +426,6 @@ header span, header label, header .open_in_chrome_btn {
 
 body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     box-shadow: none;
-}
-
-.work_folder_message {
-    top: 60px;
-    position: absolute;
 }
 
 .work_folder_fieldset_w {
