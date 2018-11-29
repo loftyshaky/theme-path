@@ -102,9 +102,11 @@
   "option_dark_text": "Темная",
   "option_light_text": "Светлая",
 
+  "search_input_placeholder": "Поиск",
   "new_theme_btn_label_text": "Новая тема",
   "pack_as_zip_btn_title": "Упаковать (ZIP)",
   "pack_as_crx_btn_title": "Упаковать (CRX)",
+  "close_all_folders_btn_title": "Закрыть все папки",
   "show_folder_btn_title": "Показать папку",
   "open_folder_btn_title": "Открыть папку",
   "open_in_chrome_btn_title": "Открыть в Chrome",

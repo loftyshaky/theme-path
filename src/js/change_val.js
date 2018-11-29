@@ -45,8 +45,6 @@ export const change_val = (family, i, val, img_extension, e) => {
                 if (name === 'name') {
                     if (locale === default_locale) {
                         new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
-
-                        shared.set_default_locale_theme_name(name, new_val);
                     }
                 }
 

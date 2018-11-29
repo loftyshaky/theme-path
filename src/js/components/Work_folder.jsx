@@ -11,6 +11,7 @@ import * as component_methods from 'js/work_folder/component_methods';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as search from 'js/work_folder/search';
 
 import { Fieldset } from 'components/Fieldset';
 
@@ -53,8 +54,9 @@ export class Work_folder extends React.Component {
     }
 
     render_row = ({ index, key, style }) => {
-        const folder = wf_shared.ob.folders[index];
+        const folder = search.mut.filtered_folders[index];
         const folder_is_opened = wf_shared.mut.opened_folders.indexOf(folder.path) > -1;
+        const filtered_index = wf_shared.ob.folders.findIndex(cur_folder => cur_folder.path === folder.path) + 1;
         const arrow = folder.is_empty || folder.is_theme
             ? <span className="folder_arrow_placeholder" />
             : (
@@ -62,7 +64,7 @@ export class Work_folder extends React.Component {
                     className="folder_arrow"
                     type="button"
                     disabled={wf_shared.com2.inputs_disabled_4}
-                    onClick={expand_or_collapse.expand_or_collapse_folder.bind(null, 'arrow', folder.path, folder.nest_level + 1, index + 1)}
+                    onClick={expand_or_collapse.expand_or_collapse_folder.bind(null, 'arrow', folder.path, folder.nest_level + 1, filtered_index)}
                 >
                     <Svg src={folder_is_opened ? arrow_down_svg : arrow_right_svg} />
                 </button>
@@ -84,7 +86,7 @@ export class Work_folder extends React.Component {
                             className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
                             type="button"
                             tabIndex="-1"
-                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, index + 1)}
+                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, filtered_index)}
                         >
                             <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
                         </button>
@@ -92,7 +94,7 @@ export class Work_folder extends React.Component {
                             className={x.cls(['folder_name', folder.path === shared.ob.chosen_folder_path ? 'selected_folder' : null])}
                             type="button"
                             tabIndex={wf_shared.com2.inputs_disabled_3}
-                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, index + 1)}
+                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, filtered_index)}
                             title={folder.name}
                         >
                             {folder.name}
@@ -104,7 +106,10 @@ export class Work_folder extends React.Component {
     };
 
     render() {
-        const number_of_rows = wf_shared.ob.folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
+        search.search();
+
+        const number_of_rows = search.mut.filtered_folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
+        wf_shared.ob.folders; // eslint-disable-line no-unused-expressions
         shared.ob.chosen_folder_path; // eslint-disable-line no-unused-expressions
 
         return (
@@ -135,6 +140,8 @@ export class Work_folder extends React.Component {
 
 class Work_folder_selector extends React.Component {
     render() {
+        wf_shared.ob.folders; // eslint-disable-line no-unused-expressions
+
         const { set_ref } = this.props;
 
         const message_key = r.ifElse(
@@ -151,7 +158,7 @@ class Work_folder_selector extends React.Component {
             },
         )();
 
-        const work_folder_is_empty_message = wf_shared.ob.folders.length === 0
+        const work_folder_is_empty_message = search.mut.filtered_folders.length === 0
             ? (
                 <div className="work_folder_message">
                     {

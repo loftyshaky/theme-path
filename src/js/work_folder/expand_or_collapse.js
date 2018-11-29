@@ -74,7 +74,7 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
                         const opened_folder_i = wf_shared.mut.opened_folders.indexOf(item.path);
 
                         if (opened_folder_i > -1) {
-                            wf_shared.mut.opened_folders.splice(wf_shared.mut.opened_folders.indexOf(item.path), 1);
+                            wf_shared.mut.opened_folders.splice(opened_folder_i, 1);
                         }
                         //<2 mark target folder's child folders as closed
 
@@ -83,11 +83,11 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
                         }
 
                         return null;
-
                     }
 
                     return item;
                 });
+
                 const close_nulled = r.filter(item => item);
 
                 wf_shared.mut.opened_folders.splice(wf_shared.mut.opened_folders.indexOf(folder_path), 1); // mark target folder as closed

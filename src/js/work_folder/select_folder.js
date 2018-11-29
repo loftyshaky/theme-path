@@ -108,10 +108,6 @@ export const get_theme_name_or_descrption_inner = (folder_path, locale, default_
 
                 } else {
                     set_val('theme_metadata', name, val);
-
-                    if (locale === default_locale) {
-                        shared.set_default_locale_theme_name(name, val);
-                    }
                 }
             }
         });
@@ -136,10 +132,6 @@ const get_theme_name_or_descrption = (name, message_name, locale, default_locale
         }
 
         set_val('theme_metadata', name, val);
-
-        if (locale === default_locale) {
-            shared.set_default_locale_theme_name(name, val);
-        }
 
     } catch (er) {
         err(er, 79);

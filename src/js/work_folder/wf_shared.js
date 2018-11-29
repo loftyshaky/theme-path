@@ -5,8 +5,9 @@ import { decorate, observable, action, computed, configure } from 'mobx';
 import * as r from 'ramda';
 
 import * as shared from 'js/shared';
-import * as choose_folder from 'js/work_folder/choose_folder';
 import * as toggle_popup from 'js/toggle_popup';
+import * as choose_folder from 'js/work_folder/choose_folder';
+import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 
 configure({ enforceActions: 'observed' });
 
@@ -82,6 +83,31 @@ export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
     return undefined;
 };
 
+export const close_all_folders = () => {
+    try {
+        const at_least_one_folder_is_open = mut.opened_folders[1];
+
+        if (at_least_one_folder_is_open) {
+            if (mut.opened_folders[1] !== choose_folder.ob.work_folder) {
+                const i = ob.folders.findIndex(cur_folder => cur_folder.path === mut.opened_folders[1]);
+
+                expand_or_collapse.expand_or_collapse_folder('arrow', ob.folders[i].path, ob.folders[i].nest_level + 1, i + 1);
+
+                if (mut.opened_folders[1]) {
+                    close_all_folders();
+                }
+            }
+        }
+
+    } catch (er) {
+        err(er, 147);
+    }
+};
+
+export const set_folders = action(val => {
+    ob.folders = val;
+});
+
 //> varibles t
 export const ob = observable({
     chosen_folder_info: {},
@@ -117,10 +143,6 @@ export const com2 = {
         return toggle_popup.ob.proptecting_screen_is_visible;
     },
 };
-
-export const set_folders = action(val => {
-    ob.folders = val;
-});
 
 export const mut = {
     opened_folders: [],

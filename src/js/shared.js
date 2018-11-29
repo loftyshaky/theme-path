@@ -84,17 +84,6 @@ export const deselect_theme = action(() => {
     }
 });
 
-export const set_default_locale_theme_name = action((name, val) => {
-    try {
-        if (name === 'name') {
-            ob.default_locale_theme_name = val;
-        }
-
-    } catch (er) {
-        err(er, 63);
-    }
-});
-
 export const construct_icons_obj = json => {
     try {
         const new_json = json;
@@ -140,8 +129,7 @@ export const get_icon_paths = () => {
 
 //> varibles t
 export const ob = observable({
-    chosen_folder_path: choose_folder.ob.work_folder,
-    default_locale_theme_name: null,
+    chosen_folder_path: choose_folder.ob.work_folder
 });
 
 export const mut = {

@@ -42,7 +42,7 @@ textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmar
     border-color: #212121;
 }
 
-.selected_folder, .btn:hover, .option:hover, .header_btn, .header_btn label, .current_theme_name, .header_btn:hover, .header_btn:hover label, .current_theme_name:hover, .help_viewer_message {
+.selected_folder, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input {
     color: white;
 }
 

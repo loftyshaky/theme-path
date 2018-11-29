@@ -11,10 +11,12 @@ import * as open_and_pack from 'js/open_and_pack';
 import * as toggle_popup from 'js/toggle_popup';
 import * as show_or_open_folder from 'js/show_or_open_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as search from 'js/work_folder/search';
 
 import plus_svg from 'svg/plus';
-import arrow_up_2 from 'svg/arrow_up_2';
-import eye from 'svg/eye';
+import dehaze_svg from 'svg/dehaze';
+import arrow_up_2_svg from 'svg/arrow_up_2';
+import eye_svg from 'svg/eye';
 import open_in_browser_svg from 'svg/open_in_browser';
 import archive_svg from 'svg/archive';
 import gear_svg from 'svg/gear';
@@ -69,9 +71,12 @@ export class Header extends React.Component {
                         </span>
                         <label data-text="new_theme_btn_label_text" />
                     </button>
-                    <span className="current_theme_name">
-                        {shared.ob.default_locale_theme_name}
-                    </span>
+                    <input
+                        className="search_input"
+                        type="text"
+                        data-placeholder="search_input_placeholder"
+                        onInput={search.trigger_work_folder_reload}
+                    />
                 </span>
                 <span className="header_section header_right">
                     {
@@ -89,14 +94,19 @@ export class Header extends React.Component {
                         svg={open_in_browser_svg}
                     />
                     <Btn
+                        name="close_all_folders"
+                        on_click={wf_shared.close_all_folders}
+                        svg={dehaze_svg}
+                    />
+                    <Btn
                         name="show_folder"
                         on_click={show_or_open_folder.show_folder}
-                        svg={arrow_up_2}
+                        svg={arrow_up_2_svg}
                     />
                     <Btn
                         name="open_folder"
                         on_click={show_or_open_folder.open_folder}
-                        svg={eye}
+                        svg={eye_svg}
                     />
                     <Pack_btn name="zip" />
                     <Pack_btn name="crx" />

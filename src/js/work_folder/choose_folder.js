@@ -7,6 +7,7 @@ import * as shared from 'js/shared';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as watch from 'js/work_folder/watch';
+import * as search from 'js/work_folder/search';
 
 const { dialog } = require('electron').remote;
 
@@ -36,6 +37,8 @@ export const choose_folder = callback => {
 
 export const change_work_folder = action(folder_path => {
     try {
+        search.remove_search_val();
+
         watch.watch_folder(folder_path);
 
         store.set('work_folder', folder_path);
@@ -53,7 +56,6 @@ export const reset_work_folder = action(terminate_script => {
 
         if (!work_folder_exist) {
             wf_shared.ob.chosen_folder_info.is_theme = false;
-            shared.ob.default_locale_theme_name = '';
 
             change_work_folder('');
             expand_or_collapse.close_all_folders();

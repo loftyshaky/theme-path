@@ -9,7 +9,7 @@
 	font-family: Roboto;
 }
 
-*, .legend_color_unactive, .er_msg, .header_btn:hover:focus, .header_btn:hover:focus label {
+*, .legend_color_unactive, .er_msg, .header_btn:hover:focus, .header_btn:hover:focus label, .search_input::placeholder {
     color: white;
 }
 
@@ -339,6 +339,10 @@ header span, header label, header .open_in_chrome_btn {
     flex-shrink: 0;
 }
 
+.header_left {
+    width: 100%;
+}
+
 .header_btn {
     background-color: transparent;
     border: none;
@@ -346,13 +350,7 @@ header span, header label, header .open_in_chrome_btn {
     outline: none;
 }
 
-.current_theme_name {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.header_btn, .current_theme_name {
+.header_btn {
     padding: 8px;
 }
 
@@ -387,6 +385,25 @@ header span, header label, header .open_in_chrome_btn {
 .header_btn_icon svg {
     width: 24px;
     height: 24px;
+}
+
+.search_input {
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    height: 24px;
+    margin-top: 7px;
+    max-width: 500px;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    outline: none;
+    border-bottom: 1px solid white;
+}
+
+.search_input::placeholder {
+    font-style: italic;
 }
 /*< header */
 
