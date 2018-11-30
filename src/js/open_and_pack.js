@@ -12,6 +12,7 @@ import Store from 'electron-store';
 import getChrome from 'get-chrome';
 
 import * as shared from 'js/shared';
+import * as tutorial from 'js/tutorial';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import { observable, action, configure } from 'mobx';
 
@@ -75,6 +76,10 @@ export const open_in_chrome = (folder_path, e) => {
 
                     mut.chrome_process_ids[user_data_path] = child_process.pid;
 
+                    if (tutorial.ob.tutorial_stage === 6) {
+                        tutorial.increment_tutorial_stage();
+                    }
+
                 } catch (er2) {
                     err(er2, 46);
                 }
@@ -111,7 +116,7 @@ export const pack = type => {
                 }
 
             } catch (er) {
-                err(er, 6, 'pak_is_locked');
+                err(er, 6, 'pak_is_locked', false, false, true);
             }
 
             if (type === 'zip') {
@@ -123,7 +128,7 @@ export const pack = type => {
                     }
 
                 } catch (er) {
-                    err(er, 18, 'zip_is_locked');
+                    err(er, 18, 'zip_is_locked', false, false, true);
                 }
 
 
@@ -132,7 +137,7 @@ export const pack = type => {
                         zip.compress().save(zip_path);
 
                     } else {
-                        err(er, 5);
+                        err(er, 5, null, false, false, true);
                     }
                 });
 
@@ -145,7 +150,7 @@ export const pack = type => {
                     }
 
                 } catch (er) {
-                    err(er, 19, 'crx_is_locked');
+                    err(er, 19, 'crx_is_locked', false, false, true);
                 }
 
                 //> remove pems
@@ -158,12 +163,16 @@ export const pack = type => {
                         }
 
                     } catch (er) {
-                        err(er, 7, 'pem_is_locked');
+                        err(er, 7, 'pem_is_locked', false, false, true);
                     }
                 });
                 //< remove pems
 
                 execFile(getChrome(platform()), [`--pack-extension=${shared.ob.chosen_folder_path}`]);
+            }
+
+            if (tutorial.ob.tutorial_stage === 7) {
+                tutorial.increment_tutorial_stage(true);
             }
 
         } catch (er) {

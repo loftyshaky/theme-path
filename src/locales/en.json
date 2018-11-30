@@ -220,6 +220,14 @@
   "settings_chrome_user_data_dirs_help_text": "Paths to Chrome user data folders separated by commas. Used to preview a theme. If folder doesnt exist it will be created on first preview. Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
 
 
+  "choose_folder_tutorial_item_text": "Choose a folder where all your themes are/will be stored.",
+  "select_folder_tutorial_item_text": "Regular folders are marked with white (black if you have chosen the light ui theme in the settings) color. Themes are marked with blue color. Select the folder where new theme will be stored.",
+  "create_new_theme_tutorial_item_text": "Create new theme.",
+  "select_theme_tutorial_item_text": "Select newly created theme.",
+  "change_theme_properties_tutorial_item_text": "Change theme properties.",
+  "open_in_chrome_tutorial_item_text": "Open theme in Chrome.",
+  "pack_tutorial_item_text": "Package theme as a zip file for distribution in the Chrome Web Store. The package will be stored in the folder that contains theme.",
+
   "an_error_occured_msg": "An error occured.",
   "error_code_label": "Error code: ",
   "error_type_label": "Type: ",

@@ -220,6 +220,15 @@
   "settings_chrome_user_data_dirs_help_text": "Пути к пользовательским папкам, разделяемые запятой. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
 
 
+  "choose_folder_tutorial_item_text": "Выберити папку в которой хранятся/будут храниться все ваши темы.",
+  "select_folder_tutorial_item_text": "Обычные папки помечены белым (черным, если вы выбрали светлую тему интерфейса в настройках) цветом. Темы помечены синим цветом. Выберите папку в которой будет хранится новая тема.",
+  "create_new_theme_tutorial_item_text": "Создайте новую тему.",
+  "select_theme_tutorial_item_text": "Выберите только что созданную тему.",
+  "change_theme_properties_tutorial_item_text": "Измените свойства темы.",
+  "open_in_chrome_tutorial_item_text": "Откройте тему в Chrome.",
+  "pack_tutorial_item_text": "Упакуйте тему в zip файл для распространения в интернет-магазине Chrome. Пакет будет храниться в папке в которой находится тема.",
+
+
   "an_error_occured_msg": "Произошла ошибка.",
   "error_code_label": "Код ошибки: ",
   "error_type_label": "Тип: ",

@@ -106,7 +106,7 @@ export const write_to_json = (json, json_path) => {
         writeJsonSync(json_path, json, { spaces: 4 });
 
     } catch (er) {
-        err(er, 65);
+        err(er, 65, null, false, false, true);
     }
 };
 

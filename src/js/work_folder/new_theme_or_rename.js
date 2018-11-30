@@ -6,6 +6,7 @@ import * as r from 'ramda';
 
 import x from 'x';
 import * as shared from 'js/shared';
+import * as tutorial from 'js/tutorial';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as sort_folders from 'js/work_folder/sort_folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
@@ -51,6 +52,10 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                     const folders_with_new_folder = r.insert(0, new_theme, wf_shared.ob.folders);
 
                                     wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, new_theme_path, start_i, nest_level));
+                                }
+
+                                if (tutorial.ob.tutorial_stage === 3) {
+                                    tutorial.increment_tutorial_stage();
                                 }
 
                             } else if (mode === 'renaming_folder' && folder_name_final.length <= 255) {

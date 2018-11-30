@@ -14,6 +14,7 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 import * as search from 'js/work_folder/search';
 
 import { Fieldset } from 'components/Fieldset';
+import { Tutorial_item } from 'components/Tutorial_item';
 
 import folder_svg from 'svg/folder';
 import folder_opened_svg from 'svg/folder_opened';
@@ -132,6 +133,16 @@ export class Work_folder extends React.Component {
                         />
                     )}
                 </AutoSizer>
+                <Tutorial_item
+                    name="select_folder"
+                    tutorial_stage="2"
+                    outline
+                />
+                <Tutorial_item
+                    name="select_theme"
+                    tutorial_stage="4"
+                    outline
+                />
             </Fieldset>
         );
     }
@@ -174,16 +185,23 @@ class Work_folder_selector extends React.Component {
                 ref={set_ref}
             >
                 <div className="work_folder_selector">
-                    <button
-                        className="btn choose_work_folder_btn"
-                        type="button"
-                        data-text="choose_folder_btn_text"
-                        disabled={wf_shared.com2.inputs_disabled_4}
-                        onClick={choose_folder.choose_folder.bind(
-                            null,
-                            expand_or_collapse.create_top_level_folders,
-                        )}
-                    />
+                    <div className="btn_w">
+                        <button
+                            className="btn choose_work_folder_btn"
+                            type="button"
+                            data-text="choose_folder_btn_text"
+                            disabled={wf_shared.com2.inputs_disabled_4}
+                            onClick={choose_folder.choose_folder.bind(
+                                null,
+                                expand_or_collapse.create_top_level_folders,
+                            )}
+                        />
+                        <Tutorial_item
+                            name="choose_folder"
+                            tutorial_stage="1"
+                            outline={false}
+                        />
+                    </div>
                     <button
                         className={x.cls(['work_folder_path', shared.ob.chosen_folder_path === choose_folder.ob.work_folder ? 'selected_folder' : null])}
                         type="button"

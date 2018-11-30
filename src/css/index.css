@@ -42,6 +42,13 @@ body, .btn, .legend_line, .fieldset_w .cover, .popup, .help_viewer_expanded_img_
     background-color: #212121;
 } 
 
+.theme_metadata_and_theme_fieldset_w {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .fieldsets {
     display: flex;
     margin-top: 40px;
@@ -183,6 +190,11 @@ a:active, .help_link:active, .upload_box_browse_label:active {
     color: #f493ff!important;
 }
 
+.btn_w {
+    position: relative;
+    overflow: unset;
+}
+
 .btn {
     padding: 3px 6px 3px 6px;
     cursor: pointer;
@@ -218,7 +230,7 @@ textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_
     border: 1px solid #fbff75;
 }
 
-textarea, .btn {
+textarea {
     height: 28px;
     overflow: hidden;
 }
@@ -332,7 +344,6 @@ header span, header label, header .open_in_chrome_btn {
 
 .header_section {
     display: flex;
-    overflow: hidden;
 }
 
 .header_right {
@@ -611,6 +622,105 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 }
 /*< help */
 
+/*> tutorial */
+.tutorial_item {
+    position: absolute;
+    background-color: #cb87d4;
+    width: max-content;
+    max-width: 300px;
+    white-space: normal;
+    padding: 12px;
+    padding-top: 28px;
+    z-index: 3;
+}
+
+.tutorial_item_choose_folder, .tutorial_item_create_new_theme, .tutorial_item_open_in_chrome {
+    left: 0;
+    transform: translateY(22px);
+}
+
+.tutorial_item_select_folder, .tutorial_item_select_theme {
+    right: -31px;
+    top: 39px;
+    transform: translateX(100%);
+}
+
+.tutorial_item_change_theme_properties {
+    left: -30px;
+    top: 60px;
+    transform: translateX(-100%);
+}
+
+.tutorial_item_pack {
+    left: 63px;
+    transform: translate(-100%, 22px);
+}
+
+.tutorial_item_open_in_chrome {
+    left: -6px;
+}
+
+.tutorial_item:before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.tutorial_item_choose_folder:before, .tutorial_item_create_new_theme:before, .tutorial_item_open_in_chrome:before, .tutorial_item_pack:before  {
+    border-left: 12px solid transparent;
+    border-bottom: 14px solid #cb87d4;
+    border-right: 12px solid transparent;
+    left: 14px;
+    top: -14px;
+}
+
+.tutorial_item_select_folder:before, .tutorial_item_select_theme:before {
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 14px solid #cb87d4;
+    left: -14px;
+    top: 14px;
+}
+
+.tutorial_item_change_theme_properties:before {
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 14px solid #cb87d4;
+    right: -14px;
+    top: 14px;
+}
+
+.tutorial_item_pack:before {
+    left: unset;
+    right: 14px;
+}
+
+.tutorial_item_create_new_theme {
+    left: 10px;
+}
+
+.tutorial_outline {
+    height: 100%;
+    width: 100%;
+    border: 3px solid white;
+    position: absolute;
+    padding: 21px 6px 0 6px;
+    margin-left: -9px;
+    margin-top: -18px;
+    pointer-events: none;
+}
+
+.tutorial_outline_change_theme_properties {
+    height: calc(100% - 2px);
+    width: calc(100% - 6px);
+    padding: 0;
+    margin-left: -8px;
+    margin-top: 4px;
+}
+/*< tutorial */
+
 /*> imgage selector inputs */
 .img_selector_box {
     display: flex;
@@ -878,7 +988,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w {
+.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline {
     transition: all 0.2s ease-out;
 }
 
@@ -890,7 +1000,7 @@ body.using_mouse .header_btn:focus {
     transition-property: border-color, box-shadow!important;
 }
 
-.checkbox_checkmark_w svg, .protecting_screen, .fieldset_protecting_screen, .popup, .color_pickier, .help_viewer_w, .help_viewer_expanded_img_w {
+.checkbox_checkmark_w svg, .protecting_screen, .fieldset_protecting_screen, .popup, .color_pickier, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item {
     transition-property: opacity;
 }
 
@@ -906,7 +1016,7 @@ a, .help_link, .upload_box_browse_label, .legend {
     transition-property: border-color, box-shadow;
 }
 
-fieldset {
+fieldset, .tutorial_outline {
     transition-property: border-color;
 }
 
@@ -980,6 +1090,14 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
 
 .legend_color_active {
     color: #474747;
+}
+
+.tutorial_outline_border_color_unactive {
+    border-color: transparent;
+}
+
+.tutorial_outline_border_color_active {
+    border-color: #cb87d4;
 }
 /*< Tr mods */
 

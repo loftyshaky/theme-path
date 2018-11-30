@@ -12,6 +12,7 @@ export const set_defaults = () => {
             theme: 'dark',
             chrome_exe_path: '',
             chrome_user_data_dirs: '',
+            tutorial_stage: 1,
         });
 
     } catch (er) {

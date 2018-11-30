@@ -14,6 +14,7 @@ import { Settings } from 'components/Settings';
 import { Links } from 'components/Links';
 import { Help_viewer } from 'components/Help_viewer';
 import { Protecting_screen } from 'components/Protecting_screen';
+import { Tutorial_item } from 'components/Tutorial_item';
 
 //--
 
@@ -55,31 +56,38 @@ export class All extends React.Component {
                     <Header />
                     <div className="fieldsets">
                         <Work_folder />
-                        <Fieldset name="theme_metadata">
-                            <Input_block name="theme_metadata" />
-                        </Fieldset>
-                        <Fieldset name="theme">
-                            <Input_block
-                                name="images"
-                                hr
-                                add_help
+                        <span className="theme_metadata_and_theme_fieldset_w">
+                            <Fieldset name="theme_metadata">
+                                <Input_block name="theme_metadata" />
+                            </Fieldset>
+                            <Fieldset name="theme">
+                                <Input_block
+                                    name="images"
+                                    hr
+                                    add_help
+                                />
+                                <Input_block
+                                    name="colors"
+                                    hr
+                                    add_help
+                                />
+                                <Input_block
+                                    name="tints"
+                                    hr
+                                    add_help
+                                />
+                                <Input_block
+                                    name="properties"
+                                    hr
+                                    add_help
+                                />
+                            </Fieldset>
+                            <Tutorial_item
+                                name="change_theme_properties"
+                                tutorial_stage="5"
+                                outline
                             />
-                            <Input_block
-                                name="colors"
-                                hr
-                                add_help
-                            />
-                            <Input_block
-                                name="tints"
-                                hr
-                                add_help
-                            />
-                            <Input_block
-                                name="properties"
-                                hr
-                                add_help
-                            />
-                        </Fieldset>
+                        </span>
                     </div>
                     <Protecting_screen />
                     <Settings />

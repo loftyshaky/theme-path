@@ -13,6 +13,8 @@ import * as show_or_open_folder from 'js/show_or_open_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
 import * as search from 'js/work_folder/search';
 
+import { Tutorial_item } from 'components/Tutorial_item';
+
 import plus_svg from 'svg/plus';
 import dehaze_svg from 'svg/dehaze';
 import arrow_up_2_svg from 'svg/arrow_up_2';
@@ -61,16 +63,23 @@ export class Header extends React.Component {
         return (
             <header>
                 <span className="header_section header_left">
-                    <button
-                        className="header_btn new_theme_btn"
-                        type="button"
-                        onClick={this.expand_or_collapse_folder}
-                    >
-                        <span className="header_btn_icon new_theme_btn_icon">
-                            <Svg src={plus_svg} />
-                        </span>
-                        <label data-text="new_theme_btn_label_text" />
-                    </button>
+                    <div className="btn_w">
+                        <button
+                            className="header_btn new_theme_btn"
+                            type="button"
+                            onClick={this.expand_or_collapse_folder}
+                        >
+                            <span className="header_btn_icon new_theme_btn_icon">
+                                <Svg src={plus_svg} />
+                            </span>
+                            <label data-text="new_theme_btn_label_text" />
+                        </button>
+                        <Tutorial_item
+                            name="create_new_theme"
+                            tutorial_stage="3"
+                            outline={false}
+                        />
+                    </div>
                     <input
                         className="search_input"
                         type="text"
@@ -88,11 +97,18 @@ export class Header extends React.Component {
                             />
                         ))
                     }
-                    <Btn
-                        name="open_in_chrome"
-                        on_click={e => open_and_pack.open_in_chrome('', e)}
-                        svg={open_in_browser_svg}
-                    />
+                    <div className="btn_w">
+                        <Btn
+                            name="open_in_chrome"
+                            on_click={e => open_and_pack.open_in_chrome('', e)}
+                            svg={open_in_browser_svg}
+                        />
+                        <Tutorial_item
+                            name="open_in_chrome"
+                            tutorial_stage="6"
+                            outline={false}
+                        />
+                    </div>
                     <Btn
                         name="close_all_folders"
                         on_click={wf_shared.close_all_folders}
@@ -108,8 +124,15 @@ export class Header extends React.Component {
                         on_click={show_or_open_folder.open_folder}
                         svg={eye_svg}
                     />
-                    <Pack_btn name="zip" />
-                    <Pack_btn name="crx" />
+                    <div className="btn_w">
+                        <Pack_btn name="zip" />
+                        <Pack_btn name="crx" />
+                        <Tutorial_item
+                            name="pack"
+                            tutorial_stage="7"
+                            outline={false}
+                        />
+                    </div>
                     <Popup_btn
                         name="settings"
                         svg={gear_svg}

@@ -8,12 +8,13 @@ import * as r from 'ramda';
 import Store from 'electron-store';
 
 import { inputs_data } from 'js/inputs_data';
+import * as shared from 'js/shared';
+import * as settings from 'js/settings';
+import * as open_and_pack from 'js/open_and_pack';
+import * as tutorial from 'js/tutorial';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
-import * as settings from 'js/settings';
-import * as open_and_pack from 'js/open_and_pack';
-import * as shared from 'js/shared';
 
 const store = new Store();
 configure({ enforceActions: 'observed' });
@@ -167,6 +168,10 @@ const write_to_json = (json, json_path, name, new_val, family) => {
         }
 
         shared.write_to_json(new_json, json_path);
+
+        if (family !== 'theme_metadata' && tutorial.ob.tutorial_stage === 5) {
+            tutorial.increment_tutorial_stage();
+        }
 
     } catch (er) {
         err(er, 23);

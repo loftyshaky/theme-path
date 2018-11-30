@@ -6,6 +6,7 @@ import looksSame from 'looks-same';
 
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
+import * as tutorial from 'js/tutorial';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
@@ -76,6 +77,13 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 if (!is_work_folder) {
                     expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folfder_in);
                 }
+
+                if (tutorial.ob.tutorial_stage === 4) {
+                    tutorial.increment_tutorial_stage();
+                }
+
+            } else if (tutorial.ob.tutorial_stage === 2) {
+                tutorial.increment_tutorial_stage();
             }
 
             convert_color.convert_all();

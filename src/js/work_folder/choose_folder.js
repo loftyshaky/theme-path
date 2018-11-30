@@ -4,6 +4,7 @@ import { observable, action, configure } from 'mobx';
 import Store from 'electron-store';
 
 import * as shared from 'js/shared';
+import * as tutorial from 'js/tutorial';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as watch from 'js/work_folder/watch';
@@ -30,6 +31,18 @@ export const choose_folder = callback => {
             shared.deselect_theme();
 
             callback();
+
+            if (tutorial.ob.tutorial_stage === 1 || tutorial.ob.tutorial_stage === 2) {
+                if (tutorial.ob.tutorial_stage === 1) {
+                    tutorial.increment_tutorial_stage();
+                }
+
+                const there_is_non_theme_folder = wf_shared.ob.folders.some(folder => !folder.is_theme);
+
+                if (wf_shared.ob.folders.length === 0 || !there_is_non_theme_folder) {
+                    tutorial.increment_tutorial_stage();
+                }
+            }
         }
 
     } catch (er) {

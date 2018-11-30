@@ -63,9 +63,9 @@ export const handle_files = async (file, family, i) => {
         if (valid_file_types.indexOf(file[0].type) > -1) {
             const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
 
-            change_val.change_val(family, i, img_name, img_extension);
-
             copySync(file[0].path, join(shared.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
+
+            change_val.change_val(family, i, img_name, img_extension);
 
         } else {
             err(er_obj('Invalid image type'), 2, 'invalid_img_type');
