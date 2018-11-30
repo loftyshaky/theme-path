@@ -23,6 +23,8 @@ export const choose_folder = callback => {
         });
 
         if (folder_path) { // if not cancelled folder chosing
+            wf_shared.mut.chosen_folder_info.is_theme = false;
+
             change_work_folder(folder_path[0]);
 
             shared.deselect_theme();
@@ -55,7 +57,7 @@ export const reset_work_folder = action(terminate_script => {
         const work_folder_exist = existsSync(ob.work_folder);
 
         if (!work_folder_exist) {
-            wf_shared.ob.chosen_folder_info.is_theme = false;
+            wf_shared.mut.chosen_folder_info.is_theme = false;
 
             change_work_folder('');
             expand_or_collapse.close_all_folders();

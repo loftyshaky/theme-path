@@ -110,7 +110,6 @@ export const set_folders = action(val => {
 
 //> varibles t
 export const ob = observable({
-    chosen_folder_info: {},
     folders: [],
 });
 
@@ -125,7 +124,7 @@ export const com = {
 
         }
 
-        return !ob.chosen_folder_info.is_theme; // if any folder in work folder selected
+        return !mut.chosen_folder_info.is_theme; // if any folder in work folder selected
     },
 };
 
@@ -146,6 +145,7 @@ export const com2 = {
 
 export const mut = {
     opened_folders: [],
+    chosen_folder_info: {},
 };
 //< varibles t
 

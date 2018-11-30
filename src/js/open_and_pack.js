@@ -25,7 +25,7 @@ const store = new Store();
 const run = callback => {
     try {
         if (choose_folder.reset_work_folder(false)) {
-            if (wf_shared.ob.chosen_folder_info.is_theme) {
+            if (wf_shared.mut.chosen_folder_info.is_theme) {
                 const files = readdirSync(shared.ob.chosen_folder_path);
                 const folder_is_theme = files.find(file => file === 'manifest.json');
 

@@ -80,7 +80,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
 
             convert_color.convert_all();
 
-            wf_shared.ob.chosen_folder_info = {
+            wf_shared.mut.chosen_folder_info = {
                 children: children || null,
                 is_theme: folder_info.is_theme,
                 nest_level: nest_level || null,

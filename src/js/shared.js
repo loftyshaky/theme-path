@@ -129,7 +129,7 @@ export const get_icon_paths = () => {
 
 //> varibles t
 export const ob = observable({
-    chosen_folder_path: choose_folder.ob.work_folder
+    chosen_folder_path: choose_folder.ob.work_folder,
 });
 
 export const mut = {
