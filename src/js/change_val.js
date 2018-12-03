@@ -7,6 +7,7 @@ import { action, configure } from 'mobx';
 import * as r from 'ramda';
 import Store from 'electron-store';
 
+import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as settings from 'js/settings';
@@ -21,7 +22,7 @@ configure({ enforceActions: 'observed' });
 
 
 //--
-export const change_val = (family, i, val, img_extension, e) => {
+export const change_val = async (family, i, val, img_extension, e) => {
     try {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
@@ -75,7 +76,13 @@ export const change_val = (family, i, val, img_extension, e) => {
                     open_and_pack.update_chrome_user_data_dirs_observable();
 
                 } else if (name === 'theme') {
+                    x.load_css('no_tr');
+
                     settings.load_theme();
+
+                    await x.delay(200);
+
+                    x.remove(s('.no_tr'));
                 }
             }
 
