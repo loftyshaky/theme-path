@@ -21,9 +21,7 @@ render(
             //>1 remove no_tr css
             await x.delay(500);
 
-            const no_tr = sb(document.head, '.no_tr');
-
-            x.remove(no_tr);
+            x.remove(s('.no_tr'));
             //<1 remove no_tr css
 
         } catch (er) {
