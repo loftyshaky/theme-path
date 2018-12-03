@@ -11,6 +11,7 @@ const dev = !!(process.defaultApp
     || /[\\/]electron[\\/]/.test(process.execPath)); //> Keep a reference for dev mode
 const runs_from_package = !existsSync(join(__dirname, 'resources'));
 let main_window; // Keep a global reference of the window object, if you don't, the window will be closed automatically when the JavaScript object is garbage collected.
+global.os_lang = null;
 
 //> temporary fix broken high-dpi scale factor on Windows (125% scaling). info: https://github.com/electron/electron/issues/9691
 if (process.platform === 'win32') {
@@ -94,6 +95,13 @@ function create_window() {
         shell.openExternal(url);
     });
     //< open links inside of app in default browser
+
+    //> get os language
+    const available_langs = ['ru']; // except english;
+    const os_loc = app.getLocale();
+    const os_loc_sub_loc_cut = os_loc.indexOf('_') === -1 ? os_loc : os_loc.substr(0, os_loc.lastIndexOf('_'));
+    global.os_lang = available_langs.find(available_lang => available_lang === os_loc_sub_loc_cut) || 'en';
+    //< get os language
 }
 
 app.on('ready', create_window); // this method will be called when Electron has finished initialization and is ready to create browser windows. some APIs can only be used after this event occurs.

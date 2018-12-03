@@ -1,7 +1,9 @@
 import * as r from 'ramda';
 
+const { remote } = require('electron');
+
 //--
-const loc = require('locales/en.json');
+const loc = require(`locales/${remote.getGlobal('os_lang')}.json`); // eslint-disable-line import/no-dynamic-require
 
 const x = {};
 
