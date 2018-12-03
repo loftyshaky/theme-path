@@ -861,6 +861,10 @@ body.using_mouse .upload_box_browse_label:focus {
     padding: 0 3px!important;
 }
 
+.select__menu {
+    display: table;
+}
+
 .select__menu-list {
     padding: 0!important;
     max-height: 308px!important;
