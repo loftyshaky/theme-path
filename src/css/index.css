@@ -887,7 +887,7 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     right: 50px;
     min-width: 300px;
     box-shadow: 0 0 15px #fbff75;
-    z-index: 2;
+    z-index: 4;
 }
 
 .close_btn {
@@ -914,15 +914,19 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 .protecting_screen, .fieldset_protecting_screen {
     position: fixed;
     width: 100%;
-    height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-    z-index: 2;
-    top: 0;
+    bottom: 0;
     left: 0;
+}
+
+.protecting_screen {
+    height: calc(100% - 40px);
+    z-index: 4;
 }
 
 .fieldset_protecting_screen {
     position: absolute;
+    height: 100%;
     z-index: 1;
 }
 /*< protecting screens */

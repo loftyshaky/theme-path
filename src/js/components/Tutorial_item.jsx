@@ -41,7 +41,7 @@ export const Tutorial_item = observer(props => {
                 <button
                     className="close_btn tutorial_item_close_btn"
                     type="button"
-                    disabled={wf_shared.com2.inputs_disabled_5}
+                    disabled={wf_shared.com2.inputs_disabled_4}
                     onClick={tutorial.show_or_hide_tutorial_item.bind(null, false)}
                 >
                     <Svg src={close_svg} />
