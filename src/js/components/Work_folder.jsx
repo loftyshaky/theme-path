@@ -112,6 +112,7 @@ export class Work_folder extends React.Component {
         const number_of_rows = search.mut.filtered_folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
         wf_shared.ob.folders; // eslint-disable-line no-unused-expressions
         shared.ob.chosen_folder_path; // eslint-disable-line no-unused-expressions
+        wf_shared.com2.inputs_disabled_4; // eslint-disable-line no-unused-expressions
 
         return (
             <Fieldset name="work_folder">
