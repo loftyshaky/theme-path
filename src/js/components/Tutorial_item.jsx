@@ -4,6 +4,7 @@ import Svg from 'svg-inline-react';
 
 import x from 'x';
 import * as tutorial from 'js/tutorial';
+import * as wf_shared from 'js/work_folder/wf_shared';
 
 import { Tr } from 'components/Tr';
 
@@ -40,6 +41,7 @@ export const Tutorial_item = observer(props => {
                 <button
                     className="close_btn tutorial_item_close_btn"
                     type="button"
+                    disabled={wf_shared.com2.inputs_disabled_5}
                     onClick={tutorial.show_or_hide_tutorial_item.bind(null, false)}
                 >
                     <Svg src={close_svg} />

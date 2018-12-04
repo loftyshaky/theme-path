@@ -68,6 +68,7 @@ export class Header extends React.Component {
                             className="header_btn new_theme_btn"
                             type="button"
                             onClick={this.expand_or_collapse_folder}
+                            disabled={wf_shared.com2.inputs_disabled_5}
                         >
                             <span className="header_btn_icon new_theme_btn_icon">
                                 <Svg src={plus_svg} />
@@ -84,6 +85,7 @@ export class Header extends React.Component {
                         className="search_input"
                         type="text"
                         data-placeholder="search_input_placeholder"
+                        disabled={wf_shared.com2.inputs_disabled_5}
                         onInput={search.trigger_work_folder_reload}
                     />
                 </span>
@@ -156,6 +158,7 @@ const Open_in_profiled_chrome_btn = props => {
             className="header_btn open_in_chrome_btn"
             type="button"
             title={`${x.message('open_in_chrome_btn_title')} - ${path}`}
+            disabled={wf_shared.com2.inputs_disabled_5}
             onMouseUp={open_and_pack.open_in_chrome.bind(null, path)}
         >
             {no}
@@ -171,6 +174,7 @@ const Btn = props => {
             className="header_btn header_btn_icon"
             type="button"
             data-title={`${name}_btn_title`}
+            disabled={wf_shared.com2.inputs_disabled_5}
             {...(name === 'open_in_chrome' ? { onMouseUp: on_click } : { onClick: on_click })}
         >
             <Svg src={svg} />
@@ -186,6 +190,7 @@ const Popup_btn = props => {
             className={x.cls(['header_btn header_btn_icon', `${name}_btn`])}
             type="button"
             data-title={`${name}_btn_title`}
+            disabled={wf_shared.com2.inputs_disabled_5}
             onClick={toggle_popup.toggle_popup.bind(null, name)}
         >
             <Svg src={svg} />
@@ -201,6 +206,7 @@ const Pack_btn = props => {
             className="header_btn pack_btn"
             type="button"
             data-title={`pack_as_${name}_btn_title`}
+            disabled={wf_shared.com2.inputs_disabled_5}
             onClick={open_and_pack.pack.bind(null, name)}
         >
             <span className="header_btn_icon pack_btn_icon">
