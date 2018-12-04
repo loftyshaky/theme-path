@@ -142,7 +142,7 @@ textarea:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualizat
     background-color: #3892ff;
 }
 
-.upload_box_browse_label:focus {
+.upload_box_browse_label:focus, .close_btn:focus, a:focus, a:focus {
     outline: 1px solid #3892ff;
 }
 

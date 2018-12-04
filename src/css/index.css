@@ -160,7 +160,7 @@ hr {
     cursor: pointer;
 }
 
-.folder_arrow, .folder_icon, .folder_name, .work_folder_path, .er_close_btn, body.using_mouse .help_link {
+.folder_arrow, .folder_icon, .folder_name, .work_folder_path, .er_close_btn, body.using_mouse .help_link, body.using_mouse .upload_box_browse_label:focus, body.using_mouse .close_btn, .search_input, .header_btn, .color_ok_btn, textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus, body.using_mouse a:focus {
     outline: none;
 }
 
@@ -225,7 +225,6 @@ textarea {
 }
 
 textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus {
-    outline: none;
     box-shadow: 0 0 5px #fbff75;
     border: 1px solid #fbff75;
 }
@@ -291,7 +290,6 @@ textarea, .checkbox_checkmark_w {
     font-size: 14px;
     height: 21px;
     cursor: pointer;
-    outline: none;
     vertical-align: top;
 }
 
@@ -358,7 +356,6 @@ header span, header label, header .open_in_chrome_btn {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    outline: none;
 }
 
 .header_btn {
@@ -409,7 +406,6 @@ header span, header label, header .open_in_chrome_btn {
     width: 100%;
     padding-left: 5px;
     padding-right: 5px;
-    outline: none;
     border-bottom: 1px solid white;
 }
 
@@ -761,12 +757,8 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     font-weight: bold;
 }
 
-.upload_box_browse_label:focus {
+.upload_box_browse_label:focus, .close_btn:focus, a:focus {
     outline: 1px solid #fbff75;
-}
-
-body.using_mouse .upload_box_browse_label:focus {
-    outline: none;
 }
 
 .tall_color_input_vizualization {
@@ -905,7 +897,7 @@ body.using_mouse .upload_box_browse_label:focus {
     top: 8px;
     right: 8px;
     padding: 0;
-    outline: none;
+    outline-offset: 2px;
 }
 
 .close_btn svg {
