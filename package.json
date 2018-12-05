@@ -28,7 +28,8 @@
       "from": "src",
       "to": "app/bundle",
       "filter": [
-        "new_theme"
+        "new_theme",
+        "help_imgs"
       ]
     },
     "nsis": {
