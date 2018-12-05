@@ -1,4 +1,4 @@
-import { basename, dirname } from 'path';
+import { basename, dirname, sep } from 'path';
 
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
@@ -43,8 +43,9 @@ watcher
     .on('addDir', action(folder_path => {
         try {
             const folder_already_exist = wf_shared.ob.folders.findIndex(folder => folder.path === folder_path) > -1;
+            const added_folder_is_in_work_folder = folder_path.indexOf(`${choose_folder.ob.work_folder + sep}`) > -1;
 
-            if (!folder_already_exist) {
+            if (!folder_already_exist && added_folder_is_in_work_folder) {
                 const parent_folder_path = dirname(folder_path);
                 const parent_folder_is_root = parent_folder_path === choose_folder.ob.work_folder;
                 const parent_folder_i = wf_shared.ob.folders.findIndex(folder => folder.path === parent_folder_path);

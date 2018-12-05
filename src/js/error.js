@@ -6,10 +6,10 @@ configure({ enforceActions: 'observed' });
 
 window.err = action((er_obj, er_code, er_msg_param, silent, persistent, exit) => {
     if (!er_obj.silent && !silent) {
-        const er_msg = x.message(`${er_obj.msg || er_msg_param}_er`);
+        const er_msg = x.msg(`${er_obj.msg || er_msg_param}_er`);
         const er_msg_final = er_msg ? ` ${er_msg}.` : '';
 
-        ob.er_msg = `${x.message('an_error_occured_msg') + er_msg_final}\n${x.message('error_code_label') + (er_obj.er_code || er_code)}\n${x.message('error_type_label') + er_obj.name}\n${x.message('error_msg_label') + er_obj.message}`;
+        ob.er_msg = `${x.msg('an_error_occured_msg') + er_msg_final}\n${x.msg('error_code_label') + (er_obj.er_code || er_code)}\n${x.msg('error_type_label') + er_obj.name}\n${x.msg('error_msg_label') + er_obj.message}`;
 
         change_er_state('er_is_visible', true);
         change_er_state('er_is_highlighted', true);
