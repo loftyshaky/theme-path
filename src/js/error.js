@@ -4,9 +4,9 @@ import x from 'x';
 
 configure({ enforceActions: 'observed' });
 
-window.err = action((er_obj, er_code, msg, silent, persistent, exit) => {
+window.err = action((er_obj, er_code, er_msg_param, silent, persistent, exit) => {
     if (!er_obj.silent && !silent) {
-        const er_msg = x.message(`${er_obj.msg || msg}_er`);
+        const er_msg = x.message(`${er_obj.msg || er_msg_param}_er`);
         const er_msg_final = er_msg ? ` ${er_msg}.` : '';
 
         ob.er_msg = `${x.message('an_error_occured_msg') + er_msg_final}\n${x.message('error_code_label') + (er_obj.er_code || er_code)}\n${x.message('error_type_label') + er_obj.name}\n${x.message('error_msg_label') + er_obj.message}`;
@@ -27,7 +27,7 @@ window.err = action((er_obj, er_code, msg, silent, persistent, exit) => {
     if (er_obj.exit || exit) {
         const updated_er_obj = er_obj;
         updated_er_obj.er_code = er_obj.er_code || er_code;
-        updated_er_obj.msg = er_obj.msg || msg;
+        updated_er_obj.msg = er_obj.msg || er_msg_param;
         updated_er_obj.silent = er_obj.silent || silent;
         updated_er_obj.persistent = er_obj.persistent || persistent;
         updated_er_obj.exit = er_obj.exit || exit;

@@ -47,7 +47,7 @@ export const Tutorial_item = observer(props => {
                     <Svg src={close_svg} />
                 </button>
                 <div className="tutorial_text">
-                    {x.message(`${name}_tutorial_item_text`)}
+                    {x.msg(`${name}_tutorial_item_text`)}
                 </div>
             </Tr>
             {outline_el}

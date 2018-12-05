@@ -20,7 +20,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (mode === 'renaming_folder' || (mode === 'creating_folder' && !wf_shared.mut.chosen_folder_info.is_theme)) {
-                const folder_name = mode === 'renaming_folder' ? name_input_val : x.message('new_theme_btn_label_text');
+                const folder_name = mode === 'renaming_folder' ? name_input_val : x.msg('new_theme_btn_label_text');
                 const timne_id = Date.now();
                 const source_folder_path = mode === 'renaming_folder' ? folder_path : join('.', 'resources', 'app', 'bundle', 'new_theme');
                 const parent_of_renamed_folder_path = dirname(folder_path);

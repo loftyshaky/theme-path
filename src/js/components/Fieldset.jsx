@@ -34,7 +34,7 @@ export const Fieldset = observer(props => {
                 name="legend"
                 state={wf_shared.com.fieldset_protecting_screen_is_visible}
             >
-                {x.message(`${name}_legend_text`)}
+                {x.msg(`${name}_legend_text`)}
                 <div className="legend_line" />
             </Tr>
             <div className="cover" />

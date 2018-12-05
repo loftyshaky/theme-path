@@ -174,7 +174,7 @@ class Work_folder_selector extends React.Component {
             ? (
                 <div className="work_folder_message">
                     {
-                        x.message(message_key)
+                        x.msg(message_key)
                     }
                 </div>
             )

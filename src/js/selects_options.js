@@ -5,7 +5,7 @@ import x from 'x';
 //> create select label content t
 const create_option_data_text_val = (is_locale_option, modifier) => {
     try {
-        const text = x.message(`option_${modifier}_text`);
+        const text = x.msg(`option_${modifier}_text`);
 
         if (is_locale_option) {
             return `${modifier} - ${text}`;

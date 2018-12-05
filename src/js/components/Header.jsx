@@ -157,7 +157,7 @@ const Open_in_profiled_chrome_btn = props => {
         <button
             className="header_btn open_in_chrome_btn"
             type="button"
-            title={`${x.message('open_in_chrome_btn_title')} - ${path}`}
+            title={`${x.msg('open_in_chrome_btn_title')} - ${path}`}
             disabled={wf_shared.com2.inputs_disabled_5}
             onMouseUp={open_and_pack.open_in_chrome.bind(null, path)}
         >

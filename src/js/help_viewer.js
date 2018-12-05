@@ -17,17 +17,17 @@ export const open_help_viewer = action((family, name) => {
             const img_base_64 = readFileSync(img_path).toString('base64');
 
             ob.help_viewer_name = name;
-            ob.help_viewer_message = x.message(`${data_basename}_help_text`);
+            ob.help_viewer_message = x.msg(`${data_basename}_help_text`);
             ob.help_viewer_img = `data:image/png;base64,${img_base_64}`;
 
         } else if (no_image_families.indexOf(family) > -1) {
             ob.help_viewer_name = '';
-            ob.help_viewer_message = x.message(`${family}_${name}_help_text`);
+            ob.help_viewer_message = x.msg(`${family}_${name}_help_text`);
             ob.help_viewer_img = '';
 
         } else {
             ob.help_viewer_name = '';
-            ob.help_viewer_message = x.message(`${name}_help_text`);
+            ob.help_viewer_message = x.msg(`${name}_help_text`);
             ob.help_viewer_img = '';
         }
 

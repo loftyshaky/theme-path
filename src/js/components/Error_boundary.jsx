@@ -25,7 +25,7 @@ export class Error_boundary extends React.Component {
                     type="button"
                     onClick={error.set_component_has_er.bind(null, false)}
                 >
-                    {x.message('reload_ui_btn_text')}
+                    {x.msg('reload_ui_btn_text')}
                 </button>
             );
         }

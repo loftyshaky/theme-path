@@ -166,7 +166,7 @@ x.cls = classes => {
 };
 
 //> localization
-x.message = message => loc[message];
+x.msg = msg => loc[msg];
 
 x.localize = base_element => {
     const localize_inner = (item_key, loc_key) => {
@@ -174,7 +174,7 @@ x.localize = base_element => {
 
         arr.forEach(item => {
             const new_item = item;
-            new_item[item_key] = x.message(item.dataset[loc_key]);
+            new_item[item_key] = x.msg(item.dataset[loc_key]);
         });
     };
 

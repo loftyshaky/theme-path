@@ -9,7 +9,7 @@ export const Hr = props => {
 
     return (
         <div className="hr">
-            <hr /><span className="hr_text">{x.message(`${name}_hr_text`)}</span><hr />
+            <hr /><span className="hr_text">{x.msg(`${name}_hr_text`)}</span><hr />
         </div>
     );
 };
