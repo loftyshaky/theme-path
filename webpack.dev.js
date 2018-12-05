@@ -37,7 +37,7 @@ module.exports = merge(shared, {
 
         before() {
             spawn(
-                'electron --inspect=5858 ./main.js',
+                'electron --inspect=5858 ./main.js --disable-gpu', // fix freezing (hardware acceleration issue) on ubuntu. Also in prod in package.json
                 ['.'],
                 { shell: true, env: process.env, stdio: 'inherit' },
             )
