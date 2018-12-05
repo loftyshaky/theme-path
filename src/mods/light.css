@@ -62,7 +62,7 @@ hr {
     background-color: #212121;
 }
 
-svg {
+svg, body.using_mouse .folder_arrow:focus svg {
     fill: #212121;
 }
 
