@@ -64,6 +64,7 @@ module.exports = {
         't': false,
         'er_obj': false,
         'l': false,
+        'app_root': false,
         's': false,
         'sa': false,
         'sb': false,

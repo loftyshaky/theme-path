@@ -1,15 +1,20 @@
 import * as r from 'ramda';
 
-const { remote } = require('electron');
+import { join } from 'path';
+import { remote } from 'electron';
 
 //--
-const loc = require(`locales/${remote.getGlobal('os_lang')}.json`); // eslint-disable-line import/no-dynamic-require
+
+const os_lang = remote.getGlobal('os_lang');
+const loc = require(`locales/${os_lang}.json`); // eslint-disable-line import/no-dynamic-require
 
 const x = {};
 
 //> console.log
 window.l = console.log.bind(console); // eslint-disable-line no-console
 //< console.log
+
+window.app_root = remote.getGlobal('dev') ? process.cwd() : join(remote.app.getAppPath(), '../../');
 
 //> selecting elements
 window.s = selector => document.querySelector(selector); // $

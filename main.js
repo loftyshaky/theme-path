@@ -6,12 +6,12 @@ const { app, BrowserWindow, shell } = require('electron');
 
 //--
 
-const dev = !!(process.defaultApp
+global.dev = !!(process.defaultApp
     || /[\\/]electron-prebuilt[\\/]/.test(process.execPath)
     || /[\\/]electron[\\/]/.test(process.execPath)); //> Keep a reference for dev mode
+global.os_lang = null;
 const runs_from_package = !existsSync(join(__dirname, 'resources'));
 let main_window; // Keep a global reference of the window object, if you don't, the window will be closed automatically when the JavaScript object is garbage collected.
-global.os_lang = null;
 
 //> temporary fix broken high-dpi scale factor on Windows (125% scaling). info: https://github.com/electron/electron/issues/9691
 if (process.platform === 'win32') {
@@ -31,7 +31,7 @@ function create_window() {
     //< create the browser window.
 
     //> implementing Webpack
-    const index_path_return_val = dev && process.argv.indexOf('--noDevServer') === -1
+    const index_path_return_val = global.dev && process.argv.indexOf('--noDevServer') === -1
         ? (() => {
             const index_path = format({
                 protocol: 'http:',
@@ -76,7 +76,7 @@ function create_window() {
         main_window.maximize();
         main_window.show();
 
-        if (dev) { // open the DevTools automatically if developing
+        if (global.dev) { // open the DevTools automatically if developing
             main_window.webContents.openDevTools();
         }
     });

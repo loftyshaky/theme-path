@@ -1,6 +1,6 @@
 import { action, observable, configure } from 'mobx';
 
-import { resolve } from 'path';
+import { join } from 'path';
 import { readFileSync, writeJsonSync } from 'fs-extra';
 
 import * as choose_folder from 'js/work_folder/choose_folder';
@@ -112,8 +112,8 @@ export const write_to_json = (json, json_path) => {
 
 export const get_icon_paths = () => {
     try {
-        const default_icon_soure_path = resolve('resources', 'app', 'bundle', 'new_theme', 'icon.png');
-        const default_icon_target_path = resolve(ob.chosen_folder_path, 'icon.png');
+        const default_icon_soure_path = join(app_root, 'resources', 'app', 'bundle', 'new_theme', 'icon.png');
+        const default_icon_target_path = join(ob.chosen_folder_path, 'icon.png');
 
         return {
             source: default_icon_soure_path,
