@@ -2,7 +2,11 @@
   "name": "chrome-theme-creator",
   "version": "0.0.1",
   "description": "App for creating Chrome themes.",
-  "author": "loftyshaky",
+  "homepage": "https://github.com/loftyshaky/chrome-theme-creator",
+  "author": {
+    "name": "loftyshaky",
+    "email": "loftyshaky@gmail.com"
+  },
   "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --host 0.0.0.0 --config=./webpack.dev.js",
@@ -16,7 +20,7 @@
   "build": {
     "appId": "theme-creator|loftyshaky@gmail.com",
     "productName": "Chrome Theme Creator",
-    "asar": true,
+    "asar": true,   
     "files": {
       "filter": [
         "bundle",
@@ -35,6 +39,9 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": "deb"
     }
   },
   "license": "ISC",
