@@ -67,4 +67,7 @@ module.exports = {
         __dirname: false,
         __filename: false,
     },
+    externals: {
+        fsevents: 'require("fsevents")', // needed to prevent compilation error on Mac
+    },
 };
