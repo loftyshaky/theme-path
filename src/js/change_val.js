@@ -69,6 +69,13 @@ export const change_val = async (family, i, val, img_extension, e) => {
             } else if (fourth_if_names.indexOf(family) > -1) {
                 write_to_json(shared.mut.manifest, manifest_path, name, new_val + img_extension_final, family);
 
+                const created_solid_color_background_img = !img_extension && name === 'theme_ntp_background';
+
+                if (created_solid_color_background_img) {
+                    set_inputs_data_val('properties', inputs_data.obj.properties.findIndex(item => item.name === 'ntp_background_repeat'), 'repeat');
+                    write_to_json(shared.mut.manifest, manifest_path, 'ntp_background_repeat', 'repeat', 'properties');
+                }
+
             } else if (family === 'settings') {
                 store.set(name, new_val);
 
