@@ -1,5 +1,6 @@
 {
   "name": "chrome-theme-creator",
+  "productName": "Chrome Theme Creator",
   "version": "0.0.1",
   "description": "App for creating Chrome themes.",
   "homepage": "https://github.com/loftyshaky/chrome-theme-creator",
@@ -19,7 +20,6 @@
   },
   "build": {
     "appId": "theme-creator|loftyshaky@gmail.com",
-    "productName": "Chrome Theme Creator",
     "asar": true,   
     "files": {
       "filter": [
