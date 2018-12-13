@@ -47,11 +47,11 @@ const run = callback => {
     }
 };
 
-export const open_in_chrome = (folder_path, e) => {
+export const open_in_chrome = (folder_path, default_exe_path, e) => {
     try {
         const left_button_clicked = e.button === 0;
         const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
-        const chrome_path = store.get('chrome_exe_path') ? store.get('chrome_exe_path').trim() : getChrome(platform());
+        const chrome_path = default_exe_path ? getChrome(platform()) : store.get('chrome_exe_path').trim();
         const user_data_path = folder_path.trim() || join(homedir(), 'Chrome Theme Creator Chrome Preview Directory');
         const incognito = !left_button_clicked ? ' --incognito' : '--x';
 

@@ -102,7 +102,7 @@ export class Header extends React.Component {
                     <div className="btn_w">
                         <Btn
                             name="open_in_chrome"
-                            on_click={e => open_and_pack.open_in_chrome('', e)}
+                            on_click={e => open_and_pack.open_in_chrome('', true, e)}
                             svg={open_in_browser_svg}
                         />
                         <Tutorial_item
@@ -159,7 +159,7 @@ const Open_in_profiled_chrome_btn = props => {
             type="button"
             title={`${x.msg('open_in_chrome_btn_title')} - ${path}`}
             disabled={wf_shared.com2.inputs_disabled_5}
-            onMouseUp={open_and_pack.open_in_chrome.bind(null, path)}
+            onMouseUp={open_and_pack.open_in_chrome.bind(null, path, false)}
         >
             {no}
         </button>
