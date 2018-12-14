@@ -49,43 +49,44 @@ const run = callback => {
 
 export const open_in_chrome = (folder_path, default_exe_path, e) => {
     try {
-        const left_button_clicked = e.button === 0;
-        const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
-        const chrome_path = default_exe_path ? getChrome(platform()) : store.get('chrome_exe_path').trim();
-        const user_data_path = folder_path.trim() || join(homedir(), 'Chrome Theme Creator Chrome Preview Directory');
-        const incognito = !left_button_clicked ? ' --incognito' : '--x';
+        if (e.type === 'mouseup' || (e.type === 'keyup' && e.keyCode === 13)) {
+            const left_button_clicked = e.button === 0 || (e.type === 'keyup' && !e.ctrlKey && !e.shiftKey);
+            const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
+            const chrome_path = default_exe_path ? getChrome(platform()) : store.get('chrome_exe_path').trim();
+            const user_data_path = folder_path.trim() || join(homedir(), 'Chrome Theme Creator Chrome Preview Directory');
+            const incognito = !left_button_clicked ? ' --incognito' : '--x';
 
-        run(() => {
-            kill(mut.chrome_process_ids[user_data_path], 'SIGKILL', async er => {
-                if (er) {
-                    err(er, 15, null, true);
-                }
-
-                try {
-                    const child_process = await execFile(chrome_path,
-                        [
-                            new_tab_url,
-                            new_tab_url,
-                            new_tab_url,
-                            incognito,
-                            '--start-maximized',
-                            '--no-first-run', // without this canary chrome will not start if Chrome Theme Creator Chrome Preview Directory doesn't exist
-                            `--user-data-dir=${user_data_path}`,
-                            `--load-extension=${shared.ob.chosen_folder_path}`,
-                        ]);
-
-                    mut.chrome_process_ids[user_data_path] = child_process.pid;
-
-                    if (tutorial.ob.tutorial_stage === 6) {
-                        tutorial.increment_tutorial_stage();
+            run(() => {
+                kill(mut.chrome_process_ids[user_data_path], 'SIGKILL', async er => {
+                    if (er) {
+                        err(er, 15, null, true);
                     }
 
-                } catch (er2) {
-                    err(er2, 46);
-                }
-            });
-        });
+                    try {
+                        const child_process = await execFile(chrome_path,
+                            [
+                                new_tab_url,
+                                new_tab_url,
+                                new_tab_url,
+                                incognito,
+                                '--start-maximized',
+                                '--no-first-run', // without this canary chrome will not start if Chrome Theme Creator Chrome Preview Directory doesn't exist
+                                `--user-data-dir=${user_data_path}`,
+                                `--load-extension=${shared.ob.chosen_folder_path}`,
+                            ]);
 
+                        mut.chrome_process_ids[user_data_path] = child_process.pid;
+
+                        if (tutorial.ob.tutorial_stage === 6) {
+                            tutorial.increment_tutorial_stage();
+                        }
+
+                    } catch (er2) {
+                        err(er2, 46);
+                    }
+                });
+            });
+        }
     } catch (er) {
         err(er, 145);
     }

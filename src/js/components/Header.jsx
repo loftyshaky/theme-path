@@ -160,6 +160,7 @@ const Open_in_profiled_chrome_btn = props => {
             title={`${x.msg('open_in_chrome_btn_title')} - ${path}`}
             disabled={wf_shared.com2.inputs_disabled_5}
             onMouseUp={open_and_pack.open_in_chrome.bind(null, path, false)}
+            onKeyUp={open_and_pack.open_in_chrome.bind(null, path, false)}
         >
             {no}
         </button>
@@ -175,7 +176,7 @@ const Btn = props => {
             type="button"
             data-title={`${name}_btn_title`}
             disabled={wf_shared.com2.inputs_disabled_5}
-            {...(name === 'open_in_chrome' ? { onMouseUp: on_click } : { onClick: on_click })}
+            {...(name === 'open_in_chrome' ? { onMouseUp: on_click, onKeyUp: on_click } : { onClick: on_click })}
         >
             <Svg src={svg} />
         </button>
