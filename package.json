@@ -20,7 +20,7 @@
   },
   "build": {
     "appId": "theme-creator|loftyshaky@gmail.com",
-    "asar": true,   
+    "asar": true,
     "files": {
       "filter": [
         "bundle",
@@ -36,12 +36,61 @@
         "help_imgs"
       ]
     },
+    "appx": {
+      "identityName": "ChromeThemeCreator",
+      "publisher": "CN=loftyshaky",
+      "languages": [
+        "en-US",
+        "ru"
+      ]
+    },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     },
+    "win": {
+      "target": [
+        {
+          "target": "appx",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
     "linux": {
-      "target": "deb"
+      "target": [
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "rpm",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
     }
   },
   "license": "ISC",
