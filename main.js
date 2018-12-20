@@ -6,9 +6,7 @@ const { app, BrowserWindow, shell } = require('electron');
 
 //--
 
-global.dev = !!(process.defaultApp
-    || /[\\/]electron-prebuilt[\\/]/.test(process.execPath)
-    || /[\\/]electron[\\/]/.test(process.execPath)); //> Keep a reference for dev mode
+global.dev = !!(process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)); //> Keep a reference for dev mode
 global.os_lang = null;
 const runs_from_package = !existsSync(join(__dirname, 'resources'));
 let main_window; // Keep a global reference of the window object, if you don't, the window will be closed automatically when the JavaScript object is garbage collected.
