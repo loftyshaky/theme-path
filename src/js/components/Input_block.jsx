@@ -7,6 +7,7 @@ import { Textarea } from 'components/Textarea';
 import { Select } from 'components/Select';
 import { Img_selector } from 'components/Img_selector';
 import { Color } from 'components/Color';
+import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
 //--
@@ -74,6 +75,7 @@ const sta = {
         select: Select,
         img_selector: Img_selector,
         color: Color,
+        checkbox: Checkbox,
     },
 };
 //< varibles

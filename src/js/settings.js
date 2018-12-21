@@ -2,6 +2,9 @@
 
 import { observable, action, configure } from 'mobx';
 import Store from 'electron-store';
+import Mousetrap from 'mousetrap';
+
+import * as toggle_popup from 'js/toggle_popup';
 
 import x from 'x';
 
@@ -43,6 +46,23 @@ export const load_setting = action(() => {
         err(er, 55);
     }
 });
+
+Mousetrap.bind('shift+ctrl+command+alt+f12', action(() => {
+    try {
+        const settings_popup_is_visible = toggle_popup.ob.popup_visibility.settings;
+
+        if (settings_popup_is_visible) {
+            inputs_data.obj.settings.map(item => {
+                item.hidden = false; // eslint-disable-line no-param-reassign
+
+                return item;
+            });
+        }
+
+    } catch (er) {
+        err(er, 154);
+    }
+}));
 
 //> variables
 export const ob = observable({

@@ -250,6 +250,10 @@ textarea, .option  {
     margin-top: 10px;
 }
 
+.checkbox_input {
+    display: block;
+}
+
 .img_selector_box > span:not(:last-child), .color_input_label, .ordinary_color_input .color_input_vizualization, .img_selector_checkbox_w:not(:last-child) {
     margin-right: 12px;
 }
@@ -988,7 +992,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w svg, a, .help_link, .upload_box_browse_label, .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline {
+.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline {
     transition: all 0.2s ease-out;
 }
 
@@ -1000,7 +1004,7 @@ body.using_mouse .header_btn:focus {
     transition-property: border-color, box-shadow!important;
 }
 
-.checkbox_checkmark_w svg, .protecting_screen, .fieldset_protecting_screen, .popup, .color_pickier, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item {
+.checkbox_checkmark_w svg, .checkbox_input, .protecting_screen, .fieldset_protecting_screen, .popup, .color_pickier, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item {
     transition-property: opacity;
 }
 

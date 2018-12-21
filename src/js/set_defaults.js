@@ -13,6 +13,7 @@ export const set_defaults = () => {
             chrome_exe_path: '',
             chrome_user_data_dirs: '',
             tutorial_stage: 1,
+            enable_analytics: true,
         });
 
     } catch (er) {
