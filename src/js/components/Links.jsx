@@ -13,8 +13,8 @@ export const Links = () => (
                 name="clear_new_tab"
             />
             <Link
-                name="deviant_art_group"
-                href="https://bit.ly/deviant-art-group"
+                name="facebook_page"
+                href="https://bit.ly/simpleext"
             />
             <Link
                 name="donate"
