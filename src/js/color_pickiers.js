@@ -14,7 +14,7 @@ configure({ enforceActions: 'observed' });
 
 //--
 
-export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualization = e => {
+export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualization = async e => {
     try {
         const color_ok_btn_clicked = x.matches(e.target, '.color_ok_btn');
 
@@ -58,6 +58,22 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                     if (!color_pickier_is_fully_visible) {
                         set_color_color_pickier_position(family, i, 'bottom');
                     }
+
+                    //>1 focus color value input and select all text in it
+                    await x.delay(20);
+
+                    const color_val_inputs = sab(color_pickier, 'input');
+                    const number_of_color_val_inputs = color_val_inputs.length;
+                    const color_pickier_is_in_hex_mode = number_of_color_val_inputs === 1;
+                    const color_pickier_is_in_rgb_or_hsl_mode = number_of_color_val_inputs === 4 && !color_val_inputs[number_of_color_val_inputs - 1].offsetParent;
+
+                    if (color_pickier_is_in_hex_mode || color_pickier_is_in_rgb_or_hsl_mode) {
+                        focus_input_and_select_all_text_in_it(color_val_inputs[0]);
+
+                    } else { // color pickier is in rgba or hsla mode
+                        focus_input_and_select_all_text_in_it(color_val_inputs[number_of_color_val_inputs - 1]);
+                    }
+                    //<1 focus color value input and select all text in it
                 }
             }
             //< try to show color pickier when clicking on color_input_vizualization t
@@ -172,6 +188,11 @@ export const close_or_open_color_pickier_by_keyboard = e => {
     } else if (esc_pressed) {
         close_color_pickier();
     }
+};
+
+const focus_input_and_select_all_text_in_it = input => {
+    input.focus();
+    input.setSelectionRange(0, input.value.length);
 };
 
 //> varibles
