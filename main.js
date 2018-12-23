@@ -2,7 +2,7 @@ const { join } = require('path');
 const { format } = require('url');
 const { existsSync } = require('fs');
 
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow, shell, Menu } = require('electron');
 
 //--
 
@@ -100,6 +100,35 @@ function create_window() {
     const os_loc_sub_loc_cut = os_loc.indexOf('_') === -1 ? os_loc : os_loc.substr(0, os_loc.lastIndexOf('_'));
     global.os_lang = available_langs.find(available_lang => available_lang === os_loc_sub_loc_cut) || 'en';
     //< get os language
+
+    //> context menu
+    const selection_menu = Menu.buildFromTemplate([
+        { role: 'copy' },
+        { type: 'separator' },
+        { role: 'selectall' },
+    ]);
+
+    const input_menu = Menu.buildFromTemplate([
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { type: 'separator' },
+        { role: 'selectall' },
+    ]);
+
+    main_window.webContents.on('context-menu', (e, props) => {
+        const { selectionText, isEditable } = props;
+        if (isEditable) {
+            input_menu.popup(main_window);
+
+        } else if (selectionText && selectionText.trim() !== '') {
+            selection_menu.popup(main_window);
+        }
+    });
+    //< context menu
 }
 
 app.on('ready', create_window); // this method will be called when Electron has finished initialization and is ready to create browser windows. some APIs can only be used after this event occurs.
