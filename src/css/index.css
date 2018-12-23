@@ -571,7 +571,7 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 }
 
 .help_viewer_expanded_img_w, .help_viewer_w {
-    z-index: 3;
+    z-index: 4;
 }
 
 .help_viewer_w {
