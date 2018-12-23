@@ -29,9 +29,28 @@ export const show_or_hide_tutorial_item = action(bool => {
     }
 });
 
+export const enable_or_disable_alt_style = action(bool => {
+    try {
+        ob.alt_style_enabled = bool;
+
+    } catch (er) {
+        err(er, 156);
+    }
+});
+
+export const rerender_Tutorial_item = () => {
+    enable_or_disable_alt_style(true);
+    enable_or_disable_alt_style(false);
+};
+
 //> variables
 export const ob = observable({
     tutorial_stage: store.get('tutorial_stage'),
     tutorial_item_is_visible: true,
+    alt_style_enabled: false,
 });
+
+export const mut = {
+    recursive_apply_alt_style_if_tutorial_item_out_of_screen_already_called: false,
+};
 //< variables

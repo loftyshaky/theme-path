@@ -4,6 +4,7 @@ import * as color_pickiers from 'js/color_pickiers';
 import * as tab_focus from 'js/tab_focus';
 import * as toggle_popup from 'js/toggle_popup';
 import * as help_viewer from 'js/help_viewer';
+import * as tutorial from 'js/tutorial';
 
 import { Error_boundary } from 'components/Error_boundary';
 import { Header } from 'components/Header';
@@ -28,6 +29,7 @@ export class All extends React.Component {
             document.body.addEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
             document.body.addEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
             document.body.addEventListener('keydown', help_viewer.close_help_viewer_by_keyboard);
+            window.addEventListener('resize', tutorial.rerender_Tutorial_item);
 
         } catch (er) {
             err(er, 93);
@@ -43,6 +45,7 @@ export class All extends React.Component {
             document.body.removeEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
             document.body.removeEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
             document.body.removeEventListener('keydown', help_viewer.close_help_viewer_by_keyboard);
+            window.removeEventListener('resize', tutorial.rerender_Tutorial_item);
 
         } catch (er) {
             err(er, 94);

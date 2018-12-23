@@ -652,10 +652,18 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     transform: translateX(100%);
 }
 
+.tutorial_item_select_folder.alt, .tutorial_item_select_theme.alt {
+    transform: translateX(-56px);
+}
+
 .tutorial_item_change_theme_properties {
     left: -30px;
     top: 60px;
     transform: translateX(-100%);
+}
+
+.tutorial_item_change_theme_properties.alt {
+    left: 220px;
 }
 
 .tutorial_item_pack {

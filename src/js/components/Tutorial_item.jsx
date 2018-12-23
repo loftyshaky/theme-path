@@ -12,51 +12,96 @@ import close_svg from 'svg/close';
 
 //--
 
-export const Tutorial_item = observer(props => {
-    const { name, tutorial_stage, outline } = props;
-    const show_tutrial = tutorial.ob.tutorial_stage == tutorial_stage && tutorial.ob.tutorial_item_is_visible; // eslint-disable-line eqeqeq
+export class Tutorial_item extends React.Component {
+    componentDidMount() {
+        this.apply_alt_style_if_tutorial_item_out_of_screen();
+    }
 
-    const outline_el = outline
-        ? (
-            <Tr
-                attr={{
-                    className: x.cls(['tutorial_outline', `tutorial_outline_${name}`]),
-                }}
-                tag="span"
-                name="tutorial_outline"
-                state={show_tutrial}
-            />
-        ) : null;
+    componentDidUpdate() {
+        this.apply_alt_style_if_tutorial_item_out_of_screen();
+    }
 
-    return (
-        <React.Fragment>
-            <Tr
-                attr={{
-                    className: x.cls(['tutorial_item', `tutorial_item_${name}`]),
-                }}
-                tag="div"
-                name="gen"
-                state={show_tutrial}
-            >
-                <button
-                    className="close_btn tutorial_item_close_btn"
-                    type="button"
-                    disabled={wf_shared.com2.inputs_disabled_4}
-                    onClick={tutorial.show_or_hide_tutorial_item.bind(null, false)}
-                >
-                    <Svg src={close_svg} />
-                </button>
-                <div className="tutorial_text">
-                    {x.msg(`${name}_tutorial_item_text`)}
-                </div>
-                <button
-                    type="button"
-                    className="skip_tutorial_btn"
-                    data-text="skip_tutorial_btn_text"
-                    onClick={tutorial.increment_tutorial_stage.bind(null, true)}
+    apply_alt_style_if_tutorial_item_out_of_screen = async () => {
+        try {
+            await x.delay(0);
+
+            const { name, tutorial_stage } = this.props;
+
+            if (tutorial.ob.tutorial_stage == tutorial_stage && !tutorial.ob.alt_style_enabled) { // eslint-disable-line eqeqeq
+                const rect = s(`.tutorial_item_${name}`).getBoundingClientRect();
+                const tutorial_item_is_in_viewport = rect.left >= 0 && rect.right <= window.innerWidth;
+
+                if (!tutorial_item_is_in_viewport) {
+                    tutorial.enable_or_disable_alt_style(true);
+
+                    tutorial.mut.recursive_apply_alt_style_if_tutorial_item_out_of_screen_already_called = false;
+
+                } else {
+                    tutorial.enable_or_disable_alt_style(false);
+
+                    await x.delay(1000);
+
+                    if (!tutorial.mut.recursive_apply_alt_style_if_tutorial_item_out_of_screen_already_called) {
+                        tutorial.mut.recursive_apply_alt_style_if_tutorial_item_out_of_screen_already_called = true;
+
+                        this.apply_alt_style_if_tutorial_item_out_of_screen();
+                    }
+                }
+            }
+
+        } catch (er) {
+            err(er, 157);
+        }
+    }
+
+    render() {
+        const { name, tutorial_stage, outline } = this.props;
+        const show_tutrial = tutorial.ob.tutorial_stage == tutorial_stage && tutorial.ob.tutorial_item_is_visible; // eslint-disable-line eqeqeq
+
+        const outline_el = outline
+            ? (
+                <Tr
+                    attr={{
+                        className: x.cls(['tutorial_outline', `tutorial_outline_${name}`]),
+                    }}
+                    tag="span"
+                    name="tutorial_outline"
+                    state={show_tutrial}
                 />
-            </Tr>
-            {outline_el}
-        </React.Fragment>
-    );
-});
+            ) : null;
+
+        return (
+            <React.Fragment>
+                <Tr
+                    attr={{
+                        className: x.cls(['tutorial_item', `tutorial_item_${name}`, tutorial.ob.alt_style_enabled ? 'alt' : '']),
+                    }}
+                    tag="div"
+                    name="gen"
+                    state={show_tutrial}
+                >
+                    <button
+                        className="close_btn tutorial_item_close_btn"
+                        type="button"
+                        disabled={wf_shared.com2.inputs_disabled_4}
+                        onClick={tutorial.show_or_hide_tutorial_item.bind(null, false)}
+                    >
+                        <Svg src={close_svg} />
+                    </button>
+                    <div className="tutorial_text">
+                        {x.msg(`${name}_tutorial_item_text`)}
+                    </div>
+                    <button
+                        type="button"
+                        className="skip_tutorial_btn"
+                        data-text="skip_tutorial_btn_text"
+                        onClick={tutorial.increment_tutorial_stage.bind(null, true)}
+                    />
+                </Tr>
+                {outline_el}
+            </React.Fragment>
+        );
+    }
+}
+
+observer(Tutorial_item);
