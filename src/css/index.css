@@ -160,7 +160,7 @@ hr {
     cursor: pointer;
 }
 
-.folder_arrow, .folder_icon, .folder_name, .work_folder_path, .er_close_btn, body.using_mouse .help_link, body.using_mouse .upload_box_browse_label:focus, body.using_mouse .close_btn, .search_input, .header_btn, .color_ok_btn, textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus, body.using_mouse a:focus {
+.folder_arrow, .folder_icon, .folder_name, .work_folder_path, .er_close_btn, body.using_mouse .help_link, body.using_mouse .upload_box_browse_label:focus, body.using_mouse .close_btn, .search_input, .header_btn, .color_ok_btn, textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus, body.using_mouse a:focus, body.using_mouse .skip_tutorial_btn:focus {
     outline: none;
 }
 
