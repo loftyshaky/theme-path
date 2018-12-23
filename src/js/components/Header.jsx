@@ -45,7 +45,7 @@ export class Header extends React.Component {
                     'new_theme',
                     shared.ob.chosen_folder_path,
                     wf_shared.mut.chosen_folder_info.nest_level,
-                    wf_shared.mut.chosen_folder_info.i_to_insert_folfder_in,
+                    wf_shared.mut.chosen_folder_info.i_to_insert_folder_in,
                 );
             }
 

@@ -17,7 +17,7 @@ configure({ enforceActions: 'observed' });
 //--
 
 //> select folder and fill inputs with theme data
-export const select_folder = action((is_work_folder, folder_path, children, nest_level, i_to_insert_folfder_in) => { // action( need to be here otherwise protecting screen will not lift
+export const select_folder = action((is_work_folder, folder_path, children, nest_level, i_to_insert_folder_in) => { // action( need to be here otherwise protecting screen will not lift
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (!is_work_folder) {
@@ -29,8 +29,8 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
             const folder_info = wf_shared.get_info_about_folder(folder_path);
 
             if (!is_work_folder) {
-                wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_theme = folder_info.is_theme;
-                wf_shared.ob.folders[i_to_insert_folfder_in - 1].is_empty = folder_info.is_empty;
+                wf_shared.ob.folders[i_to_insert_folder_in - 1].is_theme = folder_info.is_theme;
+                wf_shared.ob.folders[i_to_insert_folder_in - 1].is_empty = folder_info.is_empty;
 
                 wf_shared.rerender_work_folder();
             }
@@ -75,7 +75,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 //< set icon default checkbox state
 
                 if (!is_work_folder) {
-                    expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folfder_in);
+                    expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folder_in);
                 }
 
                 if (tutorial.ob.tutorial_stage === 4) {
@@ -92,7 +92,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 children: children || null,
                 is_theme: folder_info.is_theme,
                 nest_level: nest_level || null,
-                i_to_insert_folfder_in: i_to_insert_folfder_in || null,
+                i_to_insert_folder_in: i_to_insert_folder_in || null,
             };
         }
 
