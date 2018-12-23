@@ -229,6 +229,9 @@
   "open_in_chrome_tutorial_item_text": "Open theme in Chrome by left-clicking on this button. Right-click to open theme in an incognito mode. To open theme in an incognito mode with keyboard select this button with Tab key, then hold down Ctrl/Shift and press Enter.",
   "pack_tutorial_item_text": "Package theme as a zip file for distribution in the Chrome Web Store. The package will be stored in the folder that contains theme.",
 
+  "skip_tutorial_btn_text": "Skip tutorial",
+
+
   "an_error_occured_msg": "An error occured.",
   "error_code_label": "Error code: ",
   "error_type_label": "Type: ",

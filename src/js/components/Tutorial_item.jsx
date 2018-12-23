@@ -49,6 +49,12 @@ export const Tutorial_item = observer(props => {
                 <div className="tutorial_text">
                     {x.msg(`${name}_tutorial_item_text`)}
                 </div>
+                <button
+                    type="button"
+                    className="skip_tutorial_btn"
+                    data-text="skip_tutorial_btn_text"
+                    onClick={tutorial.increment_tutorial_stage.bind(null, true)}
+                />
             </Tr>
             {outline_el}
         </React.Fragment>
