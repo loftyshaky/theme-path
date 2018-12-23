@@ -21,7 +21,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (!is_work_folder) {
-                shared.deselect_theme();
+                wf_shared.deselect_theme();
             }
 
             shared.set_chosen_folder_path(folder_path);

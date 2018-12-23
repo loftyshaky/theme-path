@@ -79,7 +79,7 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
                         //<2 mark target folder's child folders as closed
 
                         if (item.path === shared.ob.chosen_folder_path) {
-                            shared.deselect_theme();
+                            wf_shared.deselect_theme();
                         }
 
                         return null;

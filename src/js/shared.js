@@ -73,17 +73,6 @@ export const get_message_name = val => {
     return undefined;
 };
 
-export const deselect_theme = action(() => {
-    try {
-        ob.chosen_folder_path = choose_folder.ob.work_folder;
-
-        reset_inputs_data();
-
-    } catch (er) {
-        err(er, 62);
-    }
-});
-
 export const construct_icons_obj = json => {
     try {
         const new_json = json;
@@ -136,5 +125,3 @@ export const mut = {
     manifest: null,
 };
 //< varibles t
-
-const { reset_inputs_data } = require('js/inputs_data');

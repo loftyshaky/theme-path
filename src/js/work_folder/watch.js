@@ -123,7 +123,7 @@ watcher
                     }
 
                     if (folder_path === shared.ob.chosen_folder_path) {
-                        shared.deselect_theme();
+                        wf_shared.deselect_theme();
                     }
                 }
             }

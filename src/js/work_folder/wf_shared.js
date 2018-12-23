@@ -4,6 +4,7 @@ import { join } from 'path';
 import { decorate, observable, action, computed, configure } from 'mobx';
 import * as r from 'ramda';
 
+import { reset_inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as toggle_popup from 'js/toggle_popup';
 import * as help_viewer from 'js/help_viewer';
@@ -107,6 +108,19 @@ export const close_all_folders = () => {
 
 export const set_folders = action(val => {
     ob.folders = val;
+});
+
+export const deselect_theme = action(() => {
+    try {
+        shared.ob.chosen_folder_path = choose_folder.ob.work_folder;
+
+        mut.chosen_folder_info.is_theme = false;
+
+        reset_inputs_data();
+
+    } catch (er) {
+        err(er, 62);
+    }
 });
 
 //> varibles t

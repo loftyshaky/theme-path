@@ -3,7 +3,6 @@ import { existsSync } from 'fs-extra';
 import { observable, action, configure } from 'mobx';
 import Store from 'electron-store';
 
-import * as shared from 'js/shared';
 import * as tutorial from 'js/tutorial';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
@@ -24,11 +23,9 @@ export const choose_folder = callback => {
         });
 
         if (folder_path) { // if not cancelled folder chosing
-            wf_shared.mut.chosen_folder_info.is_theme = false;
-
             change_work_folder(folder_path[0]);
 
-            shared.deselect_theme();
+            wf_shared.deselect_theme();
 
             callback();
 
@@ -70,11 +67,9 @@ export const reset_work_folder = action(terminate_script => {
         const work_folder_exist = existsSync(ob.work_folder);
 
         if (!work_folder_exist) {
-            wf_shared.mut.chosen_folder_info.is_theme = false;
-
             change_work_folder('');
             expand_or_collapse.close_all_folders();
-            shared.deselect_theme();
+            wf_shared.deselect_theme();
 
             document.activeElement.blur();
 
