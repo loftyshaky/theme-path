@@ -19,7 +19,7 @@ export const create_top_level_folders = async () => {
         const { work_folder } = choose_folder.ob;
 
         if (work_folder) {
-            close_all_folders();
+            collapse_all_folders();
 
             expand_or_collapse_folder('top_level', work_folder, 0, 0);
         }
@@ -29,7 +29,7 @@ export const create_top_level_folders = async () => {
     }
 };
 
-export const close_all_folders = action(() => {
+export const collapse_all_folders = action(() => {
     try {
         wf_shared.ob.folders.clear();
         wf_shared.mut.opened_folders = [];

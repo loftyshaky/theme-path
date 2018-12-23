@@ -24,7 +24,7 @@ export const search = action(() => {
 
 export const trigger_work_folder_reload = x.debounce(action(() => {
     try {
-        wf_shared.close_all_folders();
+        wf_shared.collapse_all_folders();
 
         //> trigger Work_folder component rerender
         const { chosen_folder_path } = shared.ob;

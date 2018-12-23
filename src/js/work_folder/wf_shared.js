@@ -85,7 +85,7 @@ export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
     return undefined;
 };
 
-export const close_all_folders = () => {
+export const collapse_all_folders = () => {
     try {
         const at_least_one_folder_is_open = mut.opened_folders[1];
 
@@ -96,7 +96,7 @@ export const close_all_folders = () => {
                 expand_or_collapse.expand_or_collapse_folder('arrow', ob.folders[i].path, ob.folders[i].nest_level + 1, i + 1);
 
                 if (mut.opened_folders[1]) {
-                    close_all_folders();
+                    collapse_all_folders();
                 }
             }
         }

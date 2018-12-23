@@ -68,7 +68,7 @@ export const reset_work_folder = action(terminate_script => {
 
         if (!work_folder_exist) {
             change_work_folder('');
-            expand_or_collapse.close_all_folders();
+            expand_or_collapse.collapse_all_folders();
             wf_shared.deselect_theme();
 
             document.activeElement.blur();

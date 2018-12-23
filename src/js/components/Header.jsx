@@ -112,8 +112,8 @@ export class Header extends React.Component {
                         />
                     </div>
                     <Btn
-                        name="close_all_folders"
-                        on_click={wf_shared.close_all_folders}
+                        name="collapse_all_folders"
+                        on_click={wf_shared.collapse_all_folders}
                         svg={dehaze_svg}
                     />
                     <Btn
