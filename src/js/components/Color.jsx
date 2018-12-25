@@ -68,6 +68,7 @@ const Color_input_vizualization = observer(props => {
             data-family={family}
             data-i={i}
             style={{ backgroundColor: color }}
+            onMouseUp={color_pickiers.focus_input_and_select_all_text_in_it}
             onKeyUp={enter_click.open_color_pickier_on_enter}
         >
             <Color_pickier
