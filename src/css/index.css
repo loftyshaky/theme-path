@@ -333,6 +333,10 @@ svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
 .help_viewer_name, .skip_tutorial_btn {
     color: #fbff75;
 }
+
+.help_link, .help_message, .skip_tutorial_btn, .app_version {
+    font-size: 14px;
+}
 /*< general */
 
 /*> header */
@@ -540,10 +544,6 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     display: inline-table;
 }
 
-.help_link, .help_message {
-    font-size: 14px;
-}
-
 .help_message {
     margin-top: 4px;
 }
@@ -737,7 +737,6 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 
 
 .skip_tutorial_btn {
-    font-size: 14px;
     display: block;
     margin-left: auto;
     margin-top: 7px;
@@ -934,6 +933,11 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 
 .bottom_link:not(:first-child) {
     margin-top: 8px;
+}
+
+.app_version {
+    text-align: right;
+    margin-top: 10px;
 }
 /*< popup */
 

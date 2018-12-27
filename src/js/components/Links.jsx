@@ -21,6 +21,7 @@ export const Links = () => (
                 href="https://bit.ly/donate-loftyshaky"
             />
         </div>
+        <div className="app_version">{`v${app_version}`}</div>
     </Popup>
 );
 

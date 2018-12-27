@@ -3,6 +3,8 @@ import * as r from 'ramda';
 import { join } from 'path';
 import { remote } from 'electron';
 
+import package_json from 'package_json'; // eslint-disable-line import/no-unresolved
+
 //--
 
 const os_lang = remote.getGlobal('os_lang');
@@ -14,6 +16,7 @@ const x = {};
 window.l = console.log.bind(console); // eslint-disable-line no-console
 //< console.log
 
+window.app_version = package_json.version;
 window.app_root = remote.getGlobal('dev') ? process.cwd() : join(remote.app.getAppPath(), '../../');
 
 //> selecting elements

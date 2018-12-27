@@ -52,6 +52,7 @@ module.exports = {
 
     resolve: {
         alias: {
+            package_json: join(__dirname, 'package.json'),
             x: join(__dirname, 'src', 'js', 'x'),
             js: join(__dirname, 'src', 'js'),
             components: join(__dirname, 'src', 'js', 'components'),
