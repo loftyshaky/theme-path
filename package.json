@@ -31,7 +31,7 @@
       ]
     },
     "extraResources": {
-      "from": "src",
+      "from": "bundle",
       "to": "app/bundle",
       "filter": [
         "new_theme",
