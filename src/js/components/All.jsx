@@ -16,6 +16,7 @@ import { Links } from 'components/Links';
 import { Help_viewer } from 'components/Help_viewer';
 import { Protecting_screen } from 'components/Protecting_screen';
 import { Tutorial_item } from 'components/Tutorial_item';
+import { Auto_updater } from 'components/Auto_updater';
 
 //--
 
@@ -96,6 +97,7 @@ export class All extends React.Component {
                     <Settings />
                     <Links />
                     <Help_viewer />
+                    <Auto_updater />
                 </div>
             </Error_boundary>
         );

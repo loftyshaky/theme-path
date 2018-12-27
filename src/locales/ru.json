@@ -77,6 +77,11 @@
   "clear_new_tab_link_href": "https://bit.ly/clear-new-tab-ru",
 
 
+  "update_available_message_text": "Доступно обновление.",
+  "install_update_btn_text": "Установить обновление",
+  "postpone_update_btn_text": "Отложить",
+
+
   "option_default_text": "Стандарт",
 
   "option_black_text": "Чёрный",

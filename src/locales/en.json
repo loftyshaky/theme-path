@@ -115,6 +115,11 @@
   "clear_new_tab_link_href": "https://bit.ly/clear-new-tab",
 
 
+  "update_available_message_text": "There's an update available.",
+  "install_update_btn_text": "Install update",
+  "postpone_update_btn_text": "Later",
+  
+
   "option_ar_text": "Arabic",
   "option_am_text": "Amharic",
   "option_bg_text": "Bulgarian",

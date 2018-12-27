@@ -2,7 +2,9 @@ const { join } = require('path');
 const { format } = require('url');
 const { existsSync } = require('fs');
 
-const { app, BrowserWindow, shell, Menu } = require('electron');
+const { app, BrowserWindow, shell, Menu, ipcMain } = require('electron');
+
+const { autoUpdater } = require('electron-updater');
 
 //--
 
@@ -129,6 +131,14 @@ function create_window() {
         }
     });
     //< context menu
+
+    //> auto update
+    autoUpdater.checkForUpdates();
+
+    autoUpdater.on('update-downloaded', () => {
+        main_window.webContents.send('update_downloaded');
+    });
+    //< auto update
 }
 
 app.on('ready', create_window); // this method will be called when Electron has finished initialization and is ready to create browser windows. some APIs can only be used after this event occurs.
@@ -146,3 +156,9 @@ app.on('activate', () => {
         create_window(); // On macOS it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
     }
 });
+
+//> auto update
+ipcMain.on('install_update', () => {
+    autoUpdater.quitAndInstall();
+});
+//< auto update

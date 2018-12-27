@@ -8,18 +8,20 @@
     "name": "loftyshaky",
     "email": "loftyshaky@gmail.com"
   },
+  "repository": "https://github.com/testuser31/chrome-theme-creator",
   "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --host 0.0.0.0 --config=./webpack.dev.js",
     "prod": "webpack --mode production --config webpack.prod.js && electron --noDevServer . --disable-gpu",
     "pack": "npm run bundle && build --dir",
     "dist": "npm run bundle && build",
+    "ship": "npm run bundle && build --publish=always",
     "bundle": "webpack --mode production --config webpack.prod.js --packing",
     "builddir": "build --dir",
     "build": "build"
   },
   "build": {
-    "appId": "theme-creator|loftyshaky@gmail.com",
+    "appId": "chrome-theme-creator|loftyshaky@gmail.com",
     "asar": true,
     "files": {
       "filter": [
@@ -51,33 +53,17 @@
     "win": {
       "target": [
         {
-          "target": "appx",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        },
-        {
           "target": "nsis",
           "arch": [
             "x64",
             "ia32"
           ]
-        }
-      ]
-    },
-    "linux": {
-      "target": [
-        {
-          "target": "deb",
-          "arch": [
-            "x64"
-          ]
         },
         {
-          "target": "rpm",
+          "target": "appx",
           "arch": [
-            "x64"
+            "x64",
+            "ia32"
           ]
         }
       ]
@@ -91,6 +77,10 @@
           ]
         }
       ]
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility"
     }
   },
   "license": "ISC",
@@ -143,5 +133,8 @@
     "webpack-merge": "^4.1.4",
     "write-file-webpack-plugin": "^4.4.1",
     "zip-local": "^0.3.4"
+  },
+  "dependencies": {
+    "electron-updater": "^4.0.6"
   }
 }

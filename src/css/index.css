@@ -937,6 +937,24 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 }
 /*< popup */
 
+/*> auto updater */
+.auto_updater {
+    top: unset;
+    right: unset;
+    min-width: unset;
+    bottom: 50px;
+    left: 50px;
+}
+
+.update_available_message {
+    margin-top: 23px;
+    margin-bottom: 11px;
+}
+.auto_updater .btn:not(:last-child) {
+    margin-right: 10px
+}
+/*< auto updater */
+
 /*> protecting screens */
 .protecting_screen, .fieldset_protecting_screen {
     position: fixed;
