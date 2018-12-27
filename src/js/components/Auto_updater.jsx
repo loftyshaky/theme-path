@@ -20,6 +20,7 @@ export const Auto_updater = observer(() => (
         <button
             className="close_btn"
             type="button"
+            onClick={() => auto_update.show_or_hide_auto_updater(false)}
         >
             <Svg src={close_svg} />
         </button>
