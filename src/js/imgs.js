@@ -18,7 +18,7 @@ configure({ enforceActions: 'observed' });
 export const create_solid_color_image = (name, family, hex, alpha) => {
     try {
         const width = sta.width[name] ? sta.width[name] : 1;
-        const height = sta.height[name] ? sta.height[name] : 200;
+        const height = sta.height[name] ? sta.height[name] : 1;
 
         new Jimp(width, height, hex, (er, img) => { // eslint-disable-line no-new
             if (er) {
@@ -143,7 +143,8 @@ const sta = {
     },
     height: {
         icon: 128,
-        theme_ntp_background: 1,
+        theme_frame_overlay: 200,
+        theme_frame_overlay_inactive: 200,
         theme_ntp_attribution: 50,
     },
 };
