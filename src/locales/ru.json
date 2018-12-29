@@ -68,6 +68,7 @@
   "chrome_exe_path_label_text": "Путь к исполняемому файлу Chrome",
   "chrome_user_data_dirs_label_text": "Пути к папкам пользователей Chrome",
   "enable_analytics_label_text": "Включить Google Analytics",
+  "enable_analytics_dev_label_text": "Включить Google Analytics (dev)",
 
 
   "clear_new_tab_link_text": "⚗️ Уберите с новой вкладки элементы Google с помощью расширения Clear New Tab для Chrome",

@@ -494,6 +494,15 @@ export const inputs_data = observable({
                 add_help: false,
                 hidden: true,
             },
+            {
+                key: x.unique_id(),
+                name: 'enable_analytics_dev',
+                family: 'settings',
+                type: 'checkbox',
+                val: false,
+                add_help: false,
+                hidden: true,
+            },
         ],
     },
 });

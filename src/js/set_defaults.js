@@ -14,6 +14,7 @@ export const set_defaults = () => {
             chrome_user_data_dirs: '',
             tutorial_stage: 1,
             enable_analytics: true,
+            enable_analytics_dev: false,
         });
 
     } catch (er) {

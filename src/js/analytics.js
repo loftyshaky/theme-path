@@ -10,8 +10,9 @@ const visitor = ua('UA-129081690-1');
 export const send_pageview = page => {
     try {
         const analytics_enabled = typeof store.get('enable_analytics') === 'undefined' ? true : store.get('enable_analytics');
+        const enable_analytics_dev = typeof store.get('enable_analytics_dev') === 'undefined' ? false : store.get('enable_analytics_dev');
 
-        if (!sta.dev && analytics_enabled) {
+        if ((!sta.dev && analytics_enabled) || enable_analytics_dev) {
             visitor.pageview(page).send();
         }
 

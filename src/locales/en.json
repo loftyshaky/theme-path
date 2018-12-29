@@ -68,7 +68,7 @@
   "chrome_exe_path_label_text": "Path to Chrome executable",
   "chrome_user_data_dirs_label_text": "Paths to Chrome user data folders",
   "enable_analytics_label_text": "Enable Google Analytics",
-
+  "enable_analytics_dev_label_text": "Enable Google Analytics (dev)",
   "option_default_text": "Default",
 
   "option_black_text": "Black",
