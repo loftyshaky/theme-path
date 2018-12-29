@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { join } from 'path';
 import { readFileSync } from 'fs-extra';
 
 import { action, observable, configure } from 'mobx';
@@ -13,7 +13,7 @@ export const open_help_viewer = action((family, name) => {
 
         if (family && no_image_families.indexOf(family) === -1) {
             const data_basename = `${family}_${name}`;
-            const img_path = resolve('resources', 'app', 'bundle', 'help_imgs', `${data_basename}.png`);
+            const img_path = join(app_root, 'resources', 'app', 'bundle', 'help_imgs', `${data_basename}.png`);
             const img_base_64 = readFileSync(img_path).toString('base64');
 
             ob.help_viewer_name = name;
