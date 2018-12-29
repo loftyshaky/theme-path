@@ -11,6 +11,7 @@ import { Error } from 'components/Error';
 //--
 
 analytics.send_pageview('main');
+analytics.send_event('app_version', app_version);
 
 render(
     <Error />, // eslint-disable-line react/jsx-filename-extension
