@@ -132,15 +132,15 @@ function create_window() {
     });
     //< context menu
 
+    //> auto update
     if (!global.dev) {
-        //> auto update
         autoUpdater.checkForUpdates();
 
         autoUpdater.on('update-downloaded', () => {
             main_window.webContents.send('update_downloaded');
         });
-        //< auto update
     }
+    //< auto update
 }
 
 app.on('ready', create_window); // this method will be called when Electron has finished initialization and is ready to create browser windows. some APIs can only be used after this event occurs.
