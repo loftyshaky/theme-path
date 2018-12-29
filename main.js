@@ -20,6 +20,12 @@ if (process.platform === 'win32') {
 }
 //< temporary fix broken high-dpi scale factor on Windows (125% scaling). info: https://github.com/electron/electron/issues/9691
 
+//> auto update
+ipcMain.on('install_update', () => {
+    autoUpdater.quitAndInstall();
+});
+//< auto update
+
 function create_window() {
     //> create the browser window.
     main_window = new BrowserWindow({
@@ -158,9 +164,3 @@ app.on('activate', () => {
         create_window(); // On macOS it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
     }
 });
-
-//> auto update
-ipcMain.on('install_update', () => {
-    autoUpdater.quitAndInstall();
-});
-//< auto update
