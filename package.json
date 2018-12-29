@@ -8,7 +8,7 @@
     "name": "loftyshaky",
     "email": "loftyshaky@gmail.com"
   },
-  "repository": "https://github.com/testuser31/chrome-theme-creator",
+  "repository": "https://github.com/loftyshaky/chrome-theme-creator",
   "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --host 0.0.0.0 --config=./webpack.dev.js",
