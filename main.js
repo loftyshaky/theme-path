@@ -11,6 +11,7 @@ const { autoUpdater } = require('electron-updater');
 global.dev = !!(process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)); //> Keep a reference for dev mode
 global.os_lang = null;
 const runs_from_package = !existsSync(join(__dirname, 'resources'));
+const app_is_running_as_windows_store_app = process.windowsStore;
 let main_window; // Keep a global reference of the window object, if you don't, the window will be closed automatically when the JavaScript object is garbage collected.
 
 //> temporary fix broken high-dpi scale factor on Windows (125% scaling). info: https://github.com/electron/electron/issues/9691
@@ -21,9 +22,11 @@ if (process.platform === 'win32') {
 //< temporary fix broken high-dpi scale factor on Windows (125% scaling). info: https://github.com/electron/electron/issues/9691
 
 //> auto update
-ipcMain.on('install_update', () => {
-    autoUpdater.quitAndInstall();
-});
+if (!app_is_running_as_windows_store_app) {
+    ipcMain.on('install_update', () => {
+        autoUpdater.quitAndInstall();
+    });
+}
 //< auto update
 
 function create_window() {
@@ -139,7 +142,7 @@ function create_window() {
     //< context menu
 
     //> auto update
-    if (!global.dev) {
+    if (!app_is_running_as_windows_store_app && !global.dev) {
         autoUpdater.checkForUpdates();
 
         autoUpdater.on('update-downloaded', () => {
