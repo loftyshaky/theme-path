@@ -7,6 +7,8 @@ const store = new Store();
 
 const visitor = ua('UA-131099848-1');
 
+visitor.set('anonymizeIp', true);
+
 export const send_pageview = page => {
     try {
         check_if_analytics_enabled(() => visitor.pageview(page).send());
