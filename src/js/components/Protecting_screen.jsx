@@ -19,7 +19,7 @@ export class Protecting_screen extends React.Component {
 
     componentWillUnmount() {
         try {
-            this.protecting_screen.removeEventListener('nv-event', toggle_popup.close_all_popups);
+            this.protecting_screen.removeEventListener('click', toggle_popup.close_all_popups);
 
         } catch (er) {
             err(er, 105);
