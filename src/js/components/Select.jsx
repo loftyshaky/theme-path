@@ -2,6 +2,7 @@ import React from 'react';
 import * as r from 'ramda';
 import { observer } from 'mobx-react';
 import ReactSelect from 'react-select';
+import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -33,7 +34,7 @@ export class Select extends React.Component {
     //> change option val when selecting option
     change_select_val = selected_option => {
         try {
-            const { family, i } = this.props;
+            const { family, name, i } = this.props;
             const { value } = selected_option;
 
             change_val.change_val(family, i, value, null);
@@ -41,6 +42,8 @@ export class Select extends React.Component {
             if (value === 'default') {
                 set_default_or_disabled.set_default_or_disabled(family, i, 'select');
             }
+
+            analytics.send_event('selects', `selected_option-${family}-${name}-${value}`);
 
         } catch (er) {
             err(er, 107);
@@ -51,8 +54,12 @@ export class Select extends React.Component {
     on_menu_open = async () => {
         await x.delay(0);
 
+        const { family, name } = this.props;
+
         this.transit_menu();
         this.scroll_select_menu_into_view();
+
+        analytics.send_event('selects', `expanded-${family}-${name}`);
     }
 
     //> hide options when clicking on option or select_title / scroll select options into view when oipening select

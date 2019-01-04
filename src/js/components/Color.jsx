@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { ChromePicker } from 'react-color';
+import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -14,7 +15,7 @@ import { Help } from 'components/Help';
 //--
 
 export const Color = observer(props => {
-    const { name, family, i, color_input_type } = props;
+    const { family, name, i, color_input_type } = props;
 
     const label = color_input_type === 'color' ? (
         <label
@@ -44,6 +45,7 @@ export const Color = observer(props => {
                 {label}
                 <Color_input_vizualization
                     family={family}
+                    name={name}
                     i={i}
                     color_input_type={color_input_type}
                 />
@@ -56,7 +58,7 @@ export const Color = observer(props => {
 });
 
 const Color_input_vizualization = observer(props => {
-    const { family, i, color_input_type } = props;
+    const { family, name, i, color_input_type } = props;
     const color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
     color_pickiers.mut.current_pickied_color.hex = color;
 
@@ -73,6 +75,7 @@ const Color_input_vizualization = observer(props => {
         >
             <Color_pickier
                 family={family}
+                name={name}
                 i={i}
                 color={color}
             />
@@ -81,7 +84,7 @@ const Color_input_vizualization = observer(props => {
 });
 
 const Color_pickier = observer(props => {
-    const { family, i, color } = props;
+    const { family, i, name, color } = props;
     const { color_pickiers_position } = inputs_data.obj[family][i] || false;
     const { color_pickier_is_visible } = inputs_data.obj[family][i] || false;
 
@@ -100,6 +103,7 @@ const Color_pickier = observer(props => {
             >
                 <Chrome_picker
                     family={family}
+                    name={name}
                     i={i}
                     color={color}
                 />
@@ -118,12 +122,18 @@ const Chrome_picker = observer(props => {
             color_pickiers.mut.current_pickied_color = picked_color;
             color_pickiers.set_color_input_vizualization_color(family, i, picked_color);
 
+            if (!inputs_data.obj[family][i].changed_color_once_after_focus) {
+                inputs_data.obj[family][i].changed_color_once_after_focus = true;
+
+                analytics.send_event('color_pickiers', `changed_color-${family}-${name}`);
+            }
+
         } catch (er) {
             err(er, 95);
         }
     };
 
-    const { family, i } = props;
+    const { family, name, i } = props;
 
     return (
         <ChromePicker

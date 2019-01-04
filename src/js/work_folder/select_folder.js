@@ -7,6 +7,7 @@ import looksSame from 'looks-same';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as tutorial from 'js/tutorial';
+import * as analytics from 'js/analytics';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
@@ -20,6 +21,8 @@ configure({ enforceActions: 'observed' });
 export const select_folder = action((is_work_folder, folder_path, children, nest_level, i_to_insert_folder_in) => { // action( need to be here otherwise protecting screen will not lift
     try {
         if (choose_folder.reset_work_folder(false)) {
+            const folder_is_already_selected = folder_path === shared.ob.chosen_folder_path;
+
             if (!is_work_folder) {
                 wf_shared.deselect_theme();
             }
@@ -79,11 +82,11 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 }
 
                 if (tutorial.ob.tutorial_stage === 4) {
-                    tutorial.increment_tutorial_stage();
+                    tutorial.increment_tutorial_stage(false, true);
                 }
 
             } else if (tutorial.ob.tutorial_stage === 2) {
-                tutorial.increment_tutorial_stage();
+                tutorial.increment_tutorial_stage(false, true);
             }
 
             convert_color.convert_all();
@@ -94,6 +97,15 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 nest_level: nest_level || null,
                 i_to_insert_folder_in: i_to_insert_folder_in || null,
             };
+
+            if (!folder_is_already_selected) {
+                if (folder_info.is_theme) {
+                    analytics.add_work_folder_analytics('selected_theme');
+
+                } else {
+                    analytics.add_work_folder_analytics('selected_folder');
+                }
+            }
         }
 
     } catch (er) {

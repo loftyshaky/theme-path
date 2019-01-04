@@ -55,7 +55,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                 }
 
                                 if (tutorial.ob.tutorial_stage === 3) {
-                                    tutorial.increment_tutorial_stage();
+                                    tutorial.increment_tutorial_stage(false, true);
                                 }
 
                             } else if (mode === 'renaming_folder' && folder_name_final.length <= 255) {

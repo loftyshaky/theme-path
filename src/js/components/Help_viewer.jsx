@@ -43,7 +43,7 @@ export const Help_viewer = observer(() => {
                     className={x.cls(['help_viewer', help_viewer.ob.help_viewer_is_none ? 'none' : ''])}
                     role="presentation"
                     onClick={help_viewer.on_help_viewer_click}
-                    onContextMenu={help_viewer.show_help_viewer.bind(null, false)}
+                    onContextMenu={help_viewer.close_help_viewer_by_right_click_when_img_collapsed}
                 >
                     <button
                         className="close_btn"

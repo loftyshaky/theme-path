@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 import * as r from 'ramda';
+import * as analytics from 'js/analytics';
 
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as enter_click from 'js/enter_click';
@@ -16,24 +17,35 @@ import checkmark_svg from 'svg/checkmark';
 //--
 
 export const Checkbox = observer(props => {
+    const { name, family, i, special_checkbox } = props;
+
     const change_checkbox_val = e => {
         try {
             change_val.change_val(family, i, e.target.checked, null);
+
+            analytics.send_event('checkboxes', `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}`);
 
         } catch (er) {
             err(er, 152);
         }
     };
 
-    const { name, family, i, special_checkbox } = props;
     const checkbox_id = inputs_data.obj[family][i].key;
     const is_special_checkbox = special_checkbox;
-    const on_change = r.ifElse(() => is_special_checkbox,
-        () => (name !== 'icon'
-            ? set_default_or_disabled.set_default_or_disabled.bind(null, family, i, special_checkbox)
-            : set_default_or_disabled.set_default_icon.bind(null, family, i)),
 
-        () => change_checkbox_val)();
+    const on_change = r.ifElse(() => is_special_checkbox,
+        e => {
+            if (name !== 'icon') {
+                set_default_or_disabled.set_default_or_disabled(family, i, special_checkbox);
+
+            } else {
+                set_default_or_disabled.set_default_icon(family, i);
+            }
+
+            analytics.send_event('checkboxes', `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}-${special_checkbox || ''}`);
+        },
+
+        e => change_checkbox_val(e));
 
     return (
         <Tr

@@ -4,6 +4,7 @@ import Svg from 'svg-inline-react';
 
 import x from 'x';
 import * as shared from 'js/shared';
+import * as analytics from 'js/analytics';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
@@ -27,6 +28,12 @@ import list_svg from 'svg/list';
 //--
 
 export class Header extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.entered_one_char_in_search_input_after_focus = false;
+    }
+
     expand_or_collapse_folder = async () => {
         try {
             const root_folder_chosen = shared.ob.chosen_folder_path === choose_folder.ob.work_folder;
@@ -53,6 +60,30 @@ export class Header extends React.Component {
             err(er, 98);
         }
     };
+
+    on_input_in_search_input = () => {
+        try {
+            search.trigger_work_folder_reload();
+
+            if (!this.entered_one_char_in_search_input_after_focus) {
+                this.entered_one_char_in_search_input_after_focus = true;
+
+                analytics.send_event('header_items', 'input-search_input');
+            }
+
+        } catch (er) {
+            err(er, 164);
+        }
+    }
+
+    on_blur_search_input = () => {
+        try {
+            this.entered_one_char_in_search_input_after_focus = false;
+
+        } catch (er) {
+            err(er, 168);
+        }
+    }
 
     render() {
         const chrome_user_data_dirs = open_and_pack.ob.chrome_user_data_dirs.split(',');
@@ -86,7 +117,8 @@ export class Header extends React.Component {
                         type="text"
                         data-placeholder="search_input_placeholder"
                         disabled={wf_shared.com2.inputs_disabled_5}
-                        onInput={search.trigger_work_folder_reload}
+                        onInput={this.on_input_in_search_input}
+                        onBlur={this.on_blur_search_input}
                     />
                 </span>
                 <span className="header_section header_right">
@@ -170,13 +202,27 @@ const Open_in_profiled_chrome_btn = props => {
 const Btn = props => {
     const { name, on_click, svg } = props;
 
+    const on_click_inner = e => {
+        try {
+            on_click(e);
+
+            if (name !== 'open_in_chrome') {
+                analytics.add_header_btns_analytics(name);
+            }
+
+        } catch (er) {
+            err(er, 165);
+        }
+    };
+
+
     return (
         <button
             className="header_btn header_btn_icon"
             type="button"
             data-title={`${name}_btn_title`}
             disabled={wf_shared.com2.inputs_disabled_5}
-            {...(name === 'open_in_chrome' ? { onMouseUp: on_click, onKeyUp: on_click } : { onClick: on_click })}
+            {...(name === 'open_in_chrome' ? { onMouseUp: on_click_inner, onKeyUp: on_click_inner } : { onClick: on_click_inner })}
         >
             <Svg src={svg} />
         </button>
@@ -186,13 +232,24 @@ const Btn = props => {
 const Popup_btn = props => {
     const { name, svg } = props;
 
+    const on_click = () => {
+        try {
+            toggle_popup.toggle_popup(name);
+
+            analytics.add_header_btns_analytics(name);
+
+        } catch (er) {
+            err(er, 166);
+        }
+    };
+
     return (
         <button
             className={x.cls(['header_btn header_btn_icon', `${name}_btn`])}
             type="button"
             data-title={`${name}_btn_title`}
             disabled={wf_shared.com2.inputs_disabled_5}
-            onClick={toggle_popup.toggle_popup.bind(null, name)}
+            onClick={on_click}
         >
             <Svg src={svg} />
         </button>
@@ -202,13 +259,24 @@ const Popup_btn = props => {
 const Pack_btn = props => {
     const { name } = props;
 
+    const on_click = () => {
+        try {
+            open_and_pack.pack(name);
+
+            analytics.add_header_btns_analytics(name);
+
+        } catch (er) {
+            err(er, 167);
+        }
+    };
+
     return (
         <button
             className="header_btn pack_btn"
             type="button"
             data-title={`pack_as_${name}_btn_title`}
             disabled={wf_shared.com2.inputs_disabled_5}
-            onClick={open_and_pack.pack.bind(null, name)}
+            onClick={on_click}
         >
             <span className="header_btn_icon pack_btn_icon">
                 <Svg src={archive_svg} />

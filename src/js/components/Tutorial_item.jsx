@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 import x from 'x';
+import * as analytics from 'js/analytics';
 import * as tutorial from 'js/tutorial';
 import * as wf_shared from 'js/work_folder/wf_shared';
 
@@ -54,6 +55,29 @@ export class Tutorial_item extends React.Component {
         }
     }
 
+    skip_tutorial = () => {
+        try {
+            analytics.add_tutorial_analytics('skipped', tutorial.ob.tutorial_stage);
+
+            tutorial.increment_tutorial_stage(true, false);
+
+        } catch (er) {
+            err(er, 172);
+        }
+    }
+
+    close_tutorial = () => {
+        try {
+
+            tutorial.show_or_hide_tutorial_item(false);
+
+            analytics.add_tutorial_analytics('closed', tutorial.ob.tutorial_stage);
+
+        } catch (er) {
+            err(er, 173);
+        }
+    }
+
     render() {
         const { name, tutorial_stage, outline } = this.props;
         const show_tutrial = tutorial.ob.tutorial_stage == tutorial_stage && tutorial.ob.tutorial_item_is_visible; // eslint-disable-line eqeqeq
@@ -84,7 +108,7 @@ export class Tutorial_item extends React.Component {
                         className="close_btn tutorial_item_close_btn"
                         type="button"
                         disabled={wf_shared.com2.inputs_disabled_4}
-                        onClick={tutorial.show_or_hide_tutorial_item.bind(null, false)}
+                        onClick={this.close_tutorial}
                     >
                         <Svg src={close_svg} />
                     </button>
@@ -95,7 +119,7 @@ export class Tutorial_item extends React.Component {
                         type="button"
                         className="skip_tutorial_btn"
                         data-text="skip_tutorial_btn_text"
-                        onClick={tutorial.increment_tutorial_stage.bind(null, true)}
+                        onClick={this.skip_tutorial}
                     />
                 </Tr>
                 {outline_el}

@@ -6,6 +6,7 @@ import { List, AutoSizer } from 'react-virtualized';
 
 import x from 'x';
 import * as shared from 'js/shared';
+import * as analytics from 'js/analytics';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as component_methods from 'js/work_folder/component_methods';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
@@ -58,6 +59,18 @@ export class Work_folder extends React.Component {
         const folder = search.mut.filtered_folders[index];
         const folder_is_opened = wf_shared.mut.opened_folders.indexOf(folder.path) > -1;
         const filtered_index = wf_shared.ob.folders.findIndex(cur_folder => cur_folder.path === folder.path) + 1;
+
+        const on_click_folder_arrow = () => {
+            expand_or_collapse.expand_or_collapse_folder('arrow', folder.path, folder.nest_level + 1, filtered_index);
+
+            if (!folder_is_opened) {
+                analytics.add_work_folder_analytics('expanded_folder');
+
+            } else {
+                analytics.add_work_folder_analytics('collapsed_folder');
+            }
+        };
+
         const arrow = folder.is_empty || folder.is_theme
             ? <span className="folder_arrow_placeholder" />
             : (
@@ -65,7 +78,7 @@ export class Work_folder extends React.Component {
                     className="folder_arrow"
                     type="button"
                     disabled={wf_shared.com2.inputs_disabled_4}
-                    onClick={expand_or_collapse.expand_or_collapse_folder.bind(null, 'arrow', folder.path, folder.nest_level + 1, filtered_index)}
+                    onClick={on_click_folder_arrow}
                 >
                     <Svg src={folder_is_opened ? arrow_down_svg : arrow_right_svg} />
                 </button>
@@ -208,7 +221,7 @@ class Work_folder_selector extends React.Component {
                         type="button"
                         tabIndex={wf_shared.com2.inputs_disabled_3}
                         title={choose_folder.ob.work_folder}
-                        onClick={component_methods.select_root_folder}
+                        onClick={component_methods.select_work_folder}
                     >
                         {choose_folder.ob.work_folder}
                     </button>

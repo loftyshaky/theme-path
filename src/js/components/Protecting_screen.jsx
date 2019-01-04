@@ -10,7 +10,7 @@ import { Tr } from 'components/Tr';
 export class Protecting_screen extends React.Component {
     componentDidMount() {
         try {
-            this.protecting_screen.addEventListener('click', toggle_popup.close_all_popups);
+            this.protecting_screen.addEventListener('click', this.close_all_popups);
 
         } catch (er) {
             err(er, 104);
@@ -19,11 +19,15 @@ export class Protecting_screen extends React.Component {
 
     componentWillUnmount() {
         try {
-            this.protecting_screen.removeEventListener('click', toggle_popup.close_all_popups);
+            this.protecting_screen.removeEventListener('click', this.close_all_popups);
 
         } catch (er) {
             err(er, 105);
         }
+    }
+
+    close_all_popups = () => {
+        toggle_popup.close_all_popups(true, 'clicked');
     }
 
     render() {

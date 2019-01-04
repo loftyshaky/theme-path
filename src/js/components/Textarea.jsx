@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, action, configure } from 'mobx';
+import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -24,6 +25,10 @@ export class Textarea extends React.Component {
             number_of_chars: 0,
             char_limit_exceeded: false,
         });
+
+        this.mut = {
+            entered_one_char_in_textarea_after_focus: false,
+        };
     }
 
     componentDidMount() {
@@ -106,6 +111,31 @@ export class Textarea extends React.Component {
         }
     }
 
+    change_val = e => {
+        try {
+            const { family, name, i } = this.props;
+
+            change_val.change_val(family, i, 'is_not_select', null, e);
+
+            if (!this.mut.entered_one_char_in_textarea_after_focus) {
+                this.mut.entered_one_char_in_textarea_after_focus = true;
+
+                analytics.send_event('textareas', `input-${family}-${name}`);
+            }
+        } catch (er) {
+            err(er, 162);
+        }
+    }
+
+    reset_entered_one_char_in_textarea_after_focus = () => {
+        try {
+            this.mut.entered_one_char_in_textarea_after_focus = false;
+
+        } catch (er) {
+            err(er, 163);
+        }
+    }
+
     render() {
         const {
             name,
@@ -136,8 +166,9 @@ export class Textarea extends React.Component {
                     ref={textarea => { this.textarea = textarea; }}
                     value={val}
                     disabled={wf_shared.com2.inputs_disabled_2 && family !== 'settings'}
-                    onInput={change_val.change_val.bind(null, family, i, 'is_not_select', null)}
+                    onInput={this.change_val}
                     onChange={() => null}
+                    onBlur={this.reset_entered_one_char_in_textarea_after_focus}
                 />
                 <Help {...this.props} />
                 {counter_el}

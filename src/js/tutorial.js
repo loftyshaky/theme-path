@@ -1,12 +1,18 @@
 import { action, observable, configure } from 'mobx';
 import Store from 'electron-store';
 
+import * as analytics from 'js/analytics';
+
 const store = new Store();
 
 configure({ enforceActions: 'observed' });
 
-export const increment_tutorial_stage = action(tutorial_completed => {
+export const increment_tutorial_stage = action((tutorial_completed, send_event_to_analytics) => {
     try {
+        if (send_event_to_analytics) {
+            analytics.add_tutorial_analytics('incremented_stage');
+        }
+
         const new_tutorial_stage = tutorial_completed ? 'tutorial_completed' : ob.tutorial_stage + 1;
 
         ob.tutorial_stage = new_tutorial_stage;

@@ -44,6 +44,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -95,6 +96,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -108,6 +110,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -121,6 +124,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -134,6 +138,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -147,6 +152,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -160,6 +166,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -173,6 +180,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -186,6 +194,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -199,6 +208,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -212,6 +222,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -225,6 +236,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -235,6 +247,7 @@ export const inputs_data = observable({
                 val: '',
                 highlight_upload_box: false,
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
         ],
@@ -248,6 +261,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -259,6 +273,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -270,6 +285,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -281,6 +297,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -292,6 +309,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -303,6 +321,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -314,6 +333,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -325,6 +345,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -336,6 +357,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -347,6 +369,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -358,6 +381,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
         ],
@@ -372,6 +396,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -384,6 +409,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -396,6 +422,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -408,6 +435,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -420,6 +448,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
             {
@@ -432,6 +461,7 @@ export const inputs_data = observable({
                 color_pickier_is_visible: false,
                 color_pickiers_position: 'top',
                 default: true,
+                changed_color_once_after_focus: false,
                 add_help: true,
             },
         ],

@@ -3,6 +3,8 @@
 import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
 
+import * as analytics from 'js/analytics';
+
 configure({ enforceActions: 'observed' });
 
 //--
@@ -11,7 +13,7 @@ export const toggle_popup = name => {
     try {
         const new_val = !ob.popup_visibility[name];
 
-        close_all_popups();
+        close_all_popups(false);
         set_popup_visibility_bool(name, new_val);
 
     } catch (er) {
@@ -28,9 +30,25 @@ export const set_popup_visibility_bool = action((name, bool) => {
     }
 });
 
-export const close_all_popups = action(() => {
+export const close_all_popups = action((closing_by_clicking_on_protecting_screen_or_hitting_esc, analytics_action) => {
     try {
+        let opened_popup_name;
+
+        if (closing_by_clicking_on_protecting_screen_or_hitting_esc) {
+            opened_popup_name = r.keys(ob.popup_visibility).find(key => {
+                if (ob.popup_visibility[key] === true) {
+                    return key;
+                }
+
+                return undefined;
+            });
+        }
+
         ob.popup_visibility = r.map(() => false, ob.popup_visibility);
+
+        if (closing_by_clicking_on_protecting_screen_or_hitting_esc) {
+            analytics.send_event('protecting_screens', `${analytics_action}-${opened_popup_name}`);
+        }
 
     } catch (er) {
         err(er, 69);
@@ -41,7 +59,7 @@ export const close_all_popups_by_keyboard = e => {
     const esc_pressed = e.keyCode === 27;
 
     if (esc_pressed) {
-        close_all_popups();
+        close_all_popups(true, 'hit_esc');
     }
 };
 

@@ -3,6 +3,7 @@ import * as r from 'ramda';
 
 import x from 'x';
 import * as shared from 'js/shared';
+import * as analytics from 'js/analytics';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as sort_folders from 'js/work_folder/sort_folders';
@@ -47,6 +48,8 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
 
             if (mode === 'new_theme') {
                 new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, nest_level, i_to_insert_folder_in, folder_is_opened);
+
+                analytics.add_header_btns_analytics(mode);
             }
 
             const files = wf_shared.get_folders(folder_path);

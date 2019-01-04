@@ -4,12 +4,15 @@ import { readFileSync } from 'fs-extra';
 import { action, observable, configure } from 'mobx';
 
 import x from 'x';
+import * as analytics from 'js/analytics';
 
 configure({ enforceActions: 'observed' });
 
 export const open_help_viewer = action((family, name) => {
     try {
         const no_image_families = ['theme_metadata', 'settings'];
+        mut.current_family = family;
+        mut.current_name = name;
 
         if (family && no_image_families.indexOf(family) === -1) {
             const data_basename = `${family}_${name}`;
@@ -33,6 +36,8 @@ export const open_help_viewer = action((family, name) => {
 
         show_help_viewer(true);
 
+        analytics.add_help_viewer_analytics('opened');
+
     } catch (er) {
         err(er, 133);
     }
@@ -46,11 +51,24 @@ export const on_help_viewer_click = e => {
         if (clicked_on_help_viewer_img) {
             show_help_viewer_expanded_img(true);
 
+            analytics.add_help_viewer_analytics('expanded_img');
+
         } else if (clicked_on_help_viewer_expanded_img) {
             show_help_viewer_expanded_img(false);
 
+            analytics.add_help_viewer_analytics('collapsed_img');
+
         } else {
+            const clicked_on_close_btn = x.matches(x.closest(e.target, '.close_btn'), '.close_btn');
+
             show_help_viewer(false);
+
+            if (!clicked_on_close_btn) {
+                analytics.add_help_viewer_analytics('closed_by_clicking_on_empty_space');
+           
+            } else {
+                analytics.add_help_viewer_analytics('closed_by_clicking_on_close_btn');
+            }
         }
 
     } catch (er) {
@@ -85,11 +103,24 @@ const show_help_viewer_expanded_img = action(bool => {
     }
 });
 
+export const close_help_viewer_by_right_click_when_img_collapsed = () => {
+    try {
+        show_help_viewer(false);
+
+        analytics.add_help_viewer_analytics('closed_by_right_click_when_img_collapsed');
+
+    } catch (er) {
+        err(er, 169);
+    }
+};
+
 export const deactivate_all = () => {
     try {
         none_help_viewer(true);
         show_help_viewer(false);
         show_help_viewer_expanded_img(false);
+
+        analytics.add_help_viewer_analytics('closed_by_right_click_when_img_expanded');
 
     } catch (er) {
         err(er, 138);
@@ -106,6 +137,8 @@ export const close_help_viewer_by_keyboard = e => {
         } else if (ob.help_viewer_is_visible) {
             show_help_viewer(false);
         }
+
+        analytics.add_help_viewer_analytics('closed_by_esc');
     }
 };
 
@@ -118,4 +151,9 @@ export const ob = observable({
     help_viewer_message: '',
     help_viewer_img: '',
 });
+
+export const mut = {
+    current_family: '',
+    current_name: '',
+};
 //< variables

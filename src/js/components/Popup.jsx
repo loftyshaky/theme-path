@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 import * as toggle_popup from 'js/toggle_popup';
+import * as analytics from 'js/analytics';
 
 import { Tr } from 'components/Tr';
 import { Hr } from 'components/Hr';
@@ -13,6 +14,12 @@ import close_svg from 'svg/close';
 
 export const Popup = observer(props => {
     const { name, children } = props;
+
+    const on_click = () => {
+        analytics.send_event('popup_close_btns', `clicked-${name}`);
+
+        toggle_popup.close_all_popups();
+    };
 
     return (
         <Tr
@@ -26,7 +33,7 @@ export const Popup = observer(props => {
             <button
                 className="close_btn"
                 type="button"
-                onClick={toggle_popup.close_all_popups}
+                onClick={on_click}
             >
                 <Svg src={close_svg} />
             </button>

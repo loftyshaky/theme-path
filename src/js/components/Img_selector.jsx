@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import * as analytics from 'js/analytics';
 
 import { inputs_data } from 'js/inputs_data';
 import * as imgs from 'js/imgs';
@@ -37,10 +38,12 @@ export class Img_selector extends React.Component {
     //> browse_handle_files f
     browse_handle_files = e => {
         try {
-            const { family, i } = this.props;
+            const { family, name, i } = this.props;
 
             imgs.handle_files(e.target.files, family, i);
             imgs.reset_upload_btn_val();
+
+            analytics.send_event('upload_inputs', `uploaded_by_choosing-${family}-${name}`);
 
         } catch (er) {
             err(er, 101);
@@ -50,10 +53,12 @@ export class Img_selector extends React.Component {
 
     drop_handle_files = e => {
         try {
-            const { family, i } = this.props;
+            const { family, name, i } = this.props;
 
             imgs.dehighlight_upload_box_on_drop(family, i);
             imgs.handle_files(e.dataTransfer.files, family, i);
+
+            analytics.send_event('upload_inputs', `uploaded_with_dnd-${family}-${name}`);
 
         } catch (er) {
             err(er, 102);
@@ -100,6 +105,7 @@ export class Img_selector extends React.Component {
                                 tabIndex={wf_shared.com2.inputs_disabled_1}
                                 data-text="upload_box_label_text"
                                 onKeyUp={enter_click.simulate_click_on_enter}
+                                onClick={analytics.send_event.bind(null, 'upload_inputs', `browsed_for_image-${family}-${name}`)}
                             />
                         </span>
                     </Tr>

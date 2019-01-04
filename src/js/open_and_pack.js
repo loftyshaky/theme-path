@@ -13,6 +13,7 @@ import getChrome from 'get-chrome';
 
 import * as shared from 'js/shared';
 import * as tutorial from 'js/tutorial';
+import * as analytics from 'js/analytics';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import { observable, action, configure } from 'mobx';
 
@@ -49,7 +50,7 @@ const run = callback => {
 
 export const open_in_chrome = (folder_path, default_exe_path, e) => {
     try {
-        if (e.type === 'mouseup' || (e.type === 'keyup' && e.keyCode === 13)) {
+        if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === 13)) {
             const left_button_clicked = e.button === 0 || (e.type === 'keyup' && !e.ctrlKey && !e.shiftKey);
             const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
             const chrome_path = default_exe_path ? getChrome(platform()) : store.get('chrome_exe_path').trim();
@@ -63,6 +64,8 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
                     }
 
                     try {
+                        const name = folder_path === '' ? 'open_in_chrome' : 'open_in_profiled_chrome';
+                        const click_type = left_button_clicked ? 'clicked' : 'right_clicked';
                         const child_process = await execFile(chrome_path,
                             [
                                 new_tab_url,
@@ -78,8 +81,11 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
                         mut.chrome_process_ids[user_data_path] = child_process.pid;
 
                         if (tutorial.ob.tutorial_stage === 6) {
-                            tutorial.increment_tutorial_stage();
+                            tutorial.increment_tutorial_stage(false, true);
                         }
+
+
+                        analytics.send_event('header_items', `${click_type}-${name}`);
 
                     } catch (er2) {
                         err(er2, 46);
@@ -173,7 +179,7 @@ export const pack = type => {
             }
 
             if (tutorial.ob.tutorial_stage === 7) {
-                tutorial.increment_tutorial_stage(true);
+                tutorial.increment_tutorial_stage(true, true);
             }
 
         } catch (er) {

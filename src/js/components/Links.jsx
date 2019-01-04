@@ -1,6 +1,7 @@
 import React from 'react';
 
 import x from 'x';
+import * as analytics from 'js/analytics';
 
 import { Popup } from 'components/Popup';
 
@@ -36,6 +37,7 @@ const Link = props => {
             rel="noopener noreferrer"
             data-text={`${name}_link_text`}
             data-href={!href ? `${name}_link_href` : null}
+            onClick={analytics.send_event.bind(null, 'links', `clicked-${name}`)}
         >
             content
         </a>

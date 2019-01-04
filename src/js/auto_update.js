@@ -4,6 +4,8 @@ import { ipcRenderer } from 'electron';
 
 import { observable, action, configure } from 'mobx';
 
+import * as analytics from 'js/analytics';
+
 configure({ enforceActions: 'observed' });
 
 ipcRenderer.on('update_downloaded', () => {
@@ -12,7 +14,9 @@ ipcRenderer.on('update_downloaded', () => {
 
 export const install_update = () => {
     try {
-        ipcRenderer.send('install_update');
+        const name = 'install_update';
+
+        analytics.send_event_async('btns', `clicked-auto_updater-${name}`, ipcRenderer.send, [name]);
 
     } catch (er) {
         err(er, 158);

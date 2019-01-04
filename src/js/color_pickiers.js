@@ -4,6 +4,7 @@ import { action, configure } from 'mobx';
 import * as r from 'ramda';
 import hexToHsl from 'hex-to-hsl';
 import hexToRgb from 'hex-to-rgb';
+import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -49,6 +50,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                     mut.current_color_pickier.family = family;
                     mut.current_color_pickier.i = i;
                     mut.current_color_pickier.color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
+                    const { name } = inputs_data.obj[family][i];
 
                     show_or_hide_color_pickier(family, i, true);
                     set_color_color_pickier_position(family, i, 'top');
@@ -58,6 +60,8 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                     if (!color_pickier_is_fully_visible) {
                         set_color_color_pickier_position(family, i, 'bottom');
                     }
+
+                    analytics.send_event('color_pickiers', `showed-${family}-${name}`);
                 }
             }
             //< try to show color pickier when clicking on color_input_vizualization t
@@ -72,6 +76,10 @@ export const show_or_hide_color_pickier = action((family, i, bool) => {
     try {
         mut.current_pickied_color.rgb.a = 1;
         inputs_data.obj[family][i].color_pickier_is_visible = bool;
+
+        if (!bool) {
+            inputs_data.obj[family][i].changed_color_once_after_focus = false;
+        }
 
     } catch (er) {
         err(er, 32);
@@ -136,6 +144,8 @@ export const accept_color = (family, i) => {
 
         mut.current_color_pickier.el = null;
 
+        analytics.send_event('color_pickiers', `accepted_color-${family}-${name}`);
+
     } catch (er) {
         err(er, 35);
     }
@@ -147,10 +157,15 @@ const close_color_pickier = () => {
 
     if (any_color_pickier_is_opened) {
         mut.current_color_pickier.el = null;
+        const { family } = mut.current_color_pickier;
+        const { i } = mut.current_color_pickier;
+        const { name } = inputs_data.obj[family][i];
 
         show_or_hide_color_pickier(mut.current_color_pickier.family, mut.current_color_pickier.i, false);
 
         set_color_input_vizualization_color(mut.current_color_pickier.family, mut.current_color_pickier.i, mut.current_color_pickier.color);
+
+        analytics.send_event('color_pickiers', `canceled-${family}-${name}`);
     }
 };
 
