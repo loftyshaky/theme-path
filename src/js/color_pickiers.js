@@ -204,8 +204,10 @@ export const focus_input_and_select_all_text_in_it = e => {
 };
 
 const focus_input_and_select_all_text_in_it_inner = input => {
-    input.focus();
-    input.setSelectionRange(0, input.value.length);
+    if (input) {
+        input.focus();
+        input.setSelectionRange(0, input.value.length);
+    }
 };
 
 //> varibles
