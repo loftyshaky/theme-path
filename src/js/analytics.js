@@ -45,7 +45,7 @@ export const send_event_async = (category, action, callback, callback_args) => {
 
 export const check_if_analytics_enabled = callback => {
     try {
-        const analytics_enabled = typeof store.get('enable_analytics') === 'undefined' ? true : store.get('enable_analytics');
+        const analytics_enabled = typeof store.get('enable_analytics') === 'undefined' ? false : store.get('enable_analytics');
         const enable_analytics_dev = typeof store.get('enable_analytics_dev') === 'undefined' ? false : store.get('enable_analytics_dev');
 
         if ((!sta.dev && analytics_enabled) || enable_analytics_dev) {
