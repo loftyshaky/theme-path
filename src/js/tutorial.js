@@ -51,7 +51,7 @@ export const rerender_Tutorial_item = () => {
 
 //> variables
 export const ob = observable({
-    tutorial_stage: store.get('tutorial_stage'),
+    tutorial_stage: store.get('tutorial_stage') || 1,
     tutorial_item_is_visible: true,
     alt_style_enabled: false,
 });
