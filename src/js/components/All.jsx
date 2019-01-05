@@ -17,6 +17,7 @@ import { Help_viewer } from 'components/Help_viewer';
 import { Protecting_screen } from 'components/Protecting_screen';
 import { Tutorial_item } from 'components/Tutorial_item';
 import { Auto_updater } from 'components/Auto_updater';
+import { Analytics_privacy } from 'components/Analytics_privacy';
 
 //--
 
@@ -93,11 +94,13 @@ export class All extends React.Component {
                             />
                         </span>
                     </div>
-                    <Protecting_screen />
+                    <Protecting_screen tr_name="gen" state_key="proptecting_screen_is_visible" />
+                    <Protecting_screen tr_name="analytics_privacy_proptecting_screen" state_key="analytics_privacy_is_visible" />
                     <Settings />
                     <Links />
                     <Help_viewer />
                     <Auto_updater />
+                    <Analytics_privacy />
                 </div>
             </Error_boundary>
         );

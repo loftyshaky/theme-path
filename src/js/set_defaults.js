@@ -13,7 +13,8 @@ export const set_defaults = () => {
             chrome_exe_path: '',
             chrome_user_data_dirs: '',
             tutorial_stage: 1,
-            enable_analytics: true,
+            answered_to_analytics_privacy_question: false,
+            enable_analytics: false,
             enable_analytics_dev: false,
         });
 

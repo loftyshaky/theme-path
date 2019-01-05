@@ -114,6 +114,11 @@
   
   "clear_new_tab_link_href": "https://bit.ly/clear-new-tab",
 
+  
+  "analytics_privacy_message_text": "Do you want to allow Chrome Theme Creator to send anonymous usage information to Google Analytics for product improvement purposes? (can be changed later in settings)",
+  "allow_analytics_btn_text": "Allow",
+  "disallow_analytics_btn_text": "Disallow",
+
 
   "update_available_message_text": "There's an update available.",
   "install_update_btn_text": "Install update",

@@ -27,10 +27,14 @@ export class Protecting_screen extends React.Component {
     }
 
     close_all_popups = () => {
-        toggle_popup.close_all_popups(true, 'clicked');
+        if (!toggle_popup.ob.analytics_privacy_is_visible) {
+            toggle_popup.close_all_popups(true, 'clicked');
+        }
     }
 
     render() {
+        const { tr_name, state_key } = this.props;
+
         return (
             <div
                 ref={protecting_screen => { this.protecting_screen = protecting_screen; }}
@@ -40,8 +44,8 @@ export class Protecting_screen extends React.Component {
                         className: 'protecting_screen',
                     }}
                     tag="div"
-                    name="gen"
-                    state={toggle_popup.ob.proptecting_screen_is_visible}
+                    name={tr_name}
+                    state={toggle_popup.ob[state_key]}
                 />
             </div>
         );

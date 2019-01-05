@@ -337,6 +337,14 @@ svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
 .help_link, .help_message, .skip_tutorial_btn, .app_version {
     font-size: 14px;
 }
+
+.update_available_message, .analytics_privacy_message {
+    margin-bottom: 11px;
+}
+
+.auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child) {
+    margin-right: 10px
+}
 /*< general */
 
 /*> header */
@@ -941,6 +949,15 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 }
 /*< popup */
 
+/*> analytics_privacy */
+.analytics_privacy {
+    right: unset;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+}
+/*< analytics_privacy */
+
 /*> auto updater */
 .auto_updater {
     top: unset;
@@ -952,10 +969,6 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 
 .update_available_message {
     margin-top: 23px;
-    margin-bottom: 11px;
-}
-.auto_updater .btn:not(:last-child) {
-    margin-right: 10px
 }
 /*< auto updater */
 
@@ -1113,11 +1126,19 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
 /*< mods */
 
 /*> Tr mods */
-.opacity_0 {
+.opacity_0, .analytics_privacy_proptecting_screen_unactive {
     opacity: 0;
 }
 
-.opacity_1 {
+.opacity_1, .analytics_privacy_proptecting_screen_active {
+    opacity: 1;
+}
+
+.analytics_privacy_proptecting_screen_unactive, .analytics_privacy_proptecting_screen_active {
+    height: 100%;
+}
+
+.analytics_privacy_proptecting_screen_active {
     opacity: 1;
 }
 

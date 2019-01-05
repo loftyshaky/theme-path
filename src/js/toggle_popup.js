@@ -2,10 +2,12 @@
 
 import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
+import Store from 'electron-store';
 
 import * as analytics from 'js/analytics';
 
 configure({ enforceActions: 'observed' });
+const store = new Store();
 
 //--
 
@@ -69,6 +71,7 @@ export const ob = observable({
         settings: false,
         links: false,
     },
+    analytics_privacy_is_visible: !store.get('answered_to_analytics_privacy_question'),
     get proptecting_screen_is_visible() {
         return r.values(ob.popup_visibility).some(val => val);
     },

@@ -78,6 +78,11 @@
   "clear_new_tab_link_href": "https://bit.ly/clear-new-tab-ru",
 
 
+  "analytics_privacy_message_text": "Хотите ли вы разрешить Chrome Theme Creator отправлять в Google Analytics анонимную статистику использования с целью улучшения продукта? (вы можете изменить это позже в настройках)",
+  "allow_analytics_btn_text": "Разрешить",
+  "disallow_analytics_btn_text": "Запретить",
+
+
   "update_available_message_text": "Доступно обновление.",
   "install_update_btn_text": "Установить обновление",
   "postpone_update_btn_text": "Отложить",

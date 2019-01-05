@@ -6,6 +6,7 @@ import * as analytics from 'js/analytics';
 import * as auto_update from 'js/auto_update';
 
 import { Tr } from 'components/Tr';
+import { Btn } from 'components/Btn';
 
 import close_svg from 'svg/close';
 
@@ -41,27 +42,14 @@ export const Auto_updater = observer(() => {
                 className="update_available_message"
                 data-text="update_available_message_text"
             />
-            <Auto_updater_btn
+            <Btn
                 name="install_update"
                 on_click={auto_update.install_update}
             />
-            <Auto_updater_btn
+            <Btn
                 name="postpone_update"
                 on_click={postpone_update}
             />
         </Tr>
     );
 });
-
-const Auto_updater_btn = props => {
-    const { name, on_click } = props;
-
-    return (
-        <button
-            type="button"
-            className="btn"
-            data-text={`${name}_btn_text`}
-            onClick={on_click}
-        />
-    );
-};
