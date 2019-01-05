@@ -3,7 +3,7 @@ import Store from 'electron-store';
 
 import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
-import * as settings from 'js/settings';
+import * as options from 'js/options';
 
 const store = new Store();
 
@@ -11,7 +11,7 @@ const store = new Store();
 
 export const convert_theme_color_props_to_color = (family, i, val) => {
     try {
-        const { color_input_default } = settings.ob.theme_vals[store.get('theme')];
+        const { color_input_default } = options.ob.theme_vals[store.get('theme')];
         const val_is_arr = Array.isArray(val);
 
         if (family === 'images') {
@@ -58,7 +58,7 @@ export const convert_theme_color_props_to_color = (family, i, val) => {
                     const every_number_in_hsla_arr_is_minus_1 = hsla_arr.every(number => number.indexOf('-1') > -1);
 
                     if (every_number_in_hsla_arr_is_minus_1) {
-                        change_val.set_inputs_data_val(family, i, settings.ob.theme_vals[store.get('theme')].color_input_disabled);
+                        change_val.set_inputs_data_val(family, i, options.ob.theme_vals[store.get('theme')].color_input_disabled);
                         change_val.set_default_bool(family, i, false);
                         change_val.set_disabled_bool(family, i, true);
 

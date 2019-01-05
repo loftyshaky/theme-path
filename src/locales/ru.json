@@ -7,7 +7,7 @@
   "colors_hr_text": "Цвета",
   "tints_hr_text": "Оттенки",
   "properties_hr_text": "Параметры",
-  "settings_hr_text": "Настройки",
+  "options_hr_text": "Настройки",
   "links_hr_text": "Ссылки",
 
   "version_label_text": "Версия",
@@ -122,7 +122,7 @@
   "show_folder_btn_title": "Показать папку",
   "open_folder_btn_title": "Открыть папку",
   "open_in_chrome_btn_title": "Открыть в Chrome",
-  "settings_btn_title": "Настройки",
+  "options_btn_title": "Настройки",
   "help_btn_title": "Помощь",
   "links_btn_title": "Ссылки",
 
@@ -228,8 +228,8 @@
   "properties_ntp_background_repeat_help_text": "Контролирует повторение фонового изображения.",
   "properties_ntp_logo_alternate_help_text": "Определяет цвет логотипа \"Google\" на странице новой вкладки.",
 
-  "settings_chrome_exe_path_help_text": "Путь к исполняемому файлу Chrome. Используется при предпросмотре темы. Пример: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-  "settings_chrome_user_data_dirs_help_text": "Пути к пользовательским папкам, разделяемые запятой. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
+  "options_chrome_exe_path_help_text": "Путь к исполняемому файлу Chrome. Используется при предпросмотре темы. Пример: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+  "options_chrome_user_data_dirs_help_text": "Пути к пользовательским папкам, разделяемые запятой. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
 
 
   "choose_folder_tutorial_item_text": "Выберити папку в которой хранятся/будут храниться все ваши темы.",

@@ -7,7 +7,7 @@
   "colors_hr_text": "Colors",
   "tints_hr_text": "Tints",
   "properties_hr_text": "Properties",
-  "settings_hr_text": "Settings",
+  "options_hr_text": "Options",
   "links_hr_text": "Links",
 
   "version_label_text": "Version",
@@ -103,7 +103,7 @@
   "show_folder_btn_title": "Show folder",
   "open_folder_btn_title": "Open folder",
   "open_in_chrome_btn_title": "Open in Chrome",
-  "settings_btn_title": "Settings",
+  "options_btn_title": "Options",
   "help_btn_title": "Help",
   "links_btn_title": "Links",
 
@@ -115,7 +115,7 @@
   "clear_new_tab_link_href": "https://bit.ly/clear-new-tab",
 
   
-  "analytics_privacy_message_text": "Do you want to allow Chrome Theme Creator to send anonymous usage information to Google Analytics for product improvement purposes? (can be changed later in settings)",
+  "analytics_privacy_message_text": "Do you want to allow Chrome Theme Creator to send anonymous usage information to Google Analytics for product improvement purposes? (can be changed later in options)",
   "allow_analytics_btn_text": "Allow",
   "disallow_analytics_btn_text": "Disallow",
 
@@ -227,12 +227,12 @@
   "properties_ntp_background_repeat_help_text": "Controls the repeat of the background image.",
   "properties_ntp_logo_alternate_help_text": "Specifies the color of the Google logo in new tab.",
 
-  "settings_chrome_exe_path_help_text": "Path to Chrome executable. Used to preview a theme. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-  "settings_chrome_user_data_dirs_help_text": "Paths to Chrome user data folders separated by commas. Used to preview a theme. If folder doesnt exist it will be created on first preview. Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
+  "options_chrome_exe_path_help_text": "Path to Chrome executable. Used to preview a theme. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+  "options_chrome_user_data_dirs_help_text": "Paths to Chrome user data folders separated by commas. Used to preview a theme. If folder doesnt exist it will be created on first preview. Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
 
 
   "choose_folder_tutorial_item_text": "Choose a folder where all your themes are/will be stored.",
-  "select_folder_tutorial_item_text": "Regular folders are marked with white (black if you have chosen the light ui theme in the settings) color. Themes are marked with blue color. Select the folder where new theme will be stored.",
+  "select_folder_tutorial_item_text": "Regular folders are marked with white (black if you have chosen the light ui theme in the options) color. Themes are marked with blue color. Select the folder where new theme will be stored.",
   "create_new_theme_tutorial_item_text": "Create new theme.",
   "select_theme_tutorial_item_text": "Select newly created theme.",
   "change_theme_properties_tutorial_item_text": "Change theme properties.",

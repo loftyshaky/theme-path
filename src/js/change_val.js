@@ -10,7 +10,7 @@ import Store from 'electron-store';
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
-import * as settings from 'js/settings';
+import * as options from 'js/options';
 import * as open_and_pack from 'js/open_and_pack';
 import * as tutorial from 'js/tutorial';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
@@ -76,7 +76,7 @@ export const change_val = async (family, i, val, img_extension, e) => {
                     write_to_json(shared.mut.manifest, manifest_path, 'ntp_background_repeat', 'repeat', 'properties');
                 }
 
-            } else if (family === 'settings') {
+            } else if (family === 'options') {
                 store.set(name, new_val);
 
                 if (name === 'chrome_user_data_dirs') {
@@ -85,7 +85,7 @@ export const change_val = async (family, i, val, img_extension, e) => {
                 } else if (name === 'theme') {
                     x.load_css('no_tr');
 
-                    settings.load_theme();
+                    options.load_theme();
 
                     await x.delay(200);
 

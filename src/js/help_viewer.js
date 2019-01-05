@@ -10,7 +10,7 @@ configure({ enforceActions: 'observed' });
 
 export const open_help_viewer = action((family, name) => {
     try {
-        const no_image_families = ['theme_metadata', 'settings'];
+        const no_image_families = ['theme_metadata', 'options'];
         mut.current_family = family;
         mut.current_name = name;
 
@@ -65,7 +65,7 @@ export const on_help_viewer_click = e => {
 
             if (!clicked_on_close_btn) {
                 analytics.add_help_viewer_analytics('closed_by_clicking_on_empty_space');
-           
+
             } else {
                 analytics.add_help_viewer_analytics('closed_by_clicking_on_close_btn');
             }

@@ -33,9 +33,9 @@ export const load_theme = action(() => {
 
 export const load_setting = action(() => {
     try {
-        const { settings } = inputs_data.obj;
+        const { options } = inputs_data.obj;
 
-        settings.forEach(item => {
+        options.forEach(item => {
             const new_item = item;
             new_item.val = store.get(item.name);
         });
@@ -49,10 +49,10 @@ export const load_setting = action(() => {
 
 Mousetrap.bind('shift+ctrl+command+alt+f12', action(() => {
     try {
-        const settings_popup_is_visible = toggle_popup.ob.popup_visibility.settings;
+        const options_popup_is_visible = toggle_popup.ob.popup_visibility.options;
 
-        if (settings_popup_is_visible) {
-            inputs_data.obj.settings.map(item => {
+        if (options_popup_is_visible) {
+            inputs_data.obj.options.map(item => {
                 item.hidden = false; // eslint-disable-line no-param-reassign
 
                 return item;

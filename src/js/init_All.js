@@ -3,14 +3,14 @@ import { render } from 'react-dom';
 
 import x from 'x';
 import 'js/set_defaults';
-import * as settings from 'js/settings';
+import * as options from 'js/options';
 
 import { All } from 'components/All';
 
 //--
 
-settings.load_setting();
-settings.load_theme();
+options.load_setting();
+options.load_theme();
 
 //> render options page ui
 render(

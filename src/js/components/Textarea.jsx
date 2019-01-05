@@ -68,7 +68,7 @@ export class Textarea extends React.Component {
             this.textarea.style.height = '';
 
             if (mount) {
-                this.textarea.style.overflow = 'visible'; // needs to be here to resize settings textareas properly on mount
+                this.textarea.style.overflow = 'visible'; // needs to be here to resize options textareas properly on mount
             }
 
             const scrool_height = this.textarea.scrollHeight;
@@ -165,7 +165,7 @@ export class Textarea extends React.Component {
                     className={this.ob.char_limit_exceeded ? 'char_limit_exceeded_textarea' : ''}
                     ref={textarea => { this.textarea = textarea; }}
                     value={val}
-                    disabled={wf_shared.com2.inputs_disabled_2 && family !== 'settings'}
+                    disabled={wf_shared.com2.inputs_disabled_2 && family !== 'options'}
                     onInput={this.change_val}
                     onChange={() => null}
                     onBlur={this.reset_entered_one_char_in_textarea_after_focus}

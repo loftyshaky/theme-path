@@ -7,7 +7,7 @@ import * as r from 'ramda';
 import Store from 'electron-store';
 
 import * as shared from 'js/shared';
-import * as settings from 'js/settings';
+import * as options from 'js/options';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 import * as choose_folder from 'js/work_folder/choose_folder';
@@ -35,7 +35,7 @@ export const set_default_icon = (family, i) => {
         //< copy default icon
 
         //> restore default color_input_vizualization color
-        const { color_input_default } = settings.ob.theme_vals[store.get('theme')];
+        const { color_input_default } = options.ob.theme_vals[store.get('theme')];
 
         change_val.set_inputs_data_color(family, i, color_input_default);
         //< restore default color_input_vizualization color
@@ -69,7 +69,7 @@ export const set_default_or_disabled = (family, i, special_checkbox) => {
 
                     change_val.change_val(family, i, [-1, -1, -1], null);
 
-                    change_val.set_inputs_data_val(family, i, settings.ob.theme_vals[store.get('theme')].color_input_disabled);
+                    change_val.set_inputs_data_val(family, i, options.ob.theme_vals[store.get('theme')].color_input_disabled);
 
                 } else {
                     change_val.set_disabled_bool(family, i, false);
@@ -88,7 +88,7 @@ export const set_default_or_disabled = (family, i, special_checkbox) => {
 
 const set_default = (family, i) => {
     try {
-        const { color_input_default } = settings.ob.theme_vals[store.get('theme')];
+        const { color_input_default } = options.ob.theme_vals[store.get('theme')];
         const name_to_delete = inputs_data.obj[family][i].name;
 
         delete shared.mut.manifest.theme[family][name_to_delete];

@@ -25,7 +25,7 @@ export const center_analytics_privacy = () => {
 
 export const allow_or_disallow_analytics = action((enable_analytics, name) => {
     try {
-        const enable_analytics_obj = shared.find_from_name(inputs_data.obj.settings, 'enable_analytics');
+        const enable_analytics_obj = shared.find_from_name(inputs_data.obj.options, 'enable_analytics');
         toggle_popup.ob.analytics_privacy_is_visible = false;
         enable_analytics_obj.val = enable_analytics;
 

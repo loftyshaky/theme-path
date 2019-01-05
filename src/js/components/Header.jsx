@@ -168,7 +168,7 @@ export class Header extends React.Component {
                         />
                     </div>
                     <Popup_btn
-                        name="settings"
+                        name="options"
                         svg={gear_svg}
                     />
 

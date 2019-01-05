@@ -1126,19 +1126,19 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
 /*< mods */
 
 /*> Tr mods */
-.opacity_0, .analytics_privacy_proptecting_screen_unactive {
+.opacity_0, .analytics_privacy_protecting_screen_unactive {
     opacity: 0;
 }
 
-.opacity_1, .analytics_privacy_proptecting_screen_active {
+.opacity_1, .analytics_privacy_protecting_screen_active {
     opacity: 1;
 }
 
-.analytics_privacy_proptecting_screen_unactive, .analytics_privacy_proptecting_screen_active {
+.analytics_privacy_protecting_screen_unactive, .analytics_privacy_protecting_screen_active {
     height: 100%;
 }
 
-.analytics_privacy_proptecting_screen_active {
+.analytics_privacy_protecting_screen_active {
     opacity: 1;
 }
 

@@ -11,7 +11,7 @@ import { Header } from 'components/Header';
 import { Fieldset } from 'components/Fieldset';
 import { Work_folder } from 'components/Work_folder';
 import { Input_block } from 'components/Input_block';
-import { Settings } from 'components/Settings';
+import { Options } from 'components/Options';
 import { Links } from 'components/Links';
 import { Help_viewer } from 'components/Help_viewer';
 import { Protecting_screen } from 'components/Protecting_screen';
@@ -94,9 +94,9 @@ export class All extends React.Component {
                             />
                         </span>
                     </div>
-                    <Protecting_screen tr_name="gen" state_key="proptecting_screen_is_visible" />
-                    <Protecting_screen tr_name="analytics_privacy_proptecting_screen" state_key="analytics_privacy_is_visible" />
-                    <Settings />
+                    <Protecting_screen tr_name="gen" state_key="protecting_screen_is_visible" />
+                    <Protecting_screen tr_name="analytics_privacy_protecting_screen" state_key="analytics_privacy_is_visible" />
+                    <Options />
                     <Links />
                     <Help_viewer />
                     <Auto_updater />

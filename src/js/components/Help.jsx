@@ -17,7 +17,7 @@ export const Help = observer(props => {
                     type="button"
                     data-help-message={`${name}_help_message`}
                     data-text="help_link_text"
-                    disabled={wf_shared.com2.inputs_disabled_2 && family !== 'settings'}
+                    disabled={wf_shared.com2.inputs_disabled_2 && family !== 'options'}
                     onClick={help_viewer.open_help_viewer.bind(null, family, name)}
                 />
             </span>

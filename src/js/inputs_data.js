@@ -3,20 +3,20 @@ import * as r from 'ramda';
 import Store from 'electron-store';
 
 import x from 'x';
-import * as settings from 'js/settings';
+import * as options from 'js/options';
 
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
 //--
 
-const { color_input_default } = settings.ob.theme_vals[store.get('theme')];
+const { color_input_default } = options.ob.theme_vals[store.get('theme')];
 
 export const reset_inputs_data = action(() => {
     try {
         inputs_data.obj = data_obj_default;
 
-        settings.load_setting();
+        options.load_setting();
 
     } catch (er) {
         err(er, 45);
@@ -491,18 +491,18 @@ export const inputs_data = observable({
                 add_help: true,
             },
         ],
-        settings: [
+        options: [
             {
                 key: x.unique_id(),
                 name: 'theme',
-                family: 'settings',
+                family: 'options',
                 type: 'select',
                 val: '',
             },
             {
                 key: x.unique_id(),
                 name: 'chrome_exe_path',
-                family: 'settings',
+                family: 'options',
                 type: 'textarea',
                 val: '',
                 add_help: true,
@@ -510,7 +510,7 @@ export const inputs_data = observable({
             {
                 key: x.unique_id(),
                 name: 'chrome_user_data_dirs',
-                family: 'settings',
+                family: 'options',
                 type: 'textarea',
                 val: '',
                 add_help: true,
@@ -518,7 +518,7 @@ export const inputs_data = observable({
             {
                 key: x.unique_id(),
                 name: 'enable_analytics',
-                family: 'settings',
+                family: 'options',
                 type: 'checkbox',
                 val: true,
                 add_help: false,
@@ -526,7 +526,7 @@ export const inputs_data = observable({
             {
                 key: x.unique_id(),
                 name: 'enable_analytics_dev',
-                family: 'settings',
+                family: 'options',
                 type: 'checkbox',
                 val: false,
                 add_help: false,
