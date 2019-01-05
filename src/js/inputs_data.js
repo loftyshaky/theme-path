@@ -522,7 +522,6 @@ export const inputs_data = observable({
                 type: 'checkbox',
                 val: true,
                 add_help: false,
-                hidden: true,
             },
             {
                 key: x.unique_id(),
