@@ -210,6 +210,10 @@ const focus_input_and_select_all_text_in_it_inner = input => {
     }
 };
 
+export const defocus_color_field = () => {
+    document.activeElement.blur();
+};
+
 //> varibles
 export const mut = {
     current_pickied_color: {

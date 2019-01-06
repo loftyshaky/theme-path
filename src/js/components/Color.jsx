@@ -14,48 +14,77 @@ import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 //--
 
-export const Color = observer(props => {
-    const { family, name, i, color_input_type } = props;
+export class Color extends React.Component {
+    constructor(props) {
+        super(props);
 
-    const label = color_input_type === 'color' ? (
-        <label
-            className="input_label color_input_label"
-            data-text={`${name}_label_text`}
-            htmlFor={name}
-        />
-    ) : null;
+        ({ color_input_type: this.color_input_type, name: this.name, family: this.family, i: this.i } = this.props);
 
-    const default_checkbox = color_input_type === 'color' ? (
-        <Checkbox
-            {...props}
-            special_checkbox="default"
-        />
-    ) : null;
+        this.label = this.color_input_type === 'color' ? (
+            <label
+                className="input_label color_input_label"
+                data-text={`${this.name}_label_text`}
+                htmlFor={this.name}
+            />
+        ) : null;
 
-    const disabled_checkbox = family === 'tints' ? (
-        <Checkbox
-            {...props}
-            special_checkbox="disabled"
-        />
-    ) : null;
+        this.default_checkbox = this.color_input_type === 'color' ? (
+            <Checkbox
+                {...props}
+                special_checkbox="default"
+            />
+        ) : null;
 
-    return (
-        <span className={x.cls(['input', color_input_type === 'img' ? 'tall_color_input' : 'ordinary_color_input'])}>
-            <span className="ordinary_color_input_inner">
-                {label}
-                <Color_input_vizualization
-                    family={family}
-                    name={name}
-                    i={i}
-                    color_input_type={color_input_type}
-                />
-                {disabled_checkbox}
-                {default_checkbox}
+        this.disabled_checkbox = this.family === 'tints' ? (
+            <Checkbox
+                {...props}
+                special_checkbox="disabled"
+            />
+        ) : null;
+
+        this.color_input = React.createRef();
+    }
+
+    componentDidMount() {
+        try {
+            sb(this.color_input.current, '.chrome-picker div').addEventListener('mousedown', color_pickiers.defocus_color_field);
+
+        } catch (er) {
+            err(er, 175);
+        }
+    }
+
+    componentWillUnmount() {
+        try {
+            sb(this.color_input.current, '.chrome-picker div').removeEventListener('mousedown', color_pickiers.defocus_color_field);
+
+        } catch (er) {
+            err(er, 176);
+        }
+    }
+
+    render() {
+        return (
+            <span
+                className={x.cls(['input', this.color_input_type === 'img' ? 'tall_color_input' : 'ordinary_color_input'])}
+                ref={this.color_input}
+            >
+                <span className="ordinary_color_input_inner">
+                    {this.label}
+                    <Color_input_vizualization
+                        family={this.family}
+                        name={this.name}
+                        i={this.i}
+                        color_input_type={this.color_input_type}
+                    />
+                    {this.disabled_checkbox}
+                    {this.default_checkbox}
+                </span>
+                <Help {...this.props} />
             </span>
-            <Help {...props} />
-        </span>
-    );
-});
+        );
+    }
+}
 
 const Color_input_vizualization = observer(props => {
     const { family, name, i, color_input_type } = props;
@@ -166,3 +195,5 @@ const Color_pickier_ok_btn = observer(props => {
         </button>
     );
 });
+
+observer(Color);
