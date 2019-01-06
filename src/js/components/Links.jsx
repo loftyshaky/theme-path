@@ -10,6 +10,10 @@ import { Popup } from 'components/Popup';
 export const Links = () => (
     <Popup name="links">
         <div>
+            <Link
+                name="privacy_policy"
+                href="https://bit.ly/ctc-privacy-policy"
+            />
             <Link // eslint-disable-line jsx-a11y/anchor-is-valid
                 name="clear_new_tab"
             />
