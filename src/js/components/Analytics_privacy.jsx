@@ -43,7 +43,6 @@ export class Analytics_privacy extends React.Component {
                         target="_blank"
                         rel="noopener noreferrer"
                         data-text="privacy_policy_link_text"
-                        onClick={analytics.send_event.bind(null, 'links', 'clicked-clicked-analytics_privacy-privacy_policy_link')}
                     >
                         content
                     </a>
