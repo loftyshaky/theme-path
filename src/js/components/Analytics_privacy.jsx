@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import * as analytics from 'js/analytics';
 import * as analytics_privacy from 'js/analytics_privacy';
 import * as toggle_popup from 'js/toggle_popup';
 
