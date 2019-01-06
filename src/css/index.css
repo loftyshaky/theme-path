@@ -956,6 +956,16 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     left: 50%;
     width: 500px;
 }
+
+.analytics_privacy_btns_and_link {
+    display: flex;
+    align-items: center;
+}
+
+.privacy_policy_link {
+    margin-top: -2px;
+    margin-left: auto;
+}
 /*< analytics_privacy */
 
 /*> auto updater */
