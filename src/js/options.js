@@ -64,7 +64,6 @@ Mousetrap.bind('shift+ctrl+command+alt+f12', action(() => {
     }
 }));
 
-//> variables
 export const ob = observable({
     theme: store.get('theme'),
     theme_vals: {
@@ -78,8 +77,6 @@ export const ob = observable({
         },
     },
 });
-
-//< variables
 
 const open_and_pack = require('js/open_and_pack');
 const { inputs_data } = require('js/inputs_data');

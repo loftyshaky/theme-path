@@ -188,7 +188,6 @@ export const pack = type => {
     });
 };
 
-//> variables
 const mut = {
     chrome_process_ids: {},
 };
@@ -196,4 +195,3 @@ const mut = {
 export const ob = observable({
     chrome_user_data_dirs: null,
 });
-//< variables

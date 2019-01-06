@@ -375,11 +375,9 @@ export const set_disabled_bool = action((family, i, bool) => {
     }
 });
 
-//> variables
 const sta = {
     msg_dict: {
         name: '__MSG_name__',
         description: '__MSG_description__',
     },
 };
-//< variables

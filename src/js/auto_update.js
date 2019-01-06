@@ -32,8 +32,6 @@ export const show_or_hide_auto_updater = action(bool => {
     }
 });
 
-//> variables
 export const ob = observable({
     auto_updater_visible: false,
 });
-//< variables

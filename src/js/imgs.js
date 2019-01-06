@@ -132,7 +132,6 @@ export const dehighlight_upload_box_on_drag_leave = action((family, i) => {
 });
 //< drag and drop
 
-//> variables
 const sta = {
     width: {
         icon: 128,
@@ -156,4 +155,3 @@ const mut = {
 export const ob = observable({
     file_input_value: '',
 });
-//< variables

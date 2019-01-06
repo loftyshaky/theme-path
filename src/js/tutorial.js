@@ -49,7 +49,6 @@ export const rerender_Tutorial_item = () => {
     enable_or_disable_alt_style(false);
 };
 
-//> variables
 export const ob = observable({
     tutorial_stage: store.get('tutorial_stage') || 1,
     tutorial_item_is_visible: true,
@@ -59,4 +58,3 @@ export const ob = observable({
 export const mut = {
     recursive_apply_alt_style_if_tutorial_item_out_of_screen_already_called: false,
 };
-//< variables

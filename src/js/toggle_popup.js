@@ -65,7 +65,6 @@ export const close_all_popups_by_keyboard = e => {
     }
 };
 
-//> variables
 export const ob = observable({
     popup_visibility: {
         options: false,
@@ -76,4 +75,3 @@ export const ob = observable({
         return r.values(ob.popup_visibility).some(val => val);
     },
 });
-//< variables

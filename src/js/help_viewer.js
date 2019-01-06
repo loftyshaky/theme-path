@@ -142,7 +142,6 @@ export const close_help_viewer_by_keyboard = e => {
     }
 };
 
-//> variables
 export const ob = observable({
     help_viewer_is_none: false,
     help_viewer_is_visible: false,
@@ -156,4 +155,3 @@ export const mut = {
     current_family: '',
     current_name: '',
 };
-//< variables

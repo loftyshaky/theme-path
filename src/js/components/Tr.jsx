@@ -22,9 +22,7 @@ export class Tr extends React.Component {
 
         this.create_transitions();
 
-        //> observables
-        this.display_style = {};
-        //< observables
+        this.display_style = {}; // observable
     }
 
     componentWillMount() {

@@ -15,8 +15,6 @@ export const open_color_pickier_on_enter = e => {
     }
 };
 
-//> variables
 const sta = {
     enter_key_code: 13,
 };
-//< variables

@@ -100,8 +100,6 @@ export const reset_work_folder = action(terminate_script => {
     }
 });
 
-//> variables
 export const ob = observable({
     work_folder: store.get('work_folder'),
 });
-//< variables

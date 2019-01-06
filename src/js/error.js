@@ -69,7 +69,6 @@ const change_er_persistence = action(persistent => {
     ob.er_is_persistent = persistent || false;
 });
 
-//> variables
 export const ob = observable({
     component_has_er: false,
     er_is_visible: false,
@@ -82,4 +81,3 @@ const mut = {
     er_is_visible_timeout: null,
     er_is_highlighted_timeout: null,
 };
-//< variables
