@@ -8,7 +8,7 @@ const store = new Store();
 
 //--
 
-const visitor = ua('UA-129081690-1');
+const visitor = ua('UA-131099848-1');
 
 visitor.set('anonymizeIp', true);
 
