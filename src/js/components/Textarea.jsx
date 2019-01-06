@@ -19,6 +19,14 @@ export class Textarea extends React.Component {
     constructor(props) {
         super(props);
 
+        ({
+            name: this.name,
+            family: this.family,
+            i: this.i,
+            counter: this.counter,
+            char_limit: this.char_limit,
+        } = this.props);
+
         this.textarea = React.createRef();
 
         this.ob = observable({
@@ -29,6 +37,14 @@ export class Textarea extends React.Component {
         this.mut = {
             entered_one_char_in_textarea_after_focus: false,
         };
+
+        this.counter_el = this.counter
+            ? (
+                <span className={x.cls(['counter', this.ob.char_limit_exceeded ? 'char_limit_exceeded_counter' : ''])}>
+                    {this.ob.number_of_chars}
+                </span>
+            )
+            : null;
     }
 
     componentDidMount() {
@@ -89,16 +105,14 @@ export class Textarea extends React.Component {
 
     count_char = () => {
         try {
-            const { family, counter, char_limit } = this.props;
-
-            if (counter) {
+            if (this.counter) {
                 const number_of_chars = this.textarea.value.length;
-                const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
-                const default_locale = shared.find_from_name(inputs_data.obj[family], 'default_locale').val;
+                const locale = shared.find_from_name(inputs_data.obj[this.family], 'locale').val;
+                const default_locale = shared.find_from_name(inputs_data.obj[this.family], 'default_locale').val;
 
                 this.set_number_of_chars_val(this.textarea.value.length);
 
-                if (number_of_chars > char_limit && locale === default_locale) {
+                if (number_of_chars > this.char_limit && locale === default_locale) {
                     this.set_char_limit_exceeded_bool(true);
 
                 } else {
@@ -113,14 +127,12 @@ export class Textarea extends React.Component {
 
     change_val = e => {
         try {
-            const { family, name, i } = this.props;
-
-            change_val.change_val(family, i, 'is_not_select', null, e);
+            change_val.change_val(this.family, this.i, 'is_not_select', null, e);
 
             if (!this.mut.entered_one_char_in_textarea_after_focus) {
                 this.mut.entered_one_char_in_textarea_after_focus = true;
 
-                analytics.send_event('textareas', `input-${family}-${name}`);
+                analytics.send_event('textareas', `input-${this.family}-${this.name}`);
             }
         } catch (er) {
             err(er, 162);
@@ -137,44 +149,47 @@ export class Textarea extends React.Component {
     }
 
     render() {
-        const {
-            name,
-            family,
-            i,
-            counter,
-        } = this.props;
-        const { val } = inputs_data.obj[family][i];
-
-        const counter_el = counter
-            ? (
-                <span className={x.cls(['counter', this.ob.char_limit_exceeded ? 'char_limit_exceeded_counter' : ''])}>
-                    {this.ob.number_of_chars}
-                </span>
-            )
-            : null;
+        const { val } = inputs_data.obj[this.family][this.i];
 
         return (
             <div className="input">
                 <label
                     className="input_label"
-                    data-text={`${name}_label_text`}
-                    htmlFor={`${name}_input`}
+                    data-text={`${this.name}_label_text`}
+                    htmlFor={`${this.name}_input`}
                 />
                 <textarea
-                    id={`${name}_input`}
+                    id={`${this.name}_input`}
                     className={this.ob.char_limit_exceeded ? 'char_limit_exceeded_textarea' : ''}
                     ref={textarea => { this.textarea = textarea; }}
                     value={val}
-                    disabled={wf_shared.com2.inputs_disabled_2 && family !== 'options'}
+                    disabled={wf_shared.com2.inputs_disabled_2 && this.family !== 'options'}
                     onInput={this.change_val}
                     onChange={() => null}
                     onBlur={this.reset_entered_one_char_in_textarea_after_focus}
                 />
                 <Help {...this.props} />
-                {counter_el}
+                <Counter
+                    counter={this.counter}
+                    ob={this.ob}
+                />
             </div>
         );
     }
 }
+
+const Counter = observer(props => {
+    const { counter, ob } = props;
+    const { char_limit_exceeded, number_of_chars } = ob;
+
+    return (
+        counter ? (
+            <span className={x.cls(['counter', char_limit_exceeded ? 'char_limit_exceeded_counter' : ''])}>
+                {number_of_chars}
+            </span>
+        )
+            : null
+    );
+});
 
 observer(Textarea);

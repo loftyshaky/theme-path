@@ -8,6 +8,15 @@ import { Tr } from 'components/Tr';
 //--
 
 export class Protecting_screen extends React.Component {
+    constructor(props) {
+        super(props);
+
+        ({
+            tr_name: this.tr_name,
+            state_key: this.state_key,
+        } = this.props);
+    }
+
     componentDidMount() {
         try {
             this.protecting_screen.addEventListener('click', this.close_all_popups);
@@ -33,8 +42,6 @@ export class Protecting_screen extends React.Component {
     }
 
     render() {
-        const { tr_name, state_key } = this.props;
-
         return (
             <div
                 ref={protecting_screen => { this.protecting_screen = protecting_screen; }}
@@ -44,8 +51,8 @@ export class Protecting_screen extends React.Component {
                         className: 'protecting_screen',
                     }}
                     tag="div"
-                    name={tr_name}
-                    state={toggle_popup.ob[state_key]}
+                    name={this.tr_name}
+                    state={toggle_popup.ob[this.state_key]}
                 />
             </div>
         );

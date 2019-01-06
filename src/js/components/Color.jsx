@@ -18,7 +18,12 @@ export class Color extends React.Component {
     constructor(props) {
         super(props);
 
-        ({ color_input_type: this.color_input_type, name: this.name, family: this.family, i: this.i } = this.props);
+        ({
+            color_input_type: this.color_input_type,
+            name: this.name,
+            family: this.family,
+            i: this.i,
+        } = this.props);
 
         this.label = this.color_input_type === 'color' ? (
             <label

@@ -17,14 +17,23 @@ import { Help } from 'components/Help';
 //--
 
 export class Select extends React.Component {
+    constructor(props) {
+        super(props);
+
+        ({
+            name: this.name,
+            family: this.family,
+            i: this.i,
+        } = this.props);
+    }
+
     componentDidUpdate() {
         try {
-            const { name, count_char } = this.props;
+            const { count_char } = this.props;
 
-            if (name === 'default_locale') {
+            if (this.name === 'default_locale') {
                 count_char();
             }
-
 
         } catch (er) {
             err(er, 106);
@@ -34,16 +43,15 @@ export class Select extends React.Component {
     //> change option val when selecting option
     change_select_val = selected_option => {
         try {
-            const { family, name, i } = this.props;
             const { value } = selected_option;
 
-            change_val.change_val(family, i, value, null);
+            change_val.change_val(this.family, this.i, value, null);
 
             if (value === 'default') {
-                set_default_or_disabled.set_default_or_disabled(family, i, 'select');
+                set_default_or_disabled.set_default_or_disabled(this.family, this.i, 'select');
             }
 
-            analytics.send_event('selects', `selected_option-${family}-${name}-${value}`);
+            analytics.send_event('selects', `selected_option-${this.family}-${this.name}-${value}`);
 
         } catch (er) {
             err(er, 107);
@@ -54,12 +62,10 @@ export class Select extends React.Component {
     on_menu_open = async () => {
         await x.delay(0);
 
-        const { family, name } = this.props;
-
         this.transit_menu();
         this.scroll_select_menu_into_view();
 
-        analytics.send_event('selects', `expanded-${family}-${name}`);
+        analytics.send_event('selects', `expanded-${this.family}-${this.name}`);
     }
 
     //> hide options when clicking on option or select_title / scroll select options into view when oipening select
@@ -67,7 +73,7 @@ export class Select extends React.Component {
         try {
             const { family } = this.props;
 
-            if (family !== 'options') {
+            if (family !== 'settings') {
                 const select_menu = s('.select__menu');
 
                 const fieldset_w = x.closest(this.input, '.fieldset_w');
@@ -104,9 +110,8 @@ export class Select extends React.Component {
     }
 
     render() {
-        const { name, family, i } = this.props;
-        const { val } = inputs_data.obj[family][i];
-        const options = selects_options[name !== 'default_locale' ? name : 'locale'];
+        const { val } = inputs_data.obj[this.family][this.i];
+        const options = selects_options[this.name !== 'default_locale' ? this.name : 'locale'];
         const selected_option = shared.find_from_val(options, val);
 
         const selected_option_final = r.ifElse(
@@ -130,12 +135,12 @@ export class Select extends React.Component {
                 <div>
                     <label
                         className="input_label"
-                        data-text={`${name}_label_text`}
+                        data-text={`${this.name}_label_text`}
                     />
                     <ReactSelect
                         value={selected_option_final}
                         options={options}
-                        isDisabled={wf_shared.com2.inputs_disabled_2 && family !== 'options'}
+                        isDisabled={wf_shared.com2.inputs_disabled_2 && this.family !== 'settings'}
                         classNamePrefix="select"
                         backspaceRemovesValue={false}
                         onChange={this.change_select_val}

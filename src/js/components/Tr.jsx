@@ -12,6 +12,11 @@ export class Tr extends React.Component {
     constructor(props) {
         super(props);
 
+        ({
+            name: this.name,
+            tr_end_callbacks: this.tr_end_callbacks,
+        } = this.props);
+
         this.normal_duration = 200;
         this.theme = store.get('theme');
 
@@ -63,8 +68,8 @@ export class Tr extends React.Component {
     //> hide component when it faded out or show component when it starting fading in
     handle_transition = (called_from_component_did_update, tr_end_callbacks) => {
         try {
-            const { state, name } = this.props;
-            const component_uses_fading_transition = name === 'gen' || name === 'analytics_privacy_protecting_screen';
+            const { state } = this.props;
+            const component_uses_fading_transition = this.name === 'gen' || this.name === 'analytics_privacy_protecting_screen';
 
             if (component_uses_fading_transition) {
                 const component_is_visible = this.display_style.visibility;
@@ -113,8 +118,8 @@ export class Tr extends React.Component {
     //< create other transitions
 
     render() {
-        const { attr, name, state, tr_end_callbacks, children } = this.props;
-        const class_name = `${attr.className} ${this.transit(name, state)}`;
+        const { attr, state, children } = this.props;
+        const class_name = `${attr.className} ${this.transit(this.name, state)}`;
         const display_style = toJS(this.display_style);
 
         return (
@@ -123,7 +128,7 @@ export class Tr extends React.Component {
                 className={class_name}
                 ref={this.tr}
                 style={display_style}
-                onTransitionEnd={this.handle_transition.bind(null, false, tr_end_callbacks)}
+                onTransitionEnd={this.handle_transition.bind(null, false, this.tr_end_callbacks)}
             >
                 {children}
             </this.props.tag>

@@ -14,6 +14,16 @@ import close_svg from 'svg/close';
 //--
 
 export class Tutorial_item extends React.Component {
+    constructor(props) {
+        super(props);
+
+        ({
+            name: this.name,
+            tutorial_stage: this.tutorial_stage,
+            outline: this.outline,
+        } = this.props);
+    }
+
     componentDidMount() {
         this.apply_alt_style_if_tutorial_item_out_of_screen();
     }
@@ -26,10 +36,8 @@ export class Tutorial_item extends React.Component {
         try {
             await x.delay(0);
 
-            const { name, tutorial_stage } = this.props;
-
-            if (tutorial.ob.tutorial_stage == tutorial_stage && !tutorial.ob.alt_style_enabled) { // eslint-disable-line eqeqeq
-                const rect = s(`.tutorial_item_${name}`).getBoundingClientRect();
+            if (tutorial.ob.tutorial_stage == this.tutorial_stage && !tutorial.ob.alt_style_enabled) { // eslint-disable-line eqeqeq
+                const rect = s(`.tutorial_item_${this.name}`).getBoundingClientRect();
                 const tutorial_item_is_in_viewport = rect.left >= 0 && rect.right <= window.innerWidth;
 
                 if (!tutorial_item_is_in_viewport) {
@@ -79,26 +87,13 @@ export class Tutorial_item extends React.Component {
     }
 
     render() {
-        const { name, tutorial_stage, outline } = this.props;
-        const show_tutrial = tutorial.ob.tutorial_stage == tutorial_stage && tutorial.ob.tutorial_item_is_visible; // eslint-disable-line eqeqeq
-
-        const outline_el = outline
-            ? (
-                <Tr
-                    attr={{
-                        className: x.cls(['tutorial_outline', `tutorial_outline_${name}`]),
-                    }}
-                    tag="span"
-                    name="tutorial_outline"
-                    state={show_tutrial}
-                />
-            ) : null;
+        const show_tutrial = tutorial.ob.tutorial_stage == this.tutorial_stage && tutorial.ob.tutorial_item_is_visible; // eslint-disable-line eqeqeq
 
         return (
             <React.Fragment>
                 <Tr
                     attr={{
-                        className: x.cls(['tutorial_item', `tutorial_item_${name}`, tutorial.ob.alt_style_enabled ? 'alt' : '']),
+                        className: x.cls(['tutorial_item', `tutorial_item_${this.name}`, tutorial.ob.alt_style_enabled ? 'alt' : '']),
                     }}
                     tag="div"
                     name="gen"
@@ -113,7 +108,7 @@ export class Tutorial_item extends React.Component {
                         <Svg src={close_svg} />
                     </button>
                     <div className="tutorial_text">
-                        {x.msg(`${name}_tutorial_item_text`)}
+                        {x.msg(`${this.name}_tutorial_item_text`)}
                     </div>
                     <button
                         type="button"
@@ -122,10 +117,31 @@ export class Tutorial_item extends React.Component {
                         onClick={this.skip_tutorial}
                     />
                 </Tr>
-                {outline_el}
+                <Outline
+                    name={this.name}
+                    outline={this.outline}
+                    show_tutrial={show_tutrial}
+                />
             </React.Fragment>
         );
     }
 }
+
+const Outline = observer(props => {
+    const { name, outline, show_tutrial } = props;
+
+    return (
+        outline ? (
+            <Tr
+                attr={{
+                    className: x.cls(['tutorial_outline', `tutorial_outline_${name}`]),
+                }}
+                tag="span"
+                name="tutorial_outline"
+                state={show_tutrial}
+            />
+        ) : null
+    );
+});
 
 observer(Tutorial_item);

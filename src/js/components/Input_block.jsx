@@ -16,6 +16,13 @@ export class Input_block extends React.Component {
     constructor(props) {
         super(props);
 
+        ({
+            name: this.name,
+            hr: this.hr,
+        } = this.props);
+
+        this.hr_el = this.hr ? <Hr name={this.name} /> : null;
+
         this.childs = [];
     }
 
@@ -35,18 +42,15 @@ export class Input_block extends React.Component {
     //< call count_char method from </Textarea> instance when you change default locale in </Select>
 
     render() {
-        const { name, hr } = this.props;
-        const hr_el = hr ? <Hr name={name} /> : null;
-
         return (
             <React.Fragment>
                 <div className="hr_and_help">
-                    {hr_el}
+                    {this.hr_el}
                     <Help {...this.props} />
                 </div>
-                <div className={name === 'colors' || name === 'tints' ? 'colors_and_tints_input_block' : null}>
+                <div className={this.name === 'colors' || this.name === 'tints' ? 'colors_and_tints_input_block' : null}>
                     {
-                        inputs_data.obj[name].map((item, i) => {
+                        inputs_data.obj[this.name].map((item, i) => {
                             const Component = sta.components[item.type];
                             const color_input_type = item.type === 'color' ? 'color' : null;
 
