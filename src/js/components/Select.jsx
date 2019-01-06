@@ -73,7 +73,7 @@ export class Select extends React.Component {
         try {
             const { family } = this.props;
 
-            if (family !== 'settings') {
+            if (family !== 'options') {
                 const select_menu = s('.select__menu');
 
                 const fieldset_w = x.closest(this.input, '.fieldset_w');
@@ -140,7 +140,7 @@ export class Select extends React.Component {
                     <ReactSelect
                         value={selected_option_final}
                         options={options}
-                        isDisabled={wf_shared.com2.inputs_disabled_2 && this.family !== 'settings'}
+                        isDisabled={wf_shared.com2.inputs_disabled_2 && this.family !== 'options'}
                         classNamePrefix="select"
                         backspaceRemovesValue={false}
                         onChange={this.change_select_val}
