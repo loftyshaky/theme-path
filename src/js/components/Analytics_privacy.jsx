@@ -38,7 +38,7 @@ export class Analytics_privacy extends React.Component {
                         on_click={() => analytics_privacy.allow_or_disallow_analytics(false, 'disallow_analytics')}
                     />
                     <a
-                        className="privacy_policy_link"
+                        className="analytics_privacy_privacy_policy_link"
                         href="https://bit.ly/ctc-privacy-policy"
                         target="_blank"
                         rel="noopener noreferrer"
