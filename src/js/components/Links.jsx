@@ -42,8 +42,6 @@ const Link = props => {
             data-text={`${name}_link_text`}
             data-href={!href ? `${name}_link_href` : null}
             onClick={analytics.send_event.bind(null, 'links', `clicked-${name}`)}
-        >
-            content
-        </a>
+        />
     );
 };
