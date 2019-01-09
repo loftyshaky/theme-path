@@ -74,6 +74,8 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
                                 incognito,
                                 '--start-maximized',
                                 '--no-first-run', // without this canary chrome will not start if Chrome Theme Creator Chrome Preview Directory doesn't exist
+                                '--no-sandbox', // fix blank black screen in Chrome Canary
+                                '--test-type', // "supress You are using an unsupported command-line flag: --no-sandbox. Stability and security will suffer." message
                                 `--user-data-dir=${user_data_path}`,
                                 `--load-extension=${shared.ob.chosen_folder_path}`,
                             ]);
