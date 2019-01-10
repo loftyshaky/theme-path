@@ -31,7 +31,6 @@ window.sb = (base_element, selector) => ( // $ with base element
 window.sab = (base_element, selector) => ( // $ All with base element
     base_element ? base_element.querySelectorAll(selector) : null
 );
-
 //< selecting elements
 
 //> dom manipulation
