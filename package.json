@@ -49,8 +49,16 @@
       ]
     },
     "nsis": {
+      "artifactName": "windows-${version}.${ext}",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
+    },
+    "dmg": {
+      "artifactName": "macOS-${version}.${ext}"
+    },
+    "appImage": {
+      "artifactName": "linux-${version}.${ext}",      
+      "systemIntegration": "ask"
     },
     "win": {
       "target": [
