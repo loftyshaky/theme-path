@@ -1,6 +1,7 @@
 import { observable, action, configure } from 'mobx';
 
 import x from 'x';
+import * as analytics from 'js/analytics';
 
 configure({ enforceActions: 'observed' });
 
@@ -37,6 +38,8 @@ window.err = action((er_obj, er_code, er_msg_param, silent, persistent, exit) =>
     } else {
         console.error(er_obj.stack); // eslint-disable-line no-console
     }
+
+    analytics.send_event('error', er_code);
 });
 
 window.t = msg => {
