@@ -40,6 +40,7 @@
       ]
     },
     "appx": {
+      "artifactName": "microsoft_store-${version}.${ext}",
       "applicationId": "ChromeThemeCreator",
       "identityName": "64610loftyshaky.ChromeThemeCreator",
       "publisher": "CN=878D672D-A2DC-4D4D-AAFA-B7B21598CA5C",
