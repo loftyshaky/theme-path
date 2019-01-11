@@ -36,6 +36,7 @@ export const allow_or_disallow_analytics = action((enable_analytics, name) => {
         store.set('enable_analytics', enable_analytics);
 
         analytics.send_event('btns', `clicked-analytics_privacy-${name}`);
+        analytics.track_app_start();
 
     } catch (er) {
         err(er, 174);

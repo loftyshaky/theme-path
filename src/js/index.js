@@ -10,8 +10,7 @@ import { Error } from 'components/Error';
 
 //--
 
-analytics.send_pageview('main');
-analytics.send_event('app_version', app_version);
+analytics.track_app_start();
 
 render(
     <Error />, // eslint-disable-line react/jsx-filename-extension

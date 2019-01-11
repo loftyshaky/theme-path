@@ -87,6 +87,12 @@ export const add_tutorial_analytics = action => {
     send_event('tutorial', `${action}_at_stage_${tutorial.ob.tutorial_stage}`);
 };
 
+export const track_app_start = () => {
+    send_pageview('main');
+    send_event('app_version', app_version);
+    send_event('app_host', process.windowsStore ? 'microsoft_store' : 'package');
+};
+
 export const sta = {
     dev: !!(process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)),
     visitor,
