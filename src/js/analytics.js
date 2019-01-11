@@ -32,11 +32,16 @@ export const send_event = (category, action) => {
 
 export const send_event_async = (category, action, callback, callback_args) => {
     try {
-        check_if_analytics_enabled(() => {
+        const analytics_enabled = check_if_analytics_enabled();
+
+        if (analytics_enabled) {
             visitor.event(category, action, () => {
-                callback(callback_args);
+                callback(...callback_args);
             });
-        });
+
+        } else {
+            callback(...callback_args);
+        }
 
     } catch (er) {
         err(er, 171);
@@ -47,14 +52,23 @@ export const check_if_analytics_enabled = callback => {
     try {
         const analytics_enabled = typeof store.get('enable_analytics') === 'undefined' ? false : store.get('enable_analytics');
         const enable_analytics_dev = typeof store.get('enable_analytics_dev') === 'undefined' ? false : store.get('enable_analytics_dev');
+        const analytics_enabled_final = (!sta.dev && analytics_enabled) || enable_analytics_dev;
 
-        if ((!sta.dev && analytics_enabled) || enable_analytics_dev) {
-            callback();
+        if (analytics_enabled_final) {
+            if (callback) {
+                callback();
+            }
+
+            return true;
         }
+
+        return false;
 
     } catch (er) {
         err(er, 160);
     }
+
+    return undefined;
 };
 
 export const add_header_btns_analytics = name => {
