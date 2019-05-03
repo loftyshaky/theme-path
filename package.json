@@ -58,7 +58,7 @@
       "artifactName": "macOS-${version}.${ext}"
     },
     "appImage": {
-      "artifactName": "linux-${version}.${ext}",      
+      "artifactName": "linux-${version}.${ext}",
       "systemIntegration": "ask"
     },
     "win": {

@@ -27,7 +27,7 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                 const clicked_outside_of_color_pickier = !mut.current_color_pickier.el.contains(e.target);
 
                 if (clicked_outside_of_color_pickier) {
-                    close_color_pickier();
+                    cancel_color_picking();
                 }
             }
             //< try to hide color pickier when clicking outside of color pickier t
@@ -152,66 +152,91 @@ export const accept_color = (family, i) => {
 };
 //< accept color when clicking OK t
 
-const close_color_pickier = () => {
-    const any_color_pickier_is_opened = mut.current_color_pickier.el;
+const cancel_color_picking = () => {
+    try {
+        const any_color_pickier_is_opened = mut.current_color_pickier.el;
 
-    if (any_color_pickier_is_opened) {
-        mut.current_color_pickier.el = null;
-        const { family } = mut.current_color_pickier;
-        const { i } = mut.current_color_pickier;
-        const { name } = inputs_data.obj[family][i];
+        if (any_color_pickier_is_opened) {
+            mut.current_color_pickier.el = null;
+            const { family } = mut.current_color_pickier;
+            const { i } = mut.current_color_pickier;
+            const { name } = inputs_data.obj[family][i];
 
-        show_or_hide_color_pickier(mut.current_color_pickier.family, mut.current_color_pickier.i, false);
+            show_or_hide_color_pickier(mut.current_color_pickier.family, mut.current_color_pickier.i, false);
 
-        set_color_input_vizualization_color(mut.current_color_pickier.family, mut.current_color_pickier.i, mut.current_color_pickier.color);
+            set_color_input_vizualization_color(mut.current_color_pickier.family, mut.current_color_pickier.i, mut.current_color_pickier.color);
 
-        analytics.send_event('color_pickiers', `canceled-${family}-${name}`);
+            analytics.send_event('color_pickiers', `canceled-${family}-${name}`);
+        }
+
+    } catch (er) {
+        err(er, 181);
     }
 };
 
 export const close_or_open_color_pickier_by_keyboard = e => {
-    const { family, i } = mut.current_color_pickier;
-    const any_color_pickier_is_opened = mut.current_color_pickier.el;
-    const enter_pressed = e.keyCode === 13;
-    const esc_pressed = e.keyCode === 27;
+    try {
+        const { family, i } = mut.current_color_pickier;
+        const any_color_pickier_is_opened = mut.current_color_pickier.el;
+        const enter_pressed = e.keyCode === 13;
+        const esc_pressed = e.keyCode === 27;
 
-    if (enter_pressed && any_color_pickier_is_opened) {
-        document.activeElement.blur(); // prevent color_input_vizualization focus
-    }
-
-    if (enter_pressed) {
-        if (any_color_pickier_is_opened) {
-            accept_color(family, i);
+        if (enter_pressed && any_color_pickier_is_opened) {
+            document.activeElement.blur(); // prevent color_input_vizualization focus
         }
 
-    } else if (esc_pressed) {
-        close_color_pickier();
+        if (enter_pressed) {
+            if (any_color_pickier_is_opened) {
+                accept_color(family, i);
+            }
+
+        } else if (esc_pressed) {
+            cancel_color_picking();
+        }
+
+    } catch (er) {
+        err(er, 182);
     }
 };
 
 export const focus_input_and_select_all_text_in_it = e => {
-    const color_val_inputs = sab(e.target, 'input');
-    const number_of_color_val_inputs = color_val_inputs.length;
-    const color_pickier_is_in_hex_mode = number_of_color_val_inputs === 1;
-    const color_pickier_is_in_rgb_or_hsl_mode = number_of_color_val_inputs === 4 && !color_val_inputs[number_of_color_val_inputs - 1].offsetParent;
+    try {
+        const color_val_inputs = sab(e.target, 'input');
+        const number_of_color_val_inputs = color_val_inputs.length;
+        const color_pickier_is_in_hex_mode = number_of_color_val_inputs === 1;
+        const color_pickier_is_in_rgb_or_hsl_mode = number_of_color_val_inputs === 4 && !color_val_inputs[number_of_color_val_inputs - 1].offsetParent;
 
-    if (color_pickier_is_in_hex_mode || color_pickier_is_in_rgb_or_hsl_mode) {
-        focus_input_and_select_all_text_in_it_inner(color_val_inputs[0]);
+        if (color_pickier_is_in_hex_mode || color_pickier_is_in_rgb_or_hsl_mode) {
+            focus_input_and_select_all_text_in_it_inner(color_val_inputs[0]);
 
-    } else { // color pickier is in rgba or hsla mode
-        focus_input_and_select_all_text_in_it_inner(color_val_inputs[number_of_color_val_inputs - 1]);
+        } else { // color pickier is in rgba or hsla mode
+            focus_input_and_select_all_text_in_it_inner(color_val_inputs[number_of_color_val_inputs - 1]);
+        }
+
+    } catch (er) {
+        err(er, 183);
     }
 };
 
 const focus_input_and_select_all_text_in_it_inner = input => {
-    if (input) {
-        input.focus();
-        input.setSelectionRange(0, input.value.length);
+    try {
+        if (input) {
+            input.focus();
+            input.setSelectionRange(0, input.value.length);
+        }
+
+    } catch (er) {
+        err(er, 184);
     }
 };
 
 export const defocus_color_field = () => {
-    document.activeElement.blur();
+    try {
+        document.activeElement.blur();
+
+    } catch (er) {
+        err(er, 185);
+    }
 };
 
 //> varibles

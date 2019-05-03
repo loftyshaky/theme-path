@@ -208,7 +208,7 @@ body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.
     box-shadow: none;
 }
 
-.btn:hover, .option:hover, .header_btn:active, .select__option--is-focused {
+.btn:hover, .option:hover, .header_btn:active {
     background-color: #fbff75!important;
 }
 
@@ -255,6 +255,7 @@ textarea, .option  {
 
 .checkbox_input {
     display: block;
+    align-items: center;
 }
 
 .img_selector_box > span:not(:last-child), .color_input_label, .ordinary_color_input .color_input_vizualization, .img_selector_checkbox_w:not(:last-child) {
@@ -801,7 +802,7 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 /*< imgage selector inputs */
 
 /*>1 checkboxes */
-.img_selector_box .img_selector_checkbox_w {
+.img_selector_checkbox_w {
     align-items: center;
     display: flex;
 }
@@ -818,27 +819,28 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     display: none;
 }
 
+.checkbox_input {
+    display: flex;
+    align-items: center;
+}
+
 .checkbox_checkmark_w {
-    height: 16px;
-    width: 16px;
-    position: relative;
-    top: 3px;
-    height: 16px;
-    width: 16px;
-    display: inline-block;
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+    display: block;
 }
 
 .checkbox_checkmark_w svg {
     margin-top: 1px;
     margin-left: 1px;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
+    display: block;
 }
 
 .checkbox_label {
     margin-right: 8px;
-    margin-top: -2px;
-    display: inline-block;
 }
 /*<1 checkboxes */
 
@@ -1060,7 +1062,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn {
+.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn {
     transition: all 0.2s ease-out;
 }
 
@@ -1080,7 +1082,7 @@ a, .help_link, .upload_box_browse_label, .legend, .skip_tutorial_btn {
     transition-property: color;
 }
 
-.btn {
+.using_mouse .btn {
     transition-property: color, background-color, border-color, box-shadow;
 }
 

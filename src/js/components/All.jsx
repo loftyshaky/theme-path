@@ -25,9 +25,6 @@ export class All extends React.Component {
     componentDidMount() {
         try {
             document.addEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
-            document.body.addEventListener('mousedown', tab_focus.set_using_mouse_cls.bind(null, 'add_cls'));
-            document.body.addEventListener('keydown', tab_focus.prevent_el_focus_on_esc);
-            document.body.addEventListener('keydown', tab_focus.set_using_mouse_cls.bind(null, 'remove_cls'));
             document.body.addEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
             document.body.addEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
             document.body.addEventListener('keydown', help_viewer.close_help_viewer_by_keyboard);
@@ -41,9 +38,6 @@ export class All extends React.Component {
     componentWillUnmount() {
         try {
             document.removeEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
-            document.body.removeEventListener('mousedown', tab_focus.set_using_mouse_cls.bind(null, 'add_cls'));
-            document.body.removeEventListener('keydown', tab_focus.prevent_el_focus_on_esc);
-            document.body.removeEventListener('keydown', tab_focus.set_using_mouse_cls.bind(null, 'remove_cls'));
             document.body.removeEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
             document.body.removeEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
             document.body.removeEventListener('keydown', help_viewer.close_help_viewer_by_keyboard);

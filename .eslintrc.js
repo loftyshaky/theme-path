@@ -21,6 +21,12 @@ module.exports = {
                 'components': ['Link']
             },
         ],
+        "no-restricted-syntax": [
+            "error",
+            "ForInStatement",
+            "LabeledStatement",
+            "WithStatement"
+        ],
         'indent': [
             'error',
             4,
