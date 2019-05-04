@@ -1,7 +1,7 @@
 'use_strict';
 
 import { join, sep } from 'path';
-import { existsSync, mkdirSync, writeFileSync, removeSync, readdirSync } from 'fs-extra';
+import { existsSync, mkdirSync, removeSync, readdirSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
@@ -10,6 +10,7 @@ import Store from 'electron-store';
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
+import * as json_file from 'js/json_file';
 import * as options from 'js/options';
 import * as open_and_pack from 'js/open_and_pack';
 import * as tutorial from 'js/tutorial';
@@ -121,18 +122,18 @@ const set_name_or_description_prop = (name, new_val, forced_locale) => {
         check_if_localisation_folders_exists_create_them_if_dont(locale);
 
         if (val_is_localized) {
-            create_messages_file(messages_path);
+            json_file.create_json_file(messages_path);
 
             const message_name = shared.get_message_name(val);
-            const messages = shared.parse_json(messages_path);
+            const messages = json_file.parse_json(messages_path);
 
             write_to_json(messages, messages_path, message_name, new_val, 'theme_metadata'); // write to messages.json
 
         } else {
-            create_messages_file(messages_path);
+            json_file.create_json_file(messages_path);
             write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
-            const messages = shared.parse_json(messages_path);
+            const messages = json_file.parse_json(messages_path);
 
             write_to_json(messages, messages_path, name, new_val, 'theme_metadata'); // write to messages.json
         }
@@ -181,7 +182,7 @@ const write_to_json = (json, json_path, name, new_val, family) => {
             new_json.theme[family][name] = name === 'ntp_logo_alternate' ? +new_val : new_val;
         }
 
-        shared.write_to_json(new_json, json_path);
+        json_file.write_to_json(new_json, json_path);
 
         if (family !== 'theme_metadata' && tutorial.ob.tutorial_stage === 5) {
             tutorial.increment_tutorial_stage(false, true);
@@ -212,19 +213,6 @@ const check_if_folder_exists_create_it_if_dont = folder_path => {
 
     } catch (er) {
         err(er, 25);
-    }
-};
-
-const create_messages_file = messages_path => {
-    try {
-        const messages_file_exist = existsSync(messages_path);
-
-        if (!messages_file_exist) {
-            writeFileSync(messages_path, '{}', 'utf8');
-        }
-
-    } catch (er) {
-        err(er, 26);
     }
 };
 
@@ -261,7 +249,7 @@ const delete_unused_locale_folders = new_default_locale => {
                 const remove_locale_folder = r.ifElse(
                     () => existsSync(messages_path),
                     () => {
-                        const messages_json = shared.parse_json(messages_path);
+                        const messages_json = json_file.parse_json(messages_path);
 
                         const name_exist = check_if_name_or_description_exist('name', messages_json);
                         const description_exist = check_if_name_or_description_exist('name', messages_json);

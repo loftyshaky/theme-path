@@ -8,8 +8,10 @@ import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
+import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
+import * as picked_colors from 'js/picked_colors';
 
 configure({ enforceActions: 'observed' });
 
@@ -95,10 +97,19 @@ export const set_color_color_pickier_position = action((family, i, val) => {
     }
 });
 
-export const set_color_input_vizualization_color = action((family, i, color) => {
+export const set_color_input_vizualization_color = action((family, name, i, color) => {
     try {
-        if (family === 'images' || inputs_data.obj[family][i].name === 'icon') {
-            inputs_data.obj[family][i].color = color.rgb ? `rgba(${r.values(color.rgb).join(',')})` : color;
+        if (family === 'images' || ((name && name === 'icon') || inputs_data.obj[family][i].name === 'icon')) {
+            const loading_old_colors_from_picked_colors_json = name;
+            const color_final = color.rgb || loading_old_colors_from_picked_colors_json ? `rgba(${r.values(color.rgb || color).join(',')})` : color;
+
+            if (name) {
+                const item = shared.find_from_name(inputs_data.obj[family], name);
+                item.color = color_final;
+
+            } else {
+                inputs_data.obj[family][i].color = color_final;
+            }
 
         } else {
             inputs_data.obj[family][i].val = color.hex || color;
@@ -120,6 +131,8 @@ export const accept_color = (family, i) => {
             imgs.create_solid_color_image(name, family, hex, mut.current_pickied_color.rgb.a);
 
             change_val.change_val(family, i, name, null);
+
+            picked_colors.record_picked_color(family, name);
 
         } else if (family === 'colors') {
             color = hexToRgb(hex);
@@ -164,7 +177,7 @@ const cancel_color_picking = () => {
 
             show_or_hide_color_pickier(mut.current_color_pickier.family, mut.current_color_pickier.i, false);
 
-            set_color_input_vizualization_color(mut.current_color_pickier.family, mut.current_color_pickier.i, mut.current_color_pickier.color);
+            set_color_input_vizualization_color(mut.current_color_pickier.family, null, mut.current_color_pickier.i, mut.current_color_pickier.color);
 
             analytics.send_event('color_pickiers', `canceled-${family}-${name}`);
         }
@@ -240,6 +253,10 @@ export const defocus_color_field = () => {
 };
 
 //> varibles
+export const con = {
+    no_alpha: ['theme_frame', 'theme_frame_inactive', 'theme_frame_incognito', 'theme_frame_incognito_inactive'],
+};
+
 export const mut = {
     current_pickied_color: {
         rgb: {

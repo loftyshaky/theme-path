@@ -13,9 +13,12 @@ export const convert_theme_color_props_to_color = (family, i, val) => {
     try {
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];
         const val_is_arr = Array.isArray(val);
+        const color_is_not_set_in_picked_colors_json = inputs_data.obj[family][i].color === options.ob.theme_vals.dark.color_input_default || inputs_data.obj[family][i].color === options.ob.theme_vals.light.color_input_default;
 
         if (family === 'images') {
-            change_val.set_inputs_data_color(family, i, color_input_default);
+            if (color_is_not_set_in_picked_colors_json) {
+                change_val.set_inputs_data_color(family, i, color_input_default);
+            }
 
             if (val !== '') {
                 change_val.set_default_bool(family, i, false);
@@ -70,7 +73,7 @@ export const convert_theme_color_props_to_color = (family, i, val) => {
             }
 
         } else if (family === 'theme_metadata') {
-            if (inputs_data.obj[family][i].type === 'img_selector') {
+            if (inputs_data.obj[family][i].type === 'img_selector' && color_is_not_set_in_picked_colors_json) {
                 change_val.set_inputs_data_color(family, i, color_input_default);
             }
         }

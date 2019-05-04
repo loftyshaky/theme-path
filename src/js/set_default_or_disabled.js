@@ -7,6 +7,7 @@ import * as r from 'ramda';
 import Store from 'electron-store';
 
 import * as shared from 'js/shared';
+import * as json_file from 'js/json_file';
 import * as options from 'js/options';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
@@ -25,7 +26,7 @@ export const set_default_icon = (family, i) => {
 
         shared.mut.manifest.icons['128'] = 'icon.png';
 
-        shared.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
+        json_file.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
         //< set default icon name
 
         //> copy default icon
@@ -108,7 +109,7 @@ const set_default = (family, i) => {
             }
         }
 
-        shared.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
+        json_file.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
 
         if (inputs_data.obj[family][i].color) {
             change_val.set_inputs_data_color(family, i, color_input_default);

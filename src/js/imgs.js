@@ -5,13 +5,18 @@ import { copySync, writeFileSync } from 'fs-extra';
 
 import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
+import Store from 'electron-store';
 import Jimp from 'jimp';
 
 import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
+import * as picked_colors from 'js/picked_colors';
+import * as options from 'js/options';
 
 configure({ enforceActions: 'observed' });
+
+const store = new Store();
 
 //--
 
@@ -66,6 +71,12 @@ export const handle_files = async (file, family, i) => {
             copySync(file[0].path, join(shared.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
 
             change_val.change_val(family, i, img_name, img_extension);
+
+            picked_colors.remove_picked_color(family, img_name);
+
+            const { color_input_default } = options.ob.theme_vals[store.get('theme')];
+
+            change_val.set_inputs_data_color(family, i, color_input_default);
 
         } else {
             err(er_obj('Invalid image type'), 2, 'invalid_img_type');

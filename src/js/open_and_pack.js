@@ -2,8 +2,8 @@
 
 import { join, sep } from 'path';
 import { homedir, platform } from 'os';
-import { existsSync, unlinkSync, readdirSync } from 'fs-extra';
-import { execFile } from 'child_process';
+import { existsSync, unlinkSync, readdirSync, moveSync } from 'fs-extra';
+import { execFile, execFileSync } from 'child_process';
 import glob from 'glob';
 
 import kill from 'tree-kill';
@@ -118,6 +118,10 @@ export const pack = type => {
             );
             const package_name = shared.ob.chosen_folder_path.substring(shared.ob.chosen_folder_path.lastIndexOf(sep) + 1);
             const pak_path = join(shared.ob.chosen_folder_path, 'Cached Theme.pak');
+            const system_path = join(shared.ob.chosen_folder_path, 'system');
+            const work_folder_system_path = join(choose_folder.ob.work_folder, 'system');
+
+            moveSync(system_path, work_folder_system_path, { overwrite: true });
 
             try {
                 if (existsSync(pak_path)) {
@@ -144,6 +148,8 @@ export const pack = type => {
                 zipLocal.zip(shared.ob.chosen_folder_path, (er, zip) => {
                     if (!er) {
                         zip.compress().save(zip_path);
+
+                        moveSync(work_folder_system_path, system_path, { overwrite: true });
 
                     } else {
                         err(er, 5, null, false, false, true);
@@ -177,7 +183,9 @@ export const pack = type => {
                 });
                 //< remove pems
 
-                execFile(getChrome(platform()), [`--pack-extension=${shared.ob.chosen_folder_path}`]);
+                execFileSync(getChrome(platform()), [`--pack-extension=${shared.ob.chosen_folder_path}`]);
+
+                moveSync(work_folder_system_path, system_path, { overwrite: true });
             }
 
             if (tutorial.ob.tutorial_stage === 7) {

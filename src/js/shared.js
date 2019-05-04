@@ -1,7 +1,6 @@
 import { action, observable, configure } from 'mobx';
 
 import { join } from 'path';
-import { readFileSync, writeJsonSync } from 'fs-extra';
 
 import * as choose_folder from 'js/work_folder/choose_folder';
 
@@ -17,17 +16,6 @@ export const set_chosen_folder_path = action(chosen_folder_path => {
         err(er, 56);
     }
 });
-
-export const parse_json = file_path => {
-    try {
-        return JSON.parse(readFileSync(file_path, 'utf-8').trim());
-
-    } catch (er) {
-        err(er, 57, null, true);
-    }
-
-    return undefined;
-};
 
 export const find_from_name = (array, name) => {
     try {
@@ -87,15 +75,6 @@ export const construct_icons_obj = json => {
 
     } catch (er) {
         err(er, 64);
-    }
-};
-
-export const write_to_json = (json, json_path) => {
-    try {
-        writeJsonSync(json_path, json, { spaces: 4 });
-
-    } catch (er) {
-        err(er, 65, null, false, false, true);
     }
 };
 

@@ -154,7 +154,7 @@ const Chrome_picker = observer(props => {
     const on_change = picked_color => {
         try {
             color_pickiers.mut.current_pickied_color = picked_color;
-            color_pickiers.set_color_input_vizualization_color(family, i, picked_color);
+            color_pickiers.set_color_input_vizualization_color(family, null, i, picked_color);
 
             if (!inputs_data.obj[family][i].changed_color_once_after_focus) {
                 inputs_data.obj[family][i].changed_color_once_after_focus = true;
@@ -172,7 +172,7 @@ const Chrome_picker = observer(props => {
     return (
         <ChromePicker
             color={props.color}
-            disableAlpha={family !== 'images'}
+            disableAlpha={family !== 'images' || color_pickiers.con.no_alpha.indexOf(name) > -1}
             onChange={on_change}
         />
     );

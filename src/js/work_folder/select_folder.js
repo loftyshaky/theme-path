@@ -6,12 +6,15 @@ import looksSame from 'looks-same';
 
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
+import * as json_file from 'js/json_file';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as color_pickiers from 'js/color_pickiers';
+import * as picked_colors from 'js/picked_colors';
 
 configure({ enforceActions: 'observed' });
 
@@ -41,17 +44,29 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
             if (folder_info.is_theme) {
                 reset_inputs_data();
 
-                shared.mut.manifest = shared.parse_json(join(folder_path, 'manifest.json'));
+                shared.mut.manifest = json_file.parse_json(join(folder_path, 'manifest.json'));
                 const { default_locale } = shared.mut.manifest;
 
                 get_theme_name_or_descrption_inner(folder_path, default_locale, default_locale);
 
                 set_val('theme_metadata', 'locale', default_locale);
 
+                const picked_colors_path = join(shared.ob.chosen_folder_path, picked_colors.con.picked_colors_sdb_path);
+
+                const picked_colors_obj = existsSync(picked_colors_path) ? json_file.parse_json(picked_colors_path) : null;
+
+                if (picked_colors_obj && picked_colors_obj.theme_metadata && picked_colors_obj.theme_metadata.icon) {
+                    color_pickiers.set_color_input_vizualization_color('theme_metadata', 'icon', null, picked_colors_obj.theme_metadata.icon);
+                }
+
                 if (shared.mut.manifest.theme) {
                     Object.entries(shared.mut.manifest.theme).forEach(([family, family_obj]) => {
                         Object.entries(family_obj).forEach(([name, val]) => {
                             set_val(family, name, val);
+
+                            if (picked_colors_obj && picked_colors_obj[family] && picked_colors_obj[family][name]) {
+                                color_pickiers.set_color_input_vizualization_color(family, name, null, picked_colors_obj[family][name]);
+                            }
                         });
                     });
                 }
@@ -144,10 +159,10 @@ const get_theme_name_or_descrption = (name, message_name, locale, default_locale
         let val = '';
 
         if (messages_file_exist) {
-            const name_exist = shared.parse_json(messages_path)[message_name]; // name ex: description, name
+            const name_exist = json_file.parse_json(messages_path)[message_name]; // name ex: description, name
 
             if (name_exist) {
-                val = shared.parse_json(messages_path)[message_name].message;
+                val = json_file.parse_json(messages_path)[message_name].message;
             }
         }
 
