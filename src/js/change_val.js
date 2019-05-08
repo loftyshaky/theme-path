@@ -9,9 +9,10 @@ import Store from 'electron-store';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
-import * as shared from 'js/shared';
+import * as manifest from 'js/manifest';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as icons from 'js/icons';
+import * as msg from 'js/msg';
 import * as json_file from 'js/json_file';
 import * as options from 'js/options';
 import * as open_and_pack from 'js/open_and_pack';
@@ -55,7 +56,7 @@ export const change_val = async (family, name, val, img_extension, e) => {
                 delete_locale_folder(locale, default_locale);
 
             } else if (second_if_names.indexOf(name) > -1) {
-                write_to_json(shared.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
+                write_to_json(manifest.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
 
                 if (name === 'default_locale') {
                     add_locale_folder(new_val);
@@ -66,16 +67,16 @@ export const change_val = async (family, name, val, img_extension, e) => {
                 select_folder.get_theme_name_or_descrption_inner(chosen_folder_path.ob.chosen_folder_path, new_val, default_locale);
 
             } else if (third_if_names.indexOf(family) > -1) {
-                write_to_json(shared.mut.manifest, manifest_path, name, new_val, family);
+                write_to_json(manifest.mut.manifest, manifest_path, name, new_val, family);
 
             } else if (fourth_if_names.indexOf(family) > -1) {
-                write_to_json(shared.mut.manifest, manifest_path, name, new_val + img_extension_final, family);
+                write_to_json(manifest.mut.manifest, manifest_path, name, new_val + img_extension_final, family);
 
                 const created_solid_color_background_img = !img_extension && name === 'theme_ntp_background';
 
                 if (created_solid_color_background_img) {
                     set_inputs_data_val('properties', 'ntp_background_repeat', 'repeat');
-                    write_to_json(shared.mut.manifest, manifest_path, 'ntp_background_repeat', 'repeat', 'properties');
+                    write_to_json(manifest.mut.manifest, manifest_path, 'ntp_background_repeat', 'repeat', 'properties');
                 }
 
             } else if (family === 'options') {
@@ -115,8 +116,8 @@ export const change_val = async (family, name, val, img_extension, e) => {
 
 const set_name_or_description_prop = (name, new_val, forced_locale) => {
     try {
-        const val = shared.mut.manifest[name];
-        const val_is_localized = shared.val_is_localized(val);
+        const val = manifest.mut.manifest[name];
+        const val_is_localized = msg.val_is_localized(val);
         const locale = forced_locale || inputs_data.obj.theme_metadata.locale.val;
         const messages_path = join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale, 'messages.json');
 
@@ -125,14 +126,14 @@ const set_name_or_description_prop = (name, new_val, forced_locale) => {
         if (val_is_localized) {
             json_file.create_json_file(messages_path);
 
-            const message_name = shared.get_message_name(val);
+            const message_name = msg.get_message_name(val);
             const messages = json_file.parse_json(messages_path);
 
             write_to_json(messages, messages_path, message_name, new_val, 'theme_metadata'); // write to messages.json
 
         } else {
             json_file.create_json_file(messages_path);
-            write_to_json(shared.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
+            write_to_json(manifest.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
             const messages = json_file.parse_json(messages_path);
 
@@ -283,11 +284,11 @@ const delete_unused_locale_folders = new_default_locale => {
 
 const check_if_name_or_description_exist = (name, message_json) => {
     try {
-        const val = shared.mut.manifest[name];
-        const val_is_localized = shared.val_is_localized(val);
+        const val = manifest.mut.manifest[name];
+        const val_is_localized = msg.val_is_localized(val);
 
         if (val_is_localized) {
-            const message_name = shared.get_message_name(val);
+            const message_name = msg.get_message_name(val);
             if (!message_json) {
                 return false;
             }

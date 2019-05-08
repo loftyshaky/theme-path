@@ -6,7 +6,7 @@ import { existsSync, unlinkSync, copySync } from 'fs-extra';
 import * as r from 'ramda';
 import Store from 'electron-store';
 
-import * as shared from 'js/shared';
+import * as manifest from 'js/manifest';
 import * as json_file from 'js/json_file';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as icons from 'js/icons';
@@ -24,11 +24,11 @@ export const set_default_icon = (family, name) => {
         //> set default icon name
         change_val.set_default_bool(family, name, true);
 
-        icons.construct_icons_obj(shared.mut.manifest);
+        icons.construct_icons_obj(manifest.mut.manifest);
 
-        shared.mut.manifest.icons['128'] = 'icon.png';
+        manifest.mut.manifest.icons['128'] = 'icon.png';
 
-        json_file.write_to_json(shared.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
+        json_file.write_to_json(manifest.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
         //< set default icon name
 
         //> copy default icon
@@ -93,10 +93,10 @@ const set_default = (family, name) => {
     try {
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];
 
-        delete shared.mut.manifest.theme[family][name];
+        delete manifest.mut.manifest.theme[family][name];
 
-        if (r.isEmpty(shared.mut.manifest.theme[family])) {
-            delete shared.mut.manifest.theme[family];
+        if (r.isEmpty(manifest.mut.manifest.theme[family])) {
+            delete manifest.mut.manifest.theme[family];
         }
 
         const img_to_delete_path = join(chosen_folder_path.ob.chosen_folder_path, inputs_data.obj[family][name].val);
@@ -110,7 +110,7 @@ const set_default = (family, name) => {
             }
         }
 
-        json_file.write_to_json(shared.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
+        json_file.write_to_json(manifest.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
 
         if (inputs_data.obj[family][name].color) {
             change_val.set_inputs_data_color(family, name, color_input_default);

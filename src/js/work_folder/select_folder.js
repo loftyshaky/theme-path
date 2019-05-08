@@ -5,9 +5,10 @@ import { action, configure } from 'mobx';
 import looksSame from 'looks-same';
 
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
-import * as shared from 'js/shared';
+import * as manifest from 'js/manifest';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as icons from 'js/icons';
+import * as msg from 'js/msg';
 import * as json_file from 'js/json_file';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
@@ -46,8 +47,8 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
             if (folder_info.is_theme) {
                 reset_inputs_data();
 
-                shared.mut.manifest = json_file.parse_json(join(folder_path, 'manifest.json'));
-                const { default_locale } = shared.mut.manifest;
+                manifest.mut.manifest = json_file.parse_json(join(folder_path, 'manifest.json'));
+                const { default_locale } = manifest.mut.manifest;
 
                 get_theme_name_or_descrption_inner(folder_path, default_locale, default_locale);
 
@@ -61,8 +62,8 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                     color_pickiers.set_color_input_vizualization_color('theme_metadata', 'icon', picked_colors_obj.theme_metadata.icon, true);
                 }
 
-                if (shared.mut.manifest.theme) {
-                    Object.entries(shared.mut.manifest.theme).forEach(([family, family_obj]) => {
+                if (manifest.mut.manifest.theme) {
+                    Object.entries(manifest.mut.manifest.theme).forEach(([family, family_obj]) => {
                         Object.entries(family_obj).forEach(([name, val]) => {
                             set_val(family, name, val);
                             if (picked_colors_obj && picked_colors_obj[family] && picked_colors_obj[family][name]) {
@@ -73,7 +74,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 }
 
                 //> set icon default checkbox state
-                if (shared.mut.manifest.icons && shared.mut.manifest.icons['128']) {
+                if (manifest.mut.manifest.icons && manifest.mut.manifest.icons['128']) {
                     const icon_paths = icons.get_icon_paths();
 
                     if (existsSync(icon_paths.target)) {
@@ -131,12 +132,12 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
 
 export const get_theme_name_or_descrption_inner = (folder_path, locale, default_locale) => {
     try {
-        Object.entries(shared.mut.manifest).forEach(([name, val]) => {
+        Object.entries(manifest.mut.manifest).forEach(([name, val]) => {
             if (inputs_data.obj.theme_metadata[name]) {
-                const val_is_localized = shared.val_is_localized(val);
+                const val_is_localized = msg.val_is_localized(val);
 
                 if (val_is_localized) {
-                    const message_name = shared.get_message_name(val);
+                    const message_name = msg.get_message_name(val);
 
                     get_theme_name_or_descrption(name, message_name, locale, default_locale, folder_path);
 

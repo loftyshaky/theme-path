@@ -19,9 +19,3 @@ export const get_message_name = val => {
 
     return undefined;
 };
-
-//> varibles t
-export const mut = {
-    manifest: null,
-};
-//< varibles t
