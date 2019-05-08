@@ -11,6 +11,7 @@ import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as chosen_folder_path from 'js/chosen_folder_path';
+import * as icons from 'js/icons';
 import * as json_file from 'js/json_file';
 import * as options from 'js/options';
 import * as open_and_pack from 'js/open_and_pack';
@@ -165,7 +166,7 @@ const write_to_json = (json, json_path, name, new_val, family) => {
                 //< write to messages.json or manifest.json
 
             } else if (name === 'icon') {
-                shared.construct_icons_obj(json);
+                icons.construct_icons_obj(json);
 
                 new_json.icons['128'] = new_val;
             }

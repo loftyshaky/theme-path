@@ -9,6 +9,7 @@ import Store from 'electron-store';
 import * as shared from 'js/shared';
 import * as json_file from 'js/json_file';
 import * as chosen_folder_path from 'js/chosen_folder_path';
+import * as icons from 'js/icons';
 import * as options from 'js/options';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
@@ -23,7 +24,7 @@ export const set_default_icon = (family, name) => {
         //> set default icon name
         change_val.set_default_bool(family, name, true);
 
-        shared.construct_icons_obj(shared.mut.manifest);
+        icons.construct_icons_obj(shared.mut.manifest);
 
         shared.mut.manifest.icons['128'] = 'icon.png';
 
@@ -31,7 +32,7 @@ export const set_default_icon = (family, name) => {
         //< set default icon name
 
         //> copy default icon
-        const icon_paths = shared.get_icon_paths();
+        const icon_paths = icons.get_icon_paths();
 
         copySync(icon_paths.source, icon_paths.target);
         //< copy default icon

@@ -7,6 +7,7 @@ import looksSame from 'looks-same';
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
 import * as chosen_folder_path from 'js/chosen_folder_path';
+import * as icons from 'js/icons';
 import * as json_file from 'js/json_file';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
@@ -73,7 +74,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
 
                 //> set icon default checkbox state
                 if (shared.mut.manifest.icons && shared.mut.manifest.icons['128']) {
-                    const icon_paths = shared.get_icon_paths();
+                    const icon_paths = icons.get_icon_paths();
 
                     if (existsSync(icon_paths.target)) {
                         looksSame(icon_paths.source, icon_paths.target, (er2, using_default_icon) => {
