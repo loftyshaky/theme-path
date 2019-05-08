@@ -25,15 +25,15 @@ export const reset_inputs_data = action(() => {
 
 export const inputs_data = observable({
     obj: {
-        theme_metadata: [
-            {
+        theme_metadata: {
+            version: {
                 key: x.unique_id(),
                 name: 'version',
                 family: 'theme_metadata',
                 type: 'textarea',
                 val: '',
             },
-            {
+            icon: {
                 key: x.unique_id(),
                 name: 'icon',
                 family: 'theme_metadata',
@@ -47,7 +47,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            locale: {
                 key: x.unique_id(),
                 name: 'locale',
                 family: 'theme_metadata',
@@ -55,7 +55,7 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
-            {
+            name: {
                 key: x.unique_id(),
                 name: 'name',
                 family: 'theme_metadata',
@@ -65,7 +65,7 @@ export const inputs_data = observable({
                 counter: true,
                 char_limit: 45,
             },
-            {
+            description: {
                 key: x.unique_id(),
                 name: 'description',
                 family: 'theme_metadata',
@@ -75,7 +75,7 @@ export const inputs_data = observable({
                 counter: true,
                 char_limit: 132,
             },
-            {
+            default_locale: {
                 key: x.unique_id(),
                 name: 'default_locale',
                 family: 'theme_metadata',
@@ -83,9 +83,9 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
-        ],
-        images: [
-            {
+        },
+        images: {
+            theme_ntp_background: {
                 key: x.unique_id(),
                 name: 'theme_ntp_background',
                 family: 'images',
@@ -99,7 +99,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_toolbar: {
                 key: x.unique_id(),
                 name: 'theme_toolbar',
                 family: 'images',
@@ -113,7 +113,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_frame: {
                 key: x.unique_id(),
                 name: 'theme_frame',
                 family: 'images',
@@ -127,7 +127,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_frame_inactive: {
                 key: x.unique_id(),
                 name: 'theme_frame_inactive',
                 family: 'images',
@@ -141,7 +141,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_frame_incognito: {
                 key: x.unique_id(),
                 name: 'theme_frame_incognito',
                 family: 'images',
@@ -155,7 +155,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_frame_incognito_inactive: {
                 key: x.unique_id(),
                 name: 'theme_frame_incognito_inactive',
                 family: 'images',
@@ -169,7 +169,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_frame_overlay: {
                 key: x.unique_id(),
                 name: 'theme_frame_overlay',
                 family: 'images',
@@ -183,7 +183,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_frame_overlay_inactive: {
                 key: x.unique_id(),
                 name: 'theme_frame_overlay_inactive',
                 family: 'images',
@@ -197,7 +197,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_tab_background: {
                 key: x.unique_id(),
                 name: 'theme_tab_background',
                 family: 'images',
@@ -211,7 +211,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_tab_background_incognito: {
                 key: x.unique_id(),
                 name: 'theme_tab_background_incognito',
                 family: 'images',
@@ -225,7 +225,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_window_control_background: {
                 key: x.unique_id(),
                 name: 'theme_window_control_background',
                 family: 'images',
@@ -239,7 +239,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            theme_ntp_attribution: {
                 key: x.unique_id(),
                 name: 'theme_ntp_attribution',
                 family: 'images',
@@ -253,9 +253,9 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-        ],
-        colors: [
-            {
+        },
+        colors: {
+            ntp_background: {
                 key: x.unique_id(),
                 name: 'ntp_background',
                 family: 'colors',
@@ -267,7 +267,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            toolbar: {
                 key: x.unique_id(),
                 name: 'toolbar',
                 family: 'colors',
@@ -279,7 +279,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            frame: {
                 key: x.unique_id(),
                 name: 'frame',
                 family: 'colors',
@@ -291,7 +291,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            frame_inactive: {
                 key: x.unique_id(),
                 name: 'frame_inactive',
                 family: 'colors',
@@ -303,7 +303,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            frame_incognito: {
                 key: x.unique_id(),
                 name: 'frame_incognito',
                 family: 'colors',
@@ -315,7 +315,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            frame_incognito_inactive: {
                 key: x.unique_id(),
                 name: 'frame_incognito_inactive',
                 family: 'colors',
@@ -327,7 +327,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            bookmark_text: {
                 key: x.unique_id(),
                 name: 'bookmark_text',
                 family: 'colors',
@@ -339,7 +339,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            tab_text: {
                 key: x.unique_id(),
                 name: 'tab_text',
                 family: 'colors',
@@ -351,7 +351,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            tab_background_text: {
                 key: x.unique_id(),
                 name: 'tab_background_text',
                 family: 'colors',
@@ -363,7 +363,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            button_background: {
                 key: x.unique_id(),
                 name: 'button_background',
                 family: 'colors',
@@ -375,7 +375,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            ntp_text: {
                 key: x.unique_id(),
                 name: 'ntp_text',
                 family: 'colors',
@@ -387,9 +387,9 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-        ],
-        tints: [
-            {
+        },
+        tints: {
+            frame: {
                 key: x.unique_id(),
                 name: 'frame',
                 family: 'tints',
@@ -402,7 +402,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            frame_inactive: {
                 key: x.unique_id(),
                 name: 'frame_inactive',
                 family: 'tints',
@@ -415,7 +415,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            frame_incognito: {
                 key: x.unique_id(),
                 name: 'frame_incognito',
                 family: 'tints',
@@ -428,7 +428,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            frame_incognito_inactive: {
                 key: x.unique_id(),
                 name: 'frame_incognito_inactive',
                 family: 'tints',
@@ -441,7 +441,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            background_tab: {
                 key: x.unique_id(),
                 name: 'background_tab',
                 family: 'tints',
@@ -454,7 +454,7 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-            {
+            buttons: {
                 key: x.unique_id(),
                 name: 'buttons',
                 family: 'tints',
@@ -467,9 +467,9 @@ export const inputs_data = observable({
                 changed_color_once_after_focus: false,
                 add_help: true,
             },
-        ],
-        properties: [
-            {
+        },
+        properties: {
+            ntp_background_alignment: {
                 key: x.unique_id(),
                 name: 'ntp_background_alignment',
                 family: 'properties',
@@ -477,7 +477,7 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
-            {
+            ntp_background_repeat: {
                 key: x.unique_id(),
                 name: 'ntp_background_repeat',
                 family: 'properties',
@@ -485,7 +485,7 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
-            {
+            ntp_logo_alternate: {
                 key: x.unique_id(),
                 name: 'ntp_logo_alternate',
                 family: 'properties',
@@ -493,16 +493,16 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
-        ],
-        options: [
-            {
+        },
+        options: {
+            theme: {
                 key: x.unique_id(),
                 name: 'theme',
                 family: 'options',
                 type: 'select',
                 val: '',
             },
-            {
+            chrome_exe_path: {
                 key: x.unique_id(),
                 name: 'chrome_exe_path',
                 family: 'options',
@@ -510,7 +510,7 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
-            {
+            chrome_user_data_dirs: {
                 key: x.unique_id(),
                 name: 'chrome_user_data_dirs',
                 family: 'options',
@@ -518,7 +518,7 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
-            {
+            enable_analytics: {
                 key: x.unique_id(),
                 name: 'enable_analytics',
                 family: 'options',
@@ -526,7 +526,7 @@ export const inputs_data = observable({
                 val: true,
                 add_help: false,
             },
-            {
+            enable_analytics_dev: {
                 key: x.unique_id(),
                 name: 'enable_analytics_dev',
                 family: 'options',
@@ -535,7 +535,7 @@ export const inputs_data = observable({
                 add_help: false,
                 hidden: true,
             },
-        ],
+        },
     },
 });
 
