@@ -5,7 +5,7 @@ import { action, configure } from 'mobx';
 import * as r from 'ramda';
 
 import x from 'x';
-import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as sort_folders from 'js/work_folder/sort_folders';
@@ -33,7 +33,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                         if (!existsSync(join(folder_path, folder_name_final))) {
                             if (mode === 'creating_folder') {
                                 const new_theme_path = join(folder_path, folder_name_final);
-                                const root_folder_chosen = shared.ob.chosen_folder_path === choose_folder.ob.work_folder;
+                                const root_folder_chosen = chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder;
 
 
                                 copySync(source_folder_path, new_theme_path);
@@ -71,7 +71,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                     t('folder_is_locked'); // eslint-disable-line no-throw-literal
                                 }
 
-                                shared.set_chosen_folder_path(new_folder_path);
+                                chosen_folder_path.set_chosen_folder_path(new_folder_path);
 
                                 const renamed_folder_i = wf_shared.ob.folders.findIndex(item => item.path === source_folder_path);
                                 const work_folder_is_theme_folder = wf_shared.ob.folders.length === 0;

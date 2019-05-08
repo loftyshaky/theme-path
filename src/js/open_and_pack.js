@@ -11,7 +11,7 @@ import zipLocal from 'zip-local';
 import Store from 'electron-store';
 import getChrome from 'get-chrome';
 
-import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
 import * as wf_shared from 'js/work_folder/wf_shared';
@@ -28,7 +28,7 @@ const run = callback => {
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (wf_shared.mut.chosen_folder_info.is_theme) {
-                const files = readdirSync(shared.ob.chosen_folder_path);
+                const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
                 const folder_is_theme = files.find(file => file === 'manifest.json');
 
                 if (folder_is_theme) {
@@ -77,7 +77,7 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
                                 '--no-sandbox', // fix blank black screen in Chrome Canary
                                 '--test-type', // "supress You are using an unsupported command-line flag: --no-sandbox. Stability and security will suffer." message
                                 `--user-data-dir=${user_data_path}`,
-                                `--load-extension=${shared.ob.chosen_folder_path}`,
+                                `--load-extension=${chosen_folder_path.ob.chosen_folder_path}`,
                             ]);
 
                         mut.chrome_process_ids[user_data_path] = child_process.pid;
@@ -112,13 +112,13 @@ export const update_chrome_user_data_dirs_observable = action(() => {
 export const pack = type => {
     run(async () => {
         try {
-            const directory_to_save_package_in = shared.ob.chosen_folder_path.substring(
+            const directory_to_save_package_in = chosen_folder_path.ob.chosen_folder_path.substring(
                 0,
-                shared.ob.chosen_folder_path.lastIndexOf(sep),
+                chosen_folder_path.ob.chosen_folder_path.lastIndexOf(sep),
             );
-            const package_name = shared.ob.chosen_folder_path.substring(shared.ob.chosen_folder_path.lastIndexOf(sep) + 1);
-            const pak_path = join(shared.ob.chosen_folder_path, 'Cached Theme.pak');
-            const system_path = join(shared.ob.chosen_folder_path, 'system');
+            const package_name = chosen_folder_path.ob.chosen_folder_path.substring(chosen_folder_path.ob.chosen_folder_path.lastIndexOf(sep) + 1);
+            const pak_path = join(chosen_folder_path.ob.chosen_folder_path, 'Cached Theme.pak');
+            const system_path = join(chosen_folder_path.ob.chosen_folder_path, 'system');
             const work_folder_system_path = join(choose_folder.ob.work_folder, 'system');
 
             moveSync(system_path, work_folder_system_path, { overwrite: true });
@@ -145,7 +145,7 @@ export const pack = type => {
                 }
 
 
-                zipLocal.zip(shared.ob.chosen_folder_path, (er, zip) => {
+                zipLocal.zip(chosen_folder_path.ob.chosen_folder_path, (er, zip) => {
                     if (!er) {
                         zip.compress().save(zip_path);
 
@@ -183,7 +183,7 @@ export const pack = type => {
                 });
                 //< remove pems
 
-                execFileSync(getChrome(platform()), [`--pack-extension=${shared.ob.chosen_folder_path}`]);
+                execFileSync(getChrome(platform()), [`--pack-extension=${chosen_folder_path.ob.chosen_folder_path}`]);
 
                 moveSync(work_folder_system_path, system_path, { overwrite: true });
             }

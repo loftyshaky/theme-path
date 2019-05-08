@@ -1,43 +1,6 @@
-import { action, observable, configure } from 'mobx';
-
 import { join } from 'path';
 
-import * as choose_folder from 'js/work_folder/choose_folder';
-
-configure({ enforceActions: 'observed' });
-
 //--
-
-export const set_chosen_folder_path = action(chosen_folder_path => {
-    try {
-        ob.chosen_folder_path = chosen_folder_path;
-
-    } catch (er) {
-        err(er, 56);
-    }
-});
-
-export const find_from_name = (array, name) => {
-    try {
-        return array.find(item => item.name === name);
-
-    } catch (er) {
-        err(er, 58);
-    }
-
-    return undefined;
-};
-
-export const find_from_val = (array, val) => {
-    try {
-        return array.find(item => (item.val || item.value) === val);
-
-    } catch (er) {
-        err(er, 59);
-    }
-
-    return undefined;
-};
 
 export const val_is_localized = val => {
     try {
@@ -96,10 +59,6 @@ export const get_icon_paths = () => {
 };
 
 //> varibles t
-export const ob = observable({
-    chosen_folder_path: choose_folder.ob.work_folder,
-});
-
 export const mut = {
     manifest: null,
 };

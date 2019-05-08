@@ -1,11 +1,11 @@
 import { shell } from 'electron';
 
-import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 
 const show_or_open_folder = (fun, err1, err2) => {
     try {
-        if (shared.ob.chosen_folder_path !== '') {
-            const folder_opened_in_explorer = shell[fun](shared.ob.chosen_folder_path);
+        if (chosen_folder_path.ob.chosen_folder_path !== '') {
+            const folder_opened_in_explorer = shell[fun](chosen_folder_path.ob.chosen_folder_path);
 
             if (!folder_opened_in_explorer) {
                 err1();

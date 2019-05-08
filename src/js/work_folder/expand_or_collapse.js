@@ -2,8 +2,8 @@ import { action, configure } from 'mobx';
 import * as r from 'ramda';
 
 import x from 'x';
-import * as shared from 'js/shared';
 import * as analytics from 'js/analytics';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as sort_folders from 'js/work_folder/sort_folders';
@@ -81,7 +81,7 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
                         }
                         //<2 mark target folder's child folders as closed
 
-                        if (item.path === shared.ob.chosen_folder_path) {
+                        if (item.path === chosen_folder_path.ob.chosen_folder_path) {
                             wf_shared.deselect_theme();
                         }
 

@@ -3,8 +3,8 @@ import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 import x from 'x';
-import * as shared from 'js/shared';
 import * as analytics from 'js/analytics';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
@@ -36,12 +36,12 @@ export class Header extends React.Component {
 
     expand_or_collapse_folder = async () => {
         try {
-            const root_folder_chosen = shared.ob.chosen_folder_path === choose_folder.ob.work_folder;
+            const root_folder_chosen = chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder;
 
             if (root_folder_chosen) {
                 new_theme_or_rename.create_new_theme_or_rename_theme_folder(
                     'creating_folder',
-                    shared.ob.chosen_folder_path,
+                    chosen_folder_path.ob.chosen_folder_path,
                     0,
                     0,
                     true,
@@ -50,7 +50,7 @@ export class Header extends React.Component {
             } else {
                 expand_or_collapse.expand_or_collapse_folder(
                     'new_theme',
-                    shared.ob.chosen_folder_path,
+                    chosen_folder_path.ob.chosen_folder_path,
                     wf_shared.mut.chosen_folder_info.nest_level,
                     wf_shared.mut.chosen_folder_info.i_to_insert_folder_in,
                 );

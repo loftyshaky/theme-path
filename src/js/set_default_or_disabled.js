@@ -8,6 +8,7 @@ import Store from 'electron-store';
 
 import * as shared from 'js/shared';
 import * as json_file from 'js/json_file';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as options from 'js/options';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
@@ -26,7 +27,7 @@ export const set_default_icon = (family, name) => {
 
         shared.mut.manifest.icons['128'] = 'icon.png';
 
-        json_file.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
+        json_file.write_to_json(shared.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
         //< set default icon name
 
         //> copy default icon
@@ -97,7 +98,7 @@ const set_default = (family, name) => {
             delete shared.mut.manifest.theme[family];
         }
 
-        const img_to_delete_path = join(shared.ob.chosen_folder_path, inputs_data.obj[family][name].val);
+        const img_to_delete_path = join(chosen_folder_path.ob.chosen_folder_path, inputs_data.obj[family][name].val);
 
         if (existsSync(img_to_delete_path)) {
             try {
@@ -108,7 +109,7 @@ const set_default = (family, name) => {
             }
         }
 
-        json_file.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
+        json_file.write_to_json(shared.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
 
         if (inputs_data.obj[family][name].color) {
             change_val.set_inputs_data_color(family, name, color_input_default);

@@ -10,6 +10,7 @@ import Store from 'electron-store';
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as json_file from 'js/json_file';
 import * as options from 'js/options';
 import * as open_and_pack from 'js/open_and_pack';
@@ -29,7 +30,7 @@ export const change_val = async (family, name, val, img_extension, e) => {
 
         if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
             const new_val = val === 'is_not_select' ? e.target.value : val;
-            const manifest_path = join(shared.ob.chosen_folder_path, 'manifest.json');
+            const manifest_path = join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json');
             const default_locale = family === 'theme_metadata' ? inputs_data.obj[family][name] : null;
             const first_if_names = ['name', 'description'];
             const second_if_names = ['version', 'default_locale'];
@@ -46,7 +47,7 @@ export const change_val = async (family, name, val, img_extension, e) => {
 
                 if (name === 'name') {
                     if (locale === default_locale) {
-                        new_theme_or_rename.rename_theme_folder(shared.ob.chosen_folder_path, new_val);
+                        new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_val);
                     }
                 }
 
@@ -61,7 +62,7 @@ export const change_val = async (family, name, val, img_extension, e) => {
                 }
 
             } else if (name === 'locale') {
-                select_folder.get_theme_name_or_descrption_inner(shared.ob.chosen_folder_path, new_val, default_locale);
+                select_folder.get_theme_name_or_descrption_inner(chosen_folder_path.ob.chosen_folder_path, new_val, default_locale);
 
             } else if (third_if_names.indexOf(family) > -1) {
                 write_to_json(shared.mut.manifest, manifest_path, name, new_val, family);
@@ -116,7 +117,7 @@ const set_name_or_description_prop = (name, new_val, forced_locale) => {
         const val = shared.mut.manifest[name];
         const val_is_localized = shared.val_is_localized(val);
         const locale = forced_locale || inputs_data.obj.theme_metadata.locale.val;
-        const messages_path = join(shared.ob.chosen_folder_path, '_locales', locale, 'messages.json');
+        const messages_path = join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale, 'messages.json');
 
         check_if_localisation_folders_exists_create_them_if_dont(locale);
 
@@ -130,7 +131,7 @@ const set_name_or_description_prop = (name, new_val, forced_locale) => {
 
         } else {
             json_file.create_json_file(messages_path);
-            write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
+            write_to_json(shared.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
             const messages = json_file.parse_json(messages_path);
 
@@ -194,8 +195,8 @@ const write_to_json = (json, json_path, name, new_val, family) => {
 
 const check_if_localisation_folders_exists_create_them_if_dont = locale => {
     try {
-        check_if_folder_exists_create_it_if_dont(join(shared.ob.chosen_folder_path, '_locales'));
-        check_if_folder_exists_create_it_if_dont(join(shared.ob.chosen_folder_path, '_locales', locale));
+        check_if_folder_exists_create_it_if_dont(join(chosen_folder_path.ob.chosen_folder_path, '_locales'));
+        check_if_folder_exists_create_it_if_dont(join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale));
 
     } catch (er) {
         err(er, 24);
@@ -223,7 +224,7 @@ const delete_locale_folder = async (locale, default_locale) => {
 
         if (name === '' && description === '' && locale !== default_locale) {
             try {
-                removeSync(join(shared.ob.chosen_folder_path, '_locales', locale));
+                removeSync(join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale));
 
             } catch (er) {
                 err(er, 123, 'locale_is_locked');
@@ -239,11 +240,11 @@ const delete_locale_folder = async (locale, default_locale) => {
 //> delete locale folders with empty name and description
 const delete_unused_locale_folders = new_default_locale => {
     try {
-        const locale_folders = readdirSync(join(shared.ob.chosen_folder_path, '_locales'));
+        const locale_folders = readdirSync(join(chosen_folder_path.ob.chosen_folder_path, '_locales'));
 
         locale_folders.forEach(locale_folder => {
             if (locale_folder !== new_default_locale) {
-                const messages_path = join(shared.ob.chosen_folder_path, '_locales', locale_folder, 'messages.json');
+                const messages_path = join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale_folder, 'messages.json');
 
                 const remove_locale_folder = r.ifElse(
                     () => existsSync(messages_path),
@@ -264,7 +265,7 @@ const delete_unused_locale_folders = new_default_locale => {
 
                 if (remove_locale_folder) {
                     try {
-                        removeSync(join(shared.ob.chosen_folder_path, '_locales', locale_folder));
+                        removeSync(join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale_folder));
 
                     } catch (er) {
                         err(er, 131, 'folder_is_locked');

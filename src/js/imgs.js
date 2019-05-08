@@ -8,7 +8,7 @@ import * as r from 'ramda';
 import Store from 'electron-store';
 import Jimp from 'jimp';
 
-import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 import * as picked_colors from 'js/picked_colors';
@@ -42,7 +42,7 @@ export const create_solid_color_image = (family, name, hex, alpha) => {
                 try {
                     const base_64_data = data.replace(/^data:image\/png;base64,/, '');
 
-                    writeFileSync(join(shared.ob.chosen_folder_path, `${name}.png`), base_64_data, 'base64');
+                    writeFileSync(join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`), base_64_data, 'base64');
 
                 } catch (er3) {
                     err(er3, 1);
@@ -68,7 +68,7 @@ export const handle_files = async (file, family, name) => {
         if (valid_file_types.indexOf(file[0].type) > -1) {
             const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
 
-            copySync(file[0].path, join(shared.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
+            copySync(file[0].path, join(chosen_folder_path.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
 
             change_val.change_val(family, name, img_name, img_extension);
 

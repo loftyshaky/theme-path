@@ -1,7 +1,7 @@
 import { action, configure } from 'mobx';
 
 import x from 'x';
-import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as wf_shared from 'js/work_folder/wf_shared';
 
 configure({ enforceActions: 'observed' });
@@ -27,9 +27,9 @@ export const trigger_work_folder_reload = x.debounce(action(() => {
         wf_shared.collapse_all_folders();
 
         //> trigger Work_folder component rerender
-        const { chosen_folder_path } = shared.ob;
-        shared.ob.chosen_folder_path = '';
-        shared.ob.chosen_folder_path = chosen_folder_path;
+        const { chosen_folder_path: old_chosen_folder_path } = chosen_folder_path.ob;
+        chosen_folder_path.ob.chosen_folder_path = '';
+        chosen_folder_path.ob.chosen_folder_path = old_chosen_folder_path;
         //< trigger Work_folder component rerender
 
     } catch (er) {

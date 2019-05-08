@@ -6,6 +6,7 @@ import looksSame from 'looks-same';
 
 import { inputs_data, reset_inputs_data } from 'js/inputs_data';
 import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as json_file from 'js/json_file';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
@@ -24,13 +25,13 @@ configure({ enforceActions: 'observed' });
 export const select_folder = action((is_work_folder, folder_path, children, nest_level, i_to_insert_folder_in) => { // action( need to be here otherwise protecting screen will not lift
     try {
         if (choose_folder.reset_work_folder(false)) {
-            const folder_is_already_selected = folder_path === shared.ob.chosen_folder_path;
+            const folder_is_already_selected = folder_path === chosen_folder_path.ob.chosen_folder_path;
 
             if (!is_work_folder) {
                 wf_shared.deselect_theme();
             }
 
-            shared.set_chosen_folder_path(folder_path);
+            chosen_folder_path.set_chosen_folder_path(folder_path);
 
             const folder_info = wf_shared.get_info_about_folder(folder_path);
 
@@ -51,7 +52,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
 
                 set_val('theme_metadata', 'locale', default_locale);
 
-                const picked_colors_path = join(shared.ob.chosen_folder_path, picked_colors.con.picked_colors_sdb_path);
+                const picked_colors_path = join(chosen_folder_path.ob.chosen_folder_path, picked_colors.con.picked_colors_sdb_path);
 
                 const picked_colors_obj = existsSync(picked_colors_path) ? json_file.parse_json(picked_colors_path) : null;
 

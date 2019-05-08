@@ -5,7 +5,7 @@ import * as r from 'ramda';
 import chokidar from 'chokidar';
 
 import x from 'x';
-import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as wf_shared from 'js/work_folder/wf_shared';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
@@ -122,7 +122,7 @@ watcher
                         //< update folder state (theme / not theme /, empty / not empty, opened / closed)
                     }
 
-                    if (folder_path === shared.ob.chosen_folder_path) {
+                    if (folder_path === chosen_folder_path.ob.chosen_folder_path) {
                         wf_shared.deselect_theme();
                     }
                 }

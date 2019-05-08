@@ -5,7 +5,7 @@ import { decorate, observable, action, computed, configure } from 'mobx';
 import * as r from 'ramda';
 
 import { reset_inputs_data } from 'js/inputs_data';
-import * as shared from 'js/shared';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as toggle_popup from 'js/toggle_popup';
 import * as help_viewer from 'js/help_viewer';
 import * as choose_folder from 'js/work_folder/choose_folder';
@@ -17,9 +17,9 @@ configure({ enforceActions: 'observed' });
 
 export const rerender_work_folder = action(() => {
     try {
-        const previous_val = shared.ob.chosen_folder_path;
-        shared.ob.chosen_folder_path = '';
-        shared.ob.chosen_folder_path = previous_val;
+        const previous_val = chosen_folder_path.ob.chosen_folder_path;
+        chosen_folder_path.ob.chosen_folder_path = '';
+        chosen_folder_path.ob.chosen_folder_path = previous_val;
 
     } catch (er) {
         err(er, 89);
@@ -112,7 +112,7 @@ export const set_folders = action(val => {
 
 export const deselect_theme = action(() => {
     try {
-        shared.ob.chosen_folder_path = choose_folder.ob.work_folder;
+        chosen_folder_path.ob.chosen_folder_path = choose_folder.ob.work_folder;
 
         mut.chosen_folder_info.is_theme = false;
 
@@ -132,7 +132,7 @@ export const com = {
     get fieldset_protecting_screen_is_visible() {
         const work_folder_path = choose_folder.ob.work_folder;
 
-        if (work_folder_path === shared.ob.chosen_folder_path) {
+        if (work_folder_path === chosen_folder_path.ob.chosen_folder_path) {
             const work_folder_info = get_info_about_folder(work_folder_path);
 
             return !work_folder_info.is_theme;
