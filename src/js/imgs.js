@@ -20,7 +20,7 @@ const store = new Store();
 
 //--
 
-export const create_solid_color_image = (name, family, hex, alpha) => {
+export const create_solid_color_image = (family, name, hex, alpha) => {
     try {
         const width = sta.width[name] ? sta.width[name] : 1;
         const height = sta.height[name] ? sta.height[name] : 1;
@@ -56,9 +56,9 @@ export const create_solid_color_image = (name, family, hex, alpha) => {
 };
 
 //> image upload
-export const handle_files = async (file, family, i) => {
+export const handle_files = async (file, family, name) => {
     try {
-        const img_name = inputs_data.obj[family][i].name;
+        const img_name = name;
         const valid_file_types = r.cond([
             [r.equals('theme_ntp_background'), () => ['image/png', 'image/jpeg', 'image/gif']],
             [r.equals('icon'), () => ['image/png', 'image/jpeg']],
@@ -70,13 +70,13 @@ export const handle_files = async (file, family, i) => {
 
             copySync(file[0].path, join(shared.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
 
-            change_val.change_val(family, i, img_name, img_extension);
+            change_val.change_val(family, name, img_name, img_extension);
 
             picked_colors.remove_picked_color(family, img_name);
 
             const { color_input_default } = options.ob.theme_vals[store.get('theme')];
 
-            change_val.set_inputs_data_color(family, i, color_input_default);
+            change_val.set_inputs_data_color(family, name, color_input_default);
 
         } else {
             err(er_obj('Invalid image type'), 2, 'invalid_img_type');
@@ -108,33 +108,33 @@ export const prevent_default_dnd_actions = e => {
     }
 };
 
-export const dehighlight_upload_box_on_drop = action((family, i) => {
+export const dehighlight_upload_box_on_drop = action((family, name) => {
     try {
         mut.drag_counter = 0;
-        inputs_data.obj[family][i].highlight_upload_box = false;
+        inputs_data.obj[family][name].highlight_upload_box = false;
 
     } catch (er) {
         err(er, 41);
     }
 });
 
-export const highlight_upload_box_on_drag_enter = action((family, i) => {
+export const highlight_upload_box_on_drag_enter = action((family, name) => {
     try {
         mut.drag_counter++;
 
-        inputs_data.obj[family][i].highlight_upload_box = true;
+        inputs_data.obj[family][name].highlight_upload_box = true;
 
     } catch (er) {
         err(er, 42);
     }
 });
 
-export const dehighlight_upload_box_on_drag_leave = action((family, i) => {
+export const dehighlight_upload_box_on_drag_leave = action((family, name) => {
     try {
         mut.drag_counter--;
 
         if (mut.drag_counter === 0) {
-            inputs_data.obj[family][i].highlight_upload_box = false;
+            inputs_data.obj[family][name].highlight_upload_box = false;
         }
 
     } catch (er) {

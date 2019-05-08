@@ -5,7 +5,6 @@ import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
-import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import * as wf_shared from 'js/work_folder/wf_shared';
 
@@ -22,7 +21,6 @@ export class Textarea extends React.Component {
         ({
             name: this.name,
             family: this.family,
-            i: this.i,
             counter: this.counter,
             char_limit: this.char_limit,
         } = this.props);
@@ -107,8 +105,8 @@ export class Textarea extends React.Component {
         try {
             if (this.counter) {
                 const number_of_chars = this.textarea.value.length;
-                const locale = shared.find_from_name(inputs_data.obj[this.family], 'locale').val;
-                const default_locale = shared.find_from_name(inputs_data.obj[this.family], 'default_locale').val;
+                const { val: locale } = inputs_data.obj[this.family].locale;
+                const { val: default_locale } = inputs_data.obj[this.family].default_locale;
 
                 this.set_number_of_chars_val(this.textarea.value.length);
 
@@ -127,7 +125,7 @@ export class Textarea extends React.Component {
 
     change_val = e => {
         try {
-            change_val.change_val(this.family, this.i, 'is_not_select', null, e);
+            change_val.change_val(this.family, this.name, 'is_not_select', null, e);
 
             if (!this.mut.entered_one_char_in_textarea_after_focus) {
                 this.mut.entered_one_char_in_textarea_after_focus = true;
@@ -149,7 +147,7 @@ export class Textarea extends React.Component {
     }
 
     render() {
-        const { val } = inputs_data.obj[this.family][this.i];
+        const { val } = inputs_data.obj[this.family][this.name];
 
         return (
             <div className="input">

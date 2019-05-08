@@ -17,11 +17,11 @@ import checkmark_svg from 'svg/checkmark';
 //--
 
 export const Checkbox = observer(props => {
-    const { name, family, i, special_checkbox } = props;
+    const { name, family, special_checkbox } = props;
 
     const change_checkbox_val = e => {
         try {
-            change_val.change_val(family, i, e.target.checked, null);
+            change_val.change_val(family, name, e.target.checked, null);
 
             analytics.send_event('checkboxes', `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}`);
 
@@ -30,16 +30,16 @@ export const Checkbox = observer(props => {
         }
     };
 
-    const checkbox_id = inputs_data.obj[family][i].key;
+    const checkbox_id = inputs_data.obj[family][name].key;
     const is_special_checkbox = special_checkbox;
 
     const on_change = r.ifElse(() => is_special_checkbox,
         e => {
             if (name !== 'icon') {
-                set_default_or_disabled.set_default_or_disabled(family, i, special_checkbox);
+                set_default_or_disabled.set_default_or_disabled(family, name, special_checkbox);
 
             } else {
-                set_default_or_disabled.set_default_icon(family, i);
+                set_default_or_disabled.set_default_icon(family, name);
             }
 
             analytics.send_event('checkboxes', `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}-${special_checkbox || ''}`);
@@ -54,14 +54,14 @@ export const Checkbox = observer(props => {
             }}
             tag="div"
             name="gen"
-            state={!inputs_data.obj[family][i].hidden}
+            state={!inputs_data.obj[family][name].hidden}
         >
             <label className="checkbox_label">
                 <input
                     className="checkbox"
                     type="checkbox"
                     id={checkbox_id}
-                    checked={is_special_checkbox ? inputs_data.obj[family][i][special_checkbox] : inputs_data.obj[family][i].val}
+                    checked={is_special_checkbox ? inputs_data.obj[family][name][special_checkbox] : inputs_data.obj[family][name].val}
                     onChange={on_change}
                 />
                 <span

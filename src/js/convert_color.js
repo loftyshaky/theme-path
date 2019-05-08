@@ -9,35 +9,36 @@ const store = new Store();
 
 //--
 
-export const convert_theme_color_props_to_color = (family, i, val) => {
+const convert_theme_color_props_to_color = item => {
     try {
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];
-        const val_is_arr = Array.isArray(val);
-        const color_is_not_set_in_picked_colors_json = inputs_data.obj[family][i].color === options.ob.theme_vals.dark.color_input_default || inputs_data.obj[family][i].color === options.ob.theme_vals.light.color_input_default;
+        const val_is_arr = Array.isArray(item.val);
+        const color_is_not_set_in_picked_colors_json = item.color === options.ob.theme_vals.dark.color_input_default || item.color === options.ob.theme_vals.light.color_input_default;
+        const { family, name, val } = item;
 
-        if (family === 'images') {
+        if (item.family === 'images') {
             if (color_is_not_set_in_picked_colors_json) {
-                change_val.set_inputs_data_color(family, i, color_input_default);
+                change_val.set_inputs_data_color(family, name, color_input_default);
             }
 
             if (val !== '') {
-                change_val.set_default_bool(family, i, false);
+                change_val.set_default_bool(family, name, false);
             }
 
         } else if (family === 'colors') {
-            change_val.set_inputs_data_val(family, i, color_input_default);
+            change_val.set_inputs_data_val(family, name, color_input_default);
 
             if (val_is_arr) {
                 const rgb_val = val.length === 4 ? r.dropLast(1, val) : val;
 
                 if (val !== '') {
-                    change_val.set_inputs_data_val(family, i, `rgb(${rgb_val.join()})`);
-                    change_val.set_default_bool(family, i, false);
+                    change_val.set_inputs_data_val(family, name, `rgb(${rgb_val.join()})`);
+                    change_val.set_default_bool(family, name, false);
                 }
             }
 
         } else if (family === 'tints') {
-            change_val.set_inputs_data_val(family, i, color_input_default);
+            change_val.set_inputs_data_val(family, name, color_input_default);
 
             if (val_is_arr) {
                 if (val !== '') {
@@ -61,20 +62,20 @@ export const convert_theme_color_props_to_color = (family, i, val) => {
                     const every_number_in_hsla_arr_is_minus_1 = hsla_arr.every(number => number.indexOf('-1') > -1);
 
                     if (every_number_in_hsla_arr_is_minus_1) {
-                        change_val.set_inputs_data_val(family, i, options.ob.theme_vals[store.get('theme')].color_input_disabled);
-                        change_val.set_default_bool(family, i, false);
-                        change_val.set_disabled_bool(family, i, true);
+                        change_val.set_inputs_data_val(family, name, options.ob.theme_vals[store.get('theme')].color_input_disabled);
+                        change_val.set_default_bool(family, name, false);
+                        change_val.set_disabled_bool(family, name, true);
 
                     } else {
-                        change_val.set_inputs_data_val(family, i, `hsl(${hsla_arr.join()})`);
-                        change_val.set_default_bool(family, i, false);
+                        change_val.set_inputs_data_val(family, name, `hsl(${hsla_arr.join()})`);
+                        change_val.set_default_bool(family, name, false);
                     }
                 }
             }
 
         } else if (family === 'theme_metadata') {
-            if (inputs_data.obj[family][i].type === 'img_selector' && color_is_not_set_in_picked_colors_json) {
-                change_val.set_inputs_data_color(family, i, color_input_default);
+            if (item.type === 'img_selector' && color_is_not_set_in_picked_colors_json) {
+                change_val.set_inputs_data_color(family, name, color_input_default);
             }
         }
 
@@ -92,8 +93,8 @@ export const convert_all = () => {
 
 const convert_family = family => {
     try {
-        inputs_data.obj[family].forEach((item, i) => {
-            convert_theme_color_props_to_color(family, i, item.val);
+        Object.values(inputs_data.obj[family]).forEach(item => {
+            convert_theme_color_props_to_color(item);
         });
 
     } catch (er) {

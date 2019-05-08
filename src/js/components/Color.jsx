@@ -19,13 +19,12 @@ export class Color extends React.Component {
         super(props);
 
         ({
-            color_input_type: this.color_input_type,
             name: this.name,
             family: this.family,
-            i: this.i,
+            type: this.type,
         } = this.props);
 
-        this.label = this.color_input_type === 'color' ? (
+        this.label = this.type === 'color' ? (
             <label
                 className="input_label color_input_label"
                 data-text={`${this.name}_label_text`}
@@ -33,7 +32,7 @@ export class Color extends React.Component {
             />
         ) : null;
 
-        this.default_checkbox = this.color_input_type === 'color' ? (
+        this.default_checkbox = this.type === 'color' ? (
             <Checkbox
                 {...props}
                 special_checkbox="default"
@@ -71,7 +70,7 @@ export class Color extends React.Component {
     render() {
         return (
             <span
-                className={x.cls(['input', this.color_input_type === 'img' ? 'tall_color_input' : 'ordinary_color_input'])}
+                className={x.cls(['input', this.type === 'img_selector' ? 'tall_color_input' : 'ordinary_color_input'])}
                 ref={this.color_input}
             >
                 <span className="ordinary_color_input_inner">
@@ -79,8 +78,7 @@ export class Color extends React.Component {
                     <Color_input_vizualization
                         family={this.family}
                         name={this.name}
-                        i={this.i}
-                        color_input_type={this.color_input_type}
+                        type={this.type}
                     />
                     {this.disabled_checkbox}
                     {this.default_checkbox}
@@ -92,17 +90,17 @@ export class Color extends React.Component {
 }
 
 const Color_input_vizualization = observer(props => {
-    const { family, name, i, color_input_type } = props;
-    const color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
+    const { family, name, type } = props;
+    const color = inputs_data.obj[family][name].color || inputs_data.obj[family][name].val;
     color_pickiers.mut.current_pickied_color.hex = color;
 
     return (
         <span
-            className={x.cls(['color_input_vizualization', color_input_type === 'img' ? 'tall_color_input_vizualization' : null])}
+            className={x.cls(['color_input_vizualization', type === 'img_selector' ? 'tall_color_input_vizualization' : null])}
             role="button"
             tabIndex={wf_shared.com2.inputs_disabled_1}
             data-family={family}
-            data-i={i}
+            data-name={name}
             style={{ backgroundColor: color }}
             onMouseUp={color_pickiers.focus_input_and_select_all_text_in_it}
             onKeyUp={enter_click.open_color_pickier_on_enter}
@@ -110,7 +108,6 @@ const Color_input_vizualization = observer(props => {
             <Color_pickier
                 family={family}
                 name={name}
-                i={i}
                 color={color}
             />
         </span>
@@ -118,9 +115,9 @@ const Color_input_vizualization = observer(props => {
 });
 
 const Color_pickier = observer(props => {
-    const { family, i, name, color } = props;
-    const { color_pickiers_position } = inputs_data.obj[family][i] || false;
-    const { color_pickier_is_visible } = inputs_data.obj[family][i] || false;
+    const { family, name, color } = props;
+    const { color_pickiers_position } = inputs_data.obj[family][name] || false;
+    const { color_pickier_is_visible } = inputs_data.obj[family][name] || false;
 
     return (
         <div
@@ -138,12 +135,11 @@ const Color_pickier = observer(props => {
                 <Chrome_picker
                     family={family}
                     name={name}
-                    i={i}
                     color={color}
                 />
                 <Color_pickier_ok_btn
                     family={family}
-                    i={i}
+                    name={name}
                 />
             </Tr>
         </div>
@@ -151,13 +147,15 @@ const Color_pickier = observer(props => {
 });
 
 const Chrome_picker = observer(props => {
+    const { family, name } = props;
+
     const on_change = picked_color => {
         try {
             color_pickiers.mut.current_pickied_color = picked_color;
-            color_pickiers.set_color_input_vizualization_color(family, null, i, picked_color);
+            color_pickiers.set_color_input_vizualization_color(family, name, picked_color, false);
 
-            if (!inputs_data.obj[family][i].changed_color_once_after_focus) {
-                inputs_data.obj[family][i].changed_color_once_after_focus = true;
+            if (!inputs_data.obj[family][name].changed_color_once_after_focus) {
+                inputs_data.obj[family][name].changed_color_once_after_focus = true;
 
                 analytics.send_event('color_pickiers', `changed_color-${family}-${name}`);
             }
@@ -166,8 +164,6 @@ const Chrome_picker = observer(props => {
             err(er, 95);
         }
     };
-
-    const { family, name, i } = props;
 
     return (
         <ChromePicker
@@ -179,11 +175,11 @@ const Chrome_picker = observer(props => {
 });
 
 const Color_pickier_ok_btn = observer(props => {
-    const { family, i } = props;
+    const { family, name } = props;
 
     const on_click = () => {
         try {
-            color_pickiers.accept_color(family, i);
+            color_pickiers.accept_color(family, name);
 
         } catch (er) {
             err(er, 96);

@@ -56,16 +56,15 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 const picked_colors_obj = existsSync(picked_colors_path) ? json_file.parse_json(picked_colors_path) : null;
 
                 if (picked_colors_obj && picked_colors_obj.theme_metadata && picked_colors_obj.theme_metadata.icon) {
-                    color_pickiers.set_color_input_vizualization_color('theme_metadata', 'icon', null, picked_colors_obj.theme_metadata.icon);
+                    color_pickiers.set_color_input_vizualization_color('theme_metadata', 'icon', picked_colors_obj.theme_metadata.icon, true);
                 }
 
                 if (shared.mut.manifest.theme) {
                     Object.entries(shared.mut.manifest.theme).forEach(([family, family_obj]) => {
                         Object.entries(family_obj).forEach(([name, val]) => {
                             set_val(family, name, val);
-
                             if (picked_colors_obj && picked_colors_obj[family] && picked_colors_obj[family][name]) {
-                                color_pickiers.set_color_input_vizualization_color(family, name, null, picked_colors_obj[family][name]);
+                                color_pickiers.set_color_input_vizualization_color(family, name, picked_colors_obj[family][name], true);
                             }
                         });
                     });
@@ -131,9 +130,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
 export const get_theme_name_or_descrption_inner = (folder_path, locale, default_locale) => {
     try {
         Object.entries(shared.mut.manifest).forEach(([name, val]) => {
-            const item = shared.find_from_name(inputs_data.obj.theme_metadata, name);
-
-            if (item) {
+            if (inputs_data.obj.theme_metadata[name]) {
                 const val_is_localized = shared.val_is_localized(val);
 
                 if (val_is_localized) {
@@ -175,7 +172,7 @@ const get_theme_name_or_descrption = (name, message_name, locale, default_locale
 
 const set_val = action((family, name, val) => {
     try {
-        const item = shared.find_from_name(inputs_data.obj[family], name);
+        const item = inputs_data.obj[family][name];
 
         if (item) {
             item.val = name === 'ntp_logo_alternate' ? val.toString() : val;
@@ -188,9 +185,7 @@ const set_val = action((family, name, val) => {
 
 const uncheck_icon_input_default_checkbox = action(() => {
     try {
-        const icon_item = shared.find_from_name(inputs_data.obj.theme_metadata, 'icon');
-
-        icon_item.default = false;
+        inputs_data.obj.theme_metadata.icon.default = false;
 
     } catch (er) {
         err(er, 81);

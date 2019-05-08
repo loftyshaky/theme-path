@@ -50,18 +50,14 @@ export class Input_block extends React.Component {
                 </div>
                 <div className={this.name === 'colors' || this.name === 'tints' ? 'colors_and_tints_input_block' : null}>
                     {
-                        inputs_data.obj[this.name].map((item, i) => {
+                        Object.values(inputs_data.obj[this.name]).map(item => {
                             const Component = sta.components[item.type];
-                            const color_input_type = item.type === 'color' ? 'color' : null;
 
                             return (
                                 <Component
                                     {...item}
-                                    i={i}
-                                    color_input_type={color_input_type}
-                                    add_help={item.add_help}
-                                    ref={instance => { this.childs.push(this.child = instance); }}
                                     count_char={this.count_char}
+                                    ref={instance => { this.childs.push(this.child = instance); }}
                                 />
                             );
                         })

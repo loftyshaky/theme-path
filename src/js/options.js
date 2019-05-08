@@ -33,10 +33,9 @@ export const load_theme = action(() => {
 
 export const load_setting = action(() => {
     try {
-        const { options } = inputs_data.obj;
-
-        options.forEach(item => {
+        Object.values(inputs_data.obj.options).forEach(item => {
             const new_item = item;
+
             new_item.val = store.get(item.name);
         });
 

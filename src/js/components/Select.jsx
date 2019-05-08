@@ -7,7 +7,6 @@ import * as analytics from 'js/analytics';
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import { selects_options } from 'js/selects_options';
-import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as wf_shared from 'js/work_folder/wf_shared';
@@ -23,7 +22,6 @@ export class Select extends React.Component {
         ({
             name: this.name,
             family: this.family,
-            i: this.i,
         } = this.props);
     }
 
@@ -45,10 +43,10 @@ export class Select extends React.Component {
         try {
             const { value } = selected_option;
 
-            change_val.change_val(this.family, this.i, value, null);
+            change_val.change_val(this.family, this.name, value, null);
 
             if (value === 'default') {
-                set_default_or_disabled.set_default_or_disabled(this.family, this.i, 'select');
+                set_default_or_disabled.set_default_or_disabled(this.family, this.name, 'select');
             }
 
             analytics.send_event('selects', `selected_option-${this.family}-${this.name}-${value}`);
@@ -110,9 +108,9 @@ export class Select extends React.Component {
     }
 
     render() {
-        const { val } = inputs_data.obj[this.family][this.i];
+        const { val } = inputs_data.obj[this.family][this.name];
         const options = selects_options[this.name !== 'default_locale' ? this.name : 'locale'];
-        const selected_option = shared.find_from_val(options, val);
+        const selected_option = options.find(item => item.value === val);
 
         const selected_option_final = r.ifElse(
             () => selected_option,

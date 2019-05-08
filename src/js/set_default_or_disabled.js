@@ -17,10 +17,10 @@ const store = new Store();
 
 //--
 
-export const set_default_icon = (family, i) => {
+export const set_default_icon = (family, name) => {
     try {
         //> set default icon name
-        change_val.set_default_bool(family, i, true);
+        change_val.set_default_bool(family, name, true);
 
         shared.construct_icons_obj(shared.mut.manifest);
 
@@ -38,7 +38,7 @@ export const set_default_icon = (family, i) => {
         //> restore default color_input_vizualization color
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];
 
-        change_val.set_inputs_data_color(family, i, color_input_default);
+        change_val.set_inputs_data_color(family, name, color_input_default);
         //< restore default color_input_vizualization color
 
     } catch (er) {
@@ -46,38 +46,38 @@ export const set_default_icon = (family, i) => {
     }
 };
 
-export const set_default_or_disabled = (family, i, special_checkbox) => {
+export const set_default_or_disabled = (family, name, special_checkbox) => {
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (special_checkbox === 'default') {
-                if (!inputs_data.obj[family][i].default) {
-                    change_val.set_default_bool(family, i, true);
+                if (!inputs_data.obj[family][name].default) {
+                    change_val.set_default_bool(family, name, true);
 
                     if (family === 'tints') {
-                        change_val.set_disabled_bool(family, i, false);
+                        change_val.set_disabled_bool(family, name, false);
                     }
 
-                    set_default(family, i, special_checkbox);
+                    set_default(family, name, special_checkbox);
                 }
 
             } else if (special_checkbox === 'select') {
-                set_default(family, i, special_checkbox);
+                set_default(family, name, special_checkbox);
 
             } else if (special_checkbox === 'disabled') {
-                if (!inputs_data.obj[family][i].disabled) {
-                    change_val.set_disabled_bool(family, i, true);
-                    change_val.set_default_bool(family, i, false);
+                if (!inputs_data.obj[family][name].disabled) {
+                    change_val.set_disabled_bool(family, name, true);
+                    change_val.set_default_bool(family, name, false);
 
-                    change_val.change_val(family, i, [-1, -1, -1], null);
+                    change_val.change_val(family, name, [-1, -1, -1], null);
 
-                    change_val.set_inputs_data_val(family, i, options.ob.theme_vals[store.get('theme')].color_input_disabled);
+                    change_val.set_inputs_data_val(family, name, options.ob.theme_vals[store.get('theme')].color_input_disabled);
 
                 } else {
-                    change_val.set_disabled_bool(family, i, false);
-                    change_val.set_disabled_bool(family, i, false);
-                    change_val.set_default_bool(family, i, true);
+                    change_val.set_disabled_bool(family, name, false);
+                    change_val.set_disabled_bool(family, name, false);
+                    change_val.set_default_bool(family, name, true);
 
-                    set_default(family, i, 'default');
+                    set_default(family, name, 'default');
                 }
             }
         }
@@ -87,18 +87,17 @@ export const set_default_or_disabled = (family, i, special_checkbox) => {
     }
 };
 
-const set_default = (family, i) => {
+const set_default = (family, name) => {
     try {
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];
-        const name_to_delete = inputs_data.obj[family][i].name;
 
-        delete shared.mut.manifest.theme[family][name_to_delete];
+        delete shared.mut.manifest.theme[family][name];
 
         if (r.isEmpty(shared.mut.manifest.theme[family])) {
             delete shared.mut.manifest.theme[family];
         }
 
-        const img_to_delete_path = join(shared.ob.chosen_folder_path, inputs_data.obj[family][i].val);
+        const img_to_delete_path = join(shared.ob.chosen_folder_path, inputs_data.obj[family][name].val);
 
         if (existsSync(img_to_delete_path)) {
             try {
@@ -111,11 +110,11 @@ const set_default = (family, i) => {
 
         json_file.write_to_json(shared.mut.manifest, join(shared.ob.chosen_folder_path, 'manifest.json'));
 
-        if (inputs_data.obj[family][i].color) {
-            change_val.set_inputs_data_color(family, i, color_input_default);
+        if (inputs_data.obj[family][name].color) {
+            change_val.set_inputs_data_color(family, name, color_input_default);
 
         } else {
-            change_val.set_inputs_data_val(family, i, color_input_default);
+            change_val.set_inputs_data_val(family, name, color_input_default);
         }
 
     } catch (er) {

@@ -23,27 +23,26 @@ configure({ enforceActions: 'observed' });
 
 
 //--
-export const change_val = async (family, i, val, img_extension, e) => {
+export const change_val = async (family, name, val, img_extension, e) => {
     try {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
         if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
             const new_val = val === 'is_not_select' ? e.target.value : val;
-            const { name } = inputs_data.obj[family][i];
             const manifest_path = join(shared.ob.chosen_folder_path, 'manifest.json');
-            const default_locale = family === 'theme_metadata' ? shared.find_from_name(inputs_data.obj[family], 'default_locale').val : null;
+            const default_locale = family === 'theme_metadata' ? inputs_data.obj[family][name] : null;
             const first_if_names = ['name', 'description'];
             const second_if_names = ['version', 'default_locale'];
             const third_if_names = ['colors', 'tints', 'properties'];
             const fourth_if_names = ['images', 'icon'];
             const img_extension_final = `.${img_extension || 'png'}`;
 
-            set_inputs_data_val(family, i, fourth_if_names.indexOf(family) > -1 ? new_val + img_extension_final : new_val);
+            set_inputs_data_val(family, name, fourth_if_names.indexOf(family) > -1 ? new_val + img_extension_final : new_val);
 
             if (first_if_names.indexOf(name) > -1) {
                 set_name_or_description_prop(name, e.target.value);
 
-                const locale = shared.find_from_name(inputs_data.obj[family], 'locale').val;
+                const locale = inputs_data.obj.theme_metadata.locale.val;
 
                 if (name === 'name') {
                     if (locale === default_locale) {
@@ -51,7 +50,7 @@ export const change_val = async (family, i, val, img_extension, e) => {
                     }
                 }
 
-                delete_locale_folder(locale, default_locale, family);
+                delete_locale_folder(locale, default_locale);
 
             } else if (second_if_names.indexOf(name) > -1) {
                 write_to_json(shared.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
@@ -73,7 +72,7 @@ export const change_val = async (family, i, val, img_extension, e) => {
                 const created_solid_color_background_img = !img_extension && name === 'theme_ntp_background';
 
                 if (created_solid_color_background_img) {
-                    set_inputs_data_val('properties', inputs_data.obj.properties.findIndex(item => item.name === 'ntp_background_repeat'), 'repeat');
+                    set_inputs_data_val('properties', 'ntp_background_repeat', 'repeat');
                     write_to_json(shared.mut.manifest, manifest_path, 'ntp_background_repeat', 'repeat', 'properties');
                 }
 
@@ -95,14 +94,14 @@ export const change_val = async (family, i, val, img_extension, e) => {
             }
 
             if (family === 'images' || third_if_names.indexOf(family) > -1 || name === 'icon') {
-                set_default_bool(family, i, false);
+                set_default_bool(family, name, false);
             }
 
             if (family === 'tints') {
                 const not_disabling = val.some(item => item > -1);
 
                 if (not_disabling) {
-                    set_disabled_bool(family, i, false);
+                    set_disabled_bool(family, name, false);
                 }
             }
         }
@@ -116,7 +115,7 @@ const set_name_or_description_prop = (name, new_val, forced_locale) => {
     try {
         const val = shared.mut.manifest[name];
         const val_is_localized = shared.val_is_localized(val);
-        const locale = forced_locale || shared.find_from_name(inputs_data.obj.theme_metadata, 'locale').val;
+        const locale = forced_locale || inputs_data.obj.theme_metadata.locale.val;
         const messages_path = join(shared.ob.chosen_folder_path, '_locales', locale, 'messages.json');
 
         check_if_localisation_folders_exists_create_them_if_dont(locale);
@@ -217,10 +216,10 @@ const check_if_folder_exists_create_it_if_dont = folder_path => {
 };
 
 //> delete locale folder when both name and description is ''
-const delete_locale_folder = async (locale, default_locale, family) => {
+const delete_locale_folder = async (locale, default_locale) => {
     try {
-        const name = shared.find_from_name(inputs_data.obj[family], 'name').val;
-        const description = shared.find_from_name(inputs_data.obj[family], 'description').val;
+        const name = inputs_data.obj.theme_metadata.name.val;
+        const description = inputs_data.obj.theme_metadata.description.val;
 
         if (name === '' && description === '' && locale !== default_locale) {
             try {
@@ -327,36 +326,36 @@ const add_locale_folder = new_default_locale => {
     }
 };
 
-export const set_inputs_data_val = action((family, i, val) => {
+export const set_inputs_data_val = action((family, name, val) => {
     try {
-        inputs_data.obj[family][i].val = val;
+        inputs_data.obj[family][name].val = val;
 
     } catch (er) {
         err(er, 27);
     }
 });
 
-export const set_inputs_data_color = action((family, i, color) => {
+export const set_inputs_data_color = action((family, name, color) => {
     try {
-        inputs_data.obj[family][i].color = color;
+        inputs_data.obj[family][name].color = color;
 
     } catch (er) {
         err(er, 28);
     }
 });
 
-export const set_default_bool = action((family, i, bool) => {
+export const set_default_bool = action((family, name, bool) => {
     try {
-        inputs_data.obj[family][i].default = bool;
+        inputs_data.obj[family][name].default = bool;
 
     } catch (er) {
         err(er, 29);
     }
 });
 
-export const set_disabled_bool = action((family, i, bool) => {
+export const set_disabled_bool = action((family, name, bool) => {
     try {
-        inputs_data.obj[family][i].disabled = bool;
+        inputs_data.obj[family][name].disabled = bool;
 
     } catch (er) {
         err(er, 30);

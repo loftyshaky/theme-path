@@ -1,7 +1,6 @@
 import React from 'react';
 
 import * as color_pickiers from 'js/color_pickiers';
-import * as tab_focus from 'js/tab_focus';
 import * as toggle_popup from 'js/toggle_popup';
 import * as help_viewer from 'js/help_viewer';
 import * as tutorial from 'js/tutorial';

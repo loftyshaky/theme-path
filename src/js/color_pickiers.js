@@ -8,7 +8,6 @@ import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
-import * as shared from 'js/shared';
 import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
 import * as picked_colors from 'js/picked_colors';
@@ -39,9 +38,8 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
 
             if (clicked_on_color_input_vizualization) {
                 const color_pickier = sb(e.target, '.color_pickier');
-                const { family } = e.target.dataset;
-                const { i } = e.target.dataset;
-                const color_pickier_hidden = !inputs_data.obj[family][i].color_pickier_is_visible;
+                const { family, name } = e.target.dataset;
+                const color_pickier_hidden = !inputs_data.obj[family][name].color_pickier_is_visible;
                 const clicked_on_same_color_input_vizualization_second_time = previously_opened_color_pickier === color_pickier;
 
                 if (color_pickier_hidden && !clicked_on_same_color_input_vizualization_second_time) {
@@ -50,17 +48,16 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                     const margin_bottom_of_body_plus_fieldset_border_width = body_margin_bottom + fieldset_border_width;
                     mut.current_color_pickier.el = color_pickier;
                     mut.current_color_pickier.family = family;
-                    mut.current_color_pickier.i = i;
-                    mut.current_color_pickier.color = inputs_data.obj[family][i].color || inputs_data.obj[family][i].val;
-                    const { name } = inputs_data.obj[family][i];
+                    mut.current_color_pickier.name = name;
+                    mut.current_color_pickier.color = inputs_data.obj[family][name].color || inputs_data.obj[family][name].val;
 
-                    show_or_hide_color_pickier(family, i, true);
-                    set_color_color_pickier_position(family, i, 'top');
+                    show_or_hide_color_pickier(family, name, true);
+                    set_color_color_pickier_position(family, name, 'top');
 
                     const color_pickier_is_fully_visible = color_pickier.getBoundingClientRect().bottom <= window.innerHeight - margin_bottom_of_body_plus_fieldset_border_width;
 
                     if (!color_pickier_is_fully_visible) {
-                        set_color_color_pickier_position(family, i, 'bottom');
+                        set_color_color_pickier_position(family, name, 'bottom');
                     }
 
                     analytics.send_event('color_pickiers', `showed-${family}-${name}`);
@@ -74,13 +71,13 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
     }
 };
 
-export const show_or_hide_color_pickier = action((family, i, bool) => {
+export const show_or_hide_color_pickier = action((family, name, bool) => {
     try {
         mut.current_pickied_color.rgb.a = 1;
-        inputs_data.obj[family][i].color_pickier_is_visible = bool;
+        inputs_data.obj[family][name].color_pickier_is_visible = bool;
 
         if (!bool) {
-            inputs_data.obj[family][i].changed_color_once_after_focus = false;
+            inputs_data.obj[family][name].changed_color_once_after_focus = false;
         }
 
     } catch (er) {
@@ -88,31 +85,24 @@ export const show_or_hide_color_pickier = action((family, i, bool) => {
     }
 });
 
-export const set_color_color_pickier_position = action((family, i, val) => {
+export const set_color_color_pickier_position = action((family, name, val) => {
     try {
-        inputs_data.obj[family][i].color_pickiers_position = val;
+        inputs_data.obj[family][name].color_pickiers_position = val;
 
     } catch (er) {
         err(er, 33);
     }
 });
 
-export const set_color_input_vizualization_color = action((family, name, i, color) => {
+export const set_color_input_vizualization_color = action((family, name, color, loading_old_colors_from_picked_colors_json) => {
     try {
-        if (family === 'images' || ((name && name === 'icon') || inputs_data.obj[family][i].name === 'icon')) {
-            const loading_old_colors_from_picked_colors_json = name;
+        if (family === 'images' || name === 'icon') {
             const color_final = color.rgb || loading_old_colors_from_picked_colors_json ? `rgba(${r.values(color.rgb || color).join(',')})` : color;
 
-            if (name) {
-                const item = shared.find_from_name(inputs_data.obj[family], name);
-                item.color = color_final;
-
-            } else {
-                inputs_data.obj[family][i].color = color_final;
-            }
+            inputs_data.obj[family][name].color = color_final;
 
         } else {
-            inputs_data.obj[family][i].val = color.hex || color;
+            inputs_data.obj[family][name].val = color.hex || color;
         }
 
     } catch (er) {
@@ -121,23 +111,22 @@ export const set_color_input_vizualization_color = action((family, name, i, colo
 });
 
 //> accept color when clicking OK t
-export const accept_color = (family, i) => {
+export const accept_color = (family, name) => {
     try {
         const { hex } = mut.current_pickied_color;
-        const { name } = inputs_data.obj[family][i];
         let color;
 
         if (family === 'images' || name === 'icon') {
-            imgs.create_solid_color_image(name, family, hex, mut.current_pickied_color.rgb.a);
+            imgs.create_solid_color_image(family, name, hex, mut.current_pickied_color.rgb.a);
 
-            change_val.change_val(family, i, name, null);
+            change_val.change_val(family, name, name, null);
 
             picked_colors.record_picked_color(family, name);
 
         } else if (family === 'colors') {
             color = hexToRgb(hex);
 
-            change_val.change_val(family, i, color, null);
+            change_val.change_val(family, name, color, null);
 
         } else if (family === 'tints') {
             const hsl = hexToHsl(hex);
@@ -146,13 +135,13 @@ export const accept_color = (family, i) => {
             const sl_final = sl.map(item => (item === 100 ? 1 : Number(`0.${item}`)));
             color = r.prepend(h, sl_final);
 
-            change_val.change_val(family, i, color, null);
+            change_val.change_val(family, name, color, null);
         }
 
-        show_or_hide_color_pickier(family, i, false);
+        show_or_hide_color_pickier(family, name, false);
 
         if (family !== 'images') {
-            change_val.set_inputs_data_val(family, i, hex);
+            change_val.set_inputs_data_val(family, name, hex);
         }
 
         mut.current_color_pickier.el = null;
@@ -171,13 +160,11 @@ const cancel_color_picking = () => {
 
         if (any_color_pickier_is_opened) {
             mut.current_color_pickier.el = null;
-            const { family } = mut.current_color_pickier;
-            const { i } = mut.current_color_pickier;
-            const { name } = inputs_data.obj[family][i];
+            const { family, name } = mut.current_color_pickier;
 
-            show_or_hide_color_pickier(mut.current_color_pickier.family, mut.current_color_pickier.i, false);
+            show_or_hide_color_pickier(family, name, false);
 
-            set_color_input_vizualization_color(mut.current_color_pickier.family, null, mut.current_color_pickier.i, mut.current_color_pickier.color);
+            set_color_input_vizualization_color(family, name, mut.current_color_pickier.color, false);
 
             analytics.send_event('color_pickiers', `canceled-${family}-${name}`);
         }
@@ -189,7 +176,7 @@ const cancel_color_picking = () => {
 
 export const close_or_open_color_pickier_by_keyboard = e => {
     try {
-        const { family, i } = mut.current_color_pickier;
+        const { family, name } = mut.current_color_pickier;
         const any_color_pickier_is_opened = mut.current_color_pickier.el;
         const enter_pressed = e.keyCode === 13;
         const esc_pressed = e.keyCode === 27;
@@ -200,7 +187,7 @@ export const close_or_open_color_pickier_by_keyboard = e => {
 
         if (enter_pressed) {
             if (any_color_pickier_is_opened) {
-                accept_color(family, i);
+                accept_color(family, name);
             }
 
         } else if (esc_pressed) {
@@ -266,7 +253,7 @@ export const mut = {
     current_color_pickier: {
         el: null,
         family: '',
-        i: '',
+        name: '',
         color: '',
     },
 };
