@@ -516,6 +516,14 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
+            locales_whitelist: {
+                key: x.unique_id(),
+                name: 'locales_whitelist',
+                family: 'options',
+                type: 'textarea',
+                val: '',
+                add_help: true,
+            },
             enable_analytics: {
                 key: x.unique_id(),
                 name: 'enable_analytics',

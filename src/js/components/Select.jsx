@@ -2,6 +2,7 @@ import React from 'react';
 import * as r from 'ramda';
 import { observer } from 'mobx-react';
 import ReactSelect from 'react-select';
+import Store from 'electron-store';
 import * as analytics from 'js/analytics';
 
 import x from 'x';
@@ -12,6 +13,8 @@ import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as els_state from 'js/els_state';
 
 import { Help } from 'components/Help';
+
+const store = new Store();
 
 export class Select extends React.Component {
     constructor(props) {
@@ -107,16 +110,20 @@ export class Select extends React.Component {
 
     render() {
         const { val } = inputs_data.obj[this.family][this.name];
+        const locales_whitelist = store.get('locales_whitelist');
         const options = selects_options[this.name !== 'default_locale' ? this.name : 'locale'];
         const selected_option = options.find(item => item.value === val);
+        const options_final = this.name === 'locale' || this.name === 'default_locale'
+            ? options.filter(option => locales_whitelist === '' || locales_whitelist.indexOf(option.value) > -1)
+            : options;
 
         const selected_option_final = r.ifElse(
             () => selected_option,
 
             () => selected_option,
             () => {
-                if (options[0].value === 'default') {
-                    return options[0];
+                if (options_final[0].value === 'default') {
+                    return options_final[0];
                 }
 
                 return false;
@@ -135,7 +142,7 @@ export class Select extends React.Component {
                     />
                     <ReactSelect
                         value={selected_option_final}
-                        options={options}
+                        options={options_final}
                         isDisabled={els_state.com2.inputs_disabled_2 && this.family !== 'options'}
                         classNamePrefix="select"
                         backspaceRemovesValue={false}

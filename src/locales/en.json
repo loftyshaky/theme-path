@@ -67,6 +67,7 @@
   "theme_label_text": "Theme",
   "chrome_exe_path_label_text": "Path to Chrome executable",
   "chrome_user_data_dirs_label_text": "Paths to Chrome user data folders",
+  "locales_whitelist_label_text": "Locales to show in locale selects",
   "enable_analytics_label_text": "Enable Google Analytics",
   "enable_analytics_dev_label_text": "Enable Google Analytics (dev)",
   "option_default_text": "Default",
@@ -230,6 +231,7 @@
 
   "options_chrome_exe_path_help_text": "Path to Chrome executable. Used to preview a theme. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
   "options_chrome_user_data_dirs_help_text": "Paths to Chrome user data folders separated by commas. Used to preview a theme. If folder doesnt exist it will be created on first preview. Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
+  "options_locales_whitelist_help_text": "Language codes of languages that you want to see in \"Locale\" and \"Default locale\" selects, separeted by commas. Example: en, ru, fr",
 
 
   "choose_folder_tutorial_item_text": "Choose a folder where all your themes are/will be stored.",
