@@ -10,6 +10,7 @@ export const set_defaults = () => {
             theme: 'dark',
             chrome_exe_path: '',
             chrome_user_data_dirs: '',
+            custom_folders: '',
             locales_whitelist: '',
             tutorial_stage: 1,
             answered_to_analytics_privacy_question: false,

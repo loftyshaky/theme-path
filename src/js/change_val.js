@@ -16,6 +16,7 @@ import * as msg from 'js/msg';
 import * as json_file from 'js/json_file';
 import * as options from 'js/options';
 import * as open_and_pack from 'js/open_and_pack';
+import * as custom_folders from 'js/work_folder/custom_folders';
 import * as tutorial from 'js/tutorial';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as select_folder from 'js/work_folder/select_folder';
@@ -82,6 +83,9 @@ export const change_val = async (family, name, val, img_extension, e) => {
 
                 if (name === 'chrome_user_data_dirs') {
                     open_and_pack.update_chrome_user_data_dirs_observable();
+
+                } else if (name === 'custom_folders') {
+                    custom_folders.update_custom_folders_observable();
 
                 } else if (name === 'theme') {
                     x.load_css('no_tr');

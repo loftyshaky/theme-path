@@ -67,6 +67,7 @@
   "theme_label_text": "Тема",
   "chrome_exe_path_label_text": "Путь к исполняемому файлу Chrome",
   "chrome_user_data_dirs_label_text": "Пути к папкам пользователей Chrome",
+  "custom_folders_label_text": "Пути к пользовательским папкам",
   "locales_whitelist_label_text": "Языки показываемые в языковых выпадающих меню",
   "enable_analytics_label_text": "Включить Google Analytics",
   "enable_analytics_dev_label_text": "Включить Google Analytics (dev)",
@@ -118,6 +119,7 @@
 
   "search_input_placeholder": "Поиск",
   "new_theme_btn_label_text": "Новая тема",
+  "create_custom_folder_btn_title": "Создать пользовательскую папку",
   "pack_as_zip_btn_title": "Упаковать (ZIP)",
   "pack_as_crx_btn_title": "Упаковать (CRX)",
   "collapse_all_folders_btn_title": "Свернуть все папки",
@@ -232,6 +234,7 @@
 
   "options_chrome_exe_path_help_text": "Путь к исполняемому файлу Chrome. Используется при предпросмотре темы. Пример: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
   "options_chrome_user_data_dirs_help_text": "Пути к папкам пользовательских данных Chrome, разделяемые запятыми. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
+  "options_custom_folders_help_text": "Пути к любым папкам, разделяемые запятыми. Каждый заданный путь создаст кнопку в заголовке рядом с кнопкой «Новая тема». При нажатии на одну из этих кнопок папка и все ее содержимое будут воссозданы в выбранной папке. Пример: \"C:\\Custom Chrome Theme Creator folders\", \"D:\\Custom Chrome Theme Creator folders\"",
   "options_locales_whitelist_help_text": "Языковые коды языков, которые следует показывать в выпадающих меню \"Язык\" и \"Язык по умолчанию\", разделяемые запятыми. Пример: en, ru, fr",
 
 

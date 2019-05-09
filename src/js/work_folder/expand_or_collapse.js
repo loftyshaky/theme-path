@@ -6,6 +6,7 @@ import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as folders from 'js/work_folder/folders';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
+import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as sort_folders from 'js/work_folder/sort_folders';
 import * as watch from 'js/work_folder/watch';
 import * as choose_folder from 'js/work_folder/choose_folder';
@@ -39,13 +40,13 @@ export const collapse_all_folders = action(() => {
 });
 //< on extension load / work_folder folder content change
 
-export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_insert_folder_in) => {
+export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_insert_folder_in, custom_folder_path) => {
     try {
         if (choose_folder.reset_work_folder(false) && (mode !== 'new_theme' || !folders.mut.chosen_folder_info.is_theme)) {
             const folder_is_opened = folders.mut.opened_folders.indexOf(folder_path) !== -1;
 
             if (mode === 'new_theme') {
-                new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, nest_level, i_to_insert_folder_in, folder_is_opened);
+                new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, nest_level, i_to_insert_folder_in, folder_is_opened, null, custom_folder_path);
 
                 analytics.add_header_btns_analytics(mode);
             }
@@ -141,5 +142,35 @@ const expand_folder = (folder_path, files, nest_level, i_to_insert_folder_in) =>
 
     } catch (er) {
         err(er, 76);
+    }
+};
+
+export const create_new_theme_or_folder = async custom_folder_path => {
+    try {
+        const root_folder_chosen = chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder;
+
+        if (root_folder_chosen) {
+            new_theme_or_rename.create_new_theme_or_rename_theme_folder(
+                'creating_folder',
+                chosen_folder_path.ob.chosen_folder_path,
+                0,
+                0,
+                true,
+                null,
+                custom_folder_path,
+            );
+
+        } else {
+            expand_or_collapse.expand_or_collapse_folder(
+                'new_theme',
+                chosen_folder_path.ob.chosen_folder_path,
+                folders.mut.chosen_folder_info.nest_level,
+                folders.mut.chosen_folder_info.i_to_insert_folder_in,
+                custom_folder_path,
+            );
+        }
+
+    } catch (er) {
+        err(er, 98);
     }
 };

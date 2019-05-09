@@ -1,5 +1,5 @@
-import { join, dirname } from 'path';
-import { existsSync, copySync, renameSync } from 'fs-extra';
+import { join, dirname, sep } from 'path';
+import { existsSync, copySync, renameSync, readdirSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
@@ -14,13 +14,15 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 configure({ enforceActions: 'observed' });
 
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
-export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, nest_level, start_i, folder_is_opened, name_input_val) => { // action( need to be here otherwise renamed folder will be deselected
+export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, nest_level, start_i, folder_is_opened, name_input_val, custom_folder_path) => { // action( need to be here otherwise renamed folder will be deselected
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (mode === 'renaming_folder' || (mode === 'creating_folder' && !folders.mut.chosen_folder_info.is_theme)) {
-                const folder_name = mode === 'renaming_folder' ? name_input_val : x.msg('new_theme_btn_label_text');
+                const custom_or_new_theme_folder_name = custom_folder_path ? custom_folder_path.substring(custom_folder_path.lastIndexOf(sep) + 1) : x.msg('new_theme_btn_label_text');
+                const folder_name = mode === 'renaming_folder' ? name_input_val : custom_or_new_theme_folder_name;
                 const timne_id = Date.now();
-                const source_folder_path = mode === 'renaming_folder' ? folder_path : join(app_root, 'resources', 'app', 'bundle', 'new_theme');
+                const folder_to_create_path = custom_folder_path || join(app_root, 'resources', 'app', 'bundle', 'new_theme');
+                const source_folder_path = mode === 'renaming_folder' ? folder_path : folder_to_create_path;
                 const parent_of_renamed_folder_path = dirname(folder_path);
 
                 for (let i = 0; i < 22; i++) {
@@ -32,7 +34,9 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                             if (mode === 'creating_folder') {
                                 const new_theme_path = join(folder_path, folder_name_final);
                                 const root_folder_chosen = chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder;
-
+                                const files = readdirSync(folder_to_create_path);
+                                const created_folder_is_theme = files.find(file => file === 'manifest.json');
+                                const created_folder_is_empty = files.length === 0;
 
                                 copySync(source_folder_path, new_theme_path);
 
@@ -43,8 +47,8 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                         path: new_theme_path,
                                         children: folders.get_folders(new_theme_path),
                                         nest_level,
-                                        is_theme: true,
-                                        is_empty: false,
+                                        is_theme: created_folder_is_theme,
+                                        is_empty: created_folder_is_empty,
                                     };
 
                                     const folders_with_new_folder = r.insert(0, new_theme, folders.ob.folders);

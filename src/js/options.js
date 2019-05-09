@@ -38,6 +38,7 @@ export const load_setting = action(() => {
         });
 
         open_and_pack.update_chrome_user_data_dirs_observable();
+        custom_folders.update_custom_folders_observable();
 
     } catch (er) {
         err(er, 55);
@@ -76,4 +77,5 @@ export const ob = observable({
 });
 
 const open_and_pack = require('js/open_and_pack');
+const custom_folders = require('js/work_folder/custom_folders');
 const { inputs_data } = require('js/inputs_data');

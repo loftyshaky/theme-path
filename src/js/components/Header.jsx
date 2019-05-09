@@ -4,16 +4,15 @@ import Svg from 'svg-inline-react';
 
 import x from 'x';
 import * as analytics from 'js/analytics';
-import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as els_state from 'js/els_state';
 import * as folders from 'js/work_folder/folders';
-import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
-import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as open_and_pack from 'js/open_and_pack';
 import * as toggle_popup from 'js/toggle_popup';
 import * as show_or_open_folder from 'js/show_or_open_folder';
-import * as choose_folder from 'js/work_folder/choose_folder';
+import * as custom_paths_btns from 'js/custom_paths_btns';
 import * as search from 'js/work_folder/search';
+import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
+import * as custom_folders from 'js/work_folder/custom_folders';
 
 import { Tutorial_item } from 'components/Tutorial_item';
 
@@ -32,33 +31,6 @@ export class Header extends React.Component {
 
         this.entered_one_char_in_search_input_after_focus = false;
     }
-
-    expand_or_collapse_folder = async () => {
-        try {
-            const root_folder_chosen = chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder;
-
-            if (root_folder_chosen) {
-                new_theme_or_rename.create_new_theme_or_rename_theme_folder(
-                    'creating_folder',
-                    chosen_folder_path.ob.chosen_folder_path,
-                    0,
-                    0,
-                    true,
-                );
-
-            } else {
-                expand_or_collapse.expand_or_collapse_folder(
-                    'new_theme',
-                    chosen_folder_path.ob.chosen_folder_path,
-                    folders.mut.chosen_folder_info.nest_level,
-                    folders.mut.chosen_folder_info.i_to_insert_folder_in,
-                );
-            }
-
-        } catch (er) {
-            err(er, 98);
-        }
-    };
 
     on_input_in_search_input = () => {
         try {
@@ -85,10 +57,8 @@ export class Header extends React.Component {
     }
 
     render() {
-        const chrome_user_data_dirs = open_and_pack.ob.chrome_user_data_dirs.split(',');
-        const chrome_user_data_dirs_final = chrome_user_data_dirs.length === 1 && chrome_user_data_dirs[0] === ''
-            ? []
-            : chrome_user_data_dirs;
+        const chrome_user_data_dirs = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_user_data_dirs);
+        const custom_folders_var = custom_paths_btns.create_paths_arr(custom_folders.ob.custom_folders);
 
         return (
             <header>
@@ -97,7 +67,7 @@ export class Header extends React.Component {
                         <button
                             className="header_btn new_theme_btn"
                             type="button"
-                            onClick={this.expand_or_collapse_folder}
+                            onClick={expand_or_collapse.create_new_theme_or_folder.bind(null, null)}
                             disabled={els_state.com2.inputs_disabled_5}
                         >
                             <span className="header_btn_icon new_theme_btn_icon">
@@ -111,6 +81,15 @@ export class Header extends React.Component {
                             outline={false}
                         />
                     </div>
+                    {
+                        custom_folders_var.map((folder_path, i) => (
+                            <Create_custom_folder_btn
+                                key={x.unique_id()}
+                                path={folder_path.trim()}
+                                no={i + 1}
+                            />
+                        ))
+                    }
                     <input
                         className="search_input"
                         type="text"
@@ -122,7 +101,7 @@ export class Header extends React.Component {
                 </span>
                 <span className="header_section header_right">
                     {
-                        chrome_user_data_dirs_final.map((folder_path, i) => (
+                        chrome_user_data_dirs.map((folder_path, i) => (
                             <Open_in_profiled_chrome_btn
                                 key={x.unique_id()}
                                 path={folder_path.trim()}
@@ -192,6 +171,23 @@ const Open_in_profiled_chrome_btn = props => {
             disabled={els_state.com2.inputs_disabled_5}
             onMouseUp={open_and_pack.open_in_chrome.bind(null, path, false)}
             onKeyUp={open_and_pack.open_in_chrome.bind(null, path, false)}
+        >
+            {no}
+        </button>
+    );
+};
+
+const Create_custom_folder_btn = props => {
+    const { path, no } = props;
+
+    return (
+        <button
+            className="header_btn open_in_chrome_btn"
+            type="button"
+            title={`${x.msg('create_custom_folder_btn_title')} - ${path}`}
+            disabled={els_state.com2.inputs_disabled_5}
+            onMouseUp={expand_or_collapse.create_new_theme_or_folder.bind(null, path)}
+            onKeyUp={expand_or_collapse.create_new_theme_or_folder.bind(null, path)}
         >
             {no}
         </button>

@@ -516,6 +516,14 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
+            custom_folders: {
+                key: x.unique_id(),
+                name: 'custom_folders',
+                family: 'options',
+                type: 'textarea',
+                val: '',
+                add_help: true,
+            },
             locales_whitelist: {
                 key: x.unique_id(),
                 name: 'locales_whitelist',
