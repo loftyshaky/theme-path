@@ -33,7 +33,7 @@ export const change_val = async (family, name, val, img_extension, e) => {
         if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
             const new_val = val === 'is_not_select' ? e.target.value : val;
             const manifest_path = join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json');
-            const default_locale = family === 'theme_metadata' ? inputs_data.obj[family][name] : null;
+            const default_locale = family === 'theme_metadata' ? inputs_data.obj[family].default_locale.val : null;
             const first_if_names = ['name', 'description'];
             const second_if_names = ['version', 'default_locale'];
             const third_if_names = ['colors', 'tints', 'properties'];
