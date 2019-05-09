@@ -67,7 +67,7 @@
   "theme_label_text": "Тема",
   "chrome_exe_path_label_text": "Путь к исполняемому файлу Chrome",
   "chrome_user_data_dirs_label_text": "Пути к папкам пользователей Chrome",
-    "locales_whitelist_label_text": "Языки показываемые в языковых выпадающих меню",
+  "locales_whitelist_label_text": "Языки показываемые в языковых выпадающих меню",
   "enable_analytics_label_text": "Включить Google Analytics",
   "enable_analytics_dev_label_text": "Включить Google Analytics (dev)",
 
@@ -231,8 +231,8 @@
   "properties_ntp_logo_alternate_help_text": "Определяет цвет логотипа \"Google\" на странице новой вкладки.",
 
   "options_chrome_exe_path_help_text": "Путь к исполняемому файлу Chrome. Используется при предпросмотре темы. Пример: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-  "options_chrome_user_data_dirs_help_text": "Пути к папкам пользовательских данных Chrome, разделяемые запятой. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
-  "options_locales_whitelist_help_text": "Языковые коды языков, которые следует показывать в выпадающих меню \"Язык \" и \"Язык по умолчанию\", разделённые запятыми. Пример: en, ru, fr",
+  "options_chrome_user_data_dirs_help_text": "Пути к папкам пользовательских данных Chrome, разделяемые запятыми. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
+  "options_locales_whitelist_help_text": "Языковые коды языков, которые следует показывать в выпадающих меню \"Язык\" и \"Язык по умолчанию\", разделяемые запятыми. Пример: en, ru, fr",
 
 
   "choose_folder_tutorial_item_text": "Выберити папку в которой хранятся/будут храниться все ваши темы.",
