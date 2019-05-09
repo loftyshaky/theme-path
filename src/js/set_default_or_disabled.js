@@ -9,6 +9,7 @@ import Store from 'electron-store';
 import * as manifest from 'js/manifest';
 import * as json_file from 'js/json_file';
 import * as chosen_folder_path from 'js/chosen_folder_path';
+import * as picked_colors from 'js/picked_colors';
 import * as icons from 'js/icons';
 import * as options from 'js/options';
 import * as change_val from 'js/change_val';
@@ -43,6 +44,8 @@ export const set_default_icon = (family, name) => {
         change_val.set_inputs_data_color(family, name, color_input_default);
         //< restore default color_input_vizualization color
 
+        picked_colors.remove_picked_color(family, name);
+
     } catch (er) {
         err(er, 49);
     }
@@ -60,6 +63,8 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
                     }
 
                     set_default(family, name, special_checkbox);
+
+                    picked_colors.remove_picked_color(family, name);
                 }
 
             } else if (special_checkbox === 'select') {
