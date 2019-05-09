@@ -7,7 +7,8 @@ import { List, AutoSizer } from 'react-virtualized';
 import x from 'x';
 import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as els_state from 'js/els_state';
+import * as folders from 'js/work_folder/folders';
 import * as component_methods from 'js/work_folder/component_methods';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as select_folder from 'js/work_folder/select_folder';
@@ -48,7 +49,7 @@ export class Work_folder extends React.Component {
     }
 
     select_work_folder_if_its_theme = () => {
-        const work_folder_info = wf_shared.get_info_about_folder(choose_folder.ob.work_folder);
+        const work_folder_info = folders.get_info_about_folder(choose_folder.ob.work_folder);
 
         if (work_folder_info.is_theme) {
             select_folder.select_folder(true, choose_folder.ob.work_folder);
@@ -57,8 +58,8 @@ export class Work_folder extends React.Component {
 
     render_row = ({ index, key, style }) => {
         const folder = search.mut.filtered_folders[index];
-        const folder_is_opened = wf_shared.mut.opened_folders.indexOf(folder.path) > -1;
-        const filtered_index = wf_shared.ob.folders.findIndex(cur_folder => cur_folder.path === folder.path) + 1;
+        const folder_is_opened = folders.mut.opened_folders.indexOf(folder.path) > -1;
+        const filtered_index = folders.ob.folders.findIndex(cur_folder => cur_folder.path === folder.path) + 1;
 
         const on_click_folder_arrow = () => {
             expand_or_collapse.expand_or_collapse_folder('arrow', folder.path, folder.nest_level + 1, filtered_index);
@@ -77,7 +78,7 @@ export class Work_folder extends React.Component {
                 <button
                     className="folder_arrow"
                     type="button"
-                    disabled={wf_shared.com2.inputs_disabled_4}
+                    disabled={els_state.com2.inputs_disabled_4}
                     onClick={on_click_folder_arrow}
                 >
                     <Svg src={folder_is_opened ? arrow_down_svg : arrow_right_svg} />
@@ -107,7 +108,7 @@ export class Work_folder extends React.Component {
                         <button
                             className={x.cls(['folder_name', folder.path === chosen_folder_path.ob.chosen_folder_path ? 'selected_folder' : null])}
                             type="button"
-                            tabIndex={wf_shared.com2.inputs_disabled_3}
+                            tabIndex={els_state.com2.inputs_disabled_3}
                             onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, filtered_index)}
                             title={folder.name}
                         >
@@ -123,9 +124,9 @@ export class Work_folder extends React.Component {
         search.search();
 
         const number_of_rows = search.mut.filtered_folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
-        wf_shared.ob.folders; // eslint-disable-line no-unused-expressions
+        folders.ob.folders; // eslint-disable-line no-unused-expressions
         chosen_folder_path.ob.chosen_folder_path; // eslint-disable-line no-unused-expressions
-        wf_shared.com2.inputs_disabled_4; // eslint-disable-line no-unused-expressions
+        els_state.com2.inputs_disabled_4; // eslint-disable-line no-unused-expressions
 
         return (
             <Fieldset name="work_folder">
@@ -165,7 +166,7 @@ export class Work_folder extends React.Component {
 
 class Work_folder_selector extends React.Component {
     render() {
-        wf_shared.ob.folders; // eslint-disable-line no-unused-expressions
+        folders.ob.folders; // eslint-disable-line no-unused-expressions
 
         const { set_ref } = this.props;
 
@@ -173,7 +174,7 @@ class Work_folder_selector extends React.Component {
             () => choose_folder.ob.work_folder === '',
             () => 'work_folder_is_not_specified_message_text',
             () => {
-                const work_folder_info = wf_shared.get_info_about_folder(choose_folder.ob.work_folder);
+                const work_folder_info = folders.get_info_about_folder(choose_folder.ob.work_folder);
 
                 if (work_folder_info.is_theme) {
                     return 'work_folder_is_theme_message_text';
@@ -204,7 +205,7 @@ class Work_folder_selector extends React.Component {
                             className="btn choose_work_folder_btn"
                             type="button"
                             data-text="choose_folder_btn_text"
-                            disabled={wf_shared.com2.inputs_disabled_4}
+                            disabled={els_state.com2.inputs_disabled_4}
                             onClick={choose_folder.choose_folder.bind(
                                 null,
                                 expand_or_collapse.create_top_level_folders,
@@ -219,7 +220,7 @@ class Work_folder_selector extends React.Component {
                     <button
                         className={x.cls(['work_folder_path', chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder ? 'selected_folder' : null])}
                         type="button"
-                        tabIndex={wf_shared.com2.inputs_disabled_3}
+                        tabIndex={els_state.com2.inputs_disabled_3}
                         title={choose_folder.ob.work_folder}
                         onClick={component_methods.select_work_folder}
                     >

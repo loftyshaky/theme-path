@@ -7,7 +7,7 @@ import * as r from 'ramda';
 import x from 'x';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as folders from 'js/work_folder/folders';
 import * as sort_folders from 'js/work_folder/sort_folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
@@ -19,7 +19,7 @@ configure({ enforceActions: 'observed' });
 export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, nest_level, start_i, folder_is_opened, name_input_val) => { // action( need to be here otherwise renamed folder will be deselected
     try {
         if (choose_folder.reset_work_folder(false)) {
-            if (mode === 'renaming_folder' || (mode === 'creating_folder' && !wf_shared.mut.chosen_folder_info.is_theme)) {
+            if (mode === 'renaming_folder' || (mode === 'creating_folder' && !folders.mut.chosen_folder_info.is_theme)) {
                 const folder_name = mode === 'renaming_folder' ? name_input_val : x.msg('new_theme_btn_label_text');
                 const timne_id = Date.now();
                 const source_folder_path = mode === 'renaming_folder' ? folder_path : join(app_root, 'resources', 'app', 'bundle', 'new_theme');
@@ -43,15 +43,15 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                         key: x.unique_id(),
                                         name: folder_name_final,
                                         path: new_theme_path,
-                                        children: wf_shared.get_folders(new_theme_path),
+                                        children: folders.get_folders(new_theme_path),
                                         nest_level,
                                         is_theme: true,
                                         is_empty: false,
                                     };
 
-                                    const folders_with_new_folder = r.insert(0, new_theme, wf_shared.ob.folders);
+                                    const folders_with_new_folder = r.insert(0, new_theme, folders.ob.folders);
 
-                                    wf_shared.set_folders(sort_folders.sort_folders(folders_with_new_folder, new_theme_path, start_i, nest_level));
+                                    folders.set_folders(sort_folders.sort_folders(folders_with_new_folder, new_theme_path, start_i, nest_level));
                                 }
 
                                 if (tutorial.ob.tutorial_stage === 3) {
@@ -73,12 +73,12 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
 
                                 chosen_folder_path.set_chosen_folder_path(new_folder_path);
 
-                                const renamed_folder_i = wf_shared.ob.folders.findIndex(item => item.path === source_folder_path);
-                                const work_folder_is_theme_folder = wf_shared.ob.folders.length === 0;
+                                const renamed_folder_i = folders.ob.folders.findIndex(item => item.path === source_folder_path);
+                                const work_folder_is_theme_folder = folders.ob.folders.length === 0;
 
                                 if (!work_folder_is_theme_folder) {
-                                    wf_shared.ob.folders[renamed_folder_i].name = folder_name_final;
-                                    wf_shared.ob.folders[renamed_folder_i].path = new_folder_path;
+                                    folders.ob.folders[renamed_folder_i].name = folder_name_final;
+                                    folders.ob.folders[renamed_folder_i].path = new_folder_path;
 
                                 } else {
                                     choose_folder.change_work_folder(new_folder_path);

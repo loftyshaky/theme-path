@@ -2,7 +2,7 @@ import { action, configure } from 'mobx';
 
 import x from 'x';
 import * as chosen_folder_path from 'js/chosen_folder_path';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
 
@@ -11,10 +11,10 @@ export const search = action(() => {
         const query = sta.search_input[0] ? sta.search_input[0].value : '';
 
         if (query !== '') {
-            mut.filtered_folders = wf_shared.ob.folders.filter(folder => folder.nest_level !== 0 || folder.name.toLowerCase().indexOf(query) > -1);
+            mut.filtered_folders = folders.ob.folders.filter(folder => folder.nest_level !== 0 || folder.name.toLowerCase().indexOf(query) > -1);
 
         } else {
-            mut.filtered_folders = wf_shared.ob.folders;
+            mut.filtered_folders = folders.ob.folders;
         }
 
     } catch (er) {
@@ -24,7 +24,7 @@ export const search = action(() => {
 
 export const trigger_work_folder_reload = x.debounce(action(() => {
     try {
-        wf_shared.collapse_all_folders();
+        folders.collapse_all_folders();
 
         //> trigger Work_folder component rerender
         const { chosen_folder_path: old_chosen_folder_path } = chosen_folder_path.ob;

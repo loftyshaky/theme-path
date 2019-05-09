@@ -9,7 +9,7 @@ import { inputs_data } from 'js/inputs_data';
 import { selects_options } from 'js/selects_options';
 import * as change_val from 'js/change_val';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as els_state from 'js/els_state';
 
 import { Help } from 'components/Help';
 
@@ -138,7 +138,7 @@ export class Select extends React.Component {
                     <ReactSelect
                         value={selected_option_final}
                         options={options}
-                        isDisabled={wf_shared.com2.inputs_disabled_2 && this.family !== 'options'}
+                        isDisabled={els_state.com2.inputs_disabled_2 && this.family !== 'options'}
                         classNamePrefix="select"
                         backspaceRemovesValue={false}
                         onChange={this.change_select_val}

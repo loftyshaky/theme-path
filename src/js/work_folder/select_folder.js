@@ -12,7 +12,7 @@ import * as msg from 'js/msg';
 import * as json_file from 'js/json_file';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as folders from 'js/work_folder/folders';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
 import * as choose_folder from 'js/work_folder/choose_folder';
@@ -30,18 +30,18 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
             const folder_is_already_selected = folder_path === chosen_folder_path.ob.chosen_folder_path;
 
             if (!is_work_folder) {
-                wf_shared.deselect_theme();
+                folders.deselect_theme();
             }
 
             chosen_folder_path.set_chosen_folder_path(folder_path);
 
-            const folder_info = wf_shared.get_info_about_folder(folder_path);
+            const folder_info = folders.get_info_about_folder(folder_path);
 
             if (!is_work_folder) {
-                wf_shared.ob.folders[i_to_insert_folder_in - 1].is_theme = folder_info.is_theme;
-                wf_shared.ob.folders[i_to_insert_folder_in - 1].is_empty = folder_info.is_empty;
+                folders.ob.folders[i_to_insert_folder_in - 1].is_theme = folder_info.is_theme;
+                folders.ob.folders[i_to_insert_folder_in - 1].is_empty = folder_info.is_empty;
 
-                wf_shared.rerender_work_folder();
+                folders.rerender_work_folder();
             }
 
             if (folder_info.is_theme) {
@@ -108,7 +108,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
 
             convert_color.convert_all();
 
-            wf_shared.mut.chosen_folder_info = {
+            folders.mut.chosen_folder_info = {
                 children: children || null,
                 is_theme: folder_info.is_theme,
                 nest_level: nest_level || null,

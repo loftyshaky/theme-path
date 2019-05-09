@@ -6,7 +6,7 @@ import * as analytics from 'js/analytics';
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as els_state from 'js/els_state';
 
 import { Help } from 'components/Help';
 
@@ -161,7 +161,7 @@ export class Textarea extends React.Component {
                     className={this.ob.char_limit_exceeded ? 'char_limit_exceeded_textarea' : ''}
                     ref={textarea => { this.textarea = textarea; }}
                     value={val}
-                    disabled={wf_shared.com2.inputs_disabled_2 && this.family !== 'options'}
+                    disabled={els_state.com2.inputs_disabled_2 && this.family !== 'options'}
                     onInput={this.change_val}
                     onChange={() => null}
                     onBlur={this.reset_entered_one_char_in_textarea_after_focus}

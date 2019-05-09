@@ -5,7 +5,7 @@ import Store from 'electron-store';
 
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as folders from 'js/work_folder/folders';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as watch from 'js/work_folder/watch';
 import * as search from 'js/work_folder/search';
@@ -28,7 +28,7 @@ export const choose_folder = callback => {
         if (folder_path) { // if not cancelled folder chosing
             change_work_folder(folder_path[0]);
 
-            wf_shared.deselect_theme();
+            folders.deselect_theme();
 
             callback();
 
@@ -37,9 +37,9 @@ export const choose_folder = callback => {
                     tutorial.increment_tutorial_stage(false, true);
                 }
 
-                const there_is_non_theme_folder = wf_shared.ob.folders.some(folder => !folder.is_theme);
+                const there_is_non_theme_folder = folders.ob.folders.some(folder => !folder.is_theme);
 
-                if (wf_shared.ob.folders.length === 0 || !there_is_non_theme_folder) {
+                if (folders.ob.folders.length === 0 || !there_is_non_theme_folder) {
                     tutorial.increment_tutorial_stage(false, true);
                 }
             }
@@ -77,7 +77,7 @@ export const reset_work_folder = action(terminate_script => {
         if (!work_folder_exist) {
             change_work_folder('');
             expand_or_collapse.collapse_all_folders();
-            wf_shared.deselect_theme();
+            folders.deselect_theme();
 
             document.activeElement.blur();
 

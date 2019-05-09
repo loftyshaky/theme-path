@@ -5,9 +5,9 @@ import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
+import * as els_state from 'js/els_state';
 import * as color_pickiers from 'js/color_pickiers';
 import * as enter_click from 'js/enter_click';
-import * as wf_shared from 'js/work_folder/wf_shared';
 
 import { Tr } from 'components/Tr';
 import { Checkbox } from 'components/Checkbox';
@@ -98,7 +98,7 @@ const Color_input_vizualization = observer(props => {
         <span
             className={x.cls(['color_input_vizualization', type === 'img_selector' ? 'tall_color_input_vizualization' : null])}
             role="button"
-            tabIndex={wf_shared.com2.inputs_disabled_1}
+            tabIndex={els_state.com2.inputs_disabled_1}
             data-family={family}
             data-name={name}
             style={{ backgroundColor: color }}

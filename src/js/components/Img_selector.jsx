@@ -5,7 +5,7 @@ import * as analytics from 'js/analytics';
 import { inputs_data } from 'js/inputs_data';
 import * as imgs from 'js/imgs';
 import * as enter_click from 'js/enter_click';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as els_state from 'js/els_state';
 
 import { Tr } from 'components/Tr';
 import { Color } from 'components/Color';
@@ -101,7 +101,7 @@ export class Img_selector extends React.Component {
                             <label
                                 className="upload_box_browse_label"
                                 htmlFor={`${this.name}_file`}
-                                tabIndex={wf_shared.com2.inputs_disabled_1}
+                                tabIndex={els_state.com2.inputs_disabled_1}
                                 data-text="upload_box_label_text"
                                 onKeyUp={enter_click.simulate_click_on_enter}
                                 onClick={analytics.send_event.bind(null, 'upload_inputs', `browsed_for_image-${this.family}-${this.name}`)}

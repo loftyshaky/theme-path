@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import x from 'x';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as els_state from 'js/els_state';
 
 import { Tr } from 'components/Tr';
 
@@ -18,7 +18,7 @@ export const Fieldset = observer(props => {
             }}
             tag="div"
             name="gen"
-            state={wf_shared.com.fieldset_protecting_screen_is_visible}
+            state={els_state.com.fieldset_protecting_screen_is_visible}
         />
     )
         : null;
@@ -32,7 +32,7 @@ export const Fieldset = observer(props => {
                 }}
                 tag="div"
                 name="legend"
-                state={wf_shared.com.fieldset_protecting_screen_is_visible}
+                state={els_state.com.fieldset_protecting_screen_is_visible}
             >
                 {x.msg(`${name}_legend_text`)}
                 <div className="legend_line" />
@@ -44,7 +44,7 @@ export const Fieldset = observer(props => {
                 }}
                 tag="fieldset"
                 name="fieldset"
-                state={wf_shared.com.fieldset_protecting_screen_is_visible}
+                state={els_state.com.fieldset_protecting_screen_is_visible}
             >
                 <div>
                     {children}

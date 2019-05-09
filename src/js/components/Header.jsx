@@ -5,7 +5,8 @@ import Svg from 'svg-inline-react';
 import x from 'x';
 import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as els_state from 'js/els_state';
+import * as folders from 'js/work_folder/folders';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as open_and_pack from 'js/open_and_pack';
@@ -51,8 +52,8 @@ export class Header extends React.Component {
                 expand_or_collapse.expand_or_collapse_folder(
                     'new_theme',
                     chosen_folder_path.ob.chosen_folder_path,
-                    wf_shared.mut.chosen_folder_info.nest_level,
-                    wf_shared.mut.chosen_folder_info.i_to_insert_folder_in,
+                    folders.mut.chosen_folder_info.nest_level,
+                    folders.mut.chosen_folder_info.i_to_insert_folder_in,
                 );
             }
 
@@ -99,7 +100,7 @@ export class Header extends React.Component {
                             className="header_btn new_theme_btn"
                             type="button"
                             onClick={this.expand_or_collapse_folder}
-                            disabled={wf_shared.com2.inputs_disabled_5}
+                            disabled={els_state.com2.inputs_disabled_5}
                         >
                             <span className="header_btn_icon new_theme_btn_icon">
                                 <Svg src={plus_svg} />
@@ -116,7 +117,7 @@ export class Header extends React.Component {
                         className="search_input"
                         type="text"
                         data-placeholder="search_input_placeholder"
-                        disabled={wf_shared.com2.inputs_disabled_5}
+                        disabled={els_state.com2.inputs_disabled_5}
                         onInput={this.on_input_in_search_input}
                         onBlur={this.on_blur_search_input}
                     />
@@ -145,7 +146,7 @@ export class Header extends React.Component {
                     </div>
                     <Btn
                         name="collapse_all_folders"
-                        on_click={wf_shared.collapse_all_folders}
+                        on_click={folders.collapse_all_folders}
                         svg={dehaze_svg}
                     />
                     <Btn
@@ -190,7 +191,7 @@ const Open_in_profiled_chrome_btn = props => {
             className="header_btn open_in_chrome_btn"
             type="button"
             title={`${x.msg('open_in_chrome_btn_title')} - ${path}`}
-            disabled={wf_shared.com2.inputs_disabled_5}
+            disabled={els_state.com2.inputs_disabled_5}
             onMouseUp={open_and_pack.open_in_chrome.bind(null, path, false)}
             onKeyUp={open_and_pack.open_in_chrome.bind(null, path, false)}
         >
@@ -221,7 +222,7 @@ const Btn = props => {
             className="header_btn header_btn_icon"
             type="button"
             data-title={`${name}_btn_title`}
-            disabled={wf_shared.com2.inputs_disabled_5}
+            disabled={els_state.com2.inputs_disabled_5}
             {...(name === 'open_in_chrome' ? { onMouseUp: on_click_inner, onKeyUp: on_click_inner } : { onClick: on_click_inner })}
         >
             <Svg src={svg} />
@@ -248,7 +249,7 @@ const Popup_btn = props => {
             className={x.cls(['header_btn header_btn_icon', `${name}_btn`])}
             type="button"
             data-title={`${name}_btn_title`}
-            disabled={wf_shared.com2.inputs_disabled_5}
+            disabled={els_state.com2.inputs_disabled_5}
             onClick={on_click}
         >
             <Svg src={svg} />
@@ -275,7 +276,7 @@ const Pack_btn = props => {
             className="header_btn pack_btn"
             type="button"
             data-title={`pack_as_${name}_btn_title`}
-            disabled={wf_shared.com2.inputs_disabled_5}
+            disabled={els_state.com2.inputs_disabled_5}
             onClick={on_click}
         >
             <span className="header_btn_icon pack_btn_icon">

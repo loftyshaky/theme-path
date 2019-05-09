@@ -5,7 +5,7 @@ import Svg from 'svg-inline-react';
 import x from 'x';
 import * as analytics from 'js/analytics';
 import * as tutorial from 'js/tutorial';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as els_state from 'js/els_state';
 
 import { Tr } from 'components/Tr';
 
@@ -102,7 +102,7 @@ export class Tutorial_item extends React.Component {
                     <button
                         className="close_btn tutorial_item_close_btn"
                         type="button"
-                        disabled={wf_shared.com2.inputs_disabled_4}
+                        disabled={els_state.com2.inputs_disabled_4}
                         onClick={this.close_tutorial}
                     >
                         <Svg src={close_svg} />

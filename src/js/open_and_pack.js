@@ -14,7 +14,7 @@ import getChrome from 'get-chrome';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as folders from 'js/work_folder/folders';
 import { observable, action, configure } from 'mobx';
 
 import * as choose_folder from 'js/work_folder/choose_folder';
@@ -27,7 +27,7 @@ const store = new Store();
 const run = callback => {
     try {
         if (choose_folder.reset_work_folder(false)) {
-            if (wf_shared.mut.chosen_folder_info.is_theme) {
+            if (folders.mut.chosen_folder_info.is_theme) {
                 const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
                 const folder_is_theme = files.find(file => file === 'manifest.json');
 

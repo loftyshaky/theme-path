@@ -4,7 +4,7 @@ import * as r from 'ramda';
 import x from 'x';
 import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
-import * as wf_shared from 'js/work_folder/wf_shared';
+import * as folders from 'js/work_folder/folders';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as sort_folders from 'js/work_folder/sort_folders';
 import * as watch from 'js/work_folder/watch';
@@ -32,8 +32,8 @@ export const create_top_level_folders = async () => {
 
 export const collapse_all_folders = action(() => {
     try {
-        wf_shared.ob.folders.clear();
-        wf_shared.mut.opened_folders = [];
+        folders.ob.folders.clear();
+        folders.mut.opened_folders = [];
 
     } catch (er) {
         err(er, 74);
@@ -43,8 +43,8 @@ export const collapse_all_folders = action(() => {
 
 export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_insert_folder_in) => {
     try {
-        if (choose_folder.reset_work_folder(false) && (mode !== 'new_theme' || !wf_shared.mut.chosen_folder_info.is_theme)) {
-            const folder_is_opened = wf_shared.mut.opened_folders.indexOf(folder_path) !== -1;
+        if (choose_folder.reset_work_folder(false) && (mode !== 'new_theme' || !folders.mut.chosen_folder_info.is_theme)) {
+            const folder_is_opened = folders.mut.opened_folders.indexOf(folder_path) !== -1;
 
             if (mode === 'new_theme') {
                 new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, nest_level, i_to_insert_folder_in, folder_is_opened);
@@ -52,7 +52,7 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
                 analytics.add_header_btns_analytics(mode);
             }
 
-            const files = wf_shared.get_folders(folder_path);
+            const files = folders.get_folders(folder_path);
 
             if (!folder_is_opened) {
                 expand_folder(folder_path, files, nest_level, i_to_insert_folder_in);
@@ -61,28 +61,28 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
 
             } else if (mode !== 'new_theme') { // folder is opened so close it
                 const folder_to_remove_start_i = i_to_insert_folder_in;
-                const number_of_folders_to_close = wf_shared.get_number_of_folders_to_work_with(i_to_insert_folder_in, nest_level); //>1 get number of folders to close
+                const number_of_folders_to_close = folders.get_number_of_folders_to_work_with(i_to_insert_folder_in, nest_level); //>1 get number of folders to close
                 const stop_folder_i = folder_to_remove_start_i + number_of_folders_to_close;
-                const stop_folder_is_not_last_folder = wf_shared.ob.folders[stop_folder_i + 1];
+                const stop_folder_is_not_last_folder = folders.ob.folders[stop_folder_i + 1];
                 const folder_to_close_end_i = stop_folder_is_not_last_folder ? stop_folder_i - 1 : stop_folder_i;
 
                 //>1 close folders
                 const set_opened_folders_to_null = x.map_i((item, i) => {
                     const folder_is_eligible_for_deletion = i >= folder_to_remove_start_i
                         && i <= folder_to_close_end_i
-                        && wf_shared.ob.folders[i].nest_level >= nest_level;
+                        && folders.ob.folders[i].nest_level >= nest_level;
 
                     if (folder_is_eligible_for_deletion) {
                         //>2 mark target's child folders as closed
-                        const opened_folder_i = wf_shared.mut.opened_folders.indexOf(item.path);
+                        const opened_folder_i = folders.mut.opened_folders.indexOf(item.path);
 
                         if (opened_folder_i > -1) {
-                            wf_shared.mut.opened_folders.splice(opened_folder_i, 1);
+                            folders.mut.opened_folders.splice(opened_folder_i, 1);
                         }
                         //<2 mark target folder's child folders as closed
 
                         if (item.path === chosen_folder_path.ob.chosen_folder_path) {
-                            wf_shared.deselect_theme();
+                            folders.deselect_theme();
                         }
 
                         return null;
@@ -93,9 +93,9 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
 
                 const close_nulled = r.filter(item => item);
 
-                wf_shared.mut.opened_folders.splice(wf_shared.mut.opened_folders.indexOf(folder_path), 1); // mark target folder as closed
+                folders.mut.opened_folders.splice(folders.mut.opened_folders.indexOf(folder_path), 1); // mark target folder as closed
 
-                wf_shared.set_folders(r.pipe(set_opened_folders_to_null, close_nulled)(wf_shared.ob.folders));
+                folders.set_folders(r.pipe(set_opened_folders_to_null, close_nulled)(folders.ob.folders));
                 //<1 close folders
             }
         }
@@ -111,7 +111,7 @@ const expand_folder = (folder_path, files, nest_level, i_to_insert_folder_in) =>
 
         files.forEach(file => {
             if (file.is_directory) {
-                const folder_info = wf_shared.get_info_about_folder(file.path);
+                const folder_info = folders.get_info_about_folder(file.path);
 
                 const expanded_folder = {
                     key: x.unique_id(),
@@ -133,12 +133,12 @@ const expand_folder = (folder_path, files, nest_level, i_to_insert_folder_in) =>
             const is_root = folder_path === '';
 
             if (!is_root) {
-                wf_shared.mut.opened_folders.push(folder_path); // mark target folder as opened
+                folders.mut.opened_folders.push(folder_path); // mark target folder as opened
             }
 
-            const folders_with_new_folder = r.insertAll(i_to_insert_folder_in, sort_folders.sort_folders_inner(expanded_folders), wf_shared.ob.folders);
+            const folders_with_new_folder = r.insertAll(i_to_insert_folder_in, sort_folders.sort_folders_inner(expanded_folders), folders.ob.folders);
 
-            wf_shared.set_folders(folders_with_new_folder);
+            folders.set_folders(folders_with_new_folder);
         }
 
     } catch (er) {
