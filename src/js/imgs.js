@@ -18,8 +18,6 @@ configure({ enforceActions: 'observed' });
 
 const store = new Store();
 
-//--
-
 export const create_solid_color_image = (family, name, hex, alpha) => {
     try {
         const width = sta.width[name] ? sta.width[name] : 1;

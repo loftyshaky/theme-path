@@ -7,8 +7,6 @@ import * as error from 'js/error';
 
 import close_svg from 'svg/close';
 
-//--
-
 export class Error extends React.Component {
     componentDidMount() {
         try {

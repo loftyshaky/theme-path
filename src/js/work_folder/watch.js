@@ -13,8 +13,6 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 
 configure({ enforceActions: 'observed' });
 
-//--
-
 const watcher = chokidar.watch(null, { persistent: true, ignoreInitial: true, awaitWriteFinish: true, usePolling: true, depth: 0 });
 
 watcher

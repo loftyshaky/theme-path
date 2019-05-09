@@ -12,8 +12,6 @@ import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
-//--
-
 export class Img_selector extends React.Component {
     constructor(props) {
         super(props);

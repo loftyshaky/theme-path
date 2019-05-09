@@ -8,8 +8,6 @@ import * as options from 'js/options';
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
-//--
-
 const { color_input_default } = options.ob.theme_vals[store.get('theme')];
 
 export const reset_inputs_data = action(() => {

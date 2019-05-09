@@ -3,8 +3,6 @@ import * as r from 'ramda';
 
 const store = new Store();
 
-//--
-
 export const set_defaults = () => {
     try {
         store.set({

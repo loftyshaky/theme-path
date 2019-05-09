@@ -1,7 +1,5 @@
 import x from 'x';
 
-//--
-
 //> create select label content t
 const create_option_data_text_val = (is_locale_option, modifier) => {
     try {

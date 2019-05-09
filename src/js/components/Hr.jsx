@@ -2,8 +2,6 @@ import React from 'react';
 
 import x from 'x';
 
-//--
-
 export const Hr = props => {
     const { name } = props;
 

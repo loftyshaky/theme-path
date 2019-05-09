@@ -41,7 +41,6 @@ export const remove_search_val = () => {
     sta.search_input[0].value = '';
 };
 
-//> varibles
 export const mut = {
     filtered_folders: null,
 };
@@ -49,4 +48,3 @@ export const mut = {
 const sta = {
     search_input: document.getElementsByClassName('search_input'),
 };
-//< varibles

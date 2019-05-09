@@ -23,8 +23,6 @@ import folder_opened_svg from 'svg/folder_opened';
 import arrow_right_svg from 'svg/arrow_right';
 import arrow_down_svg from 'svg/arrow_down';
 
-//--
-
 export class Work_folder extends React.Component {
     constructor(props) {
         super(props);

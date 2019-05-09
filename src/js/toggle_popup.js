@@ -9,8 +9,6 @@ import * as analytics from 'js/analytics';
 configure({ enforceActions: 'observed' });
 const store = new Store();
 
-//--
-
 export const toggle_popup = name => {
     try {
         const new_val = !ob.popup_visibility[name];

@@ -6,8 +6,6 @@ import * as els_state from 'js/els_state';
 
 import { Tr } from 'components/Tr';
 
-//--
-
 export const Fieldset = observer(props => {
     const { name, children } = props;
 

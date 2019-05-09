@@ -18,8 +18,6 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 
 const store = new Store();
 
-//--
-
 export const set_default_icon = (family, name) => {
     try {
         //> set default icon name

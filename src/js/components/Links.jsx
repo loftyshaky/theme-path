@@ -5,8 +5,6 @@ import * as analytics from 'js/analytics';
 
 import { Popup } from 'components/Popup';
 
-//--
-
 export const Links = () => (
     <Popup name="links">
         <div>

@@ -15,8 +15,6 @@ const { dialog } = require('electron').remote;
 configure({ enforceActions: 'observed' });
 const store = new Store();
 
-//--
-
 export const choose_folder = callback => {
     try {
         const folder_path = dialog.showOpenDialog({

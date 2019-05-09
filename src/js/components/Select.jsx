@@ -13,8 +13,6 @@ import * as els_state from 'js/els_state';
 
 import { Help } from 'components/Help';
 
-//--
-
 export class Select extends React.Component {
     constructor(props) {
         super(props);

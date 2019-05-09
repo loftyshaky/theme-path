@@ -7,8 +7,6 @@ import * as options from 'js/options';
 
 const store = new Store();
 
-//--
-
 const convert_theme_color_props_to_color = item => {
     try {
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];

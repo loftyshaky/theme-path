@@ -9,8 +9,6 @@ import { Tr } from 'components/Tr';
 
 import close_svg from 'svg/close';
 
-//--
-
 export const Help_viewer = observer(() => {
     const help_viewer_name = help_viewer.ob.help_viewer_name ? (
         <div className="help_viewer_name">

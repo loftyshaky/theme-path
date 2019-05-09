@@ -6,8 +6,6 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 
 configure({ enforceActions: 'observed' });
 
-//--
-
 export const select_work_folder = action(() => {
     try {
         if (choose_folder.reset_work_folder(false)) {

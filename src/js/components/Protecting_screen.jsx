@@ -5,8 +5,6 @@ import * as toggle_popup from 'js/toggle_popup';
 
 import { Tr } from 'components/Tr';
 
-//--
-
 export class Protecting_screen extends React.Component {
     constructor(props) {
         super(props);

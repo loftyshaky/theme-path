@@ -2,8 +2,6 @@ import { join } from 'path';
 
 import * as chosen_folder_path from 'js/chosen_folder_path';
 
-//--
-
 export const construct_icons_obj = json => {
     try {
         const new_json = json;

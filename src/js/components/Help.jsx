@@ -4,8 +4,6 @@ import { observer } from 'mobx-react';
 import * as help_viewer from 'js/help_viewer';
 import * as els_state from 'js/els_state';
 
-//--
-
 export const Help = observer(props => {
     const { add_help, family, name } = props;
 

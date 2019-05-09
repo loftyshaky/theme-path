@@ -12,8 +12,6 @@ import { Help } from 'components/Help';
 
 configure({ enforceActions: 'observed' });
 
-//--
-
 export class Textarea extends React.Component {
     constructor(props) {
         super(props);

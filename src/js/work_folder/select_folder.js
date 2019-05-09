@@ -21,8 +21,6 @@ import * as picked_colors from 'js/picked_colors';
 
 configure({ enforceActions: 'observed' });
 
-//--
-
 //> select folder and fill inputs with theme data
 export const select_folder = action((is_work_folder, folder_path, children, nest_level, i_to_insert_folder_in) => { // action( need to be here otherwise protecting screen will not lift
     try {

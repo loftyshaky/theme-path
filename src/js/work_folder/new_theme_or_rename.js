@@ -13,8 +13,6 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 
 configure({ enforceActions: 'observed' });
 
-//--
-
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
 export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, nest_level, start_i, folder_is_opened, name_input_val) => { // action( need to be here otherwise renamed folder will be deselected
     try {

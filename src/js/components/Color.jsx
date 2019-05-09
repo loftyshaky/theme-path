@@ -12,7 +12,6 @@ import * as enter_click from 'js/enter_click';
 import { Tr } from 'components/Tr';
 import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
-//--
 
 export class Color extends React.Component {
     constructor(props) {

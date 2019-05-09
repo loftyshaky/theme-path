@@ -8,8 +8,6 @@ import * as analytics from 'js/analytics';
 
 import { Error } from 'components/Error';
 
-//--
-
 analytics.track_app_start();
 
 render(

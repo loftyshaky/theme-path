@@ -7,8 +7,6 @@ import * as options from 'js/options';
 
 import { All } from 'components/All';
 
-//--
-
 options.load_setting();
 options.load_theme();
 

@@ -24,8 +24,6 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
-
-//--
 export const change_val = async (family, name, val, img_extension, e) => {
     try {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];

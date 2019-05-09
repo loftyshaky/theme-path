@@ -11,8 +11,6 @@ import x from 'x';
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
-//--
-
 export const load_theme = action(() => {
     try {
         const theme_setting = store.get('theme');

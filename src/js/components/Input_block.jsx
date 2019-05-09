@@ -10,8 +10,6 @@ import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
-//--
-
 export class Input_block extends React.Component {
     constructor(props) {
         super(props);
@@ -68,7 +66,6 @@ export class Input_block extends React.Component {
     }
 }
 
-//> varibles
 const sta = {
     components: {
         textarea: Textarea,
@@ -78,4 +75,3 @@ const sta = {
         checkbox: Checkbox,
     },
 };
-//< varibles

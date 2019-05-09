@@ -6,8 +6,6 @@ import * as tutorial from 'js/tutorial';
 
 const store = new Store();
 
-//--
-
 const visitor = ua('UA-131099848-1');
 
 visitor.set('anonymizeIp', true);

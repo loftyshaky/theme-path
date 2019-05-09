@@ -14,8 +14,6 @@ import { Tr } from 'components/Tr';
 
 import checkmark_svg from 'svg/checkmark';
 
-//--
-
 export const Checkbox = observer(props => {
     const { name, family, special_checkbox } = props;
 

@@ -26,8 +26,6 @@ import archive_svg from 'svg/archive';
 import gear_svg from 'svg/gear';
 import list_svg from 'svg/list';
 
-//--
-
 export class Header extends React.Component {
     constructor(props) {
         super(props);

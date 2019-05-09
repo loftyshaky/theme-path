@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { existsSync } from 'fs';
 
-
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as json_file from 'js/json_file';
 import * as color_pickiers from 'js/color_pickiers';

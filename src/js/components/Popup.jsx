@@ -10,8 +10,6 @@ import { Hr } from 'components/Hr';
 
 import close_svg from 'svg/close';
 
-//--
-
 export const Popup = observer(props => {
     const { name, children } = props;
 

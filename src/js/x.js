@@ -5,8 +5,6 @@ import { remote } from 'electron';
 
 import package_json from 'package_json'; // eslint-disable-line import/no-unresolved
 
-//--
-
 const os_lang = remote.getGlobal('os_lang');
 const loc = require(`locales/${os_lang}.json`); // eslint-disable-line import/no-dynamic-require
 

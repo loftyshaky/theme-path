@@ -3,8 +3,6 @@ import * as r from 'ramda';
 import x from 'x';
 import * as folders from 'js/work_folder/folders';
 
-//--
-
 export const sort_folders = (folders_to_sort, added_folder_path, start_i, nest_level) => {
     const only_one_folder = folders_to_sort.length === 1; // total number of folders with added folder is one
     const new_folders = r.ifElse(

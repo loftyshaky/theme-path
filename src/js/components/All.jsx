@@ -18,8 +18,6 @@ import { Tutorial_item } from 'components/Tutorial_item';
 import { Auto_updater } from 'components/Auto_updater';
 import { Analytics_privacy } from 'components/Analytics_privacy';
 
-//--
-
 export class All extends React.Component {
     componentDidMount() {
         try {

@@ -14,8 +14,6 @@ import * as picked_colors from 'js/picked_colors';
 
 configure({ enforceActions: 'observed' });
 
-//--
-
 export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualization = e => {
     try {
         const color_ok_btn_clicked = x.matches(e.target, '.color_ok_btn');
@@ -239,7 +237,6 @@ export const defocus_color_field = () => {
     }
 };
 
-//> varibles
 export const con = {
     no_alpha: ['theme_frame', 'theme_frame_inactive', 'theme_frame_incognito', 'theme_frame_incognito_inactive'],
 };
@@ -257,4 +254,3 @@ export const mut = {
         color: '',
     },
 };
-//< varibles

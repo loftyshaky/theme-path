@@ -12,8 +12,6 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 
 configure({ enforceActions: 'observed' });
 
-//--
-
 //> on extension load / work_folder folder content change
 export const create_top_level_folders = async () => {
     try {

@@ -11,8 +11,6 @@ import { Tr } from 'components/Tr';
 
 import close_svg from 'svg/close';
 
-//--
-
 export class Tutorial_item extends React.Component {
     constructor(props) {
         super(props);

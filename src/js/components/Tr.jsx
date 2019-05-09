@@ -6,8 +6,6 @@ import Store from 'electron-store';
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
-//--
-
 export class Tr extends React.Component {
     constructor(props) {
         super(props);

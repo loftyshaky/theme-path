@@ -7,7 +7,6 @@ import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
 
-//> varibles t
 export const com = {
     get fieldset_protecting_screen_is_visible() {
         const work_folder_path = choose_folder.ob.work_folder;
