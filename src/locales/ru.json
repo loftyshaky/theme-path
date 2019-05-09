@@ -231,7 +231,7 @@
   "properties_ntp_logo_alternate_help_text": "Определяет цвет логотипа \"Google\" на странице новой вкладки.",
 
   "options_chrome_exe_path_help_text": "Путь к исполняемому файлу Chrome. Используется при предпросмотре темы. Пример: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-  "options_chrome_user_data_dirs_help_text": "Пути к пользовательским папкам, разделяемые запятой. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
+  "options_chrome_user_data_dirs_help_text": "Пути к папкам пользовательских данных Chrome, разделяемые запятой. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
   "options_locales_whitelist_help_text": "Языковые коды языков, которые следует показывать в выпадающих меню \"Язык \" и \"Язык по умолчанию\", разделённые запятыми. Пример: en, ru, fr",
 
 
