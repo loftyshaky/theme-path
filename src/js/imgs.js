@@ -60,6 +60,7 @@ export const handle_files = async (file, family, name) => {
         const valid_file_types = r.cond([
             [r.equals('theme_ntp_background'), () => ['image/png', 'image/jpeg', 'image/gif']],
             [r.equals('icon'), () => ['image/png', 'image/jpeg']],
+            [r.equals('clear_new_tab_video'), () => ['video/mp4', 'video/webm', 'video/ogg']],
             [r.T, () => ['image/png']],
         ])(img_name);
 
@@ -77,7 +78,7 @@ export const handle_files = async (file, family, name) => {
             change_val.set_inputs_data_color(family, name, color_input_default);
 
         } else {
-            err(er_obj('Invalid image type'), 2, 'invalid_img_type');
+            err(er_obj('Invalid file type'), 2, 'invalid_file_type');
         }
 
     } catch (er) {

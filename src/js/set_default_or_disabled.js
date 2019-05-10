@@ -1,7 +1,7 @@
 'use_strict';
 
 import { join } from 'path';
-import { existsSync, unlinkSync, copySync } from 'fs-extra';
+import { existsSync, unlinkSync, copySync, readdirSync } from 'fs-extra';
 
 import * as r from 'ramda';
 import Store from 'electron-store';
@@ -95,18 +95,25 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
 const set_default = (family, name) => {
     try {
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];
+        let clear_new_tab_video_name = '';
 
-        delete manifest.mut.manifest.theme[family][name];
+        if (name !== 'clear_new_tab_video') {
+            delete manifest.mut.manifest.theme[family][name];
 
-        if (r.isEmpty(manifest.mut.manifest.theme[family])) {
-            delete manifest.mut.manifest.theme[family];
+            if (r.isEmpty(manifest.mut.manifest.theme[family])) {
+                delete manifest.mut.manifest.theme[family];
+            }
+
+        } else {
+            const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
+            clear_new_tab_video_name = files.find(file => file.indexOf('clear_new_tab_video') > -1) || '';
         }
 
-        const img_to_delete_path = join(chosen_folder_path.ob.chosen_folder_path, inputs_data.obj[family][name].val);
+        const file_to_delete_path = join(chosen_folder_path.ob.chosen_folder_path, inputs_data.obj[family][name].val || clear_new_tab_video_name);
 
-        if (existsSync(img_to_delete_path)) {
+        if (existsSync(file_to_delete_path)) {
             try {
-                unlinkSync(img_to_delete_path);
+                unlinkSync(file_to_delete_path);
 
             } catch (er) {
                 err(er, 139, 'img_is_locked');

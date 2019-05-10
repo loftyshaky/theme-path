@@ -91,7 +91,7 @@ export class Img_selector extends React.Component {
                             className="upload_btn"
                             id={`${this.name}_file`}
                             type="file"
-                            accept="image/*"
+                            accept="image/*, video/*"
                             value={imgs.ob.file_input_value}
                             onChange={this.browse_handle_files}
                         />

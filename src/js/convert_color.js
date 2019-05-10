@@ -1,9 +1,12 @@
+import { readdirSync } from 'fs-extra';
+
 import * as r from 'ramda';
 import Store from 'electron-store';
 
 import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
 import * as options from 'js/options';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 
 const store = new Store();
 
@@ -75,6 +78,14 @@ const convert_theme_color_props_to_color = item => {
             if (item.type === 'img_selector' && color_is_not_set_in_picked_colors_json) {
                 change_val.set_inputs_data_color(family, name, color_input_default);
             }
+
+        } else if (name === 'clear_new_tab_video') {
+            const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
+            const clear_new_tab_video_exist = files.some(file => file.indexOf('clear_new_tab_video') > -1);
+
+            if (clear_new_tab_video_exist) {
+                change_val.set_default_bool(family, name, false);
+            }
         }
 
     } catch (er) {
@@ -87,6 +98,7 @@ export const convert_all = () => {
     convert_family('colors');
     convert_family('tints');
     convert_family('theme_metadata');
+    convert_family('clear_new_tab');
 };
 
 const convert_family = family => {

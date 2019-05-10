@@ -37,9 +37,12 @@ export const change_val = async (family, name, val, img_extension, e) => {
             const second_if_names = ['version', 'default_locale'];
             const third_if_names = ['colors', 'tints', 'properties'];
             const fourth_if_names = ['images', 'icon'];
+            const five_if_names = ['video_volume', 'size'];
             const img_extension_final = `.${img_extension || 'png'}`;
 
-            set_inputs_data_val(family, name, fourth_if_names.indexOf(family) > -1 ? new_val + img_extension_final : new_val);
+            if (name !== 'clear_new_tab_video') {
+                set_inputs_data_val(family, name, fourth_if_names.indexOf(family) > -1 ? new_val + img_extension_final : new_val);
+            }
 
             if (first_if_names.indexOf(name) > -1) {
                 set_name_or_description_prop(name, e.target.value);
@@ -65,7 +68,7 @@ export const change_val = async (family, name, val, img_extension, e) => {
             } else if (name === 'locale') {
                 select_folder.get_theme_name_or_descrption_inner(chosen_folder_path.ob.chosen_folder_path, new_val, default_locale);
 
-            } else if (third_if_names.indexOf(family) > -1) {
+            } else if (five_if_names.indexOf(name) > -1 || five_if_names.indexOf(name) > -1) {
                 write_to_json(manifest.mut.manifest, manifest_path, name, new_val, family);
 
             } else if (fourth_if_names.indexOf(family) > -1) {
@@ -98,7 +101,7 @@ export const change_val = async (family, name, val, img_extension, e) => {
                 }
             }
 
-            if (family === 'images' || third_if_names.indexOf(family) > -1 || name === 'icon') {
+            if (family === 'images' || third_if_names.indexOf(family) > -1 || name === 'icon' || name === 'clear_new_tab_video') {
                 set_default_bool(family, name, false);
             }
 
