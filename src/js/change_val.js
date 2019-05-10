@@ -68,7 +68,7 @@ export const change_val = async (family, name, val, img_extension, e) => {
             } else if (name === 'locale') {
                 select_folder.get_theme_name_or_descrption_inner(chosen_folder_path.ob.chosen_folder_path, new_val, default_locale);
 
-            } else if (five_if_strings.indexOf(name) > -1 || five_if_strings.indexOf(name) > -1) {
+            } else if (third_if_strings.indexOf(family) > -1 || five_if_strings.indexOf(name) > -1) {
                 write_to_json(manifest.mut.manifest, manifest_path, name, new_val, family);
 
             } else if (fourth_if_strings.indexOf(family) > -1) {
