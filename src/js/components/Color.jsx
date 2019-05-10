@@ -69,7 +69,10 @@ export class Color extends React.Component {
     render() {
         return (
             <span
-                className={x.cls(['input', this.type === 'img_selector' ? 'tall_color_input' : 'ordinary_color_input'])}
+                className={x.cls(['input',
+                    this.type === 'img_selector' ? 'tall_color_input' : 'ordinary_color_input',
+                    this.name === 'clear_new_tab_video' ? 'none' : null,
+                ])}
                 ref={this.color_input}
             >
                 <span className="ordinary_color_input_inner">
@@ -95,7 +98,10 @@ const Color_input_vizualization = observer(props => {
 
     return (
         <span
-            className={x.cls(['color_input_vizualization', type === 'img_selector' ? 'tall_color_input_vizualization' : null])}
+            className={x.cls([
+                'color_input_vizualization',
+                type === 'img_selector' ? 'tall_color_input_vizualization' : null,
+            ])}
             role="button"
             tabIndex={els_state.com2.inputs_disabled_1}
             data-family={family}
