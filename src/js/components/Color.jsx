@@ -127,7 +127,7 @@ const Color_pickier = observer(props => {
     return (
         <div
             className="color_pickier_w"
-            style={{ [color_pickiers_position]: family === 'images' ? '40px' : '26px' }}
+            style={{ [color_pickiers_position]: family === 'images' || name === 'icon' ? '40px' : '26px' }}
         >
             <Tr
                 attr={{
