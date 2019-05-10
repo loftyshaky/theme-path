@@ -245,7 +245,7 @@
   "properties_ntp_logo_alternate_help_text": "Specifies the color of the Google logo in new tab.",
 
   "clear_new_tab_help_text": "Clear New Tab elements change the background image/video settings in the Clear New Tab Chrome extension.",
-  "clear_new_tab_clear_new_tab_video_help_text": "This is the video that is displayed in new tab instead of a background image. Note that this video will not be displayed when you previewing a theme from Chrome Theme Creator, it will be displayed only when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
+  "clear_new_tab_clear_new_tab_video_help_text": "This is the video that is displayed in new tab instead of a background image. Note that this video will not be displayed when you previewing a theme from Chrome Theme Creator, it will be displayed only when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode. \"Background video\" can be in mp4, webm or ogg format.",
   "clear_new_tab_video_volume_help_text": "Volume of the video that you upload above. This value will be applied to the video when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
   "clear_new_tab_size_help_text": "Size of the background image or video that you upload above. This value will be applied to the image/video when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
 
@@ -272,7 +272,7 @@
   "error_msg_label": "Message: ",
 
   "cant_render_ui_er": "Can't render user interface",
-  "invalid_img_type_er": "Invalid image type",
+  "invalid_file_type_er": "Invalid file type",
   "theme_folder_is_not_chosen_er": "Theme folder is not chosen",
   "chosen_folder_is_not_theme_er": "Chosen folder is not a theme",
   "pak_is_locked_er": "Can't delete Cached Theme.pak file because it's locked",
