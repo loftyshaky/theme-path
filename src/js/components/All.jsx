@@ -77,6 +77,11 @@ export class All extends React.Component {
                                     hr
                                     add_help
                                 />
+                                <Input_block
+                                    name="clear_new_tab"
+                                    hr
+                                    add_help
+                                />
                             </Fieldset>
                             <Tutorial_item
                                 name="change_theme_properties"

@@ -10,7 +10,7 @@ configure({ enforceActions: 'observed' });
 
 export const open_help_viewer = action((family, name) => {
     try {
-        const no_image_families = ['theme_metadata', 'options'];
+        const no_image_families = ['theme_metadata', 'clear_new_tab', 'options'];
         mut.current_family = family;
         mut.current_name = name;
 

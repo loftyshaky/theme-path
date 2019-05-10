@@ -151,6 +151,7 @@ hr {
     font-size: 22px;
     margin-left: 6px;
     margin-right: 6px;
+    white-space: nowrap;
 }
 
 .help_link, .folder_arrow, .folder_icon, .folder_name, .work_folder_path, .er_close_btn, .skip_tutorial_btn {

@@ -7,6 +7,7 @@
   "colors_hr_text": "Colors",
   "tints_hr_text": "Tints",
   "properties_hr_text": "Properties",
+  "clear_new_tab_hr_text": "Clear New Tab",
   "options_hr_text": "Options",
   "links_hr_text": "Links",
 
@@ -64,6 +65,10 @@
   "ntp_background_repeat_label_text": "Background image repeat",
   "ntp_logo_alternate_label_text": "Google logo",
 
+  "clear_new_tab_video_label_text": "Background video",
+  "video_volume_label_text": "Video volume",
+  "size_label_text": "Background size",
+    
   "theme_label_text": "Theme",
   "chrome_exe_path_label_text": "Path to Chrome executable",
   "chrome_user_data_dirs_label_text": "Paths to Chrome user data folders",
@@ -93,6 +98,14 @@
 
   "option_colorful_text": "Colorful",
   "option_ntp_logo_alternate_white_text": "White",
+
+  "option_dont_resize_text": "Don't resize",
+  "option_fit_screen_text": "Fit to the screen",
+  "option_fit_browser_text": "Fit to the browser window",
+  "option_cover_screen_text": "Cover the screen",
+  "option_cover_browser_text": "Cover the browser window",
+  "option_stretch_screen_text": "Stretch to fit the screen",
+  "option_stretch_browser_text": "Stretch to fit the browser window",
 
   "option_dark_text": "Dark",
   "option_light_text": "Light",
@@ -230,6 +243,11 @@
   "properties_ntp_background_alignment_help_text": "Controls the alignment of the background image.",
   "properties_ntp_background_repeat_help_text": "Controls the repeat of the background image.",
   "properties_ntp_logo_alternate_help_text": "Specifies the color of the Google logo in new tab.",
+
+  "clear_new_tab_help_text": "Clear New Tab elements change the background image/video settings in the Clear New Tab Chrome extension.",
+  "clear_new_tab_clear_new_tab_video_help_text": "This is the video that is displayed in new tab instead of a background image. Note that this video will not be displayed when you previewing a theme from Chrome Theme Creator, it will be displayed only when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
+  "clear_new_tab_video_volume_help_text": "Volume of the video that you upload above. This value will be applied to the video when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
+  "clear_new_tab_size_help_text": "Size of the background image or video that you upload above. This value will be applied to the image/video when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
 
   "options_chrome_exe_path_help_text": "Path to Chrome executable. Used to preview a theme. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
   "options_chrome_user_data_dirs_help_text": "Paths to Chrome user data folders separated by commas. Used to preview a theme. If folder doesnt exist it will be created on first preview. Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",

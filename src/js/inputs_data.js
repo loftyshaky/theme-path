@@ -492,6 +492,38 @@ export const inputs_data = observable({
                 add_help: true,
             },
         },
+        clear_new_tab: {
+            clear_new_tab_video: {
+                key: x.unique_id(),
+                name: 'clear_new_tab_video',
+                family: 'clear_new_tab',
+                type: 'img_selector',
+                val: '',
+                highlight_upload_box: false,
+                color: color_input_default,
+                color_pickier_is_visible: false,
+                color_pickiers_position: 'top',
+                default: true,
+                changed_color_once_after_focus: false,
+                add_help: true,
+            },
+            video_volume: {
+                key: x.unique_id(),
+                name: 'video_volume',
+                family: 'clear_new_tab',
+                type: 'select',
+                val: '',
+                add_help: true,
+            },
+            size: {
+                key: x.unique_id(),
+                name: 'size',
+                family: 'clear_new_tab',
+                type: 'select',
+                val: '',
+                add_help: true,
+            },
+        },
         options: {
             theme: {
                 key: x.unique_id(),

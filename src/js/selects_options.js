@@ -20,6 +20,33 @@ const create_option_data_text_val = (is_locale_option, modifier) => {
 };
 //< create select label content t
 
+const create_video_volume_options = () => {
+    try {
+        const video_volume_options = [
+            {
+                label: create_option_data_text_val(false, 'default'),
+                value: 'default',
+            },
+        ];
+
+        for (let i = 0; i <= 100; i++) {
+            const option = {
+                label: i,
+                value: i,
+            };
+
+            video_volume_options.push(option);
+        }
+
+        return video_volume_options;
+
+    } catch (er) {
+        err(er, 188);
+    }
+
+    return undefined;
+};
+
 export const selects_options = {
     locale: [
         {
@@ -315,6 +342,41 @@ export const selects_options = {
         {
             label: create_option_data_text_val(false, 'ntp_logo_alternate_white'),
             value: '1',
+        },
+    ],
+    video_volume: create_video_volume_options(),
+    size: [
+        {
+            label: create_option_data_text_val(false, 'default'),
+            value: 'default',
+        },
+        {
+            label: create_option_data_text_val(false, 'dont_resize'),
+            value: 'dont_resize',
+        },
+        {
+            label: create_option_data_text_val(false, 'fit_screen'),
+            value: 'fit_screen',
+        },
+        {
+            label: create_option_data_text_val(false, 'fit_browser'),
+            value: 'fit_browser',
+        },
+        {
+            label: create_option_data_text_val(false, 'cover_screen'),
+            value: 'cover_screen',
+        },
+        {
+            label: create_option_data_text_val(false, 'cover_browser'),
+            value: 'cover_browser',
+        },
+        {
+            label: create_option_data_text_val(false, 'stretch_screen'),
+            value: 'stretch_screen',
+        },
+        {
+            label: create_option_data_text_val(false, 'stretch_browser'),
+            value: 'stretch_browser',
         },
     ],
     theme: [

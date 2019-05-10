@@ -7,6 +7,7 @@
   "colors_hr_text": "Цвета",
   "tints_hr_text": "Оттенки",
   "properties_hr_text": "Параметры",
+  "clear_new_tab_hr_text": "Clear New Tab",
   "options_hr_text": "Настройки",
   "links_hr_text": "Ссылки",
 
@@ -64,6 +65,10 @@
   "ntp_background_repeat_label_text": "Повторение фонового изображения",
   "ntp_logo_alternate_label_text": "Логотип Google",
 
+  "clear_new_tab_video_label_text": "Фоновое видео",
+  "video_volume_label_text": "Громкость видео",
+  "size_label_text": "Размер фона",
+
   "theme_label_text": "Тема",
   "chrome_exe_path_label_text": "Путь к исполняемому файлу Chrome",
   "chrome_user_data_dirs_label_text": "Пути к папкам пользователей Chrome",
@@ -113,6 +118,14 @@
 
   "option_colorful_text": "Цветной",
   "option_ntp_logo_alternate_white_text": "Белый",
+
+  "option_dont_resize_text": "Не менять размер",
+  "option_fit_screen_text": "Вместить по размеру экрана",
+  "option_fit_browser_text": "Вместить по размеру окна браузера",
+  "option_cover_screen_text": "Заполнить экран",
+  "option_cover_browser_text": "Заполнить окно браузера",
+  "option_stretch_screen_text": "Растянуть по размеру экрана",
+  "option_stretch_browser_text": "Растянуть по размеру окна браузера",
 
   "option_dark_text": "Темная",
   "option_light_text": "Светлая",
@@ -231,6 +244,11 @@
   "properties_ntp_background_alignment_help_text": "Контролирует позицию фонового изображения.",
   "properties_ntp_background_repeat_help_text": "Контролирует повторение фонового изображения.",
   "properties_ntp_logo_alternate_help_text": "Определяет цвет логотипа \"Google\" на странице новой вкладки.",
+
+  "clear_new_tab_help_text": "Элементы \"Clear New Tab\" изменяют параметры фонового изображения/видео в расширении для Chrome Clear New Tab.",
+  "clear_new_tab_clear_new_tab_video_help_text": "Видео отображаемое в новой вкладке, вместо фонового изображения. Обратите внимание, что это видео не будет отображаться при предварительном просмотре темы с помощью Chrome Theme Creator, оно будет отображаться только при установке темы из Интернет-магазина Chrome с установленным расширением \"Clear New Tab\" работающем в режиме \"Фон темы\".",
+  "clear_new_tab_video_volume_help_text": "Громкость видео загружаемого выше. Это значение будут применено к видео при установке темы из Интернет-магазина Chrome с установленным расширением \"Clear New Tab\" работающем в режиме \"Фон темы\".",
+  "clear_new_tab_size_help_text": "Размер фонового изображения или видео. Это значение будут применено к изображению/видео при установке темы из Интернет-магазина Chrome с установленным расширением \"Clear New Tab\" работающем в режиме \"Фон темы\".",
 
   "options_chrome_exe_path_help_text": "Путь к исполняемому файлу Chrome. Используется при предпросмотре темы. Пример: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
   "options_chrome_user_data_dirs_help_text": "Пути к папкам пользовательских данных Chrome, разделяемые запятыми. Используется при предпросмотре темы. Если папка не существет, то она будет создана при первом предпросмотре. Пример: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
