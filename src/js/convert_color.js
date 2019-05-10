@@ -14,7 +14,7 @@ const convert_theme_color_props_to_color = item => {
         const color_is_not_set_in_picked_colors_json = item.color === options.ob.theme_vals.dark.color_input_default || item.color === options.ob.theme_vals.light.color_input_default;
         const { family, name, val } = item;
 
-        if (item.family === 'images') {
+        if (family === 'images') {
             if (color_is_not_set_in_picked_colors_json) {
                 change_val.set_inputs_data_color(family, name, color_input_default);
             }
