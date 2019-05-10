@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import x from 'x';
+import 'js/tab_focus';
 import 'js/set_defaults';
 import * as options from 'js/options';
 
