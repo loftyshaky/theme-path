@@ -35,6 +35,7 @@ function create_window() {
         show: false,
         webPreferences: {
             nativeWindowOpen: true,
+            nodeIntegration: true,
         },
     });
     //< create the browser window.

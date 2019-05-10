@@ -13,7 +13,7 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 
 configure({ enforceActions: 'observed' });
 
-const watcher = chokidar.watch(null, { persistent: true, ignoreInitial: true, awaitWriteFinish: true, usePolling: true, depth: 0 });
+const watcher = chokidar.watch('', { persistent: true, ignoreInitial: true, awaitWriteFinish: true, usePolling: true, depth: 0 });
 
 watcher
     .on('add', action(file_path => {

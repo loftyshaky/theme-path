@@ -853,6 +853,10 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     cursor: pointer!important;
 }
 
+.select__indicators {
+    margin-bottom: 2px;
+}
+
 .select__control, .select__menu {
     border: 1px solid white!important;
 }
@@ -876,6 +880,11 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 
 .select__indicator-separator {
     background-color: white!important;
+}
+
+.select__dropdown-indicator {
+    padding-top: 0!important;
+    padding-bottom: 0!important;
 }
 
 .select__single-value {
