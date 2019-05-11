@@ -173,7 +173,7 @@ const get_theme_name_or_descrption = (name, message_name, locale, default_locale
 
 const set_val = action((family, name, val) => {
     try {
-        const item = inputs_data.obj[family][name];
+        const item = inputs_data.obj[family] ? inputs_data.obj[family][name] : null;
 
         if (item) {
             item.val = name === 'ntp_logo_alternate' ? val.toString() : val;
