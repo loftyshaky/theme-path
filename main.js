@@ -2,7 +2,7 @@ const { join } = require('path');
 const { format } = require('url');
 const { existsSync } = require('fs');
 
-const { app, BrowserWindow, shell, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, shell, Menu, ipcMain, dialog } = require('electron');
 
 const { autoUpdater } = require('electron-updater');
 
@@ -151,6 +151,20 @@ function create_window() {
         });
     }
     //< auto update
+
+    main_window.on('close', function (e) { // eslint-disable-line func-names
+        const choice = dialog.showMessageBox(this,
+            {
+                type: 'question',
+                title: con.close_confirm[global.os_lang],
+                message: con.close_msg[global.os_lang],
+                buttons: [con.close_answer_1[global.os_lang], con.close_answer_2[global.os_lang]],
+            });
+
+        if (choice === 1) {
+            e.preventDefault();
+        }
+    });
 }
 
 app.on('ready', create_window); // this method will be called when Electron has finished initialization and is ready to create browser windows. some APIs can only be used after this event occurs.
@@ -168,3 +182,22 @@ app.on('activate', () => {
         create_window(); // On macOS it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
     }
 });
+
+const con = {
+    close_confirm: {
+        en: 'Confirm',
+        ru: 'Подтверждение',
+    },
+    close_msg: {
+        en: 'Are you sure you want to quit Chrome Theme Creator?',
+        ru: 'Вы уверены, что хотите выйти из Chrome Theme Creator?',
+    },
+    close_answer_1: {
+        en: 'Quit',
+        ru: 'Выйти',
+    },
+    close_answer_2: {
+        en: 'Cancel',
+        ru: 'Отменить',
+    },
+};
