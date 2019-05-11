@@ -56,7 +56,7 @@ function create_window() {
 
             installExtension(REACT_DEVELOPER_TOOLS)
                 /* eslint-disable no-console */
-                .then(name => console.log(`Added Extension:  ${name}`))
+                .then(name => console.log(`Added Extension: ${name} `))
                 .catch(er => console.log('An error occurred: ', er));
             //< install react chrome extension
 
