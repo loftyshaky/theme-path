@@ -1,7 +1,7 @@
 'use_strict';
 
 import { join } from 'path';
-import { copySync, writeFileSync } from 'fs-extra';
+import { copySync, writeFileSync, removeSync } from 'fs-extra';
 
 import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
@@ -13,6 +13,7 @@ import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 import * as picked_colors from 'js/picked_colors';
 import * as options from 'js/options';
+import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
 
@@ -65,6 +66,12 @@ export const handle_files = async (file, family, name) => {
         ])(img_name);
 
         if (valid_file_types.indexOf(file[0].type) > -1) {
+            const file_with_name = folders.find_file_with_exist(name);
+
+            if (file_with_name) {
+                removeSync(join(chosen_folder_path.ob.chosen_folder_path, file_with_name));
+            }
+
             const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
 
             copySync(file[0].path, join(chosen_folder_path.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image

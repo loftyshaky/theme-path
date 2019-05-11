@@ -1,12 +1,10 @@
-import { readdirSync } from 'fs-extra';
-
 import * as r from 'ramda';
 import Store from 'electron-store';
 
 import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
 import * as options from 'js/options';
-import * as chosen_folder_path from 'js/chosen_folder_path';
+import * as folders from 'js/work_folder/folders';
 
 const store = new Store();
 
@@ -80,8 +78,7 @@ const convert_theme_color_props_to_color = item => {
             }
 
         } else if (name === 'clear_new_tab_video') {
-            const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
-            const clear_new_tab_video_exist = files.some(file => file.indexOf('clear_new_tab_video') > -1);
+            const clear_new_tab_video_exist = folders.find_file_with_exist('clear_new_tab_video');
 
             if (clear_new_tab_video_exist) {
                 change_val.set_default_bool(family, name, false);

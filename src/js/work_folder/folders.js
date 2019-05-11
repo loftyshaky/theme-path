@@ -119,6 +119,13 @@ export const deselect_theme = action(() => {
     }
 });
 
+export const find_file_with_exist = name => {
+    const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
+    const file_with_name = files.find(file => file.indexOf(name) > -1);
+
+    return file_with_name;
+};
+
 export const ob = observable({
     folders: [],
 });
