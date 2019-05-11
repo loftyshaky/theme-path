@@ -10,8 +10,8 @@ export const construct_icons_obj = json => {
             new_json.icons = {};
         }
 
-        if (!json['128']) {
-            new_json['128'] = {};
+        if (!json.icons['128']) {
+            new_json.icons['128'] = {};
         }
 
     } catch (er) {

@@ -81,12 +81,13 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                                 err(er2, 82);
                             }
 
-                            if (!using_default_icon) {
+                            if (!using_default_icon.equal) {
                                 uncheck_icon_input_default_checkbox();
                             }
                         });
 
                     } else {
+
                         uncheck_icon_input_default_checkbox();
                     }
                 }
