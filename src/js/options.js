@@ -50,7 +50,7 @@ Mousetrap.bind('shift+ctrl+command+alt+f12', action(() => {
         const options_popup_is_visible = toggle_popup.ob.popup_visibility.options;
 
         if (options_popup_is_visible) {
-            inputs_data.obj.options.map(item => {
+            Object.values(inputs_data.obj.options).map(item => {
                 item.hidden = false; // eslint-disable-line no-param-reassign
 
                 return item;
