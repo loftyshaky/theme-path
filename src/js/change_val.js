@@ -30,6 +30,8 @@ export const change_val = async (family, name, val, img_extension, e) => {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
         if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
+            manifest.mut.manifest = json_file.parse_json(join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
+
             const new_val = val === 'is_not_select' ? e.target.value : val;
             const manifest_path = join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json');
             const default_locale = family === 'theme_metadata' ? inputs_data.obj[family].default_locale.val : null;
