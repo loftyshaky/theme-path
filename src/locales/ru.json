@@ -143,7 +143,7 @@
   "collapse_all_folders_btn_title": "Свернуть все папки",
   "show_folder_btn_title": "Показать папку",
   "open_folder_btn_title": "Открыть папку",
-  "open_in_chrome_btn_title": "Открыть в Chrome",
+  "open_in_chrome_btn_title": "Открыть в Chrome (левый клик = нормальный режим, правый клик = режим инкогнито, средний клик = нормальный режим + режим инкогнито)",
   "options_btn_title": "Настройки",
   "help_btn_title": "Помощь",
   "links_btn_title": "Ссылки",
