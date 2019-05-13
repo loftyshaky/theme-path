@@ -119,7 +119,7 @@ export const pack = type => {
             const system_path = join(chosen_folder_path.ob.chosen_folder_path, 'system');
             const work_folder_system_path = join(choose_folder.ob.work_folder, 'system');
 
-            moveSync(system_path, work_folder_system_path, { overwrite: true });
+            move_system_folder(system_path, work_folder_system_path);
 
             try {
                 if (existsSync(pak_path)) {
@@ -147,7 +147,7 @@ export const pack = type => {
                     if (!er) {
                         zip.compress().save(zip_path);
 
-                        moveSync(work_folder_system_path, system_path, { overwrite: true });
+                        move_system_folder(work_folder_system_path, system_path);
 
                     } else {
                         err(er, 5, null, false, false, true);
@@ -183,7 +183,7 @@ export const pack = type => {
 
                 execFileSync(getChrome(platform()), [`--pack-extension=${chosen_folder_path.ob.chosen_folder_path}`]);
 
-                moveSync(work_folder_system_path, system_path, { overwrite: true });
+                move_system_folder(work_folder_system_path, system_path);
             }
 
             if (tutorial.ob.tutorial_stage === 7) {
@@ -194,6 +194,12 @@ export const pack = type => {
             err(er, 17);
         }
     });
+};
+
+const move_system_folder = (src, destination) => {
+    if (existsSync(src)) {
+        moveSync(src, destination, { overwrite: true });
+    }
 };
 
 const mut = {
