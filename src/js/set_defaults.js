@@ -8,6 +8,7 @@ export const set_defaults = () => {
         store.set({
             work_folder: '',
             theme: 'dark',
+            language: 'system',
             chrome_exe_path: '',
             chrome_user_data_dirs: '',
             custom_folders: '',

@@ -22,6 +22,8 @@ import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
+const { getCurrentWindow } = require('electron').remote;
+
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
@@ -113,6 +115,10 @@ export const change_val = async (family, name, val, img_extension, e) => {
                 if (not_disabling) {
                     set_disabled_bool(family, name, false);
                 }
+            }
+
+            if (name === 'language') {
+                getCurrentWindow().reload();
             }
         }
 

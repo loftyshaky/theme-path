@@ -389,4 +389,18 @@ export const selects_options = {
             value: 'light',
         },
     ],
+    language: [
+        {
+            label: create_option_data_text_val(false, 'system'),
+            value: 'system',
+        },
+        {
+            label: create_option_data_text_val(true, 'en'),
+            value: 'en',
+        },
+        {
+            label: create_option_data_text_val(true, 'ru'),
+            value: 'ru',
+        },
+    ],
 };

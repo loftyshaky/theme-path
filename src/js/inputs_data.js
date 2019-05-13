@@ -532,6 +532,13 @@ export const inputs_data = observable({
                 type: 'select',
                 val: '',
             },
+            language: {
+                key: x.unique_id(),
+                name: 'language',
+                family: 'options',
+                type: 'select',
+                val: '',
+            },
             chrome_exe_path: {
                 key: x.unique_id(),
                 name: 'chrome_exe_path',

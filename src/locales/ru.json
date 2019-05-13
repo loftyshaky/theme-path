@@ -70,6 +70,7 @@
   "size_label_text": "Размер фона",
 
   "theme_label_text": "Тема",
+  "language_label_text": "Язык",
   "chrome_exe_path_label_text": "Путь к исполняемому файлу Chrome",
   "chrome_user_data_dirs_label_text": "Пути к папкам пользователей Chrome",
   "custom_folders_label_text": "Пути к пользовательским папкам",
@@ -102,6 +103,8 @@
 
   "option_black_text": "Чёрный",
   "option_white_text": "Белый",
+
+  "option_system_text": "Системный",
 
   "option_top_text": "Вверху в центре",
   "option_center_text": "В центре",

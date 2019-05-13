@@ -70,6 +70,7 @@
   "size_label_text": "Background size",
     
   "theme_label_text": "Theme",
+  "language_label_text": "Language",
   "chrome_exe_path_label_text": "Path to Chrome executable",
   "chrome_user_data_dirs_label_text": "Paths to Chrome user data folders",
   "custom_folders_label_text": "Paths to custom folders",
@@ -112,6 +113,8 @@
 
   "option_dark_text": "Dark",
   "option_light_text": "Light",
+
+  "option_system_text": "System",
 
   "search_input_placeholder": "Search",
   "new_theme_btn_label_text": "New theme",

@@ -2,11 +2,15 @@ import * as r from 'ramda';
 
 import { join } from 'path';
 import { remote } from 'electron';
+import Store from 'electron-store';
 
 import package_json from 'package_json'; // eslint-disable-line import/no-unresolved
 
+const store = new Store();
+
 const os_lang = remote.getGlobal('os_lang');
-const loc = require(`locales/${os_lang}.json`); // eslint-disable-line import/no-dynamic-require
+const user_language = store.get('language');
+const loc = require(`locales/${store.get('language') === 'system' ? os_lang : user_language}.json`); // eslint-disable-line import/no-dynamic-require
 
 const x = {};
 
