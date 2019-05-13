@@ -48,15 +48,16 @@ const run = callback => {
 
 export const open_in_chrome = (folder_path, default_exe_path, e) => {
     try {
-        if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === 13)) {
+        if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === con.enter_key_code && (!e.ctrlKey || !e.shiftKey))) {
             const left_button_clicked = e.button === 0 || (e.type === 'keyup' && !e.ctrlKey && !e.shiftKey);
             const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
             const chrome_path = default_exe_path ? getChrome(platform()) : store.get('chrome_exe_path').trim();
-            const user_data_path = folder_path.trim() || join(homedir(), 'Chrome Theme Creator Chrome Preview Directory');
+            const user_data_path = folder_path.trim() || join(join(homedir(), 'chrome-theme-creator'), 'chrome-preview-user-data');
             const incognito = !left_button_clicked ? ' --incognito' : '--x';
+            const chrome_process_ids = !left_button_clicked ? 'chrome_incognito_process_ids' : 'chrome_process_ids';
 
             run(() => {
-                kill(mut.chrome_process_ids[user_data_path], 'SIGKILL', async er => {
+                kill(mut[chrome_process_ids][user_data_path], 'SIGKILL', async er => {
                     if (er) {
                         err(er, 15, null, true);
                     }
@@ -74,11 +75,11 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
                                 '--no-first-run', // without this canary chrome will not start if Chrome Theme Creator Chrome Preview Directory doesn't exist
                                 '--no-sandbox', // fix blank black screen in Chrome Canary
                                 '--test-type', // "supress You are using an unsupported command-line flag: --no-sandbox. Stability and security will suffer." message
-                                `--user-data-dir=${user_data_path}`,
+                                `--user-data-dir=${user_data_path}${!left_button_clicked ? '-incognito' : ''}`,
                                 `--load-extension=${chosen_folder_path.ob.chosen_folder_path}`,
                             ]);
 
-                        mut.chrome_process_ids[user_data_path] = child_process.pid;
+                        mut[chrome_process_ids][user_data_path] = child_process.pid;
 
                         if (tutorial.ob.tutorial_stage === 6) {
                             tutorial.increment_tutorial_stage(false, true);
@@ -92,7 +93,18 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
                     }
                 });
             });
+
+        } else if (e.button === 1 || (e.keyCode === con.enter_key_code && e.ctrlKey && e.shiftKey)) {
+            e.type = 'mouseup';
+            e.button = 0;
+
+            open_in_chrome(folder_path, default_exe_path, e);
+
+            e.button = 2;
+
+            open_in_chrome(folder_path, default_exe_path, e);
         }
+
     } catch (er) {
         err(er, 145);
     }
@@ -202,8 +214,13 @@ const move_system_folder = (src, destination) => {
     }
 };
 
+const con = {
+    enter_key_code: 13,
+};
+
 const mut = {
     chrome_process_ids: {},
+    chrome_incognito_process_ids: {},
 };
 
 export const ob = observable({
