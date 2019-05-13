@@ -929,9 +929,12 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 /*> popup */
 .popup {
     position: fixed;
+    overflow: auto;
     top: 90px;
     right: 50px;
-    min-width: 300px;
+    min-width: 350px;
+    height: calc(100% - 166px);
+    max-height: fit-content;
     box-shadow: 0 0 15px #fbff75;
     z-index: 4;
 }
