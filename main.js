@@ -183,6 +183,14 @@ app.on('activate', () => {
     }
 });
 
+ipcMain.on('open_folder', (e, path) => {
+    shell.openExternal(path);
+});
+
+ipcMain.on('show_folder', (e, path) => {
+    shell.showItemInFolder(path);
+});
+
 const con = {
     close_confirm: {
         en: 'Confirm',

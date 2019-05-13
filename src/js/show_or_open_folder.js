@@ -1,33 +1,19 @@
-import { shell } from 'electron';
+import { ipcRenderer } from 'electron';
 
 import * as chosen_folder_path from 'js/chosen_folder_path';
 
-const show_or_open_folder = (fun, err1, err2) => {
+export const show_or_open_folder = mode => {
     try {
         if (chosen_folder_path.ob.chosen_folder_path !== '') {
-            const folder_opened_in_explorer = shell[fun](chosen_folder_path.ob.chosen_folder_path);
-
-            if (!folder_opened_in_explorer) {
-                err1();
-            }
+            ipcRenderer.send(`${mode}_folder`, chosen_folder_path.ob.chosen_folder_path);
 
         } else {
-            err2();
+            const er_obj_v = er_obj('Cant open folder');
+
+            err(er_obj_v, 143, 'cant_open_folder');
         }
 
     } catch (er) {
-        err(er, 144);
+        err(er, 144, 'cant_open_folder');
     }
-};
-
-export const show_folder = () => {
-    const er_obj_instance = er_obj('Cant show folder');
-
-    show_or_open_folder('showItemInFolder', err.bind(null, er_obj_instance, 140), err.bind(null, er_obj_instance, 141, 'cant_show_folder'));
-};
-
-export const open_folder = () => {
-    const er_obj_instance = er_obj('Cant open folder');
-
-    show_or_open_folder('openItem', err.bind(null, er_obj_instance, 142), err.bind(null, er_obj_instance, 143, 'cant_open_folder'));
 };

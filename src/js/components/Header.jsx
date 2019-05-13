@@ -128,12 +128,12 @@ export class Header extends React.Component {
                     />
                     <Btn
                         name="show_folder"
-                        on_click={show_or_open_folder.show_folder}
+                        on_click={() => show_or_open_folder.show_or_open_folder('show')}
                         svg={arrow_up_2_svg}
                     />
                     <Btn
                         name="open_folder"
-                        on_click={show_or_open_folder.open_folder}
+                        on_click={() => show_or_open_folder.show_or_open_folder('open')}
                         svg={eye_svg}
                     />
                     <div className="btn_w">
