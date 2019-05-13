@@ -344,7 +344,7 @@ svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
     margin-bottom: 11px;
 }
 
-.auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child) {
+.auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child), .export_settings_btn {
     margin-right: 10px
 }
 /*< general */

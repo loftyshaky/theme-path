@@ -76,6 +76,9 @@
   "locales_whitelist_label_text": "Locales to show in locale selects",
   "enable_analytics_label_text": "Enable Google Analytics",
   "enable_analytics_dev_label_text": "Enable Google Analytics (dev)",
+  "export_settings_btn_text": "Export settings",
+  "import_settings_btn_text": "Import settings",
+
   "option_default_text": "Default",
 
   "option_black_text": "Black",
@@ -286,6 +289,7 @@
   "cant_show_folder_er": "Can't show folder because you didn't select any folder",
   "cant_open_folder_er": "Can't open folder because you didn't select any folder",
   "work_folder_doesnt_exist_er": "Work folder doesn't exist",
+  "settings_file_is_corrupted_er": "Settings file is corrupted",
 
   "reload_ui_btn_text": "Reload"
 }

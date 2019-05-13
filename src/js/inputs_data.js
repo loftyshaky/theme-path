@@ -581,6 +581,13 @@ export const inputs_data = observable({
                 add_help: false,
                 hidden: true,
             },
+            settings_export_import: {
+                key: x.unique_id(),
+                name: 'settings_export_import',
+                family: 'options',
+                type: 'settings_export_import',
+                add_help: false,
+            },
         },
     },
 });

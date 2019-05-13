@@ -8,6 +8,7 @@ import { Select } from 'components/Select';
 import { Img_selector } from 'components/Img_selector';
 import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
+import { Settings_export_import } from 'components/Settings_export_import';
 import { Help } from 'components/Help';
 
 export class Input_block extends React.Component {
@@ -55,7 +56,7 @@ export class Input_block extends React.Component {
                                 <Component
                                     {...item}
                                     count_char={this.count_char}
-                                    ref={instance => { this.childs.push(this.child = instance); }}
+                                    ref={item.name === 'settings_export_import' ? null : instance => { this.childs.push(this.child = instance); }}
                                 />
                             );
                         })
@@ -73,5 +74,6 @@ const sta = {
         img_selector: Img_selector,
         color: Color,
         checkbox: Checkbox,
+        settings_export_import: Settings_export_import,
     },
 };

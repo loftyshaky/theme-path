@@ -85,6 +85,11 @@ export const add_tutorial_analytics = action => {
     send_event('tutorial', `${action}_at_stage_${tutorial.ob.tutorial_stage}`);
 };
 
+export const add_settings_export_import_analytics = action => {
+    send_event('settings_export_import', `${action}`);
+};
+
+
 export const track_app_start = () => {
     send_pageview('main');
     send_event('app_version', app_version);
