@@ -132,7 +132,7 @@ const set_name_or_description_prop = (name, new_val, forced_locale) => {
         const val = manifest.mut.manifest[name];
         const val_is_localized = msg.val_is_localized(val);
         const locale = forced_locale || inputs_data.obj.theme_metadata.locale.val;
-        const messages_path = join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale, 'messages.json');
+        const messages_path = get_messages_path(locale);
 
         check_if_localisation_folders_exists_create_them_if_dont(locale);
 
@@ -259,7 +259,7 @@ const delete_unused_locale_folders = new_default_locale => {
 
         locale_folders.forEach(locale_folder => {
             if (locale_folder !== new_default_locale) {
-                const messages_path = join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale_folder, 'messages.json');
+                const messages_path = get_messages_path(locale_folder);
 
                 const remove_locale_folder = r.ifElse(
                     () => existsSync(messages_path),
@@ -334,8 +334,13 @@ const check_if_name_or_description_exist = (name, message_json) => {
 
 const add_locale_folder = new_default_locale => {
     try {
-        set_name_or_description_prop('name', '', new_default_locale);
-        set_name_or_description_prop('description', '', new_default_locale);
+        const messages_path = get_messages_path(new_default_locale);
+        const messages_json = json_file.parse_json(messages_path);
+
+        if (!messages_json || (messages_json && !messages_json.name && !messages_json.description)) {
+            set_name_or_description_prop('name', '', new_default_locale);
+            set_name_or_description_prop('description', '', new_default_locale);
+        }
 
     } catch (er) {
         err(er, 129, 'folder_is_locked');
@@ -377,6 +382,17 @@ export const set_disabled_bool = action((family, name, bool) => {
         err(er, 30);
     }
 });
+
+const get_messages_path = locale => {
+    try {
+        return join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale, 'messages.json');
+
+    } catch (er) {
+        err(er, 193);
+    }
+
+    return undefined;
+};
 
 const sta = {
     msg_dict: {
