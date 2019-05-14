@@ -28,13 +28,16 @@ export const get_folders = folder_path => {
 
         return files.map(file => {
             const child_path = join(folder_path, file);
+            if (existsSync(child_path)) {
+                return {
+                    name: file,
+                    path: child_path,
+                    is_directory: statSync(join(folder_path, file)).isDirectory(),
+                };
+            }
 
-            return {
-                name: file,
-                path: child_path,
-                is_directory: statSync(join(folder_path, file)).isDirectory(),
-            };
-        });
+            return null;
+        }).filter(file => file);
 
     } catch (er) {
         err(er, 90);
