@@ -75,7 +75,7 @@
   "chrome_user_data_dirs_label_text": "Пути к папкам пользователей Chrome",
   "custom_folders_label_text": "Пути к пользовательским папкам",
   "locales_whitelist_label_text": "Языки показываемые в языковых выпадающих меню",
-  "enable_analytics_label_text": "Включить Google Analytics",
+  "enable_analytics_label_text": "Разрешить Chrome Theme Creator отправлять анонимную статистику использования",
   "enable_analytics_dev_label_text": "Включить Google Analytics (dev)",
   "export_settings_btn_text": "Экспортировать настройки",
   "import_settings_btn_text": "Импортировать настройки",
