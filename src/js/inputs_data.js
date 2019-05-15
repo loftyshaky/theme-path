@@ -579,15 +579,6 @@ export const inputs_data = observable({
                 val: true,
                 add_help: false,
             },
-            enable_analytics_dev: {
-                key: x.unique_id(),
-                name: 'enable_analytics_dev',
-                family: 'options',
-                type: 'checkbox',
-                val: false,
-                add_help: false,
-                hidden: true,
-            },
             settings_export_import: {
                 key: x.unique_id(),
                 name: 'settings_export_import',

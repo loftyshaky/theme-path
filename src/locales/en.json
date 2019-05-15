@@ -76,7 +76,6 @@
   "custom_folders_label_text": "Paths to custom folders",
   "locales_whitelist_label_text": "Locales to show in locale selects",
   "enable_analytics_label_text": "Allow Chrome Theme Creator to send anonymous usage information",
-  "enable_analytics_dev_label_text": "Enable Google Analytics (dev)",
   "export_settings_btn_text": "Export settings",
   "import_settings_btn_text": "Import settings",
 
