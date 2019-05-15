@@ -61,6 +61,7 @@ module.exports = {
             js: join(__dirname, 'src', 'js'),
             components: join(__dirname, 'src', 'js', 'components'),
             locales: join(__dirname, 'src', 'locales'),
+            locale_css: join(__dirname, 'src', 'locale_css'),
             css: join(__dirname, 'src', 'css'),
             svg: join(__dirname, 'src', 'svg'),
         },
