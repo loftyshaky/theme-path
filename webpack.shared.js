@@ -42,7 +42,7 @@ module.exports = {
             chunks: ['index'],
         }),
         new Copy_webpack_plugin([
-            { from: join(__dirname, 'src', 'mods'), to: join(__dirname, output_dir) },
+            { from: join(__dirname, 'src', 'css', 'mods'), to: join(__dirname, output_dir) },
             { from: join(__dirname, 'src', 'Roboto-Light.ttf'), to: join(__dirname, output_dir) },
             { from: join(__dirname, 'src', 'new_theme'), to: join(__dirname, output_dir, 'new_theme') },
             { from: join(__dirname, 'src', 'help_imgs'), to: join(__dirname, output_dir, 'help_imgs') },
@@ -61,8 +61,8 @@ module.exports = {
             js: join(__dirname, 'src', 'js'),
             components: join(__dirname, 'src', 'js', 'components'),
             locales: join(__dirname, 'src', 'locales'),
-            locale_css: join(__dirname, 'src', 'locale_css'),
             css: join(__dirname, 'src', 'css'),
+            locale_css: join(__dirname, 'src', 'css', 'locale_css'),
             svg: join(__dirname, 'src', 'svg'),
         },
         extensions: ['.js', '.jsx', '.css', '.svg', '.png', '.gif'],
