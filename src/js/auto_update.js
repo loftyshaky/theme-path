@@ -16,7 +16,7 @@ export const install_update = () => {
     try {
         const name = 'install_update';
 
-        analytics.send_event_async('btns', `clicked-auto_updater-${name}`, ipcRenderer.send, [name]);
+        analytics.send_request('event', null, 'btns', `clicked-auto_updater-${name}`, () => ipcRenderer.send([name]));
 
     } catch (er) {
         err(er, 158);

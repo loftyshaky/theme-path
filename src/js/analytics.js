@@ -1,72 +1,66 @@
 import Store from 'electron-store';
-import ua from 'universal-analytics';
 
 import * as help_viewer from 'js/help_viewer';
 import * as tutorial from 'js/tutorial';
 
 const store = new Store();
 
-const visitor = ua('UA-131099848-1');
-
-visitor.set('anonymizeIp', true);
-
 export const send_pageview = async page => {
     try {
-        check_if_analytics_enabled(() => visitor.pageview(page).send());
+        check_if_analytics_enabled(() => send_request('pageview', page, null, null));
 
     } catch (er) {
-        err(er, 153);
+        err(er, 194);
     }
 };
 
 export const send_event = (category, action) => {
     try {
-        check_if_analytics_enabled(() => visitor.event(category, action).send());
+        check_if_analytics_enabled(() => send_request('event', null, category, action));
 
     } catch (er) {
-        err(er, 161);
+        err(er, 195);
     }
 };
 
-export const send_event_async = (category, action, callback, callback_args) => {
+const check_if_analytics_enabled = callback => {
     try {
-        const analytics_enabled = check_if_analytics_enabled();
+        const allow_analytics = store.get('enable_analytics');
 
-        if (analytics_enabled) {
-            visitor.event(category, action, () => {
-                callback(...callback_args);
-            });
-
-        } else {
-            callback(...callback_args);
+        if (allow_analytics) {
+            callback();
         }
 
     } catch (er) {
-        err(er, 171);
+        err(er, 196);
     }
 };
 
-export const check_if_analytics_enabled = callback => {
+export const send_request = async (mode, page, category, action, callback) => {
     try {
-        const analytics_enabled = typeof store.get('enable_analytics') === 'undefined' ? false : store.get('enable_analytics');
-        const enable_analytics_dev = typeof store.get('enable_analytics_dev') === 'undefined' ? false : store.get('enable_analytics_dev');
-        const analytics_enabled_final = (!sta.dev && analytics_enabled) || enable_analytics_dev;
+        const tracking_id = con.dev ? 'UA-131099848-3' : 'UA-131099848-1';
+        const client_id_try = await store.get('client_id');
+        const client_id_is_valid = /[0-9]{10}\.[0-9]{10}/.test(client_id_try);
 
-        if (analytics_enabled_final) {
-            if (callback) {
-                callback();
-            }
-
-            return true;
+        if (!client_id_is_valid) {
+            await store.set('client_id', con.generated_client_id);
         }
 
-        return false;
+        const client_id = client_id_try || con.generated_client_id;
+        const message = `v=1&tid=${tracking_id}&cid=${client_id}&aip=1&ds=app&t=${mode === 'pageview' ? `pageview&dp=${page}` : `event&ec=${category}&ea=${action}`}`;
+
+        await window.fetch('https://www.google-analytics.com/collect', {
+            method: 'POST',
+            body: message,
+        });
+
+        if (callback) {
+            callback();
+        }
 
     } catch (er) {
-        err(er, 160);
+        err(er, 197);
     }
-
-    return undefined;
 };
 
 export const add_header_btns_analytics = name => {
@@ -96,7 +90,7 @@ export const track_app_start = () => {
     send_event('app_host', process.windowsStore ? 'microsoft_store' : 'package');
 };
 
-export const sta = {
+const con = {
     dev: !!(process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)),
-    visitor,
+    generated_client_id: `${Math.floor(Math.random() * (2147483647 - 1000000000 + 1)) + 1000000000}.${Math.floor(new Date().getTime() / 1000)}`, // eqwuavelent of php rand(1000000000, 2147483647) . '.' . time();
 };
