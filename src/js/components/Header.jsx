@@ -24,6 +24,7 @@ import open_in_browser_svg from 'svg/open_in_browser';
 import archive_svg from 'svg/archive';
 import gear_svg from 'svg/gear';
 import list_svg from 'svg/list';
+import history_svg from 'svg/history';
 
 export class Header extends React.Component {
     constructor(props) {
@@ -129,6 +130,11 @@ export class Header extends React.Component {
                             outline={false}
                         />
                     </div>
+                    <Btn
+                        name="history"
+                        on_click={null}
+                        svg={history_svg}
+                    />
                     <Btn
                         name="collapse_all_folders"
                         on_click={folders.collapse_all_folders}

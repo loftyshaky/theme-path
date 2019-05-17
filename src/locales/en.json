@@ -121,6 +121,7 @@
   "pack_as_zip_btn_title": "Pack as ZIP",
   "pack_as_crx_btn_title": "Pack as CRX",
   "collapse_all_folders_btn_title": "Collapse all folders",
+  "history_btn_title": "Changes history",
   "show_folder_btn_title": "Show folder",
   "open_folder_btn_title": "Open folder",
   "open_in_chrome_btn_title": "Open in Chrome (left-click = normal mode, right-click = incognito mode, middle-click = normal mode + incognito mode)",

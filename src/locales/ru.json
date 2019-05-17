@@ -121,6 +121,7 @@
   "pack_as_zip_btn_title": "Упаковать (ZIP)",
   "pack_as_crx_btn_title": "Упаковать (CRX)",
   "collapse_all_folders_btn_title": "Свернуть все папки",
+  "history_btn_title": "История изменений",
   "show_folder_btn_title": "Показать папку",
   "open_folder_btn_title": "Открыть папку",
   "open_in_chrome_btn_title": "Открыть в Chrome (левый клик = нормальный режим, правый клик = режим инкогнито, средний клик = нормальный режим + режим инкогнито)",
