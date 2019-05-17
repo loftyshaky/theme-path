@@ -57,7 +57,8 @@ export class Header extends React.Component {
     }
 
     render() {
-        const chrome_user_data_dirs = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_user_data_dirs);
+        const chrome_exe_paths = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_exe_paths);
+        const chrome_user_data_folders = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_user_data_folders);
         const custom_folders_var = custom_paths_btns.create_paths_arr(custom_folders.ob.custom_folders);
 
         return (
@@ -101,10 +102,11 @@ export class Header extends React.Component {
                 </span>
                 <span className="header_section header_right">
                     {
-                        chrome_user_data_dirs.map((folder_path, i) => (
+                        chrome_user_data_folders.map((folder_path, i) => (
                             <Open_in_profiled_chrome_btn
                                 key={x.unique_id()}
-                                path={folder_path.trim()}
+                                exe={chrome_exe_paths[i] ? chrome_exe_paths[i] : chrome_exe_paths[0]}
+                                path={folder_path}
                                 no={i + 1}
                             />
                         ))
@@ -112,7 +114,7 @@ export class Header extends React.Component {
                     <div className="btn_w">
                         <Btn
                             name="open_in_chrome"
-                            on_click={e => open_and_pack.open_in_chrome('', true, e)}
+                            on_click={e => open_and_pack.open_in_chrome(null, null, e)}
                             svg={open_in_browser_svg}
                         />
                         <Tutorial_item
@@ -161,7 +163,7 @@ export class Header extends React.Component {
 }
 
 const Open_in_profiled_chrome_btn = props => {
-    const { path, no } = props;
+    const { exe, path, no } = props;
 
     return (
         <button
@@ -169,8 +171,8 @@ const Open_in_profiled_chrome_btn = props => {
             type="button"
             title={`${x.msg('open_in_chrome_btn_title')} - ${path}`}
             disabled={els_state.com2.inputs_disabled_5}
-            onMouseUp={open_and_pack.open_in_chrome.bind(null, path, false)}
-            onKeyUp={open_and_pack.open_in_chrome.bind(null, path, false)}
+            onMouseUp={open_and_pack.open_in_chrome.bind(null, exe, path)}
+            onKeyUp={open_and_pack.open_in_chrome.bind(null, exe, path)}
         >
             {no}
         </button>

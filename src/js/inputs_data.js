@@ -539,17 +539,17 @@ export const inputs_data = observable({
                 type: 'select',
                 val: '',
             },
-            chrome_exe_path: {
+            chrome_exe_paths: {
                 key: x.unique_id(),
-                name: 'chrome_exe_path',
+                name: 'chrome_exe_paths',
                 family: 'options',
                 type: 'textarea',
                 val: '',
                 add_help: true,
             },
-            chrome_user_data_dirs: {
+            chrome_user_data_folders: {
                 key: x.unique_id(),
-                name: 'chrome_user_data_dirs',
+                name: 'chrome_user_data_folders',
                 family: 'options',
                 type: 'textarea',
                 val: '',

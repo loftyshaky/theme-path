@@ -1,8 +1,17 @@
 export const create_paths_arr = paths_string => {
-    const paths = paths_string.split(',');
-    const paths_final = paths.length === 1 && paths[0] === ''
-        ? []
-        : paths;
+    try {
+        const paths = paths_string.split(',');
+        const paths_2 = paths.length === 1 && paths[0] === ''
+            ? []
+            : paths;
 
-    return paths_final;
+        const paths_final = paths_2.map(path => path.trim());
+
+        return paths_final;
+
+    } catch (er) {
+        err(er, 198);
+    }
+
+    return undefined;
 };

@@ -36,7 +36,8 @@ export const load_setting = action(() => {
             new_item.val = store.get(item.name);
         });
 
-        open_and_pack.update_chrome_user_data_dirs_observable();
+        open_and_pack.update_chrome_exe_paths_observable();
+        open_and_pack.update_chrome_user_data_folders_observable();
         custom_folders.update_custom_folders_observable();
 
     } catch (er) {

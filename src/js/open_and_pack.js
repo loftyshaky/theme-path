@@ -46,13 +46,13 @@ const run = callback => {
     }
 };
 
-export const open_in_chrome = (folder_path, default_exe_path, e) => {
+export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
     try {
         if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === con.enter_key_code && (!e.ctrlKey || !e.shiftKey))) {
             const left_button_clicked = e.button === 0 || (e.type === 'keyup' && !e.ctrlKey && !e.shiftKey);
             const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
-            const chrome_path = default_exe_path ? getChrome(platform()) : store.get('chrome_exe_path').trim();
-            const user_data_path = folder_path.trim() || join(join(homedir(), 'chrome-theme-creator'), 'chrome-preview-user-data');
+            const chrome_exe_path_final = chrome_exe_path || getChrome(platform());
+            const user_data_path = folder_path || join(join(homedir(), 'chrome-theme-creator'), 'chrome-preview-user-data');
             const incognito = !left_button_clicked ? ' --incognito' : '--x';
             const chrome_process_ids = !left_button_clicked ? 'chrome_incognito_process_ids' : 'chrome_process_ids';
 
@@ -65,7 +65,7 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
                     try {
                         const name = folder_path === '' ? 'open_in_chrome' : 'open_in_profiled_chrome';
                         const click_type = left_button_clicked ? 'clicked' : 'right_clicked';
-                        const child_process = await execFile(chrome_path,
+                        const child_process = await execFile(chrome_exe_path_final,
                             [
                                 new_tab_url,
                                 new_tab_url,
@@ -98,11 +98,11 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
             e.type = 'mouseup';
             e.button = 0;
 
-            open_in_chrome(folder_path, default_exe_path, e);
+            open_in_chrome(chrome_exe_path, folder_path, e);
 
             e.button = 2;
 
-            open_in_chrome(folder_path, default_exe_path, e);
+            open_in_chrome(chrome_exe_path, folder_path, e);
         }
 
     } catch (er) {
@@ -110,9 +110,18 @@ export const open_in_chrome = (folder_path, default_exe_path, e) => {
     }
 };
 
-export const update_chrome_user_data_dirs_observable = action(() => {
+export const update_chrome_exe_paths_observable = action(() => {
     try {
-        ob.chrome_user_data_dirs = store.get('chrome_user_data_dirs');
+        ob.chrome_exe_paths = store.get('chrome_exe_paths');
+
+    } catch (er) {
+        err(er, 47);
+    }
+});
+
+export const update_chrome_user_data_folders_observable = action(() => {
+    try {
+        ob.chrome_user_data_folders = store.get('chrome_user_data_folders');
 
     } catch (er) {
         err(er, 47);
@@ -224,5 +233,6 @@ const mut = {
 };
 
 export const ob = observable({
-    chrome_user_data_dirs: null,
+    chrome_exe_paths: '',
+    chrome_user_data_folders: '',
 });

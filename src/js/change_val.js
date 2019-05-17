@@ -88,8 +88,11 @@ export const change_val = async (family, name, val, img_extension, e) => {
             } else if (family === 'options') {
                 store.set(name, new_val);
 
-                if (name === 'chrome_user_data_dirs') {
-                    open_and_pack.update_chrome_user_data_dirs_observable();
+                if (name === 'chrome_user_data_folders') {
+                    open_and_pack.update_chrome_user_data_folders_observable();
+
+                } else if (name === 'chrome_exe_paths') {
+                    open_and_pack.update_chrome_exe_paths_observable();
 
                 } else if (name === 'custom_folders') {
                     custom_folders.update_custom_folders_observable();
