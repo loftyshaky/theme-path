@@ -71,8 +71,8 @@
     
   "theme_label_text": "Theme",
   "language_label_text": "Language",
-  "chrome_exe_path_label_text": "Path to Chrome executable",
-  "chrome_user_data_dirs_label_text": "Paths to Chrome user data folders",
+  "chrome_exe_paths_label_text": "Paths to Chrome executables",
+  "chrome_user_data_folders_label_text": "Paths to Chrome user data folders",
   "custom_folders_label_text": "Paths to custom folders",
   "locales_whitelist_label_text": "Locales to show in locale selects",
   "enable_analytics_label_text": "Allow Chrome Theme Creator to send anonymous usage information",
@@ -203,11 +203,11 @@
   "option_zh_TW_text": "Chinese (Taiwan)",
 
 
-  "theme_metadata_name_help_text": "Theme name displayed in the Chrome web store.",
-  "theme_metadata_description_help_text": "Theme short description displayed in the Chrome web store.",
-  "theme_metadata_locale_help_text": "Currently edited language of theme name and description.",
+  "theme_metadata_name_help_text": "Theme name displayed in the Chrome Web Store.",
+  "theme_metadata_description_help_text": "Theme short description displayed in the Chrome Web Store.",
+  "theme_metadata_locale_help_text": "Currently edited language of theme's name and description.",
   "theme_metadata_default_locale_help_text": "Fallback language displayed to users in whose language a theme is not translated.",
-  "theme_metadata_icon_help_text": "Theme icon displayed in the Chrome web store.",
+  "theme_metadata_icon_help_text": "Theme icon displayed in the Chrome Web Store.",
 
   "images_help_text": "Images that covers differrent parts of the browser. \"Background image\" can be in png, jpg or gif format. All other images elements can only be in png format.",
   "images_theme_ntp_background_help_text": "Recommended Width x Height: 1920 x 1080.\nThis is the image that is displayed at the large white space in the browser, in the new tab page. It can be semi-transparent. There are two ways you can create the inner background for the browser-use: a large image without repetition/tiling or use a small image that repeats in x-axis and/or y-axis (see \"Background image repeat\"). There is also option for you to select the alignment of this image, by default the image is center aligned, but you may choose to align it the way you want (see \"Background image position\"). Please note that when you preview a theme in incognito mode \"Background image\" will not be visible in three automatically opened tabs. To see it open new tab manually. If you create solid color image for this element \"Background image repeat\" will be automatically set to \"Repeat\".",
@@ -224,9 +224,9 @@
   "images_theme_ntp_attribution_help_text": "Recommended Width x Height: Any but not too large.\nAn image that is displayed at the bottom right corner of the new tab page. Chrome automatically puts a heading \"Theme created by:\" and below that displays whatever image you give as attribution. A good practice is to create a small png file enough for an author name (and contact if needed) with alpha transparency background. Making large and more color intense image will attract view. If \"Background image\" is not set this element will not be displayed.",
 
   "colors_help_text": "Color elements changes color of different parts of the browser.",
-  "colors_ntp_background_help_text": "Specifies the color of the background of the new tab page. This element also determines color of top right items (Gmail, Images etc.). These items will be black if \"Background\" set to light color and white if \"Background\" set to dark color. If \"Background image\" is in dark colors you may choose to set this element to black (#000) color to make top right items white. Please note that when you preview a theme top right items may be black in three automatically opened tabs even if you set \"Background image\" to dark color. To see how they will actually look open new tab manually.",
+  "colors_ntp_background_help_text": "Specifies the color of the background of the new tab page.",
   "colors_toolbar_help_text": "Specifies the color of the area of the current tab, toolbar below it, downloads bar and status bar.",
-  "colors_frame_help_text": "Specifies the color of the frame area of the browser (the area behind the tabs). This element also determines color of the window control buttons (minimize, maximize, close). If dark color is chosen the window control buttons will be white, if light color is chosen they will be black.",
+  "colors_frame_help_text": "Specifies the color of the frame area of the browser (the area behind the tabs).",
   "colors_frame_inactive_help_text": "Specifies the color of the frame area of the browser (the area behind the tabs) but when the window is inactive/out of focus.",
   "colors_frame_incognito_help_text": "This is a color element similar to \"Frame\", but under the incognito mode.",
   "colors_frame_incognito_inactive_help_text": "This is a color element similar to \"Frame (inactive)\", but under the incognito mode.",
@@ -234,7 +234,7 @@
   "colors_tab_text_help_text": "Specifies the color of the title text of the current tab and the text in the status bar.",
   "colors_tab_background_text_help_text": "Specifies the color of the title text of all the inactive tabs.",
   "colors_button_background_help_text": "Specifies the background color of the window control buttons (minimize, maximize, close).",
-  "colors_ntp_text_help_text": "Specifies the color of the background area of shortcuts on hover. Can be only white or black.",
+  "colors_ntp_text_help_text": "Specifies the color of the background area of shortcuts on hover. Can be only white or black. This element also determines color of top right items (Gmail, Images etc.).",
 
   "tints_help_text": "Tint elements change the hue, saturation and lightness of images. To disable specefic tint element click \"Disabled\" checkbox.",
   "tints_frame_help_text": "Specifies a color tint for the frame area. Whatever image you've created for the frame area will be tinted with a color that you specify here.",
@@ -254,9 +254,9 @@
   "clear_new_tab_video_volume_help_text": "Volume of the video that you upload above. This value will be applied to the video when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
   "clear_new_tab_size_help_text": "Size of the background image or video that you upload above. This value will be applied to the image/video when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode. Recommended value: Cover the screen.",
 
-  "options_chrome_exe_path_help_text": "Path to Chrome executable. Used to preview a theme. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-  "options_chrome_user_data_dirs_help_text": "Paths to Chrome user data folders separated by commas. Used to preview a theme. If folder doesnt exist it will be created on first preview. Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
-  "options_custom_folders_help_text": "Paths to any folders separated by commas. Each given path will create a button in the header next to \"New Theme\" button. When you click on one of these buttons the folder and all of its content will be recreated in the selected folder. Example: \"C:\\Custom Chrome Theme Creator folders\", \"D:\\Custom Chrome Theme Creator folders\"",
+  "options_chrome_exe_paths_help_text": "Paths to Chrome executables separated by commas. Used to preview themes in the separate user profile (see \"Paths to Chrome user data folders\" help). For example if you have Stable and Canary channel installed you can put in this text input executable to Stable channel if you wish to preview themes with it. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe, C:\\Program Files (x86)\\Google\\Chrome Beta\\Application\\chrome.exe",
+  "options_chrome_user_data_folders_help_text": "Paths to Chrome user data folders separated by commas. Each given path will create a button in the header next to \"Open in Chrome\" button. When you click on one of these buttons Chrome will be opened in the separate user profile with theme installed. If folder doesnt exist it will be created on the first preview. You can specify Chrome executable for each user data folder (see \"Paths to Chrome executables\" above). Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
+  "options_custom_folders_help_text": "Paths to any folders separated by commas. Each given path will create a button in the header next to \"New Theme\" button. When you click on one of these buttons the folder and all of its content will be recreated in the selected folder. Example: C:\\Custom Chrome Theme Creator folders, D:\\Custom Chrome Theme Creator folders",
   "options_locales_whitelist_help_text": "Language codes of languages that you want to see in \"Locale\" and \"Default locale\" selects, separeted by commas. Example: en, ru, fr",
 
 
