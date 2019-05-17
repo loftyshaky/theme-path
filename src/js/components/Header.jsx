@@ -56,6 +56,12 @@ export class Header extends React.Component {
         }
     }
 
+    create_new_theme = () => {
+        analytics.add_header_btns_analytics('new_theme');
+
+        expand_or_collapse.create_new_theme_or_folder(null);
+    }
+
     render() {
         const chrome_exe_paths = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_exe_paths);
         const chrome_user_data_folders = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_user_data_folders);
@@ -68,7 +74,7 @@ export class Header extends React.Component {
                         <button
                             className="header_btn new_theme_btn"
                             type="button"
-                            onClick={expand_or_collapse.create_new_theme_or_folder.bind(null, null)}
+                            onClick={this.create_new_theme}
                             disabled={els_state.com2.inputs_disabled_5}
                         >
                             <span className="header_btn_icon new_theme_btn_icon">
@@ -182,14 +188,19 @@ const Open_in_profiled_chrome_btn = props => {
 const Create_custom_folder_btn = props => {
     const { path, no } = props;
 
+    const create_custom_folder = () => {
+        analytics.add_header_btns_analytics('create_custom_folder');
+
+        expand_or_collapse.create_new_theme_or_folder(path);
+    };
+
     return (
         <button
             className="header_btn open_in_chrome_btn"
             type="button"
             title={`${x.msg('create_custom_folder_btn_title')} - ${path}`}
             disabled={els_state.com2.inputs_disabled_5}
-            onMouseUp={expand_or_collapse.create_new_theme_or_folder.bind(null, path)}
-            onKeyUp={expand_or_collapse.create_new_theme_or_folder.bind(null, path)}
+            onClick={create_custom_folder}
         >
             {no}
         </button>

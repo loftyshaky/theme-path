@@ -2,7 +2,6 @@ import { action, configure } from 'mobx';
 import * as r from 'ramda';
 
 import x from 'x';
-import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as folders from 'js/work_folder/folders';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
@@ -47,8 +46,6 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
 
             if (mode === 'new_theme') {
                 new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, nest_level, i_to_insert_folder_in, folder_is_opened, null, custom_folder_path);
-
-                analytics.add_header_btns_analytics(mode);
             }
 
             const files = folders.get_folders(folder_path);
