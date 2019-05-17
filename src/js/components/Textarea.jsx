@@ -121,19 +121,26 @@ export class Textarea extends React.Component {
         }
     }
 
-    change_val = e => {
+    change_val = val => {
+        change_val.set_inputs_data_val(this.family, this.name, val);
+
+        this.change_val_inner(this.family, this.name, val);
+    };
+
+    change_val_inner = x.debounce((family, name, val) => { // eslint-disable-line react/sort-comp
         try {
-            change_val.change_val(this.family, this.name, 'is_not_select', null, e);
+            change_val.change_val(family, name, val, null);
 
             if (!this.mut.entered_one_char_in_textarea_after_focus) {
                 this.mut.entered_one_char_in_textarea_after_focus = true;
 
-                analytics.send_event('textareas', `input-${this.family}-${this.name}`);
+                analytics.send_event('textareas', `input-${family}-${name}`);
             }
         } catch (er) {
             err(er, 162);
         }
-    }
+    }, 200);
+
 
     reset_entered_one_char_in_textarea_after_focus = () => {
         try {
@@ -160,7 +167,7 @@ export class Textarea extends React.Component {
                     ref={textarea => { this.textarea = textarea; }}
                     value={val}
                     disabled={els_state.com2.inputs_disabled_2 && this.family !== 'options'}
-                    onInput={this.change_val}
+                    onInput={({ target: { value } }) => this.change_val(value)}
                     onChange={() => null}
                     onBlur={this.reset_entered_one_char_in_textarea_after_focus}
                 />
