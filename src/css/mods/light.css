@@ -38,11 +38,11 @@ body, .btn, .option, .legend_line, .fieldset_w .cover, .popup {
     background-color: white;
 }
 
-textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .upload_box {
+textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .upload_box, .history_item_color {
     border-color: #212121;
 }
 
-.selected_folder, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg {
+.selected_folder, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span {
     color: white;
 }
 
@@ -153,6 +153,28 @@ textarea:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualizat
 .skip_tutorial_btn {
     color: #fbff75;
 }
+
+/*> history */
+.history_item:nth-child(odd) {
+    background-color: #9ff1a5;
+}
+
+.history_item:nth-child(even) {
+    background-color: #8ce0ef;
+}
+
+.reverted_history_item:nth-child(odd) {
+     background-color: #c3c3c3;
+}
+
+.reverted_history_item:nth-child(even) {
+    background-color: #adadad;
+}
+
+.history .ReactVirtualized__List {
+    border: 1px solid #212121;
+}
+/*< history */
 
 /*> mods */
 .char_limit_exceeded_textarea {

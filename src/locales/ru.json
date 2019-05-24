@@ -10,6 +10,7 @@
   "clear_new_tab_hr_text": "Clear New Tab",
   "options_hr_text": "Настройки",
   "links_hr_text": "Ссылки",
+  "history_hr_text": "History",
 
   "version_label_text": "Версия",
   "name_label_text": "Название",
@@ -51,7 +52,7 @@
   "frame_label_text": "Рама",
   "frame_inactive_label_text": "Рама (неактивное окно)",
   "frame_incognito_label_text": "Рама (инкогнито)",
-  "frame_incognito_inactive_label_text": "Рама (инкогнито, неактивное окно)",
+  "frame_incognito_inactive_label_text": "Рама (инкогнито, неак. окно)",
   "bookmark_text_label_text": "Текст закладок",
   "tab_text_label_text": "Текст активной вкладки",
   "tab_background_text_label_text": "Текст неактивной вкладки",
@@ -270,6 +271,28 @@
   "pack_tutorial_item_text": "Упакуйте тему в zip файл для распространения в Интернет-магазине Chrome. Пакет будет храниться в папке в которой находится тема.",
 
   "skip_tutorial_btn_text": "Пропустить обучение",
+
+
+  "history_accept_btn_text": "Принять",
+  "history_cancel_btn_text": "Отменить",
+  "history_revert_all_btn_text": "Откатить все изменения",
+
+  "history_color_changed_to_text": "Цвет изменён на",
+  "history_set_to_default_text": "К стандарту",
+  "history_set_to_disabled_text": "Отключен",
+
+  "jan": "янв",
+  "feb": "фев",
+  "mar": "мар",
+  "apr": "апр",
+  "may": "мая",
+  "jun": "июня",
+  "jul": "июля",
+  "aug": "авг",
+  "sep": "сен",
+  "oct": "окт",
+  "nov": "ноя",
+  "dec": "дек",
 
 
   "an_error_occured_msg": "Произошла ошибка.",

@@ -267,7 +267,7 @@ hr, .color_input_vizualization, .color_ok_btn, .header_btn:hover, body.using_mou
     background-color: white;
 }
 
-textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w {
+textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .history_item_color, .history .ReactVirtualized__List {
     border: 1px solid white;
 }
 
@@ -344,7 +344,7 @@ svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
     margin-bottom: 11px;
 }
 
-.auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child), .export_settings_btn {
+.history_popup .btn:not(:last-child), .auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child), .export_settings_btn {
     margin-right: 10px
 }
 /*< general */
@@ -938,6 +938,14 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     z-index: 4;
 }
 
+.history_popup {
+    resize: horizontal;
+    max-width: calc(100% - 126px);
+    right: unset;
+    left: 50px;
+    max-height: unset;
+}
+
 .close_btn {
     position: absolute;
     background-color: transparent;
@@ -962,6 +970,56 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     margin-top: 10px;
 }
 /*< popup */
+
+/*> history */
+.history {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    height: 100%;
+    height: calc(100% - 85px);
+}
+
+.history_item {
+    cursor: pointer;
+    outline: none;
+}
+
+.history_item:nth-child(odd) {
+    background-color: #487d4c;
+}
+
+.history_item:nth-child(even) {
+    background-color: #54828a;
+}
+
+.reverted_history_item:nth-child(odd) {
+     background-color: #5a5a5a;
+}
+
+.reverted_history_item:nth-child(even) {
+    background-color: #4a4a4a;
+}
+
+.using_keyboard .history_item:focus {
+    background-color: #3892ff;
+}
+
+.history_item span {
+    display: inline-block;
+}
+
+.history_item span:not(.history_item_color) {
+    padding: 4px;
+}
+
+.history_item_color {
+    height: 14px;
+    width: 14px;
+    margin-bottom: -3px;
+    margin-right: 4px;
+    margin-left: 4px;
+}
+/*< history */
 
 /*> analytics_privacy */
 .analytics_privacy {
@@ -1016,6 +1074,22 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     z-index: 1;
 }
 /*< protecting screens */
+
+/*> history fieldset protecting screens */
+.fieldset_content, .history_fieldset_protecting_screen_w {
+    position: relative;
+    height: 100%;
+}
+
+.history_fieldset_protecting_screen {
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+    width: 100%;
+    top:0;
+    left:0;
+}
+/*< history fieldset protecting screens */
 
 /*> ordinary color inputs */
 .colors_and_tints_input_block, .ordinary_color_input {
@@ -1074,7 +1148,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn {
+.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn, .using_mouse .history_item {
     transition: all 0.2s ease-out;
 }
 
@@ -1106,7 +1180,7 @@ fieldset, .tutorial_outline {
     transition-property: border-color;
 }
 
-.upload_box, .color_input_vizualization {
+.upload_box, .color_input_vizualization, .using_mouse .history_item {
     transition-property: background-color;
 }
 

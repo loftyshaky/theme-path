@@ -9,7 +9,7 @@ export const record_picked_color = (family, name) => {
     try {
         const picked_colors_path = join(chosen_folder_path.ob.chosen_folder_path, con.picked_colors_sdb_path);
 
-        json_file.create_json_file(picked_colors_path);
+        json_file.create_json_file(picked_colors_path, '{}');
 
         const picked_colors_obj = json_file.parse_json(picked_colors_path);
 

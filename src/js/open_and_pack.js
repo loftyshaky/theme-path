@@ -22,30 +22,6 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 configure({ enforceActions: 'observed' });
 const store = new Store();
 
-const run = callback => {
-    try {
-        if (choose_folder.reset_work_folder(false)) {
-            if (folders.mut.chosen_folder_info.is_theme) {
-                const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
-                const folder_is_theme = files.find(file => file === 'manifest.json');
-
-                if (folder_is_theme) {
-                    callback();
-
-                } else {
-                    err(er_obj('Chosen folder is not a theme'), 4, 'chosen_folder_is_not_theme');
-                }
-
-            } else {
-                err(er_obj('Theme folder is not chosen'), 3, 'theme_folder_is_not_chosen');
-            }
-        }
-
-    } catch (er) {
-        err(er, 16);
-    }
-};
-
 export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
     try {
         if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === con.enter_key_code && (!e.ctrlKey || !e.shiftKey))) {
@@ -56,7 +32,7 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
             const incognito = !left_button_clicked ? ' --incognito' : '--x';
             const chrome_process_ids = !left_button_clicked ? 'chrome_incognito_process_ids' : 'chrome_process_ids';
 
-            run(() => {
+            folders.check_if_selected_folder_is_theme(() => {
                 kill(mut[chrome_process_ids][user_data_path], 'SIGKILL', async er => {
                     if (er) {
                         err(er, 15, null, true);
@@ -129,7 +105,7 @@ export const update_chrome_user_data_folders_observable = action(() => {
 });
 
 export const pack = type => {
-    run(async () => {
+    folders.check_if_selected_folder_is_theme(async () => {
         try {
             const directory_to_save_package_in = chosen_folder_path.ob.chosen_folder_path.substring(
                 0,

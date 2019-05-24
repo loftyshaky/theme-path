@@ -83,6 +83,13 @@ export const add_settings_export_import_analytics = action => {
     send_event('settings_export_import', `${action}`);
 };
 
+export const add_popup_close_btns_analytics = name => {
+    send_event('popup_close_btns', `clicked-${name}`);
+};
+
+export const add_history_analytics = name => {
+    send_event('history', `clicked-${name}`);
+};
 
 export const track_app_start = () => {
     send_pageview('main');

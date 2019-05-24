@@ -11,6 +11,30 @@ import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 
 configure({ enforceActions: 'observed' });
 
+export const check_if_selected_folder_is_theme = callback => {
+    try {
+        if (choose_folder.reset_work_folder(false)) {
+            if (mut.chosen_folder_info.is_theme) {
+                const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
+                const folder_is_theme = files.find(file => file === 'manifest.json');
+
+                if (folder_is_theme) {
+                    callback();
+
+                } else {
+                    err(er_obj('Chosen folder is not a theme'), 4, 'chosen_folder_is_not_theme');
+                }
+
+            } else {
+                err(er_obj('Theme folder is not chosen'), 3, 'theme_folder_is_not_chosen');
+            }
+        }
+
+    } catch (er) {
+        err(er, 16);
+    }
+};
+
 export const rerender_work_folder = action(() => {
     try {
         const previous_val = chosen_folder_path.ob.chosen_folder_path;

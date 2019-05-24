@@ -1,11 +1,17 @@
 import { existsSync, outputFileSync, writeJsonSync, readFileSync } from 'fs-extra';
 
-export const create_json_file = messages_path => {
+import { join } from 'path';
+
+import * as manifest from 'js/manifest';
+import * as chosen_folder_path from 'js/chosen_folder_path';
+
+
+export const create_json_file = (path, content) => {
     try {
-        const messages_file_exist = existsSync(messages_path);
+        const messages_file_exist = existsSync(path);
 
         if (!messages_file_exist) {
-            outputFileSync(messages_path, '{}', 'utf8');
+            outputFileSync(path, content, 'utf8');
         }
 
     } catch (er) {
@@ -31,4 +37,8 @@ export const write_to_json = (json, json_path) => {
     } catch (er) {
         err(er, 65, null, false, false, true);
     }
+};
+
+export const write_to_manifest_json = () => {
+    write_to_json(manifest.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
 };

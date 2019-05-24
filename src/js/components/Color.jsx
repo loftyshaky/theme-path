@@ -94,7 +94,6 @@ export class Color extends React.Component {
 const Color_input_vizualization = observer(props => {
     const { family, name, type } = props;
     const color = inputs_data.obj[family][name].color || inputs_data.obj[family][name].val;
-    color_pickiers.mut.current_pickied_color.hex = color;
 
     return (
         <span

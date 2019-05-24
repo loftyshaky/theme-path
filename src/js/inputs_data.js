@@ -21,6 +21,15 @@ export const reset_inputs_data = action(() => {
     }
 });
 
+export const set_inputs_data = action(new_inputs_data => {
+    try {
+        inputs_data.obj = new_inputs_data;
+
+    } catch (er) {
+        err(er, 201);
+    }
+});
+
 export const inputs_data = observable({
     obj: {
         theme_metadata: {

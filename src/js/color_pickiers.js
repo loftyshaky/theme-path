@@ -2,15 +2,15 @@
 
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
-import hexToHsl from 'hex-to-hsl';
-import hexToRgb from 'hex-to-rgb';
-import * as analytics from 'js/analytics';
+import colorConvert from 'color-convert';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
+import * as analytics from 'js/analytics';
 import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
 import * as picked_colors from 'js/picked_colors';
+import * as history from 'js/history';
 
 configure({ enforceActions: 'observed' });
 
@@ -48,6 +48,8 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                     mut.current_color_pickier.family = family;
                     mut.current_color_pickier.name = name;
                     mut.current_color_pickier.color = inputs_data.obj[family][name].color || inputs_data.obj[family][name].val;
+                    mut.current_pickied_color.hex = mut.current_color_pickier.color;
+                    mut.previous_pickied_color = mut.current_pickied_color;
 
                     show_or_hide_color_pickier(family, name, true);
                     set_color_color_pickier_position(family, name, 'top');
@@ -111,8 +113,12 @@ export const set_color_input_vizualization_color = action((family, name, color, 
 //> accept color when clicking OK t
 export const accept_color = (family, name) => {
     try {
+        const was_default = inputs_data.obj[family][name].default;
+        const was_disabled = Boolean(inputs_data.obj[family][name].disabled);
         const { hex } = mut.current_pickied_color;
+        const { hex: previous_hex } = mut.previous_pickied_color;
         let color;
+        let previous_manifest_val;
 
         if (family === 'images' || name === 'icon') {
             imgs.create_solid_color_image(family, name, hex, mut.current_pickied_color.rgb.a);
@@ -122,16 +128,13 @@ export const accept_color = (family, name) => {
             picked_colors.record_picked_color(family, name);
 
         } else if (family === 'colors') {
-            color = hexToRgb(hex);
-
+            color = colorConvert.hex.rgb(hex);
+            previous_manifest_val = colorConvert.hex.rgb(previous_hex);
             change_val.change_val(family, name, color, null);
 
         } else if (family === 'tints') {
-            const hsl = hexToHsl(hex);
-            const h = hsl[0] / 360;
-            const sl = [hsl[1], hsl[2]];
-            const sl_final = sl.map(item => (item === 100 ? 1 : Number(`0.${item}`)));
-            color = r.prepend(h, sl_final);
+            color = convert_hex_to_tints_val(hex);
+            previous_manifest_val = convert_hex_to_tints_val(previous_hex);
 
             change_val.change_val(family, name, color, null);
         }
@@ -144,11 +147,25 @@ export const accept_color = (family, name) => {
 
         mut.current_color_pickier.el = null;
 
+        if (family === 'colors' || family === 'tints') {
+            history.record_color_change(family, name, was_default, was_disabled, previous_hex, previous_manifest_val, hex, false, false);
+        }
+
         analytics.send_event('color_pickiers', `accepted_color-${family}-${name}`);
 
     } catch (er) {
         err(er, 35);
     }
+};
+
+export const convert_hex_to_tints_val = hex => {
+    const hsl = colorConvert.hex.hsl(hex);
+    const h = hsl[0] / 360;
+    const sl = [hsl[1], hsl[2]];
+    const sl_final = sl.map(item => (item === 100 ? 1 : Number(`0.${item}`)));
+    const color = r.prepend(h, sl_final);
+
+    return color;
 };
 //< accept color when clicking OK t
 
@@ -247,6 +264,7 @@ export const mut = {
             a: 1, // alpha
         },
     },
+    previous_pickied_color: null,
     current_color_pickier: {
         el: null,
         family: '',

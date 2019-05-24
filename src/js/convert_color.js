@@ -1,5 +1,6 @@
 import * as r from 'ramda';
 import Store from 'electron-store';
+import colorConvert from 'color-convert';
 
 import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
@@ -29,9 +30,8 @@ const convert_theme_color_props_to_color = item => {
 
             if (val_is_arr) {
                 const rgb_val = val.length === 4 ? r.dropLast(1, val) : val;
-
                 if (val !== '') {
-                    change_val.set_inputs_data_val(family, name, `rgb(${rgb_val.join()})`);
+                    change_val.set_inputs_data_val(family, name, `#${colorConvert.rgb.hex(rgb_val)}`);
                     change_val.set_default_bool(family, name, false);
                 }
             }
@@ -41,7 +41,7 @@ const convert_theme_color_props_to_color = item => {
 
             if (val_is_arr) {
                 if (val !== '') {
-                    const hsla_arr = val.map((number, number_i) => {
+                    const hsl_arr = val.map((number, number_i) => {
                         if (number_i === 0) {
                             if (number < 0 || number > 1) {
                                 return '-1';
@@ -52,13 +52,13 @@ const convert_theme_color_props_to_color = item => {
                         }
 
                         if (number < 0 || number > 1) {
-                            return '-1%';
+                            return '-1';
                         }
 
-                        return `${number * 100}%`;
+                        return `${number * 100}`;
                     });
 
-                    const every_number_in_hsla_arr_is_minus_1 = hsla_arr.every(number => number.indexOf('-1') > -1);
+                    const every_number_in_hsla_arr_is_minus_1 = hsl_arr.every(number => number.indexOf('-1') > -1);
 
                     if (every_number_in_hsla_arr_is_minus_1) {
                         change_val.set_inputs_data_val(family, name, options.ob.theme_vals[store.get('theme')].color_input_disabled);
@@ -66,7 +66,7 @@ const convert_theme_color_props_to_color = item => {
                         change_val.set_disabled_bool(family, name, true);
 
                     } else {
-                        change_val.set_inputs_data_val(family, name, `hsl(${hsla_arr.join()})`);
+                        change_val.set_inputs_data_val(family, name, `#${colorConvert.hsl.hex(hsl_arr)}`);
                         change_val.set_default_bool(family, name, false);
                     }
                 }

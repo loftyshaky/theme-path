@@ -10,11 +10,13 @@ import * as open_and_pack from 'js/open_and_pack';
 import * as toggle_popup from 'js/toggle_popup';
 import * as show_or_open_folder from 'js/show_or_open_folder';
 import * as custom_paths_btns from 'js/custom_paths_btns';
+import * as history from 'js/history';
 import * as search from 'js/work_folder/search';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as custom_folders from 'js/work_folder/custom_folders';
 
 import { Tutorial_item } from 'components/Tutorial_item';
+import { History_fieldset_protecting_screen } from 'components/Protecting_screen';
 
 import plus_svg from 'svg/plus';
 import dehaze_svg from 'svg/dehaze';
@@ -132,7 +134,7 @@ export class Header extends React.Component {
                     </div>
                     <Btn
                         name="history"
-                        on_click={null}
+                        on_click={history.load_history}
                         svg={history_svg}
                     />
                     <Btn
@@ -169,6 +171,7 @@ export class Header extends React.Component {
                         svg={list_svg}
                     />
                 </span>
+                <History_fieldset_protecting_screen />
             </header>
         );
     }

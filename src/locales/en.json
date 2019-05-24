@@ -10,6 +10,7 @@
   "clear_new_tab_hr_text": "Clear New Tab",
   "options_hr_text": "Options",
   "links_hr_text": "Links",
+  "history_hr_text": "History",
 
   "version_label_text": "Version",
   "name_label_text": "Name",
@@ -270,6 +271,28 @@
   "pack_tutorial_item_text": "Package theme as a zip file for distribution in the Chrome Web Store. The package will be stored in the folder that contains theme.",
 
   "skip_tutorial_btn_text": "Skip tutorial",
+
+
+  "history_accept_btn_text": "Accept",
+  "history_cancel_btn_text": "Cancel",
+  "history_revert_all_btn_text": "Revert all changes",
+
+  "history_color_changed_to_text": "Color changed to",
+  "history_set_to_default_text": "Set to default",
+  "history_set_to_disabled_text": "Set to disabled",
+
+  "jan": "Jan",
+  "feb": "Feb",
+  "mar": "Mar",
+  "apr": "Apr",
+  "may": "May",
+  "jun": "Jun",
+  "jul": "Jul",
+  "aug": "Aug",
+  "sep": "Sep",
+  "oct": "Oct",
+  "nov": "Nov",
+  "dec": "Dec",
 
 
   "an_error_occured_msg": "An error occured.",

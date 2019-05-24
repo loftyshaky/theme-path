@@ -22,6 +22,17 @@ export const Auto_updater = observer(() => {
         }
     };
 
+    const close_auto_updater = () => {
+        try {
+            auto_update.show_or_hide_auto_updater(false);
+
+            analytics.add_popup_close_btns_analytics('auto_updater');
+
+        } catch (er) {
+            err(er, 217);
+        }
+    };
+
     return (
         <Tr
             attr={{
@@ -34,7 +45,7 @@ export const Auto_updater = observer(() => {
             <button
                 className="close_btn"
                 type="button"
-                onClick={() => auto_update.show_or_hide_auto_updater(false)}
+                onClick={close_auto_updater}
             >
                 <Svg src={close_svg} />
             </button>

@@ -32,12 +32,9 @@ export const change_val = async (family, name, new_val, img_extension) => {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
         if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
+            manifest.reload_manifest();
+
             const manifest_path = join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json');
-
-            if (existsSync(manifest_path)) {
-                manifest.mut.manifest = json_file.parse_json(manifest_path);
-            }
-
             const default_locale = family === 'theme_metadata' ? inputs_data.obj[family].default_locale.val : null;
             const first_if_strings = ['name', 'description'];
             const second_if_strings = ['version', 'default_locale'];
@@ -142,7 +139,7 @@ const set_name_or_description_prop = (name, new_val, forced_locale) => {
         check_if_localisation_folders_exists_create_them_if_dont(locale);
 
         if (val_is_localized) {
-            json_file.create_json_file(messages_path);
+            json_file.create_json_file(messages_path, '{}');
 
             const message_name = msg.get_message_name(val);
             const messages = json_file.parse_json(messages_path);
@@ -150,7 +147,7 @@ const set_name_or_description_prop = (name, new_val, forced_locale) => {
             write_to_json(messages, messages_path, message_name, new_val, 'theme_metadata'); // write to messages.json
 
         } else {
-            json_file.create_json_file(messages_path);
+            json_file.create_json_file(messages_path, '{}');
             write_to_json(manifest.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
             const messages = json_file.parse_json(messages_path);

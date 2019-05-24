@@ -32,6 +32,7 @@ const con = {
         work_folder: '',
         theme: 'dark',
         language: 'system',
+        history_popup_width: 700,
         chrome_exe_paths: '',
         chrome_user_data_folders: '',
         custom_folders: '',

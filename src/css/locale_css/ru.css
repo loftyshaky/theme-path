@@ -1,3 +1,7 @@
-.popup {
+.options_popup {
     width: 482px;
+}
+
+.history_popup {
+    min-width: 400px;
 }

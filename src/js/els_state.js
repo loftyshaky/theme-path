@@ -2,6 +2,7 @@ import { decorate, computed, configure } from 'mobx';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as toggle_popup from 'js/toggle_popup';
 import * as help_viewer from 'js/help_viewer';
+import * as history from 'js/history';
 import * as choose_folder from 'js/work_folder/choose_folder';
 import * as folders from 'js/work_folder/folders';
 
@@ -24,19 +25,19 @@ export const com = {
 
 export const com2 = {
     get inputs_disabled_1() {
-        return com.fieldset_protecting_screen_is_visible || toggle_popup.ob.protecting_screen_is_visible || help_viewer.ob.help_viewer_is_visible ? -1 : 0;
+        return com.fieldset_protecting_screen_is_visible || toggle_popup.ob.protecting_screen_is_visible || history.ob.history_is_visible || help_viewer.ob.help_viewer_is_visible ? -1 : 0;
     },
     get inputs_disabled_2() {
-        return (com.fieldset_protecting_screen_is_visible || toggle_popup.ob.protecting_screen_is_visible || help_viewer.ob.help_viewer_is_visible) || false;
+        return (com.fieldset_protecting_screen_is_visible || toggle_popup.ob.protecting_screen_is_visible || help_viewer.ob.help_viewer_is_visible || history.ob.history_is_visible) || false;
     },
     get inputs_disabled_3() {
-        return toggle_popup.ob.protecting_screen_is_visible || help_viewer.ob.help_viewer_is_visible ? -1 : 0;
+        return toggle_popup.ob.protecting_screen_is_visible || history.ob.history_is_visible || help_viewer.ob.help_viewer_is_visible ? -1 : 0;
     },
     get inputs_disabled_4() {
-        return (toggle_popup.ob.protecting_screen_is_visible || help_viewer.ob.help_viewer_is_visible) || false;
+        return (toggle_popup.ob.protecting_screen_is_visible || help_viewer.ob.help_viewer_is_visible || history.ob.history_is_visible) || false;
     },
     get inputs_disabled_5() {
-        return help_viewer.ob.help_viewer_is_visible || false;
+        return (help_viewer.ob.help_viewer_is_visible || history.ob.history_is_visible) || false;
     },
 };
 
