@@ -1019,6 +1019,10 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     margin-right: 4px;
     margin-left: 4px;
 }
+
+.history_item span.history_item_changed_to {
+    padding-left: 0;
+}
 /*< history */
 
 /*> analytics_privacy */

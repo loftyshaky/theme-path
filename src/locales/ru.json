@@ -277,7 +277,7 @@
   "history_cancel_btn_text": "Отменить",
   "history_revert_all_btn_text": "Откатить все изменения",
 
-  "history_color_changed_to_text": "Цвет изменён на",
+  "history_changed_to_text": "Изменено на",
   "history_set_to_default_text": "К стандарту",
   "history_set_to_disabled_text": "Отключен",
 

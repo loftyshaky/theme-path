@@ -4,6 +4,7 @@ import Svg from 'svg-inline-react';
 import { List, AutoSizer, CellMeasurerCache, CellMeasurer } from 'react-virtualized';
 
 import x from 'x';
+import { selects_options } from 'js/selects_options';
 import * as analytics from 'js/analytics';
 import * as enter_click from 'js/enter_click';
 import * as history from 'js/history';
@@ -27,13 +28,21 @@ export const History = observer(() => {
 
                 }
 
-                if (item.set_to_default) {
-                    return <String name="set_to_default" />;
-                }
+            } else if (history.selects_cond(item.family, item.name)) {
+                return (
+                    <Changed_to
+                        name={item.name}
+                        val={item.to}
+                    />
+                );
+            }
 
-                if (item.set_to_disabled) {
-                    return <String name="set_to_disabled" />;
-                }
+            if (item.set_to_default) {
+                return <String name="set_to_default" />;
+            }
+
+            if (item.set_to_disabled) {
+                return <String name="set_to_disabled" />;
             }
 
         } catch (er) {
@@ -165,7 +174,7 @@ const History_item_family_and_name = props => {
 
     return (
         <React.Fragment>
-            <span className="history_item_family">{x.msg(`${family}_hr_text`)}</span>
+            <span className="history_item_family">{x.msg(`${family}_hr_text`) || x.msg(`${family}_legend_text`)}</span>
             |
             <span className="history_item_name">{x.msg(`${name}_label_text`)}</span>
             |
@@ -178,7 +187,7 @@ const Color_changed_to = props => {
 
     return (
         <React.Fragment>
-            <span className="history_item_text">{x.msg('history_color_changed_to_text')}</span>
+            <Changed_to_text />
             <span
                 className="history_item_color"
                 title={color}
@@ -188,6 +197,22 @@ const Color_changed_to = props => {
         </React.Fragment>
     );
 };
+
+const Changed_to = props => {
+    const { name, val } = props;
+    const { label } = selects_options[name === 'default_locale' ? 'locale' : name].find(option => option.value === val);
+
+    return (
+        <React.Fragment>
+            <Changed_to_text />
+            <span className="history_item_changed_to">{`"${label}"`}</span>
+            |
+        </React.Fragment>
+    );
+};
+
+
+const Changed_to_text = () => <span className="history_item_text">{x.msg('history_changed_to_text')}</span>;
 
 const String = props => {
     const { name } = props;

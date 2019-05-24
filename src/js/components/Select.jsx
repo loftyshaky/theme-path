@@ -11,6 +11,7 @@ import { selects_options } from 'js/selects_options';
 import * as change_val from 'js/change_val';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as els_state from 'js/els_state';
+import * as history from 'js/history';
 
 import { Help } from 'components/Help';
 
@@ -43,11 +44,22 @@ export class Select extends React.Component {
     change_select_val = selected_option => {
         try {
             const { value } = selected_option;
+            const previous_val = inputs_data.obj[this.family][this.name].val;
+            const was_default = previous_val === 'default';
+            let set_to_default;
 
             change_val.change_val(this.family, this.name, value, null);
 
             if (value === 'default') {
+                set_to_default = true;
                 set_default_or_disabled.set_default_or_disabled(this.family, this.name, 'select');
+
+            } else {
+                set_to_default = false;
+            }
+
+            if (this.family !== 'options') {
+                history.record_change(() => history.generate_select_history_obj(this.family, this.name, was_default, previous_val, value, set_to_default));
             }
 
             analytics.send_event('selects', `selected_option-${this.family}-${this.name}-${value}`);

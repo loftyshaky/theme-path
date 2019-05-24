@@ -60,7 +60,7 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
                     if (family === 'colors' || family === 'tints') {
                         const previous_color = get_previous_color(family, name);
 
-                        history.record_color_change(family, name, false, Boolean(inputs_data.obj[family][name].disabled), previous_color.previous_hex, previous_color.previous_manifest_val, null, true, false);
+                        history.record_change(() => history.generate_color_history_obj(family, name, false, Boolean(inputs_data.obj[family][name].disabled), previous_color.previous_hex, previous_color.previous_manifest_val, null, true, false));
                     }
 
                     change_val.set_default_bool(family, name, true);
@@ -81,7 +81,7 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
                 if (!inputs_data.obj[family][name].disabled) {
                     const previous_color = get_previous_color(family, name);
 
-                    history.record_color_change(family, name, inputs_data.obj[family][name].default, false, previous_color.previous_hex, previous_color.previous_manifest_val, null, false, true);
+                    history.record_change(() => history.generate_color_history_obj(family, name, inputs_data.obj[family][name].default, false, previous_color.previous_hex, previous_color.previous_manifest_val, null, false, true));
 
                     change_val.set_disabled_bool(family, name, true);
                     change_val.set_default_bool(family, name, false);
@@ -130,8 +130,10 @@ const set_default = (family, name) => {
         }
 
         json_file.write_to_manifest_json();
+        if (inputs_data.obj[family][name].type === 'select') {
+            change_val.set_inputs_data_val(family, name, 'default');
 
-        if (inputs_data.obj[family][name].color) {
+        } else if (inputs_data.obj[family][name].color) {
             change_val.set_inputs_data_color(family, name, color_input_default);
 
         } else {
@@ -163,7 +165,7 @@ const get_previous_color = (family, name) => {
     return {
         previous_hex,
         previous_manifest_val,
-    }
+    };
 };
 
 export const con = {

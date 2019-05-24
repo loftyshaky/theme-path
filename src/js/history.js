@@ -49,7 +49,7 @@ export const accept_history_change = () => {
 
         if (!clicked_on_last_item) {
             for (const change of mut.changes_to_revert) {
-                const { family, name, from_manifest_val, was_default, was_disabled } = change;
+                const { family, name, from, from_manifest_val, was_default, was_disabled } = change;
 
                 if (family === 'colors' || family === 'tints') {
                     if (!was_default) {
@@ -60,8 +60,16 @@ export const accept_history_change = () => {
                             manifest.mut.manifest.theme[family][name] = set_default_or_disabled.con.disabled_manifest_val;
                         }
 
-                    } else if (was_default) {
+                    } else {
                         set_default_or_disabled.delete_key_from_manifest(family, name);
+                    }
+
+                } else if (selects_cond(family, name)) {
+                    if (!was_default) {
+                        change_val.change_val(family, name, from, null);
+
+                    } else {
+                        set_default_or_disabled.set_default_or_disabled(family, name, 'select');
                     }
                 }
             }
@@ -93,12 +101,9 @@ export const cancel_history_change = () => {
     }
 };
 
-export const record_color_change = (family, name, was_default, was_disabled, from_hex, from_manifest_val, to_hex, set_to_default, set_to_disabled) => {
+export const generate_color_history_obj = (family, name, was_default, was_disabled, from_hex, from_manifest_val, to_hex, set_to_default, set_to_disabled) => {
     try {
-        const history_arr = get_history_arr();
-        const history_path = get_history_path();
-
-        const history_obj = {
+        return {
             family,
             name,
             was_default,
@@ -111,12 +116,45 @@ export const record_color_change = (family, name, was_default, was_disabled, fro
             timestamp: get_timestamp(),
         };
 
+    } catch (er) {
+        err(er, 222);
+    }
+
+    return undefined;
+};
+
+export const generate_select_history_obj = (family, name, was_default, from, to, set_to_default) => {
+    try {
+        return {
+            family,
+            name,
+            was_default,
+            from,
+            to,
+            set_to_default,
+            timestamp: get_timestamp(),
+        };
+
+    } catch (er) {
+        err(er, 222);
+    }
+
+    return undefined;
+};
+
+export const record_change = generate_history_obj_f => {
+    try {
+        const history_arr = get_history_arr();
+        const history_path = get_history_path();
+
+        const history_obj = generate_history_obj_f();
+
         history_arr.push(history_obj);
         json_file.create_json_file(history_path, '[]');
         json_file.write_to_json(history_arr, history_path);
 
     } catch (er) {
-        err(er, 207);
+        err(er, 223);
     }
 };
 
@@ -175,7 +213,7 @@ export const revert_tinker = revert_position => {
 
         if (!clicked_on_last_item) {
             for (const change of mut.changes_to_revert) {
-                const { family, name, from_hex, was_default, was_disabled } = change;
+                const { family, name, from, from_hex, was_default, was_disabled } = change;
 
                 if (family === 'colors' || family === 'tints') {
                     color_pickiers.set_color_input_vizualization_color(family, name, from_hex, false);
@@ -185,6 +223,9 @@ export const revert_tinker = revert_position => {
                     if (family === 'tints') {
                         change_val.set_disabled_bool(family, name, was_disabled);
                     }
+
+                } else if (selects_cond(family, name)) {
+                    change_val.set_inputs_data_val(family, name, from);
                 }
             }
         }
@@ -251,6 +292,8 @@ export const reset_history_popup_content = action(() => {
         err(er, 216);
     }
 });
+
+export const selects_cond = (family, name) => family === 'properties' || (family === 'clear_new_tab' && name !== 'clear_new_tab_video') || (family === 'theme_metadata' && (name === 'locale' || name === 'default_locale'));
 
 const con = {
     history_path: 'system/history.json',

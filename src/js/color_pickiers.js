@@ -148,7 +148,7 @@ export const accept_color = (family, name) => {
         mut.current_color_pickier.el = null;
 
         if (family === 'colors' || family === 'tints') {
-            history.record_color_change(family, name, was_default, was_disabled, previous_hex, previous_manifest_val, hex, false, false);
+            history.record_change(() => history.generate_color_history_obj(family, name, was_default, was_disabled, previous_hex, previous_manifest_val, hex, false, false));
         }
 
         analytics.send_event('color_pickiers', `accepted_color-${family}-${name}`);
