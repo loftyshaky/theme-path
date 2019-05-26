@@ -277,6 +277,7 @@
   "history_cancel_btn_text": "Cancel",
   "history_revert_all_btn_text": "Revert all changes",
 
+  "history_changed_text": "Changed",
   "history_changed_to_text": "Changed to",
   "history_set_to_default_text": "Set to default",
   "history_set_to_disabled_text": "Set to disabled",

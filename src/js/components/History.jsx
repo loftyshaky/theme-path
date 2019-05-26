@@ -22,10 +22,19 @@ export const History = observer(() => {
 
     const render_history_item_content = item => {
         try {
-            if (item.family === 'colors' || item.family === 'tints') {
-                if (!item.set_to_default && !item.set_to_disabled) {
-                    return <Color_changed_to color={item.to_hex} />;
 
+            if (history.imgs_cond(item.family, item.name)) {
+                if (!item.set_to_default) {
+                    if (item.to_rgba) {
+                        return <Color_and_img_changed_to color={item.to_rgba} />;
+                    }
+
+                    return <String name="changed" />;
+                }
+
+            } else if (item.family === 'colors' || item.family === 'tints') {
+                if (!item.set_to_default && !item.set_to_disabled) {
+                    return <Color_and_img_changed_to color={item.to_hex} />;
                 }
 
             } else if (history.selects_cond(item.family, item.name)) {
@@ -189,7 +198,7 @@ const History_item_family_and_name = props => {
     );
 };
 
-const Color_changed_to = props => {
+const Color_and_img_changed_to = props => {
     const { color } = props;
 
     return (
