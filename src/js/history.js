@@ -53,6 +53,10 @@ export const accept_history_change = () => {
 
                 if (family === 'colors' || family === 'tints') {
                     if (!was_default) {
+                        if (!manifest.mut.manifest.theme[family]) {
+                            manifest.mut.manifest.theme[family] = {};
+                        }
+
                         if (!was_disabled) {
                             manifest.mut.manifest.theme[family][name] = from_manifest_val;
 
