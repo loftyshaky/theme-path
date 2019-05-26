@@ -52,7 +52,7 @@ export const accept_history_change = () => {
         if (!clicked_on_last_item) {
             for (const change of mut.changes_to_revert) {
                 const { family, name, locale, from, from_manifest_val, from_img_id, from_picked_color_val, was_default, was_disabled } = change;
-                l(family)
+
                 if (imgs_cond(family, name)) {
                     const path_to_current_img = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
 
@@ -442,9 +442,7 @@ export const selects_cond = (family, name) => family === 'properties' || (family
 
 export const textareas_cond = (family, name) => family === 'theme_metadata' && (name === 'name' || name === 'description' || name === 'version');
 
-const conver_rgba_arr_into_css_val = to_rgba => {
-    return `rgba(${r.values(to_rgba).join(',')})`;
-};
+const conver_rgba_arr_into_css_val = to_rgba => `rgba(${r.values(to_rgba).join(',')})`;
 
 const con = {
     history_path: join('system', 'history.json'),
