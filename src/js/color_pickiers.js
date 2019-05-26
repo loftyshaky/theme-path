@@ -121,6 +121,10 @@ export const accept_color = (family, name) => {
         let previous_manifest_val;
 
         if (family === 'images' || name === 'icon') {
+            if (history.imgs_cond(family, name)) {
+                history.record_change(() => history.generate_img_history_obj(family, name, was_default, mut.current_pickied_color.rgb, false));
+            }
+
             imgs.create_solid_color_image(family, name, hex, mut.current_pickied_color.rgb.a);
 
             change_val.change_val(family, name, name, null);
@@ -147,7 +151,7 @@ export const accept_color = (family, name) => {
 
         mut.current_color_pickier.el = null;
 
-        if (family === 'colors' || family === 'tints') {
+        if (history.colors_cond(family)) {
             history.record_change(() => history.generate_color_history_obj(family, name, was_default, was_disabled, previous_hex, previous_manifest_val, hex, false, false));
         }
 

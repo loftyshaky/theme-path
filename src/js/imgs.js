@@ -13,6 +13,7 @@ import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 import * as picked_colors from 'js/picked_colors';
 import * as options from 'js/options';
+import * as history from 'js/history';
 import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
@@ -64,8 +65,13 @@ export const handle_files = async (file, family, name) => {
             [r.equals('clear_new_tab_video'), () => ['video/mp4', 'video/webm', 'video/ogg']],
             [r.T, () => ['image/png']],
         ])(img_name);
+        const was_default = inputs_data.obj[family][name].default;
 
         if (valid_file_types.indexOf(file[0].type) > -1) {
+            if (history.imgs_cond(family, name)) {
+                history.record_change(() => history.generate_img_history_obj(family, name, was_default, null, false));
+            }
+
             const file_with_name = folders.find_file_with_exist(name);
 
             if (file_with_name) {

@@ -23,6 +23,8 @@ const store = new Store();
 
 export const set_default_icon = (family, name) => {
     try {
+        history.record_change(() => history.generate_img_history_obj(family, name, false, null, true));
+
         //> set default icon name
         change_val.set_default_bool(family, name, true);
 
@@ -57,7 +59,11 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
         if (choose_folder.reset_work_folder(false)) {
             if (special_checkbox === 'default') {
                 if (!inputs_data.obj[family][name].default) {
-                    if (family === 'colors' || family === 'tints') {
+                    if (history.imgs_cond(family, name)) {
+                        history.record_change(() => history.generate_img_history_obj(family, name, false, null, true));
+                    }
+
+                    if (history.colors_cond(family)) {
                         const previous_color = get_previous_color(family, name);
 
                         history.record_change(() => history.generate_color_history_obj(family, name, false, Boolean(inputs_data.obj[family][name].disabled), previous_color.previous_hex, previous_color.previous_manifest_val, null, true, false));

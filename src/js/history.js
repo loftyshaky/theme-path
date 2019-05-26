@@ -1,7 +1,7 @@
 'use_strict';
 
 import { join } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, copySync, removeSync } from 'fs-extra';
 
 import * as r from 'ramda';
 import { observable, action, toJS, configure } from 'mobx';
@@ -16,6 +16,8 @@ import * as json_file from 'js/json_file';
 import * as change_val from 'js/change_val';
 import * as color_pickiers from 'js/color_pickiers';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
+import * as picked_colors from 'js/picked_colors';
+import * as options from 'js/options';
 import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
@@ -49,9 +51,45 @@ export const accept_history_change = () => {
 
         if (!clicked_on_last_item) {
             for (const change of mut.changes_to_revert) {
-                const { family, name, locale, from, from_manifest_val, was_default, was_disabled } = change;
+                const { family, name, locale, from, from_manifest_val, from_img_id, from_picked_color_val, was_default, was_disabled } = change;
+                l(family)
+                if (imgs_cond(family, name)) {
+                    const path_to_current_img = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
 
-                if (family === 'colors' || family === 'tints') {
+                    if (!was_default) {
+                        change_val.change_val(family, name, name, 'png');
+
+                        if (from_img_id) {
+                            const path_to_old_img = join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
+
+                            copySync(path_to_old_img, path_to_current_img);
+
+                            removeSync(path_to_old_img);
+                        }
+
+                        if (from_picked_color_val) {
+                            color_pickiers.mut.current_pickied_color.rgb = from_picked_color_val;
+
+                            picked_colors.record_picked_color(family, name);
+
+                        } else {
+                            picked_colors.remove_picked_color(family, name);
+                        }
+
+                    } else {
+                        change_val.set_default_bool(family, name, true);
+                        picked_colors.remove_picked_color(family, name);
+                        removeSync(path_to_current_img);
+
+                        if (name !== 'icon') {
+                            set_default_or_disabled.delete_key_from_manifest(family, name);
+
+                        } else {
+                            set_default_or_disabled.set_default_icon(family, name);
+                        }
+                    }
+
+                } else if (colors_cond(family)) {
                     if (!was_default) {
                         if (!manifest.mut.manifest.theme[family]) {
                             manifest.mut.manifest.theme[family] = {};
@@ -115,6 +153,55 @@ export const cancel_history_change = () => {
     } catch (er) {
         err(er, 206);
     }
+};
+
+export const generate_img_history_obj = (family, name, was_default, to_rgba, set_to_default) => {
+    try {
+        const from_img_path = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
+        const from_img_id = Date.now();
+        const copy_img = existsSync(from_img_path) && (name !== 'icon' || (name === 'icon' && !was_default));
+
+        if (copy_img) {
+            copySync(
+                from_img_path,
+                join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`),
+            );
+        }
+
+        const picked_colors_path = join(chosen_folder_path.ob.chosen_folder_path, picked_colors.con.picked_colors_sdb_path);
+        let from_picked_color_val;
+
+        if (existsSync(picked_colors_path)) {
+            const picked_colors_obj = json_file.parse_json(picked_colors_path);
+
+            if (picked_colors_obj[family] && picked_colors_obj[family][name]) {
+                from_picked_color_val = picked_colors_obj[family][name];
+            }
+        }
+
+        const rgba_css_val = r.ifElse(
+            () => to_rgba,
+            () => conver_rgba_arr_into_css_val(to_rgba),
+
+            () => null,
+        )();
+
+        return {
+            family,
+            name,
+            was_default,
+            ...(copy_img && { from_img_id }),
+            ...(from_picked_color_val && { from_picked_color_val }),
+            ...(rgba_css_val && { to_rgba: rgba_css_val }),
+            set_to_default,
+            timestamp: get_timestamp(),
+        };
+
+    } catch (er) {
+        err(er, 225);
+    }
+
+    return undefined;
 };
 
 export const generate_color_history_obj = (family, name, was_default, was_disabled, from_hex, from_manifest_val, to_hex, set_to_default, set_to_disabled) => {
@@ -248,9 +335,19 @@ export const revert_tinker = revert_position => {
 
         if (!clicked_on_last_item) {
             for (const change of mut.changes_to_revert) {
-                const { family, name, locale, from, from_hex, was_default, was_disabled } = change;
+                const { family, name, locale, from, from_hex, from_picked_color_val, was_default, was_disabled } = change;
 
-                if (family === 'colors' || family === 'tints') {
+                if (imgs_cond(family, name)) {
+                    const color = r.ifElse(
+                        () => from_picked_color_val,
+                        () => conver_rgba_arr_into_css_val(from_picked_color_val),
+
+                        () => options.ob.theme_vals[store.get('theme')].color_input_default,
+                    )();
+
+                    color_pickiers.set_color_input_vizualization_color(family, name, color, false);
+
+                } else if (colors_cond(family)) {
                     color_pickiers.set_color_input_vizualization_color(family, name, from_hex, false);
 
                     change_val.set_default_bool(family, name, was_default);
@@ -266,6 +363,10 @@ export const revert_tinker = revert_position => {
                     if (locale === inputs_data.obj.theme_metadata.locale.val || name === 'version') {
                         change_val.set_inputs_data_val(family, name, from);
                     }
+                }
+
+                if (colors_cond(family) || imgs_cond(family, name)) {
+                    change_val.set_default_bool(family, name, was_default);
                 }
             }
         }
@@ -333,12 +434,21 @@ export const reset_history_popup_content = action(() => {
     }
 });
 
+export const imgs_cond = (family, name) => (family === 'images' && name !== 'theme_ntp_background') || name === 'icon';
+
+export const colors_cond = family => family === 'colors' || family === 'tints';
+
 export const selects_cond = (family, name) => family === 'properties' || (family === 'clear_new_tab' && name !== 'clear_new_tab_video') || (family === 'theme_metadata' && name === 'default_locale');
 
 export const textareas_cond = (family, name) => family === 'theme_metadata' && (name === 'name' || name === 'description' || name === 'version');
 
+const conver_rgba_arr_into_css_val = to_rgba => {
+    return `rgba(${r.values(to_rgba).join(',')})`;
+};
+
 const con = {
     history_path: join('system', 'history.json'),
+    old_imgs_path: join('system', 'old_imgs'),
     months: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].map(month => x.msg(month)),
 };
 
