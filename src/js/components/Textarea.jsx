@@ -7,6 +7,7 @@ import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
 import * as els_state from 'js/els_state';
+import * as history from 'js/history';
 
 import { Help } from 'components/Help';
 
@@ -124,22 +125,30 @@ export class Textarea extends React.Component {
     change_val = val => {
         change_val.set_inputs_data_val(this.family, this.name, val);
 
-        this.change_val_inner(this.family, this.name, val);
+        this.change_val_inner(val);
     };
 
-    change_val_inner = x.debounce((family, name, val) => { // eslint-disable-line react/sort-comp
+    change_val_inner = x.debounce(val => { // eslint-disable-line react/sort-comp
         try {
-            change_val.change_val(family, name, val, null);
+            change_val.change_val(this.family, this.name, val, null);
+
+            if (this.family === 'theme_metadata') {
+                history.record_change(() => history.generate_textarea_history_obj(this.family, this.name, inputs_data.obj[this.family][this.name].previous_val, val));
+
+                change_val.set_previous_val(this.family, this.name, val);
+
+            }
 
             if (!this.mut.entered_one_char_in_textarea_after_focus) {
                 this.mut.entered_one_char_in_textarea_after_focus = true;
 
-                analytics.send_event('textareas', `input-${family}-${name}`);
+                analytics.send_event('textareas', `input-${this.family}-${this.name}`);
             }
+
         } catch (er) {
             err(er, 162);
         }
-    }, 200);
+    }, 1000);
 
 
     reset_entered_one_char_in_textarea_after_focus = () => {

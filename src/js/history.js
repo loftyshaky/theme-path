@@ -49,7 +49,7 @@ export const accept_history_change = () => {
 
         if (!clicked_on_last_item) {
             for (const change of mut.changes_to_revert) {
-                const { family, name, from, from_manifest_val, was_default, was_disabled } = change;
+                const { family, name, locale, from, from_manifest_val, was_default, was_disabled } = change;
 
                 if (family === 'colors' || family === 'tints') {
                     if (!was_default) {
@@ -71,8 +71,20 @@ export const accept_history_change = () => {
                     } else {
                         set_default_or_disabled.set_default_or_disabled(family, name, 'select');
                     }
+
+                } else if (textareas_cond(family, name)) {
+                    if (name === 'version') {
+                        change_val.change_val(family, name, from, null);
+                        change_val.set_previous_val(family, name, from);
+
+                    } else {
+                        change_val.update_name_or_description(name, from, locale);
+                    }
                 }
             }
+
+            change_val.set_previous_val('theme_metadata', 'name', inputs_data.obj.theme_metadata.name.val);
+            change_val.set_previous_val('theme_metadata', 'description', inputs_data.obj.theme_metadata.description.val);
 
             const history_arr = toJS(r.dropLast(number_of_changes, ob.history));
 
@@ -137,6 +149,25 @@ export const generate_select_history_obj = (family, name, was_default, from, to,
 
     } catch (er) {
         err(er, 222);
+    }
+
+    return undefined;
+};
+
+
+export const generate_textarea_history_obj = (family, name, from, to) => {
+    try {
+        return {
+            family,
+            name,
+            ...((name === 'name' || name === 'description') && { locale: inputs_data.obj.theme_metadata.locale.val }),
+            from,
+            to,
+            timestamp: get_timestamp(),
+        };
+
+    } catch (er) {
+        err(er, 224);
     }
 
     return undefined;
@@ -213,7 +244,7 @@ export const revert_tinker = revert_position => {
 
         if (!clicked_on_last_item) {
             for (const change of mut.changes_to_revert) {
-                const { family, name, from, from_hex, was_default, was_disabled } = change;
+                const { family, name, locale, from, from_hex, was_default, was_disabled } = change;
 
                 if (family === 'colors' || family === 'tints') {
                     color_pickiers.set_color_input_vizualization_color(family, name, from_hex, false);
@@ -226,6 +257,11 @@ export const revert_tinker = revert_position => {
 
                 } else if (selects_cond(family, name)) {
                     change_val.set_inputs_data_val(family, name, from);
+
+                } else if (textareas_cond(family, name)) {
+                    if (locale === inputs_data.obj.theme_metadata.locale.val || name === 'version') {
+                        change_val.set_inputs_data_val(family, name, from);
+                    }
                 }
             }
         }
@@ -293,7 +329,9 @@ export const reset_history_popup_content = action(() => {
     }
 });
 
-export const selects_cond = (family, name) => family === 'properties' || (family === 'clear_new_tab' && name !== 'clear_new_tab_video') || (family === 'theme_metadata' && (name === 'locale' || name === 'default_locale'));
+export const selects_cond = (family, name) => family === 'properties' || (family === 'clear_new_tab' && name !== 'clear_new_tab_video') || (family === 'theme_metadata' && name === 'default_locale');
+
+export const textareas_cond = (family, name) => family === 'theme_metadata' && (name === 'name' || name === 'description' || name === 'version');
 
 const con = {
     history_path: 'system/history.json',

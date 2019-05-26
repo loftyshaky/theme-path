@@ -48,17 +48,7 @@ export const change_val = async (family, name, new_val, img_extension) => {
             }
 
             if (first_if_strings.indexOf(name) > -1) {
-                set_name_or_description_prop(name, new_val);
-
-                const locale = inputs_data.obj.theme_metadata.locale.val;
-
-                if (name === 'name') {
-                    if (locale === default_locale) {
-                        new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_val);
-                    }
-                }
-
-                delete_locale_folder(locale, default_locale);
+                update_name_or_description(name, new_val, null);
 
             } else if (second_if_strings.indexOf(name) > -1) {
                 write_to_json(manifest.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
@@ -129,7 +119,22 @@ export const change_val = async (family, name, new_val, img_extension) => {
     }
 };
 
-const set_name_or_description_prop = (name, new_val, forced_locale) => {
+export const update_name_or_description = (name, new_val, forced_locale) => {
+    set_name_or_description(name, new_val, forced_locale);
+
+    const locale = inputs_data.obj.theme_metadata.locale.val;
+    const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
+
+    if (name === 'name') {
+        if (locale === default_locale || forced_locale) {
+            new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_val);
+        }
+    }
+
+    delete_locale_folder(locale, default_locale);
+};
+
+const set_name_or_description = (name, new_val, forced_locale) => {
     try {
         const val = manifest.mut.manifest[name];
         const val_is_localized = msg.val_is_localized(val);
@@ -340,8 +345,8 @@ const add_locale_folder = new_default_locale => {
         const messages_json = json_file.parse_json(messages_path);
 
         if (!messages_json || (messages_json && !messages_json.name && !messages_json.description)) {
-            set_name_or_description_prop('name', '', new_default_locale);
-            set_name_or_description_prop('description', '', new_default_locale);
+            set_name_or_description('name', '', new_default_locale);
+            set_name_or_description('description', '', new_default_locale);
         }
 
     } catch (er) {
@@ -357,6 +362,15 @@ export const set_inputs_data_val = action((family, name, val) => {
         err(er, 27);
     }
 });
+
+export const set_previous_val = (family, name, val) => {
+    try {
+        inputs_data.obj[family][name].previous_val = val;
+
+    } catch (er) {
+        err(er, 27);
+    }
+};
 
 export const set_inputs_data_color = action((family, name, color) => {
     try {

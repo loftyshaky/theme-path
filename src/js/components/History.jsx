@@ -30,8 +30,15 @@ export const History = observer(() => {
 
             } else if (history.selects_cond(item.family, item.name)) {
                 return (
-                    <Changed_to
+                    <Selects_changed_to
                         name={item.name}
+                        val={item.to}
+                    />
+                );
+
+            } else if (history.textareas_cond(item.family, item.name)) {
+                return (
+                    <Textarea_changed_to
                         val={item.to}
                     />
                 );
@@ -198,7 +205,7 @@ const Color_changed_to = props => {
     );
 };
 
-const Changed_to = props => {
+const Selects_changed_to = props => {
     const { name, val } = props;
     const { label } = selects_options[name === 'default_locale' ? 'locale' : name].find(option => option.value === val);
 
@@ -211,6 +218,16 @@ const Changed_to = props => {
     );
 };
 
+const Textarea_changed_to = props => {
+    const { val } = props;
+    return (
+        <React.Fragment>
+            <Changed_to_text />
+            <span className="history_item_changed_to">{`"${val}"`}</span>
+            |
+        </React.Fragment>
+    );
+};
 
 const Changed_to_text = () => <span className="history_item_text">{x.msg('history_changed_to_text')}</span>;
 

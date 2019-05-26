@@ -58,7 +58,7 @@ export class Select extends React.Component {
                 set_to_default = false;
             }
 
-            if (this.family !== 'options') {
+            if (history.selects_cond(this.family, this.name)) {
                 history.record_change(() => history.generate_select_history_obj(this.family, this.name, was_default, previous_val, value, set_to_default));
             }
 

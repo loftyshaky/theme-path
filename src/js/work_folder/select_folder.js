@@ -18,6 +18,8 @@ import * as convert_color from 'js/convert_color';
 import * as choose_folder from 'js/work_folder/choose_folder';
 import * as color_pickiers from 'js/color_pickiers';
 import * as picked_colors from 'js/picked_colors';
+import * as history from 'js/history';
+import * as change_val from 'js/change_val';
 
 configure({ enforceActions: 'observed' });
 
@@ -178,6 +180,10 @@ const set_val = action((family, name, val) => {
 
         if (item) {
             item.val = name === 'ntp_logo_alternate' ? val.toString() : val;
+
+            if (history.textareas_cond(family, name)) {
+                change_val.set_previous_val(family, name, val);
+            }
         }
 
     } catch (er) {
