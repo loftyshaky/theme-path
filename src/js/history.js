@@ -334,7 +334,7 @@ export const selects_cond = (family, name) => family === 'properties' || (family
 export const textareas_cond = (family, name) => family === 'theme_metadata' && (name === 'name' || name === 'description' || name === 'version');
 
 const con = {
-    history_path: 'system/history.json',
+    history_path: join('system', 'history.json'),
     months: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].map(month => x.msg(month)),
 };
 
