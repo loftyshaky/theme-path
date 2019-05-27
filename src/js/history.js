@@ -57,7 +57,7 @@ export const accept_history_change = () => {
                     const path_to_current_img = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
 
                     if (!was_default) {
-                        change_val.change_val(family, name, name, 'png');
+                        change_val.change_val(family, name, name, 'png', false);
 
                         if (from_img_id) {
                             const path_to_old_img = join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
@@ -108,7 +108,7 @@ export const accept_history_change = () => {
 
                 } else if (selects_cond(family, name)) {
                     if (!was_default) {
-                        change_val.change_val(family, name, from, null);
+                        change_val.change_val(family, name, from, null, false);
 
                     } else {
                         set_default_or_disabled.set_default_or_disabled(family, name, 'select');
@@ -116,7 +116,7 @@ export const accept_history_change = () => {
 
                 } else if (textareas_cond(family, name)) {
                     if (name === 'version') {
-                        change_val.change_val(family, name, from, null);
+                        change_val.change_val(family, name, from, null, false);
                         change_val.set_previous_val(family, name, from);
 
                     } else {

@@ -130,7 +130,7 @@ export class Textarea extends React.Component {
 
     change_val_inner = x.debounce(val => { // eslint-disable-line react/sort-comp
         try {
-            change_val.change_val(this.family, this.name, val, null);
+            change_val.change_val(this.family, this.name, val, null, true);
 
             if (this.family === 'theme_metadata') {
                 history.record_change(() => history.generate_textarea_history_obj(this.family, this.name, inputs_data.obj[this.family][this.name].previous_val, val));

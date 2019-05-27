@@ -92,7 +92,7 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
                     change_val.set_disabled_bool(family, name, true);
                     change_val.set_default_bool(family, name, false);
 
-                    change_val.change_val(family, name, con.disabled_manifest_val, null);
+                    change_val.change_val(family, name, con.disabled_manifest_val, null, true);
 
                     change_val.set_inputs_data_val(family, name, options.ob.theme_vals[store.get('theme')].color_input_disabled);
 

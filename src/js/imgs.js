@@ -82,7 +82,7 @@ export const handle_files = async (file, family, name) => {
 
             copySync(file[0].path, join(chosen_folder_path.ob.chosen_folder_path, `${img_name}.${img_extension}`)); // copy image
 
-            change_val.change_val(family, name, img_name, img_extension);
+            change_val.change_val(family, name, img_name, img_extension, true);
 
             picked_colors.remove_picked_color(family, img_name);
 

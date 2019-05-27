@@ -19,7 +19,7 @@ export const Checkbox = observer(props => {
 
     const change_checkbox_val = e => {
         try {
-            change_val.change_val(family, name, e.target.checked, null);
+            change_val.change_val(family, name, e.target.checked, null, true);
 
             analytics.send_event('checkboxes', `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}`);
 

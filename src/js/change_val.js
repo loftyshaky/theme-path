@@ -27,12 +27,14 @@ const { getCurrentWindow } = require('electron').remote;
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
-export const change_val = async (family, name, new_val, img_extension) => {
+export const change_val = async (family, name, new_val, img_extension, reload_manifest) => {
     try {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
         if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
-            manifest.reload_manifest();
+            if (reload_manifest) {
+                manifest.reload_manifest();
+            }
 
             const manifest_path = join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json');
             const default_locale = family === 'theme_metadata' ? inputs_data.obj[family].default_locale.val : null;

@@ -48,7 +48,7 @@ export class Select extends React.Component {
             const was_default = previous_val === 'default';
             let set_to_default;
 
-            change_val.change_val(this.family, this.name, value, null);
+            change_val.change_val(this.family, this.name, value, null, true);
 
             if (value === 'default') {
                 set_to_default = true;

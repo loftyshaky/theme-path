@@ -127,20 +127,20 @@ export const accept_color = (family, name) => {
 
             imgs.create_solid_color_image(family, name, hex, mut.current_pickied_color.rgb.a);
 
-            change_val.change_val(family, name, name, null);
+            change_val.change_val(family, name, name, null, true);
 
             picked_colors.record_picked_color(family, name);
 
         } else if (family === 'colors') {
             color = colorConvert.hex.rgb(hex);
             previous_manifest_val = colorConvert.hex.rgb(previous_hex);
-            change_val.change_val(family, name, color, null);
+            change_val.change_val(family, name, color, null, true);
 
         } else if (family === 'tints') {
             color = convert_hex_to_tints_val(hex);
             previous_manifest_val = convert_hex_to_tints_val(previous_hex);
 
-            change_val.change_val(family, name, color, null);
+            change_val.change_val(family, name, color, null, true);
         }
 
         show_or_hide_color_pickier(family, name, false);
