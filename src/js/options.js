@@ -3,8 +3,6 @@
 import { observable, action, configure } from 'mobx';
 import Store from 'electron-store';
 
-import * as toggle_popup from 'js/toggle_popup';
-
 import x from 'x';
 
 const store = new Store();

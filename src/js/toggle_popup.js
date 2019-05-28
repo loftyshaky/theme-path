@@ -5,6 +5,7 @@ import * as r from 'ramda';
 import Store from 'electron-store';
 
 import * as analytics from 'js/analytics';
+import * as history from 'js/history';
 
 configure({ enforceActions: 'observed' });
 const store = new Store();
@@ -60,6 +61,7 @@ export const close_all_popups_by_keyboard = e => {
 
     if (esc_pressed) {
         close_all_popups(true, 'hit_esc');
+        history.show_or_hide_history(false);
     }
 };
 

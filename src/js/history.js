@@ -395,7 +395,7 @@ export const revert_tinker = revert_position => {
     }
 };
 
-const show_or_hide_history = action(bool => {
+export const show_or_hide_history = action(bool => {
     try {
         ob.history_is_visible = bool;
 
