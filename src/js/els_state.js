@@ -1,4 +1,4 @@
-import { decorate, computed, configure } from 'mobx';
+import { action, observable, decorate, computed, configure } from 'mobx';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as toggle_popup from 'js/toggle_popup';
 import * as help_viewer from 'js/help_viewer';
@@ -7,6 +7,26 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
+
+export const try_to_set_btn_is_inactive_class = () => {
+    try {
+        return ob.applying_textarea_val ? 'btn_is_inactive' : null;
+
+    } catch (er) {
+        err(er, 227);
+    }
+
+    return undefined;
+};
+
+export const set_applying_textarea_val_val = action(bool => {
+    try {
+        ob.applying_textarea_val = bool;
+
+    } catch (er) {
+        err(er, 228);
+    }
+});
 
 export const com = {
     get fieldset_protecting_screen_is_visible() {
@@ -48,4 +68,8 @@ decorate(com, {
 decorate(com2, {
     inputs_disabled_1: computed,
     inputs_disabled_2: computed,
+});
+
+export const ob = observable({
+    applying_textarea_val: false, // true for 1 sec after typing in textarea
 });

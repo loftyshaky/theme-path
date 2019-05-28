@@ -123,8 +123,11 @@ export class Textarea extends React.Component {
     }
 
     change_val = val => {
-        change_val.set_inputs_data_val(this.family, this.name, val);
+        if (this.family === 'theme_metadata') {
+            els_state.set_applying_textarea_val_val(true);
+        }
 
+        change_val.set_inputs_data_val(this.family, this.name, val);
         this.change_val_inner(val);
     };
 
@@ -143,6 +146,10 @@ export class Textarea extends React.Component {
                 this.mut.entered_one_char_in_textarea_after_focus = true;
 
                 analytics.send_event('textareas', `input-${this.family}-${this.name}`);
+            }
+
+            if (this.name !== 'name') {
+                els_state.set_applying_textarea_val_val(false);
             }
 
         } catch (er) {

@@ -10,6 +10,7 @@ import * as tutorial from 'js/tutorial';
 import * as folders from 'js/work_folder/folders';
 import * as sort_folders from 'js/work_folder/sort_folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as els_state from 'js/els_state';
 
 configure({ enforceActions: 'observed' });
 
@@ -85,6 +86,8 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                 } else {
                                     choose_folder.change_work_folder(new_folder_path);
                                 }
+
+                                els_state.set_applying_textarea_val_val(false);
                             }
 
                         } else {

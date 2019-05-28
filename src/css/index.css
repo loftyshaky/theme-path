@@ -437,6 +437,11 @@ header span, header label, header .open_in_chrome_btn {
 .search_input::placeholder {
     font-style: italic;
 }
+
+.btn_is_inactive {
+    background: #8f8f8f;
+    pointer-events: none;
+}
 /*< header */
 
 /*> work_folder */

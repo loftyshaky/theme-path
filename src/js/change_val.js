@@ -122,18 +122,23 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
 };
 
 export const update_name_or_description = (name, new_val, forced_locale) => {
-    set_name_or_description(name, new_val, forced_locale);
+    try {
+        set_name_or_description(name, new_val, forced_locale);
 
-    const locale = inputs_data.obj.theme_metadata.locale.val;
-    const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
+        const locale = inputs_data.obj.theme_metadata.locale.val;
+        const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
 
-    if (name === 'name') {
-        if (locale === default_locale || forced_locale) {
-            new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_val);
+        if (name === 'name') {
+            if (locale === default_locale || forced_locale) {
+                new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_val);
+            }
         }
-    }
 
-    delete_locale_folder(locale, default_locale);
+        delete_locale_folder(locale, default_locale);
+
+    } catch (er) {
+        err(er, 229);
+    }
 };
 
 const set_name_or_description = (name, new_val, forced_locale) => {

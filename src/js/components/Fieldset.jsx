@@ -48,7 +48,7 @@ export const Fieldset = observer(props => {
                 <div>
                     <div className="fieldset_content">
                         <div className="history_fieldset_protecting_screen_w">
-                            <History_fieldset_protecting_screen />
+                            <History_fieldset_protecting_screen name={name} />
                             {children}
                         </div>
                     </div>

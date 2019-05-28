@@ -134,6 +134,7 @@ export class Header extends React.Component {
                     </div>
                     <Btn
                         name="history"
+                        btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         on_click={history.load_history}
                         svg={history_svg}
                     />
@@ -217,7 +218,7 @@ const Create_custom_folder_btn = props => {
 };
 
 const Btn = props => {
-    const { name, on_click, svg } = props;
+    const { name, btn_is_inactive_class, on_click, svg } = props;
 
     const on_click_inner = e => {
         try {
@@ -235,7 +236,7 @@ const Btn = props => {
 
     return (
         <button
-            className="header_btn header_btn_icon"
+            className={x.cls(['header_btn', 'header_btn_icon', btn_is_inactive_class])}
             type="button"
             data-title={`${name}_btn_title`}
             disabled={els_state.com2.inputs_disabled_5}
@@ -289,7 +290,7 @@ const Pack_btn = props => {
 
     return (
         <button
-            className="header_btn pack_btn"
+            className={x.cls(['header_btn', 'pack_btn', els_state.try_to_set_btn_is_inactive_class()])}
             type="button"
             data-title={`pack_as_${name}_btn_title`}
             disabled={els_state.com2.inputs_disabled_5}

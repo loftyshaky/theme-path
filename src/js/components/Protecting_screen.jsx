@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 
 import x from 'x';
 import * as toggle_popup from 'js/toggle_popup';
+import * as els_state from 'js/els_state';
 import * as history from 'js/history';
 
 import { Tr } from 'components/Tr';
@@ -59,10 +60,14 @@ export class Protecting_screen extends React.Component {
     }
 }
 
-export const History_fieldset_protecting_screen = observer(() => (
-    <div
-        className={x.cls(['history_fieldset_protecting_screen', history.ob.history_is_visible ? null : 'none'])}
-    />
-));
+export const History_fieldset_protecting_screen = observer(props => {
+    const { name } = props;
+
+    return (
+        <div
+            className={x.cls(['history_fieldset_protecting_screen', history.ob.history_is_visible || (name === 'work_folder' && els_state.ob.applying_textarea_val) ? null : 'none'])}
+        />
+    );
+});
 
 observer(Protecting_screen);
