@@ -572,6 +572,14 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
+            max_number_of_history_records: {
+                key: x.unique_id(),
+                name: 'max_number_of_history_records',
+                family: 'options',
+                type: 'textarea',
+                val: '',
+                add_help: true,
+            },
             locales_whitelist: {
                 key: x.unique_id(),
                 name: 'locales_whitelist',

@@ -36,6 +36,7 @@ const con = {
         chrome_exe_paths: '',
         chrome_user_data_folders: '',
         custom_folders: '',
+        max_number_of_history_records: 250,
         locales_whitelist: '',
         tutorial_stage: 1,
         answered_to_analytics_privacy_question: false,

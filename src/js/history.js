@@ -266,15 +266,32 @@ export const generate_textarea_history_obj = (family, name, from, to) => {
 
 export const record_change = generate_history_obj_f => {
     try {
-        const history_arr = get_history_arr();
-        const history_path = get_history_path();
+        const max_number_of_history_records = store.get('max_number_of_history_records');
+        const is_digit = /^\d+$/.test(max_number_of_history_records); // true even if number is of type string
 
-        const history_obj = generate_history_obj_f();
+        if (is_digit && max_number_of_history_records > 0) {
+            const history_arr = get_history_arr();
+            const history_path = get_history_path();
 
-        history_arr.push(history_obj);
-        json_file.create_json_file(history_path, '[]');
-        json_file.write_to_json(history_arr, history_path);
+            const history_obj = generate_history_obj_f();
 
+            history_arr.push(history_obj);
+
+            while (history_arr.length > max_number_of_history_records) {
+                const { from_img_id } = history_arr[0];
+
+                if (from_img_id) { // is image record with image in old_imgs folder
+                    const path_to_img_to_delete = join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
+
+                    removeSync(path_to_img_to_delete);
+                }
+
+                history_arr.shift();
+            }
+
+            json_file.create_json_file(history_path, '[]');
+            json_file.write_to_json(history_arr, history_path);
+        }
     } catch (er) {
         err(er, 223);
     }

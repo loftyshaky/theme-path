@@ -75,6 +75,7 @@
   "chrome_exe_paths_label_text": "Paths to Chrome executables",
   "chrome_user_data_folders_label_text": "Paths to Chrome user data folders",
   "custom_folders_label_text": "Paths to custom folders",
+  "max_number_of_history_records_label_text": "Maximum number of records in changes history",
   "locales_whitelist_label_text": "Locales to show in locale selects",
   "enable_analytics_label_text": "Allow Chrome Theme Creator to send anonymous usage information",
   "export_settings_btn_text": "Export settings",
@@ -259,6 +260,7 @@
   "options_chrome_exe_paths_help_text": "Paths to Chrome executables separated by commas. Used to preview themes in the separate user profile (see \"Paths to Chrome user data folders\" help). For example if you have Stable and Canary channel installed you can put in this text input executable to Stable channel if you wish to preview themes with it. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe, C:\\Program Files (x86)\\Google\\Chrome Beta\\Application\\chrome.exe",
   "options_chrome_user_data_folders_help_text": "Paths to Chrome user data folders separated by commas. Each given path will create a button in the header next to \"Open in Chrome\" button. When you click on one of these buttons Chrome will be opened in the separate user profile with theme installed. If folder doesnt exist it will be created on the first preview. You can specify Chrome executable for each user data folder (see \"Paths to Chrome executables\" above). Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
   "options_custom_folders_help_text": "Paths to any folders separated by commas. Each given path will create a button in the header next to \"New Theme\" button. When you click on one of these buttons the folder and all of its content will be recreated in the selected folder. Example: C:\\Custom Chrome Theme Creator folders, D:\\Custom Chrome Theme Creator folders",
+  "options_max_number_of_history_records_help_text": "Set to 0 to disable changes history.",
   "options_locales_whitelist_help_text": "Language codes of languages that you want to see in \"Locale\" and \"Default locale\" selects, separeted by commas. Example: en, ru, fr",
 
 
