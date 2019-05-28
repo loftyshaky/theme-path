@@ -11,7 +11,7 @@ const store = new Store();
 const os_lang = remote.getGlobal('os_lang');
 const user_language = store.get('language') === 'system' ? os_lang : store.get('language');
 const loc = require(`locales/${user_language}.json`); // eslint-disable-line import/no-dynamic-require
-require(`locale_css/${user_language}.css`); // eslint-disable-line import/no-dynamic-require
+require(`locale_css/${user_language}`); // eslint-disable-line import/no-dynamic-require
 
 const x = {};
 

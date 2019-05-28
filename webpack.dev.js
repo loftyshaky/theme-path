@@ -10,15 +10,6 @@ const shared = require(join(__dirname, 'webpack.shared.js')); // eslint-disable-
 //--
 
 module.exports = merge(shared, {
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
-            },
-        ],
-    },
-
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development'),
