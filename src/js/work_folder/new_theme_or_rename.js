@@ -2,7 +2,6 @@ import { join, dirname, sep } from 'path';
 import { existsSync, copySync, renameSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
-import * as r from 'ramda';
 
 import x from 'x';
 import * as chosen_folder_path from 'js/chosen_folder_path';
@@ -33,6 +32,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                         if (!existsSync(join(folder_path, folder_name_final))) {
                             if (mode === 'creating_folder') {
                                 const new_theme_path = join(folder_path, folder_name_final);
+                                mut.path_of_folder_to_put_first = new_theme_path;
 
                                 copySync(source_folder_path, new_theme_path);
 
@@ -97,3 +97,24 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
 
 export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder('renaming_folder', folder_path, null, null, null, name_input_val), 1000);
 //< create new theme when clicking on "New theme" or rename theme folder when typing in name input
+
+export const put_new_folder_first = parent_folder_path => {
+    try {
+        if (mut.path_of_folder_to_put_first) {
+            const folder_to_put_first_i = folders.ob.folders.findIndex(folder => folder.path === mut.path_of_folder_to_put_first);
+            const parent_folder_i = folders.ob.folders.findIndex(folder => folder.path === parent_folder_path);
+
+            x.move_a_item(folders.ob.folders, folder_to_put_first_i, parent_folder_i === -1 ? 0 : parent_folder_i + 1);
+
+            mut.path_of_folder_to_put_first = null;
+        }
+
+    } catch (er) {
+        err(er, 230);
+    }
+};
+
+
+export const mut = {
+    path_of_folder_to_put_first: null,
+};

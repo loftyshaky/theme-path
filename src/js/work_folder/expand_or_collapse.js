@@ -135,6 +135,8 @@ const expand_folder = (folder_path, files, nest_level, i_to_insert_folder_in) =>
             const folders_with_new_folder = r.insertAll(i_to_insert_folder_in, sort_folders.sort_folders_inner(expanded_folders), folders.ob.folders);
 
             folders.set_folders(folders_with_new_folder);
+
+            new_theme_or_rename.put_new_folder_first(folder_path);
         }
 
     } catch (er) {

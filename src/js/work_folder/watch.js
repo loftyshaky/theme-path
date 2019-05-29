@@ -8,6 +8,7 @@ import x from 'x';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as folders from 'js/work_folder/folders';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
+import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as sort_folders from 'js/work_folder/sort_folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
@@ -72,6 +73,8 @@ watcher
                     const folders_with_new_folder = r.insert(0, new_folder, folders.ob.folders);
 
                     folders.set_folders(sort_folders.sort_folders(folders_with_new_folder, folder_path, start_i, nest_level));
+
+                    new_theme_or_rename.put_new_folder_first(parent_folder_path);
                 }
 
                 folders.rerender_work_folder();
