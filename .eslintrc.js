@@ -1,6 +1,6 @@
 module.exports = {
     rules: {
-        'camelcase': 0,
+        camelcase: 0,
         'max-len': 0,
         'object-curly-newline': 0,
         'import/no-extraneous-dependencies': 0,
@@ -18,7 +18,7 @@ module.exports = {
         'jsx-a11y/anchor-has-content': 0,
         'jsx-a11y/anchor-is-valid': ['error',
             {
-                'components': ['Link']
+                components: ['Link']
             },
         ],
         "no-restricted-syntax": [
@@ -27,11 +27,11 @@ module.exports = {
             "LabeledStatement",
             "WithStatement"
         ],
-        'indent': [
+        indent: [
             'error',
             4,
             {
-                "SwitchCase": 1,
+                SwitchCase: 1,
             }
         ],
         'react/jsx-indent': [
@@ -49,14 +49,14 @@ module.exports = {
         'no-use-before-define': [
             'error',
             {
-                'variables': false,
+                variables: false,
             },
         ],
         'arrow-parens': [
             'error',
             'as-needed',
         ],
-        'radix': [
+        radix: [
             'error',
             'as-needed',
         ],
@@ -70,29 +70,29 @@ module.exports = {
     },
 
     globals: {
-        'err': false,
-        't': false,
-        'er_obj': false,
-        'l': false,
-        'user_language': false,
-        'app_version': false,
-        'app_root': false,
-        's': false,
-        'sa': false,
-        'sb': false,
-        'sab': false,
+        err: false,
+        t: false,
+        er_obj: false,
+        l: false,
+        user_language: false,
+        app_version: false,
+        app_root: false,
+        s: false,
+        sa: false,
+        sb: false,
+        sab: false,
     },
 
     settings: {
         'import/resolver':
         {
-            'node':
+            node:
             {
-                'paths': [
+                paths: [
                     'src',
                     'src/js',
                 ],
-                'extensions': [
+                extensions: [
                     '.js',
                     '.jsx',
                     '.css',
@@ -104,14 +104,14 @@ module.exports = {
         },
     },
 
-    'env': {
-        'browser': true,
-        'node': true
+    env: {
+        browser: true,
+        node: true
     },
 
-    'parser': 'babel-eslint',
-    'extends': 'airbnb',
-    'plugins': [
+    parser: 'babel-eslint',
+    extends: 'airbnb',
+    plugins: [
         'react',
         'jsx-a11y',
         'import'
