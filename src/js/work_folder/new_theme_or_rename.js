@@ -1,5 +1,5 @@
 import { join, dirname, sep } from 'path';
-import { existsSync, copySync, renameSync, readdirSync } from 'fs-extra';
+import { existsSync, copySync, renameSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
 import * as r from 'ramda';
@@ -8,7 +8,6 @@ import x from 'x';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
 import * as folders from 'js/work_folder/folders';
-import * as sort_folders from 'js/work_folder/sort_folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
 import * as els_state from 'js/els_state';
 
@@ -34,28 +33,8 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                         if (!existsSync(join(folder_path, folder_name_final))) {
                             if (mode === 'creating_folder') {
                                 const new_theme_path = join(folder_path, folder_name_final);
-                                const root_folder_chosen = chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder;
-                                const files = readdirSync(folder_to_create_path);
-                                const created_folder_is_theme = files.find(file => file === 'manifest.json');
-                                const created_folder_is_empty = files.length === 0;
 
                                 copySync(source_folder_path, new_theme_path);
-
-                                if (root_folder_chosen || folder_is_opened) {
-                                    const new_theme = {
-                                        key: x.unique_id(),
-                                        name: folder_name_final,
-                                        path: new_theme_path,
-                                        children: folders.get_folders(new_theme_path),
-                                        nest_level,
-                                        is_theme: created_folder_is_theme,
-                                        is_empty: created_folder_is_empty,
-                                    };
-
-                                    const folders_with_new_folder = r.insert(0, new_theme, folders.ob.folders);
-
-                                    folders.set_folders(sort_folders.sort_folders(folders_with_new_folder, new_theme_path, start_i, nest_level));
-                                }
 
                                 if (tutorial.ob.tutorial_stage === 3) {
                                     tutorial.increment_tutorial_stage(false, true);
