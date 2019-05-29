@@ -2,7 +2,7 @@ const { join } = require('path');
 const { format } = require('url');
 const { existsSync } = require('fs');
 
-const { app, BrowserWindow, shell, Menu, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, shell, Menu, ipcMain } = require('electron');
 
 const { autoUpdater } = require('electron-updater');
 
@@ -12,6 +12,7 @@ global.dev = !!(process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process
 global.os_lang = null;
 const runs_from_package = !existsSync(join(__dirname, 'resources'));
 const app_is_running_as_windows_store_app = process.windowsStore;
+let let_app_close = false;
 let main_window; // Keep a global reference of the window object, if you don't, the window will be closed automatically when the JavaScript object is garbage collected.
 
 //> temporary fix broken high-dpi scale factor on Windows (125% scaling). info: https://github.com/electron/electron/issues/9691
@@ -106,13 +107,6 @@ function create_window() {
     });
     //< open links inside of app in default browser
 
-    //> get os language
-    const available_langs = ['ru']; // except english;
-    const os_loc = app.getLocale();
-    const os_loc_sub_loc_cut = os_loc.indexOf('_') === -1 ? os_loc : os_loc.substr(0, os_loc.lastIndexOf('_'));
-    global.os_lang = available_langs.find(available_lang => available_lang === os_loc_sub_loc_cut) || 'en';
-    //< get os language
-
     //> context menu
     const selection_menu = Menu.buildFromTemplate([
         { role: 'copy' },
@@ -142,6 +136,13 @@ function create_window() {
     });
     //< context menu
 
+    //> get os language
+    const available_langs = ['ru']; // except english;
+    const os_loc = app.getLocale();
+    const os_loc_sub_loc_cut = os_loc.indexOf('_') === -1 ? os_loc : os_loc.substr(0, os_loc.lastIndexOf('_'));
+    global.os_lang = available_langs.find(available_lang => available_lang === os_loc_sub_loc_cut) || 'en';
+    //< get os language
+
     //> auto update
     if (!app_is_running_as_windows_store_app && !global.dev) {
         autoUpdater.checkForUpdates();
@@ -152,19 +153,18 @@ function create_window() {
     }
     //< auto update
 
-    main_window.on('close', function (e) { // eslint-disable-line func-names
-        const choice = dialog.showMessageBox(this,
-            {
-                type: 'question',
-                title: con.close_confirm[global.os_lang],
-                message: con.close_msg[global.os_lang],
-                buttons: [con.close_answer_1[global.os_lang], con.close_answer_2[global.os_lang]],
-            });
-
-        if (choice === 1) {
+    //> app close prompt
+    main_window.on('close', function prevent_app_closing(e) { // eslint-disable-line prefer-arrow-callback
+        if (!let_app_close) {
             e.preventDefault();
+
+            main_window.webContents.send('close_app');
+
+        } else {
+            let_app_close = false;
         }
     });
+    //< app close prompt
 }
 
 app.on('ready', create_window); // this method will be called when Electron has finished initialization and is ready to create browser windows. some APIs can only be used after this event occurs.
@@ -187,25 +187,12 @@ ipcMain.on('open_folder', (e, path) => {
     shell.openExternal(path);
 });
 
-ipcMain.on('show_folder', (e, path) => {
-    shell.showItemInFolder(path);
+ipcMain.on('set_let_app_close_var_to_true_and_close_app', () => {
+    let_app_close = true;
+
+    app.quit();
 });
 
-const con = {
-    close_confirm: {
-        en: 'Confirm',
-        ru: 'Подтверждение',
-    },
-    close_msg: {
-        en: 'Are you sure you want to quit Chrome Theme Creator?',
-        ru: 'Вы уверены, что хотите выйти из Chrome Theme Creator?',
-    },
-    close_answer_1: {
-        en: 'Quit',
-        ru: 'Выйти',
-    },
-    close_answer_2: {
-        en: 'Cancel',
-        ru: 'Отменить',
-    },
-};
+ipcMain.on('set_let_app_close_var_to_false', () => {
+    let_app_close = false;
+});

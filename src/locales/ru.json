@@ -320,5 +320,11 @@
   "work_folder_doesnt_exist_er": "Рабочая папка не существует.",
   "settings_file_is_corrupted_er": "Файл настроек повреждён",
 
-  "reload_ui_btn_text": "Перезагрузить"
+  "reload_ui_btn_text": "Перезагрузить",
+
+
+  "app_close_confirm": "Подтверждение",
+  "app_close_msg": "Вы уверены, что хотите выйти из Chrome Theme Creator?",
+  "app_close_answer_1": "Выйти",
+  "app_close_answer_2": "Отменить"
 }

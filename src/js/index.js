@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 
 import 'js/set_defaults';
 import 'js/error';
+import 'js/close_prompt';
 import * as analytics from 'js/analytics';
 
 import { Error } from 'components/Error';

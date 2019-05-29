@@ -320,5 +320,11 @@
   "work_folder_doesnt_exist_er": "Work folder doesn't exist",
   "settings_file_is_corrupted_er": "Settings file is corrupted",
 
-  "reload_ui_btn_text": "Reload"
+  "reload_ui_btn_text": "Reload",
+
+  
+  "app_close_confirm": "Confirm",
+  "app_close_msg": "Are you sure you want to quit Chrome Theme Creator?",
+  "app_close_answer_1": "Quit",
+  "app_close_answer_2": "Cancel"
 }
