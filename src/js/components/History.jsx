@@ -24,8 +24,12 @@ export class History extends React.Component {
     componentDidUpdate() {
         this.list.forceUpdateGrid();
 
-        const history_scroll_container = s('.history_popup .ReactVirtualized__Grid');
-        history_scroll_container.scrollTop = history_scroll_container.scrollHeight;
+        if (history.mut.scroll_to_bottom_of_history) {
+            history.mut.scroll_to_bottom_of_history = false;
+
+            const history_scroll_container = s('.history_popup .ReactVirtualized__Grid');
+            history_scroll_container.scrollTop = history_scroll_container.scrollHeight;
+        }
     }
 
     render_history_item_content = item => {

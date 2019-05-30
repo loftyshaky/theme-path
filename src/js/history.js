@@ -27,6 +27,7 @@ export const load_history = () => {
     try {
         folders.check_if_selected_folder_is_theme(() => {
             try {
+                mut.scroll_to_bottom_of_history = true;
                 mut.initial_inputs_data = toJS(inputs_data.obj);
 
                 show_or_hide_history(true);
@@ -467,9 +468,10 @@ const con = {
     months: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].map(month => x.msg(month)),
 };
 
-const mut = {
+export const mut = {
     changes_to_revert: null,
     initial_inputs_data: null,
+    scroll_to_bottom_of_history: false,
 };
 
 export const ob = observable({
