@@ -59,7 +59,7 @@ export const send_request = async (mode, page, category, action, callback) => {
         }
 
     } catch (er) {
-        err(er, 197);
+        err(er, 197, null, true);
     }
 };
 
