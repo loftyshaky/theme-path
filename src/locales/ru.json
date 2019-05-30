@@ -55,8 +55,8 @@
   "frame_incognito_inactive_label_text": "Рама (инкогнито, неактивное окно)",
   "bookmark_text_label_text": "Текст закладок",
   "tab_text_label_text": "Текст активной вкладки",
-  "tab_background_text_label_text": "Текст неактивной вкладки",
-  "button_background_label_text": "Window controls",
+  "tab_background_text_label_text": "Текст неактивных вкладок",
+  "button_background_label_text": "Кнопки управления окном",
   "ntp_text_label_text": "Фон ярлыков",
 
   "background_tab_label_text": "Неактивные вкладки",
