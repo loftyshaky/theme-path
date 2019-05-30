@@ -302,6 +302,7 @@
   "error_code_label": "Error code: ",
   "error_type_label": "Type: ",
   "error_msg_label": "Message: ",
+  "er_more_info_btn_text": "More info",
 
   "cant_render_ui_er": "Can't render user interface",
   "invalid_file_type_er": "Invalid file type",

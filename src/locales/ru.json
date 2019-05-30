@@ -302,6 +302,7 @@
   "error_code_label": "Код ошибки: ",
   "error_type_label": "Тип: ",
   "error_msg_label": "Сообщение: ",
+  "er_more_info_btn_text": "Больше информации",
 
   "cant_render_ui_er": "Не удалось отобразить пользовательский интерфейс",
   "invalid_file_type_er": "Недопустимый тип файла",

@@ -9,7 +9,7 @@
 	font-family: Roboto;
 }
 
-*, .legend_color_unactive, .er_msg, .header_btn:hover:focus, .header_btn:hover:focus label, .search_input::placeholder {
+*, .legend_color_unactive, .er_msg, .header_btn:hover:focus, .header_btn:hover:focus label, .search_input::placeholder, .using_keyboard .er_more_info_btn:hover:focus {
     color: white;
 }
 
@@ -161,7 +161,7 @@ hr {
     cursor: pointer;
 }
 
-.folder_arrow, .folder_icon, .folder_name, .work_folder_path, .er_close_btn, body.using_mouse .help_link, body.using_mouse .upload_box_browse_label:focus, body.using_mouse .close_btn, .search_input, .header_btn, .color_ok_btn, textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus, body.using_mouse a:focus, body.using_mouse .skip_tutorial_btn:focus {
+.folder_arrow, .folder_icon, .folder_name, .work_folder_path, body.using_mouse .help_link, body.using_mouse .upload_box_browse_label:focus, body.using_mouse .close_btn, .search_input, .header_btn, .color_ok_btn, textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus, body.using_mouse a:focus, body.using_mouse .skip_tutorial_btn:focus, .er_close_btn:focus {
     outline: none;
 }
 
@@ -199,7 +199,7 @@ a:active, .help_link:active, .upload_box_browse_label:active {
     overflow: unset;
 }
 
-.btn {
+.btn, .er_more_info_btn {
     padding: 3px 6px 3px 6px;
     cursor: pointer;
     white-space: nowrap;
@@ -217,7 +217,7 @@ body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.
     background-color: #f493ff!important;
 }
 
-.btn:hover, .option:hover, .header_btn:hover, .header_btn:hover label, .header_btn:active, .header_btn:active label, .selected_folder {
+.btn:hover, .option:hover, .header_btn:hover, .header_btn:hover label, .header_btn:active, .header_btn:active label, .selected_folder, .er_more_info_btn:hover, .er_more_info_btn:active {
     color: #212121;
 }
 
@@ -263,11 +263,11 @@ textarea, .option  {
     margin-right: 12px;
 }
 
-hr, .color_input_vizualization, .color_ok_btn, .header_btn:hover, body.using_mouse .header_btn:hover:focus, body.using_mouse .color_ok_btn:focus  {
+hr, .color_input_vizualization, .color_ok_btn, .header_btn:hover, body.using_mouse .header_btn:hover:focus, body.using_mouse .color_ok_btn:focus, .er_more_info_btn:hover  {
     background-color: white;
 }
 
-textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .history_item_color, .history .ReactVirtualized__List {
+textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .history_item_color, .history .ReactVirtualized__List, .er_more_info_btn {
     border: 1px solid white;
 }
 
@@ -1137,6 +1137,11 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     position: absolute;
     top: 7px;
     right: 7px;
+    outline-offset: 2px;
+}
+
+.using_keyboard .er_close_btn:focus {
+    outline: 1px solid white;
 }
 
 .er_close_btn svg {
@@ -1149,6 +1154,24 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.er_more_info_btn {
+    background-color: transparent;
+    display: table;
+    margin: auto;
+    margin-top: 6px;
+    outline: none;
+}
+
+.er_more_info_btn:active {
+    background-color: #fbff75;
+    border-color: #fbff75;
+}
+
+.using_keyboard .er_more_info_btn:focus {
+    background-color: #3892ff;
+    border-color: #3892ff;
 }
 /*< error */
 
@@ -1215,13 +1238,17 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
     background-color: #fbff75;
 }
 
-.er_highlighted .er_msg {
+.er_highlighted .er_msg, .er_highlighted .er_more_info_btn {
     color: #212121;
 }   
 
 .er_highlighted .er_close_btn svg {
     fill: #212121
 }
+
+.er_highlighted .er_more_info_btn {
+    border-color: #212121;
+}   
 
 .char_limit_exceeded_textarea {
     background-color: #943737;

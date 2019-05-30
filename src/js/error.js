@@ -10,7 +10,9 @@ window.err = action((er_obj, er_code, er_msg_param, silent, persistent, exit) =>
         const er_msg = x.msg(`${er_obj.msg || er_msg_param}_er`);
         const er_msg_final = er_msg ? ` ${er_msg}.` : '';
 
-        ob.er_msg = `${x.msg('an_error_occured_msg') + er_msg_final}\n${x.msg('error_code_label') + (er_obj.er_code || er_code)}\n${x.msg('error_type_label') + er_obj.name}\n${x.msg('error_msg_label') + er_obj.message}`;
+        show_or_hide_er_more_info(false);
+        ob.er_msg = `${x.msg('an_error_occured_msg') + er_msg_final}`;
+        ob.er_msg_more_info = `${x.msg('error_code_label') + (er_obj.er_code || er_code)}\n${x.msg('error_type_label') + er_obj.name}\n${x.msg('error_msg_label') + er_obj.message}`;
 
         change_er_state('er_is_visible', true);
         change_er_state('er_is_highlighted', true);
@@ -66,7 +68,6 @@ export const change_er_state = action((name, bool) => {
     ob[name] = bool;
 });
 
-
 export const set_component_has_er = action(bool => {
     ob.component_has_er = bool;
 });
@@ -75,12 +76,18 @@ const change_er_persistence = action(persistent => {
     ob.er_is_persistent = persistent || false;
 });
 
+export const show_or_hide_er_more_info = action(bool => {
+    ob.more_info_is_visible = bool;
+});
+
 export const ob = observable({
     component_has_er: false,
     er_is_visible: false,
     er_is_highlighted: false,
     er_is_persistent: false,
     er_msg: '',
+    er_msg_more_info: '',
+    more_info_is_visible: false,
 });
 
 const mut = {

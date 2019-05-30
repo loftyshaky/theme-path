@@ -32,6 +32,14 @@ export class Error extends React.Component {
             >
                 <div className="er_msg">
                     {error.ob.er_msg}
+                    <button
+                        type="button"
+                        className={x.cls(['er_more_info_btn', error.ob.more_info_is_visible ? 'none' : ''])}
+                        onClick={error.show_or_hide_er_more_info.bind(null, true)}
+                    >
+                        {x.msg('er_more_info_btn_text')}
+                    </button>
+                    <div className={error.ob.more_info_is_visible ? '' : 'none'}>{error.ob.er_msg_more_info}</div>
                 </div>
                 <button
                     className="er_close_btn"
