@@ -52,7 +52,7 @@
   "frame_label_text": "Рама",
   "frame_inactive_label_text": "Рама (неактивное окно)",
   "frame_incognito_label_text": "Рама (инкогнито)",
-  "frame_incognito_inactive_label_text": "Рама (инкогнито, неак. окно)",
+  "frame_incognito_inactive_label_text": "Рама (инкогнито, неактивное окно)",
   "bookmark_text_label_text": "Текст закладок",
   "tab_text_label_text": "Текст активной вкладки",
   "tab_background_text_label_text": "Текст неактивной вкладки",
