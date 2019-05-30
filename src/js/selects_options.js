@@ -27,9 +27,13 @@ const create_video_volume_options = () => {
                 label: create_option_data_text_val(false, 'default'),
                 value: 'default',
             },
+            {
+                label: 0,
+                value: 0,
+            },
         ];
 
-        for (let i = 0; i <= 100; i++) {
+        for (let i = 100; i > 0; i--) {
             const option = {
                 label: i,
                 value: i,
