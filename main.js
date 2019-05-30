@@ -154,7 +154,7 @@ function create_window() {
     //< auto update
 
     //> app close prompt
-    main_window.on('close', function prevent_app_closing(e) { // eslint-disable-line prefer-arrow-callback
+    main_window.on('close', e => { // eslint-disable-line prefer-arrow-callback
         if (!let_app_close) {
             e.preventDefault();
 
