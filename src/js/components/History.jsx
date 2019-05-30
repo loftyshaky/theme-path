@@ -15,12 +15,20 @@ import { Hr } from 'components/Hr';
 
 import close_svg from 'svg/close';
 
-export const History = observer(() => {
-    const number_of_rows = history.ob.history.length;
-    history.ob.reset_history_popup_content; // eslint-disable-line no-unused-expressions
-    history.ob.revert_position; // eslint-disable-line no-unused-expressions
+export class History extends React.Component {
+    cache = new CellMeasurerCache({
+        fixedWidth: true,
+        defaultHeight: 28,
+    });
 
-    const render_history_item_content = item => {
+    componentDidUpdate() {
+        this.list.forceUpdateGrid();
+
+        const history_scroll_container = s('.history_popup .ReactVirtualized__Grid');
+        history_scroll_container.scrollTop = history_scroll_container.scrollHeight;
+    }
+
+    render_history_item_content = item => {
         try {
 
             if (history.imgs_cond(item.family, item.name)) {
@@ -68,7 +76,7 @@ export const History = observer(() => {
         return undefined;
     };
 
-    const close_history = () => {
+    close_history = () => {
         try {
             history.cancel_history_change();
 
@@ -79,7 +87,7 @@ export const History = observer(() => {
         }
     };
 
-    const cancel = () => {
+    cancel = () => {
         try {
             history.cancel_history_change();
 
@@ -90,7 +98,7 @@ export const History = observer(() => {
         }
     };
 
-    const revert_all = () => {
+    revert_all = () => {
         try {
             history.revert_tinker(0);
 
@@ -101,18 +109,13 @@ export const History = observer(() => {
         }
     };
 
-    const cache = new CellMeasurerCache({
-        fixedWidth: true,
-        defaultHeight: 28,
-    });
-
-    const render_row = ({ index, parent, key, style }) => {
+    render_row = ({ index, parent, key, style }) => {
         const history_item = history.ob.history[index];
 
         return (
             <CellMeasurer
                 key={key}
-                cache={cache}
+                cache={this.cache}
                 parent={parent}
                 columnIndex={0}
                 rowIndex={index}
@@ -130,60 +133,67 @@ export const History = observer(() => {
                         family={history_item.family}
                         name={history_item.name}
                     />
-                    {render_history_item_content(history_item)}
+                    {this.render_history_item_content(history_item)}
                     <span className="history_item_date">{history.get_date_from_timestamp(history_item.timestamp)}</span>
                 </div>
             </CellMeasurer>
         );
     };
 
-    return (
-        <Tr
-            attr={{
-                className: 'popup history_popup',
-            }}
-            tag="div"
-            name="gen"
-            state={history.ob.history_is_visible}
-        >
-            <button
-                className="close_btn"
-                type="button"
-                onClick={close_history}
+    render() {
+        const number_of_rows = history.ob.history.length;
+        history.ob.reset_history_popup_content; // eslint-disable-line no-unused-expressions
+        history.ob.revert_position; // eslint-disable-line no-unused-expressions
+
+        return (
+            <Tr
+                attr={{
+                    className: 'popup history_popup',
+                }}
+                tag="div"
+                name="gen"
+                state={history.ob.history_is_visible}
             >
-                <Svg src={close_svg} />
-            </button>
-            <Hr name="history" />
-            <div className="history">
-                <AutoSizer>
-                    {({ width, height }) => (
-                        <List
-                            width={width}
-                            height={height}
-                            deferredMeasurementCache={cache}
-                            rowHeight={cache.rowHeight}
-                            rowRenderer={render_row}
-                            rowCount={number_of_rows}
-                            tabIndex={null}
-                        />
-                    )}
-                </AutoSizer>
-            </div>
-            <Btn
-                name="history_accept"
-                on_click={history.accept_history_change}
-            />
-            <Btn
-                name="history_cancel"
-                on_click={cancel}
-            />
-            <Btn
-                name="history_revert_all"
-                on_click={revert_all}
-            />
-        </Tr>
-    );
-});
+                <button
+                    className="close_btn"
+                    type="button"
+                    onClick={this.close_history}
+                >
+                    <Svg src={close_svg} />
+                </button>
+                <Hr name="history" />
+                <div className="history">
+                    <AutoSizer>
+                        {({ width, height }) => (
+                            <List
+                                width={width}
+                                height={height}
+                                deferredMeasurementCache={this.cache}
+                                rowHeight={this.cache.rowHeight}
+                                rowRenderer={this.render_row}
+                                rowCount={number_of_rows}
+                                tabIndex={null}
+                                ref={ref => this.list = ref} // eslint-disable-line no-return-assign
+                            />
+                        )}
+                    </AutoSizer>
+                </div>
+                <Btn
+                    name="history_accept"
+                    on_click={history.accept_history_change}
+                />
+                <Btn
+                    name="history_cancel"
+                    on_click={this.cancel}
+                />
+                <Btn
+                    name="history_revert_all"
+                    on_click={this.revert_all}
+                />
+            </Tr>
+        );
+    }
+}
 
 const History_item_family_and_name = props => {
     const { family, name } = props;
@@ -249,3 +259,5 @@ const String = props => {
         </React.Fragment>
     );
 };
+
+observer(History);
