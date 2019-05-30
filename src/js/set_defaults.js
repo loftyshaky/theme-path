@@ -39,6 +39,7 @@ const con = {
         max_number_of_history_records: 250,
         locales_whitelist: '',
         tutorial_stage: 1,
+        show_help: true,
         answered_to_analytics_privacy_question: false,
         enable_analytics: false,
     },

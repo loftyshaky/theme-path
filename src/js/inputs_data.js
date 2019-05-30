@@ -588,6 +588,14 @@ export const inputs_data = observable({
                 val: '',
                 add_help: true,
             },
+            show_help: {
+                key: x.unique_id(),
+                name: 'show_help',
+                family: 'options',
+                type: 'checkbox',
+                val: true,
+                add_help: false,
+            },
             enable_analytics: {
                 key: x.unique_id(),
                 name: 'enable_analytics',

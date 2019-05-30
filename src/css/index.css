@@ -641,6 +641,10 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     width: 100%;
     cursor: zoom-in;
 }
+
+.fieldset_content > .history_fieldset_protecting_screen_w div:not(:last-child) .input:last-child .help_padder {
+    margin-bottom: 10px;
+}
 /*< help */
 
 /*> tutorial */
