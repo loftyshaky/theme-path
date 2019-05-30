@@ -41,43 +41,47 @@ watcher
     }))
     .on('addDir', action(folder_path => {
         try {
-            const folder_already_exist = folders.ob.folders.findIndex(folder => folder.path === folder_path) > -1;
-            const added_folder_is_in_work_folder = folder_path.indexOf(`${choose_folder.ob.work_folder + sep}`) > -1;
+            const is_system_folder = folder_path.substring(folder_path.lastIndexOf(sep) + 1) === 'system';
 
-            if (!folder_already_exist && added_folder_is_in_work_folder) {
-                const parent_folder_path = dirname(folder_path);
-                const parent_folder_is_root = parent_folder_path === choose_folder.ob.work_folder;
-                const parent_folder_i = folders.ob.folders.findIndex(folder => folder.path === parent_folder_path);
-                const start_i = parent_folder_is_root ? 0 : parent_folder_i + 1;
-                const nest_level = parent_folder_is_root ? 0 : folders.ob.folders[parent_folder_i].nest_level + 1;
-                const parent_folder_info = folders.get_info_about_folder(parent_folder_path);
-                const folder_info = folders.get_info_about_folder(folder_path);
-                const parent_folder_is_opened = folders.mut.opened_folders.indexOf(parent_folder_path) > -1;
+            if (!is_system_folder) {
+                const folder_already_exist = folders.ob.folders.findIndex(folder => folder.path === folder_path) > -1;
+                const added_folder_is_in_work_folder = folder_path.indexOf(`${choose_folder.ob.work_folder + sep}`) > -1;
 
-                if (!parent_folder_is_root) {
-                    folders.ob.folders[parent_folder_i].is_theme = parent_folder_info.is_theme;
-                    folders.ob.folders[parent_folder_i].is_empty = parent_folder_info.is_empty;
+                if (!folder_already_exist && added_folder_is_in_work_folder) {
+                    const parent_folder_path = dirname(folder_path);
+                    const parent_folder_is_root = parent_folder_path === choose_folder.ob.work_folder;
+                    const parent_folder_i = folders.ob.folders.findIndex(folder => folder.path === parent_folder_path);
+                    const start_i = parent_folder_is_root ? 0 : parent_folder_i + 1;
+                    const nest_level = parent_folder_is_root ? 0 : folders.ob.folders[parent_folder_i].nest_level + 1;
+                    const parent_folder_info = folders.get_info_about_folder(parent_folder_path);
+                    const folder_info = folders.get_info_about_folder(folder_path);
+                    const parent_folder_is_opened = folders.mut.opened_folders.indexOf(parent_folder_path) > -1;
+
+                    if (!parent_folder_is_root) {
+                        folders.ob.folders[parent_folder_i].is_theme = parent_folder_info.is_theme;
+                        folders.ob.folders[parent_folder_i].is_empty = parent_folder_info.is_empty;
+                    }
+
+                    if (parent_folder_is_opened) {
+                        const new_folder = {
+                            key: x.unique_id(),
+                            name: basename(folder_path),
+                            path: folder_path,
+                            children: folder_info.children,
+                            nest_level,
+                            is_theme: folder_info.is_theme,
+                            is_empty: folder_info.is_empty,
+                        };
+
+                        const folders_with_new_folder = r.insert(0, new_folder, folders.ob.folders);
+
+                        folders.set_folders(sort_folders.sort_folders(folders_with_new_folder, folder_path, start_i, nest_level));
+
+                        new_theme_or_rename.put_new_folder_first(parent_folder_path);
+                    }
+
+                    folders.rerender_work_folder();
                 }
-
-                if (parent_folder_is_opened) {
-                    const new_folder = {
-                        key: x.unique_id(),
-                        name: basename(folder_path),
-                        path: folder_path,
-                        children: folder_info.children,
-                        nest_level,
-                        is_theme: folder_info.is_theme,
-                        is_empty: folder_info.is_empty,
-                    };
-
-                    const folders_with_new_folder = r.insert(0, new_folder, folders.ob.folders);
-
-                    folders.set_folders(sort_folders.sort_folders(folders_with_new_folder, folder_path, start_i, nest_level));
-
-                    new_theme_or_rename.put_new_folder_first(parent_folder_path);
-                }
-
-                folders.rerender_work_folder();
             }
 
         } catch (er) {
