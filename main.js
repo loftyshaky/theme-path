@@ -187,6 +187,10 @@ ipcMain.on('open_folder', (e, path) => {
     shell.openExternal(path);
 });
 
+ipcMain.on('show_folder', (e, path) => {
+    shell.showItemInFolder(path);
+});
+
 ipcMain.on('set_let_app_close_var_to_true_and_close_app', () => {
     let_app_close = true;
 
