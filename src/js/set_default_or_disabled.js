@@ -11,6 +11,7 @@ import * as manifest from 'js/manifest';
 import * as json_file from 'js/json_file';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as picked_colors from 'js/picked_colors';
+import * as imgs from 'js/imgs';
 import * as icons from 'js/icons';
 import * as options from 'js/options';
 import * as change_val from 'js/change_val';
@@ -23,6 +24,8 @@ const store = new Store();
 
 export const set_default_icon = (family, name) => {
     try {
+        imgs.remove_img_by_name(name);
+
         history.record_change(() => history.generate_img_history_obj(family, name, false, null, true));
 
         //> set default icon name
@@ -136,6 +139,7 @@ const set_default = (family, name) => {
         }
 
         json_file.write_to_manifest_json();
+
         if (inputs_data.obj[family][name].type === 'select') {
             change_val.set_inputs_data_val(family, name, 'default');
 

@@ -72,11 +72,7 @@ export const handle_files = async (file, family, name) => {
                 history.record_change(() => history.generate_img_history_obj(family, name, was_default, null, false));
             }
 
-            const file_with_name = folders.find_file_with_exist(name);
-
-            if (file_with_name) {
-                removeSync(join(chosen_folder_path.ob.chosen_folder_path, file_with_name));
-            }
+            remove_img_by_name(name);
 
             const img_extension = file[0].name.substring(file[0].name.lastIndexOf('.') + 1); // .png
 
@@ -154,6 +150,20 @@ export const dehighlight_upload_box_on_drag_leave = action((family, name) => {
     }
 });
 //< drag and drop
+
+
+export const remove_img_by_name = name => {
+    try {
+        const file_with_name = folders.find_file_with_exist(name);
+
+        if (file_with_name) {
+            removeSync(join(chosen_folder_path.ob.chosen_folder_path, file_with_name));
+        }
+
+    } catch (er) {
+        err(er, 231);
+    }
+};
 
 const sta = {
     width: {
