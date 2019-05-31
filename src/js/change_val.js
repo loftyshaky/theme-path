@@ -21,6 +21,7 @@ import * as tutorial from 'js/tutorial';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as els_state from 'js/els_state';
 
 const { getCurrentWindow } = require('electron').remote;
 
@@ -131,7 +132,11 @@ export const update_name_or_description = (name, new_val, forced_locale) => {
         if (name === 'name') {
             if (locale === default_locale || forced_locale) {
                 new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_val);
+
+            } else {
+                els_state.set_applying_textarea_val_val(false);
             }
+
         }
 
         delete_locale_folder(locale, default_locale);
