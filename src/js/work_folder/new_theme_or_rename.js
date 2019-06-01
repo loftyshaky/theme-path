@@ -17,7 +17,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (mode === 'renaming_folder' || (mode === 'creating_folder' && !folders.mut.chosen_folder_info.is_theme)) {
-                const custom_or_new_theme_folder_name = custom_folder_path ? custom_folder_path.substring(custom_folder_path.lastIndexOf(sep) + 1) : x.msg('new_theme_btn_label_text');
+                const custom_or_new_theme_folder_name = custom_folder_path ? custom_folder_path.substring(custom_folder_path.lastIndexOf(sep) + 1) : x.msg('new_theme_folder_name_text');
                 const folder_name = mode === 'renaming_folder' ? name_input_val : custom_or_new_theme_folder_name;
                 const timne_id = Date.now();
                 const folder_to_create_path = custom_folder_path || join(app_root, 'resources', 'app', 'bundle', 'new_theme');
