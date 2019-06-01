@@ -103,6 +103,20 @@ const img_selector = name => {
     return undefined;
 };
 
+const settings_export_import = name => {
+    try {
+        return {
+            name,
+            type: 'settings_export_import',
+        };
+
+    } catch (er) {
+        err(er, 239);
+    }
+
+    return undefined;
+};
+
 //< input generator functions
 
 const inputs = {
@@ -178,6 +192,7 @@ const inputs = {
         textarea('locales_whitelist', true),
         checkbox('show_help'),
         checkbox('enable_analytics'),
+        settings_export_import('settings_export_import'),
     ],
 };
 
