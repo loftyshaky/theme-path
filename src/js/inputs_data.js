@@ -116,7 +116,6 @@ const settings_export_import = name => {
 
     return undefined;
 };
-
 //< input generator functions
 
 const inputs = {
