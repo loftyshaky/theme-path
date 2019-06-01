@@ -54,7 +54,7 @@ module.exports = {
         new Clean_webpack_plugin({
             verbose: true,
             cleanStaleWebpackAssets: false,
-            cleanOnceBeforeBuildPatterns: [join(__dirname, 'dist')],
+            cleanOnceBeforeBuildPatterns: [join(__dirname, 'dist'), join(__dirname, 'bundle'), join(__dirname, 'resources')],
         }),
     ],
 
