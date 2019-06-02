@@ -230,7 +230,8 @@ const Color_and_img_changed_to = props => {
 
 const Selects_changed_to = props => {
     const { name, val } = props;
-    const { label } = selects_options[name === 'default_locale' ? 'locale' : name].find(option => option.value === val);
+    const options = selects_options[name === 'default_locale' ? 'locale' : name];
+    const { label } = options.find(option => option.value === val) || { label: '' };
 
     return (
         <React.Fragment>
