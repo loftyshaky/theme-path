@@ -184,7 +184,7 @@ app.on('activate', () => {
 });
 
 ipcMain.on('open_folder', (e, path) => {
-    shell.openExternal(path);
+    shell[process.platform === 'win32' ? 'openExternal' : 'openItem'](path);
 });
 
 ipcMain.on('show_folder', (e, path) => {
