@@ -41,6 +41,10 @@ function create_window() {
     });
     //< create the browser window.
 
+    //> Remove default menubar
+    main_window.setMenuBarVisibility(false);
+    //< Remove default menubar
+
     //> implementing Webpack
     const index_path_return_val = global.dev && process.argv.indexOf('--noDevServer') === -1
         ? (() => {
