@@ -182,8 +182,8 @@ const inputs = {
         select('size', 'default', true),
     ],
     options: [
-        select('theme', 'default', true),
-        select('language', 'default', true),
+        select('theme', 'default', false),
+        select('language', 'default', false),
         textarea('chrome_exe_paths', true),
         textarea('chrome_user_data_folders', true),
         textarea('custom_folders', true),
