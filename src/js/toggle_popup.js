@@ -46,8 +46,9 @@ export const close_all_popups = action((closing_by_clicking_on_protecting_screen
         }
 
         ob.popup_visibility = r.map(() => false, ob.popup_visibility);
+        const is_not_analytics_privacy_protecting_screen = opened_popup_name;
 
-        if (closing_by_clicking_on_protecting_screen_or_hitting_esc) {
+        if (closing_by_clicking_on_protecting_screen_or_hitting_esc && is_not_analytics_privacy_protecting_screen) {
             analytics.send_event('protecting_screens', `${analytics_action}-${opened_popup_name}`);
         }
 
