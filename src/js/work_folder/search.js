@@ -35,7 +35,7 @@ export const trigger_work_folder_reload = x.debounce(action(() => {
     } catch (er) {
         err(er, 148);
     }
-}), 1000);
+}), 200);
 
 export const remove_search_val = () => {
     sta.search_input[0].value = '';
