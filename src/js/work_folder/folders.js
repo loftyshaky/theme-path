@@ -2,7 +2,6 @@ import { existsSync, readdirSync, statSync } from 'fs-extra';
 import { join } from 'path';
 
 import { observable, action, configure } from 'mobx';
-import * as r from 'ramda';
 
 import { reset_inputs_data } from 'js/inputs_data';
 import * as chosen_folder_path from 'js/chosen_folder_path';
@@ -113,10 +112,9 @@ export const get_info_about_folder = folder_path => {
 
 export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
     try {
-        const close_preceding_folder = r.drop(start_i);
-        const get_last_folder_to_close_i = r.findIndex(item => item.nest_level < nest_level || item === ob.folders[ob.folders.length - 1]);
+        const no_preceding_folders = ob.folders.filter((item, i) => i >= start_i);
 
-        return r.pipe(close_preceding_folder, get_last_folder_to_close_i)(ob.folders);
+        return no_preceding_folders.findIndex(item => item.nest_level < nest_level || item === ob.folders[ob.folders.length - 1]);
 
     } catch (er) {
         err(er, 92);
