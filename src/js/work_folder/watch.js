@@ -29,7 +29,9 @@ watcher
                 if (folders.ob.folders[folder_to_remove_start_i]) {
                     expand_or_collapse.expand_or_collapse_folder('watcher', parent_folder_path, folders.ob.folders[folder_to_remove_start_i].nest_level, folder_to_remove_start_i);
 
-                    folders.ob.folders[parent_folder_i].is_theme = true;
+                    if (folders.ob.folders[parent_folder_i]) {
+                        folders.ob.folders[parent_folder_i].is_theme = true;
+                    }
 
                     folders.rerender_work_folder();
                 }
@@ -56,6 +58,7 @@ watcher
                     const parent_folder_info = folders.get_info_about_folder(parent_folder_path);
                     const folder_info = folders.get_info_about_folder(folder_path);
                     const parent_folder_is_opened = folders.mut.opened_folders.indexOf(parent_folder_path) > -1;
+                    const work_folder_is_empty = folders.mut.opened_folders.length === 0;
 
                     if (!parent_folder_is_root) {
                         folders.ob.folders[parent_folder_i].is_theme = parent_folder_info.is_theme;
@@ -81,6 +84,10 @@ watcher
                     }
 
                     folders.rerender_work_folder();
+
+                    if (work_folder_is_empty) {
+                        expand_or_collapse.expand_or_collapse_folder('top_level', choose_folder.ob.work_folder, 0, 0);
+                    }
                 }
             }
 

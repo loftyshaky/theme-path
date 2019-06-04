@@ -74,15 +74,32 @@ export const get_folders = folder_path => {
 export const get_info_about_folder = folder_path => {
     try {
         const folder_info = {};
+        const folder_exist = existsSync(folder_path);
+        const getting_info_about_work_folder = folder_path === choose_folder.ob.work_folder;
 
-        if (!existsSync(folder_path)) {
-            folder_info.is_theme = false;
-            folder_info.is_empty = true;
+        if (getting_info_about_work_folder) {
+            folder_info.children = ob.folders.filter(item => item.nest_level === 0);
 
         } else {
             folder_info.children = get_folders(folder_path);
-            folder_info.is_theme = folder_info.children.some(item => item.name === 'manifest.json');
-            folder_info.is_empty = !folder_info.children.some(item => statSync(item.path).isDirectory());
+        }
+
+        if (folder_exist && folder_info.children) {
+            folder_info.is_theme = existsSync(join(folder_path, 'manifest.json'));
+            folder_info.is_empty = !folder_info.children.some(item => {
+                const folder_stat = existsSync(item.path) ? statSync(item.path) : null;
+
+                if (folder_stat) {
+                    return folder_stat.isDirectory();
+
+                }
+
+                return false;
+            });
+
+        } else {
+            folder_info.is_theme = false;
+            folder_info.is_empty = true;
         }
 
         return folder_info;
