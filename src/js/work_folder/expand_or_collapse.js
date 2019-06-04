@@ -100,8 +100,7 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
         err(er, 75);
     }
 };
-
-const expand_folder = (folder_path, files, nest_level, i_to_insert_folder_in) => {
+const expand_folder = action((folder_path, files, nest_level, i_to_insert_folder_in) => {
     try {
         const expanded_folders = [];
 
@@ -132,9 +131,7 @@ const expand_folder = (folder_path, files, nest_level, i_to_insert_folder_in) =>
                 folders.mut.opened_folders.push(folder_path); // mark target folder as opened
             }
 
-            const folders_with_new_folder = r.insertAll(i_to_insert_folder_in, sort_folders.sort_folders_inner(expanded_folders), folders.ob.folders);
-
-            folders.set_folders(folders_with_new_folder);
+            append_epanded(i_to_insert_folder_in, expanded_folders);
 
             new_theme_or_rename.put_new_folder_first(folder_path);
         }
@@ -142,7 +139,7 @@ const expand_folder = (folder_path, files, nest_level, i_to_insert_folder_in) =>
     } catch (er) {
         err(er, 76);
     }
-};
+});
 
 export const create_new_theme_or_folder = async custom_folder_path => {
     try {
@@ -173,3 +170,7 @@ export const create_new_theme_or_folder = async custom_folder_path => {
         err(er, 98);
     }
 };
+
+const append_epanded = action((i_to_insert_folder_in, expanded_folders) => {
+    folders.ob.folders.splice(i_to_insert_folder_in, 0, ...sort_folders.sort_folders_inner(expanded_folders));
+});
