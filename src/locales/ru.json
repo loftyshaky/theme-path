@@ -129,6 +129,7 @@
   "search_input_placeholder": "Поиск",
   "new_theme_btn_label_text": "Новая тема",
   "create_custom_folder_btn_title": "Создать пользовательскую папку",
+  "reupload_img_btn_title": "Перезагрузить последнее загруженное изображение",
   "pack_as_zip_btn_title": "Упаковать (ZIP)",
   "pack_as_crx_btn_title": "Упаковать (CRX)",
   "collapse_all_folders_btn_title": "Свернуть все папки",
@@ -341,6 +342,7 @@
   "cant_open_folder_er": "Не удалось открыть папку, потому что ни одна папка не выбрана",
   "work_folder_doesnt_exist_er": "Рабочая папка не существует.",
   "settings_file_is_corrupted_er": "Файл настроек повреждён",
+  "previously_uploaded_img_doesnt_exists_er": "Ранее загруженное изображение не найдено",
 
   "reload_ui_btn_text": "Перезагрузить",
 

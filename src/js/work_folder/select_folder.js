@@ -20,6 +20,7 @@ import * as color_pickiers from 'js/color_pickiers';
 import * as picked_colors from 'js/picked_colors';
 import * as history from 'js/history';
 import * as change_val from 'js/change_val';
+import * as reupload_img from 'js/reupload_img';
 
 configure({ enforceActions: 'observed' });
 
@@ -125,6 +126,8 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                     analytics.add_work_folder_analytics('selected_folder');
                 }
             }
+
+            reupload_img.set_current_previous_img_path_ob();
         }
 
     } catch (er) {

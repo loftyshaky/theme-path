@@ -11,6 +11,8 @@ import * as toggle_popup from 'js/toggle_popup';
 import * as show_or_open_folder from 'js/show_or_open_folder';
 import * as custom_paths_btns from 'js/custom_paths_btns';
 import * as history from 'js/history';
+import * as imgs from 'js/imgs';
+import * as reupload_img from 'js/reupload_img';
 import * as search from 'js/work_folder/search';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as custom_folders from 'js/work_folder/custom_folders';
@@ -27,6 +29,7 @@ import archive_svg from 'svg/archive';
 import gear_svg from 'svg/gear';
 import list_svg from 'svg/list';
 import history_svg from 'svg/history';
+import upload_svg from 'svg/upload';
 
 export class Header extends React.Component {
     constructor(props) {
@@ -153,6 +156,7 @@ export class Header extends React.Component {
                         on_click={() => show_or_open_folder.show_or_open_folder('open')}
                         svg={eye_svg}
                     />
+                    <Reupload_img_btn name="reupload_img" />
                     <div className="btn_w">
                         <Pack_btn name="zip" />
                         <Pack_btn name="crx" />
@@ -246,6 +250,23 @@ const Btn = props => {
         </button>
     );
 };
+
+const Reupload_img_btn = observer(props => {
+    const { name } = props;
+
+    return (
+        <button
+            className="header_btn header_btn_icon"
+            type="button"
+            title={`${x.msg(`${name}_btn_title`)}${reupload_img.ob.previous_img_path ? ` - ${reupload_img.ob.previous_img_path}` : ''}`}
+            disabled={els_state.com2.inputs_disabled_5}
+            onClick={imgs.handle_files.bind(null, 'reupload')}
+        >
+            <Svg src={upload_svg} />
+        </button>
+    );
+});
+
 
 const Popup_btn = props => {
     const { name, svg } = props;

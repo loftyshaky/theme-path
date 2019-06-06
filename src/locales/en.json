@@ -129,6 +129,7 @@
   "search_input_placeholder": "Search",
   "new_theme_btn_label_text": "New theme",
   "create_custom_folder_btn_title": "Create custom folder",
+  "reupload_img_btn_title": "Reupload the last uploaded image",
   "pack_as_zip_btn_title": "Pack as ZIP",
   "pack_as_crx_btn_title": "Pack as CRX",
   "collapse_all_folders_btn_title": "Collapse all folders",
@@ -341,6 +342,7 @@
   "cant_open_folder_er": "Can't open folder because you didn't select any folder",
   "work_folder_doesnt_exist_er": "Work folder doesn't exist",
   "settings_file_is_corrupted_er": "Settings file is corrupted",
+  "previously_uploaded_img_doesnt_exists_er": "Previously uploaded image doesn't exists",
 
   "reload_ui_btn_text": "Reload",
 

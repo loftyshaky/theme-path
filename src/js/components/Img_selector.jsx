@@ -45,7 +45,7 @@ export class Img_selector extends React.Component {
     //> browse_handle_files f
     browse_handle_files = e => {
         try {
-            imgs.handle_files(e.target.files, this.family, this.name);
+            imgs.handle_files('upload', e.target.files, this.family, this.name);
             imgs.reset_upload_btn_val();
 
             analytics.send_event('upload_inputs', `uploaded_by_choosing-${this.family}-${this.name}`);
@@ -59,7 +59,7 @@ export class Img_selector extends React.Component {
     drop_handle_files = e => {
         try {
             imgs.dehighlight_upload_box_on_drop(this.family, this.name);
-            imgs.handle_files(e.dataTransfer.files, this.family, this.name);
+            imgs.handle_files('upload', e.dataTransfer.files, this.family, this.name);
 
             analytics.send_event('upload_inputs', `uploaded_with_dnd-${this.family}-${this.name}`);
 

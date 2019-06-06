@@ -44,7 +44,7 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
             const third_if_strings = ['colors', 'tints', 'properties'];
             const fourth_if_strings = ['images', 'icon'];
             const five_if_strings = ['video_volume', 'size'];
-            const img_extension_final = `.${img_extension || 'png'}`;
+            const img_extension_final = `${img_extension || '.png'}`;
 
             if (name !== 'clear_new_tab_video') {
                 set_inputs_data_val(family, name, fourth_if_strings.indexOf(family) > -1 ? new_val + img_extension_final : new_val);
