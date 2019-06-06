@@ -39,7 +39,7 @@ export const collapse_all_folders = action(() => {
 });
 //< on extension load / work_folder folder content change
 
-export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_insert_folder_in, custom_folder_path) => {
+export const expand_or_collapse_folder = (mode, folder_path, nest_level, custom_folder_path) => {
     try {
         if (choose_folder.reset_work_folder(false) && (mode !== 'new_theme' || !folders.mut.chosen_folder_info.is_theme)) {
             const folder_is_opened = folders.mut.opened_folders.indexOf(folder_path) !== -1;
@@ -56,15 +56,15 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
                 watch.watch_folder(folder_path);
 
             } else if (mode !== 'new_theme') { // folder is opened so close it
-                const folder_to_remove_start_i = folders.get_folder_i(folder_path);
+                const i_to_insert_folder_in = folders.get_folder_i(folder_path) + 1;
                 const number_of_folders_to_close = folders.get_number_of_folders_to_work_with(i_to_insert_folder_in, nest_level); //>1 get number of folders to close
-                const stop_folder_i = folder_to_remove_start_i + number_of_folders_to_close;
+                const stop_folder_i = i_to_insert_folder_in + number_of_folders_to_close;
                 const stop_folder_is_not_last_folder = folders.ob.folders[stop_folder_i + 1];
                 const folder_to_close_end_i = stop_folder_is_not_last_folder ? stop_folder_i - 1 : stop_folder_i;
 
                 //>1 close folders
                 const set_opened_folders_to_null = x.map_i((item, i) => {
-                    const folder_is_eligible_for_deletion = i >= folder_to_remove_start_i
+                    const folder_is_eligible_for_deletion = i >= i_to_insert_folder_in
                         && i <= folder_to_close_end_i
                         && folders.ob.folders[i].nest_level >= nest_level;
 
