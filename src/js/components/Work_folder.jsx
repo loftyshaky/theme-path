@@ -57,10 +57,9 @@ export class Work_folder extends React.Component {
     render_row = ({ index, key, style }) => {
         const folder = search.mut.filtered_folders[index];
         const folder_is_opened = folders.mut.opened_folders.indexOf(folder.path) > -1;
-        const filtered_index = folders.ob.folders.findIndex(cur_folder => cur_folder.path === folder.path) + 1;
 
         const on_click_folder_arrow = () => {
-            expand_or_collapse.expand_or_collapse_folder('arrow', folder.path, folder.nest_level + 1, filtered_index);
+            expand_or_collapse.expand_or_collapse_folder('arrow', folder.path, folder.nest_level + 1);
 
             if (!folder_is_opened) {
                 analytics.add_work_folder_analytics('expanded_folder');
@@ -99,7 +98,7 @@ export class Work_folder extends React.Component {
                             className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
                             type="button"
                             tabIndex="-1"
-                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, filtered_index)}
+                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
                         >
                             <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
                         </button>
@@ -107,7 +106,7 @@ export class Work_folder extends React.Component {
                             className={x.cls(['folder_name', folder.path === chosen_folder_path.ob.chosen_folder_path ? 'selected_folder' : null])}
                             type="button"
                             tabIndex={els_state.com2.inputs_disabled_3}
-                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1, filtered_index)}
+                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
                             title={folder.name}
                         >
                             {folder.name}

@@ -24,10 +24,11 @@ import * as change_val from 'js/change_val';
 configure({ enforceActions: 'observed' });
 
 //> select folder and fill inputs with theme data
-export const select_folder = action((is_work_folder, folder_path, children, nest_level, i_to_insert_folder_in) => { // action( need to be here otherwise protecting screen will not lift
+export const select_folder = action((is_work_folder, folder_path, children, nest_level) => { // action( need to be here otherwise protecting screen will not lift
     try {
         if (choose_folder.reset_work_folder(false)) {
             const folder_is_already_selected = folder_path === chosen_folder_path.ob.chosen_folder_path;
+            const i_to_insert_folder_in = folders.get_folder_i(folder_path) + 1;
 
             if (!is_work_folder) {
                 folders.deselect_theme();
@@ -96,7 +97,7 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
                 //< set icon default checkbox state
 
                 if (!is_work_folder) {
-                    expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level, i_to_insert_folder_in);
+                    expand_or_collapse.expand_or_collapse_folder('select', folder_path, nest_level);
                 }
 
                 if (tutorial.ob.tutorial_stage === 4) {

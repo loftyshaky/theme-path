@@ -13,7 +13,7 @@ import * as els_state from 'js/els_state';
 configure({ enforceActions: 'observed' });
 
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
-export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, nest_level, start_i, folder_is_opened, name_input_val, custom_folder_path) => { // action( need to be here otherwise renamed folder will be deselected
+export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, name_input_val, custom_folder_path) => { // action( need to be here otherwise renamed folder will be deselected
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (mode === 'renaming_folder' || (mode === 'creating_folder' && !folders.mut.chosen_folder_info.is_theme)) {
@@ -95,7 +95,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
     }
 });
 
-export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder('renaming_folder', folder_path, null, null, null, name_input_val), 1000);
+export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder('renaming_folder', folder_path, name_input_val), 1000);
 //< create new theme when clicking on "New theme" or rename theme folder when typing in name input
 
 export const put_new_folder_first = parent_folder_path => {

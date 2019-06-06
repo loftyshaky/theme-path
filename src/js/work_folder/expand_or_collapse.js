@@ -20,7 +20,7 @@ export const create_top_level_folders = async () => {
         if (work_folder) {
             collapse_all_folders();
 
-            expand_or_collapse_folder('top_level', work_folder, 0, 0);
+            expand_or_collapse_folder('top_level', work_folder, 0);
         }
 
     } catch (er) {
@@ -45,18 +45,18 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
             const folder_is_opened = folders.mut.opened_folders.indexOf(folder_path) !== -1;
 
             if (mode === 'new_theme') {
-                new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, nest_level, i_to_insert_folder_in, folder_is_opened, null, custom_folder_path);
+                new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, null, custom_folder_path);
             }
 
             const files = folders.get_folders(folder_path);
 
             if (!folder_is_opened) {
-                expand_folder(folder_path, files, nest_level, i_to_insert_folder_in);
+                expand_folder(folder_path, files, nest_level);
 
                 watch.watch_folder(folder_path);
 
             } else if (mode !== 'new_theme') { // folder is opened so close it
-                const folder_to_remove_start_i = i_to_insert_folder_in;
+                const folder_to_remove_start_i = folders.get_folder_i(folder_path);
                 const number_of_folders_to_close = folders.get_number_of_folders_to_work_with(i_to_insert_folder_in, nest_level); //>1 get number of folders to close
                 const stop_folder_i = folder_to_remove_start_i + number_of_folders_to_close;
                 const stop_folder_is_not_last_folder = folders.ob.folders[stop_folder_i + 1];
@@ -101,9 +101,10 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, i_to_in
     }
 };
 
-const expand_folder = (folder_path, files, nest_level, i_to_insert_folder_in) => {
+const expand_folder = (folder_path, files, nest_level) => {
     try {
         const expanded_folders = [];
+        const i_to_insert_folder_in = folders.get_folder_i(folder_path) + 1;
 
         files.forEach(file => {
             if (file.is_directory) {
@@ -150,9 +151,6 @@ export const create_new_theme_or_folder = async custom_folder_path => {
             new_theme_or_rename.create_new_theme_or_rename_theme_folder(
                 'creating_folder',
                 chosen_folder_path.ob.chosen_folder_path,
-                0,
-                0,
-                true,
                 null,
                 custom_folder_path,
             );

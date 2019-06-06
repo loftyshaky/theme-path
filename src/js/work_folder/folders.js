@@ -131,7 +131,7 @@ export const collapse_all_folders = () => {
             if (mut.opened_folders[1] !== choose_folder.ob.work_folder) {
                 const i = ob.folders.findIndex(cur_folder => cur_folder.path === mut.opened_folders[1]);
 
-                expand_or_collapse.expand_or_collapse_folder('arrow', ob.folders[i].path, ob.folders[i].nest_level + 1, i + 1);
+                expand_or_collapse.expand_or_collapse_folder('arrow', ob.folders[i].path, ob.folders[i].nest_level + 1);
 
                 if (mut.opened_folders[1]) {
                     collapse_all_folders();
@@ -167,6 +167,8 @@ export const find_file_with_exist = name => {
 
     return file_with_name;
 };
+
+export const get_folder_i = folder_path => ob.folders.findIndex(cur_folder => cur_folder.path === folder_path);
 
 export const ob = observable({
     folders: [],

@@ -27,7 +27,7 @@ watcher
                 const folder_to_remove_start_i = parent_folder_i + 1;
 
                 if (folders.ob.folders[folder_to_remove_start_i]) {
-                    expand_or_collapse.expand_or_collapse_folder('watcher', parent_folder_path, folders.ob.folders[folder_to_remove_start_i].nest_level, folder_to_remove_start_i);
+                    expand_or_collapse.expand_or_collapse_folder('watcher', parent_folder_path, folders.ob.folders[folder_to_remove_start_i].nest_level);
 
                     if (folders.ob.folders[parent_folder_i]) {
                         folders.ob.folders[parent_folder_i].is_theme = true;
@@ -86,7 +86,7 @@ watcher
                     folders.rerender_work_folder();
 
                     if (work_folder_is_empty) {
-                        expand_or_collapse.expand_or_collapse_folder('top_level', choose_folder.ob.work_folder, 0, 0);
+                        expand_or_collapse.expand_or_collapse_folder('top_level', choose_folder.ob.work_folder, 0);
                     }
                 }
             }
