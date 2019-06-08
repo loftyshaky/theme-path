@@ -52,6 +52,8 @@ export const accept_history_change = () => {
         const clicked_on_last_item = number_of_changes === 0;
 
         if (!clicked_on_last_item) {
+            let updated_name = false;
+
             for (const change of mut.changes_to_revert) {
                 const { family, name, locale, from, from_manifest_val, from_img_id, from_picked_color_val, was_default, was_disabled } = change;
 
@@ -121,6 +123,10 @@ export const accept_history_change = () => {
                         change_val.set_previous_val(family, name, from);
 
                     } else {
+                        if (name === 'name') {
+                            updated_name = true;
+                        }
+
                         change_val.update_name_or_description(name, from, locale);
                     }
                 }
@@ -138,7 +144,7 @@ export const accept_history_change = () => {
             const locale = inputs_data.obj.theme_metadata.locale.val;
             const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
 
-            if (locale === default_locale) {
+            if (updated_name && locale === default_locale) {
                 new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_folder_name);
             }
         }
