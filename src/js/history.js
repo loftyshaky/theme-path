@@ -18,6 +18,7 @@ import * as color_pickiers from 'js/color_pickiers';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as picked_colors from 'js/picked_colors';
 import * as options from 'js/options';
+import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
@@ -133,6 +134,14 @@ export const accept_history_change = () => {
 
             json_file.write_to_json(history_arr, get_history_path());
             json_file.write_to_manifest_json();
+
+            const new_folder_name = inputs_data.obj.theme_metadata.name.val;
+            const locale = inputs_data.obj.theme_metadata.locale.val;
+            const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
+
+            if (locale === default_locale) {
+                new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_folder_name);
+            }
         }
 
         change_revert_position(Infinity);

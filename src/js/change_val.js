@@ -130,7 +130,7 @@ export const update_name_or_description = (name, new_val, forced_locale) => {
         const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
 
         if (name === 'name') {
-            if (locale === default_locale || forced_locale) {
+            if (locale === default_locale && !forced_locale) {
                 new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_val);
 
             } else {
