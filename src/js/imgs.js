@@ -69,7 +69,7 @@ export const handle_files = async (mode, file, family, name) => {
             const valid_file_types = r.cond([
                 [r.equals('theme_ntp_background'), () => ['image/png', 'image/jpeg', 'image/gif']],
                 [r.equals('icon'), () => ['image/png', 'image/jpeg']],
-                [r.equals('clear_new_tab_video'), () => ['video/mp4', 'video/webm', 'video/ogg']],
+                [r.equals('clear_new_tab_video'), () => ['video/mp4', 'video/webm', 'video/ogg', 'image/gif']],
                 [r.T, () => ['image/png']],
             ])(name);
 
