@@ -21,12 +21,33 @@ export class History extends React.Component {
         defaultHeight: 28,
     });
 
-    componentDidUpdate() {
+    constructor(props) {
+        super(props);
+
+        history.met.reset_history_popup_content = () => {
+            try {
+                l(3343)
+                this.cache.clearAll();
+
+            } catch (er) {
+                err(er, 216);
+            }
+        };
+    }
+
+    async componentDidUpdate() {
         this.list.forceUpdateGrid();
 
         if (history.mut.scroll_to_bottom_of_history) {
             history.mut.scroll_to_bottom_of_history = false;
 
+            this.list.scrollToRow(Infinity);
+
+            await x.delay(0);
+
+            this.list.scrollToRow(Infinity);
+
+            await x.delay(0);
             const history_scroll_container = s('.history_popup .ReactVirtualized__Grid');
             history_scroll_container.scrollTop = history_scroll_container.scrollHeight;
         }
@@ -146,7 +167,6 @@ export class History extends React.Component {
 
     render() {
         const number_of_rows = history.ob.history.length;
-        history.ob.reset_history_popup_content; // eslint-disable-line no-unused-expressions
         history.ob.revert_position; // eslint-disable-line no-unused-expressions
 
         return (

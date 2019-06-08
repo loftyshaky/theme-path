@@ -457,15 +457,6 @@ export const set_history_popup_width = () => {
     }
 };
 
-export const reset_history_popup_content = action(() => {
-    try {
-        ob.reset_history_popup_content = Date.now();
-
-    } catch (er) {
-        err(er, 216);
-    }
-});
-
 export const imgs_cond = (family, name) => (family === 'images' && name !== 'theme_ntp_background') || name === 'icon';
 
 export const colors_cond = family => family === 'colors' || family === 'tints';
@@ -475,6 +466,10 @@ export const selects_cond = (family, name) => family === 'properties' || (family
 export const textareas_cond = (family, name) => family === 'theme_metadata' && (name === 'name' || name === 'description' || name === 'version');
 
 const conver_rgba_arr_into_css_val = to_rgba => `rgba(${r.values(to_rgba).join(',')})`;
+
+export const met = {
+    reset_history_popup_content: null,
+};
 
 const con = {
     history_path: join('system', 'history.json'),

@@ -11,7 +11,7 @@ export const observer = new window.MutationObserver(mutations => {
             const { target } = mutation;
 
             if (x.matches(target, '.history_popup')) {
-                history.reset_history_popup_content();
+                history.met.reset_history_popup_content();
                 set_history_popup_width(mutation);
             }
         }
