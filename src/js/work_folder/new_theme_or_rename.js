@@ -78,6 +78,8 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
 
                     } catch (er) {
                         if (er.message === 'folder_is_locked') {
+                            els_state.set_applying_textarea_val_val(false);
+
                             break;
 
                         } else if (er.message !== 'found_folder_with_the_same_name_or_named_empty') {
