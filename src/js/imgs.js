@@ -60,8 +60,6 @@ export const create_solid_color_image = (family, name, hex, alpha) => {
 //> image upload
 export const handle_files = async (mode, file, family, name) => {
     try {
-        remove_img_by_name(name);
-
         let img_extension;
         let reuploaded_img;
 
@@ -74,6 +72,9 @@ export const handle_files = async (mode, file, family, name) => {
             ])(name);
 
             if (valid_file_types.indexOf(file[0].type) > -1) {
+                record_img_change(family, name);
+                remove_img_by_name(name);
+
                 img_extension = extname(file[0].path); // .png
 
                 copy_img(file[0].path, name, img_extension);
@@ -96,6 +97,9 @@ export const handle_files = async (mode, file, family, name) => {
 
                     if (img_path && family && name) {
                         if (existsSync(img_path)) {
+                            record_img_change(family, name);
+                            remove_img_by_name(name);
+
                             img_extension = extname(img_path); // .png
 
                             copy_img(img_path, name, img_extension);
@@ -117,12 +121,6 @@ export const handle_files = async (mode, file, family, name) => {
         }
 
         if (mode === 'upload' || reuploaded_img) {
-            const was_default = inputs_data.obj[family][name].default;
-
-            if (history.imgs_cond(family, name)) {
-                history.record_change(() => history.generate_img_history_obj(family, name, was_default, null, false));
-            }
-
             change_val.change_val(family, name, name, img_extension, true);
 
             picked_colors.remove_picked_color(family, name);
@@ -147,6 +145,19 @@ const copy_img = (path, name, img_extension) => {
 
     } catch (er) {
         err(er, 242);
+    }
+};
+
+const record_img_change = (family, name) => {
+    try {
+        const was_default = inputs_data.obj[family][name].default;
+
+        if (history.imgs_cond(family, name)) {
+            history.record_change(() => history.generate_img_history_obj(family, name, was_default, null, false));
+        }
+
+    } catch (er) {
+        err(er, 244);
     }
 };
 //< image upload

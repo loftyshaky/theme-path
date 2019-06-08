@@ -63,7 +63,6 @@ export const accept_history_change = () => {
 
                         if (from_img_id) {
                             const path_to_old_img = join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
-
                             copySync(path_to_old_img, path_to_current_img);
 
                             removeSync(path_to_old_img);
