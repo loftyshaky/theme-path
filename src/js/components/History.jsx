@@ -26,7 +26,6 @@ export class History extends React.Component {
 
         history.met.reset_history_popup_content = () => {
             try {
-                l(3343)
                 this.cache.clearAll();
 
             } catch (er) {
