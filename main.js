@@ -25,6 +25,8 @@ if (process.platform === 'win32') {
 //> auto update
 if (!app_is_running_as_windows_store_app) {
     ipcMain.on('install_update', () => {
+        let_app_close = true;
+
         autoUpdater.quitAndInstall();
     });
 }
