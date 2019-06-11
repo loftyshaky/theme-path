@@ -160,7 +160,6 @@ export const create_new_theme_or_folder = async custom_folder_path => {
                 'new_theme',
                 chosen_folder_path.ob.chosen_folder_path,
                 folders.mut.chosen_folder_info.nest_level,
-                folders.mut.chosen_folder_info.i_to_insert_folder_in,
                 custom_folder_path,
             );
         }
