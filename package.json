@@ -106,7 +106,7 @@
     "color-convert": "^2.0.0",
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.1",
-    "electron": "^5.0.1",
+    "electron": "^4.2.4",
     "electron-builder": "^20.40.2",
     "electron-devtools-installer": "^2.2.4",
     "electron-store": "^3.2.0",
