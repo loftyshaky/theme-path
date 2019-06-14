@@ -39,7 +39,7 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
                     }
 
                     try {
-                        const name = folder_path === '' ? 'open_in_chrome' : 'open_in_profiled_chrome';
+                        const name = chrome_exe_path ? 'open_in_profiled_chrome' : 'open_in_chrome';
                         const click_type = left_button_clicked ? 'clicked' : 'right_clicked';
                         const child_process = await execFile(chrome_exe_path_final,
                             [
