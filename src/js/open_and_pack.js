@@ -2,7 +2,7 @@
 
 import { join, sep } from 'path';
 import { homedir, platform } from 'os';
-import { existsSync, unlinkSync, readdirSync, moveSync } from 'fs-extra';
+import { existsSync, unlinkSync, moveSync } from 'fs-extra';
 import { execFile, execFileSync } from 'child_process';
 import glob from 'glob';
 
