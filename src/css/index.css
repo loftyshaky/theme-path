@@ -1036,9 +1036,6 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 
 /*> analytics_privacy */
 .analytics_privacy {
-    right: unset;
-    top: 50%;
-    left: 50%;
     width: 500px;
 }
 
@@ -1054,7 +1051,7 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 /*< analytics_privacy */
 
 /*> auto updater */
-.auto_updater {
+.auto_updater, .analytics_privacy {
     top: unset;
     right: unset;
     min-width: unset;
@@ -1264,19 +1261,11 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
 /*< mods */
 
 /*> Tr mods */
-.opacity_0, .analytics_privacy_protecting_screen_unactive {
+.opacity_0 {
     opacity: 0;
 }
 
-.opacity_1, .analytics_privacy_protecting_screen_active {
-    opacity: 1;
-}
-
-.analytics_privacy_protecting_screen_unactive, .analytics_privacy_protecting_screen_active {
-    height: 100%;
-}
-
-.analytics_privacy_protecting_screen_active {
+.opacity_1 {
     opacity: 1;
 }
 

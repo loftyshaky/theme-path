@@ -80,7 +80,10 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
             } else if (family === 'options') {
                 store.set(name, new_val);
 
-                if (name === 'chrome_user_data_folders') {
+                if (name === 'enable_analytics') {
+                    store.set('answered_to_analytics_privacy_question', true);
+
+                } else if (name === 'chrome_user_data_folders') {
                     open_and_pack.update_chrome_user_data_folders_observable();
 
                 } else if (name === 'chrome_exe_paths') {

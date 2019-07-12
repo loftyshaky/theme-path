@@ -5,11 +5,14 @@ import { ipcRenderer } from 'electron';
 import { observable, action, configure } from 'mobx';
 
 import * as analytics from 'js/analytics';
+import * as toggle_popup from 'js/toggle_popup';
 
 configure({ enforceActions: 'observed' });
 
 ipcRenderer.on('update_downloaded', () => {
-    show_or_hide_auto_updater(true);
+    if (!toggle_popup.ob.analytics_privacy_is_visible) {
+        show_or_hide_auto_updater(true);
+    }
 });
 
 export const install_update = () => {
