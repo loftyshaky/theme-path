@@ -8,6 +8,11 @@ import { Tr } from 'components/Tr';
 import { Btn } from 'components/Btn';
 
 export class Analytics_privacy extends React.Component {
+
+    componentDidMount() {
+        analytics_privacy.center_analytics_privacy();
+    }
+
     render() {
         return (
             <Tr

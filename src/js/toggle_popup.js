@@ -46,8 +46,9 @@ export const close_all_popups = action((closing_by_clicking_on_protecting_screen
         }
 
         ob.popup_visibility = r.map(() => false, ob.popup_visibility);
+        const is_not_analytics_privacy_protecting_screen = opened_popup_name;
 
-        if (closing_by_clicking_on_protecting_screen_or_hitting_esc) {
+        if (closing_by_clicking_on_protecting_screen_or_hitting_esc && is_not_analytics_privacy_protecting_screen) {
             analytics.send_event('protecting_screens', `${analytics_action}-${opened_popup_name}`);
         }
 
@@ -65,26 +66,12 @@ export const close_all_popups_by_keyboard = e => {
     }
 };
 
-const decide_whether_to_show_analytics_privacy_popup = () => {
-    try {
-        const date = new Date();
-        const week_after_installation_time = store.get('installation_time') + 10000;
-        const week_passed_after_installation = week_after_installation_time < date.getTime();
-
-        return !store.get('answered_to_analytics_privacy_question') && week_passed_after_installation;
-
-    } catch (er) {
-        err(er, 245);
-    }
-
-    return undefined;
-};
 export const ob = observable({
     popup_visibility: {
         options: false,
         links: false,
     },
-    analytics_privacy_is_visible: decide_whether_to_show_analytics_privacy_popup(),
+    analytics_privacy_is_visible: !store.get('answered_to_analytics_privacy_question'),
     get protecting_screen_is_visible() {
         return r.values(ob.popup_visibility).some(val => val);
     },

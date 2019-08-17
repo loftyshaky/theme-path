@@ -29,7 +29,6 @@ const normalize = () => {
 
 const con = {
     default_settings: {
-        installation_time: new Date().getTime(),
         work_folder: '',
         theme: 'dark',
         language: 'system',

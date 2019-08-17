@@ -98,6 +98,7 @@ export class All extends React.Component {
                         </span>
                     </div>
                     <Protecting_screen tr_name="gen" state_key="protecting_screen_is_visible" />
+                    <Protecting_screen tr_name="analytics_privacy_protecting_screen" state_key="analytics_privacy_is_visible" />
                     <History />
                     <Options />
                     <Links />
