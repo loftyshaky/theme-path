@@ -17,7 +17,7 @@ export const Links = () => (
             />
             <Link
                 name="facebook_page"
-                href="https://bit.ly/simpleext"
+                href="https://bit.ly/browservery"
             />
             <Link
                 name="donate"
