@@ -14,11 +14,12 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development --host 0.0.0.0 --config=./webpack.dev.js",
     "prod": "webpack --mode production --config webpack.prod.js && electron --noDevServer . --disable-gpu",
-    "pack": "npm run bundle && lectron-builder build --dir",
-    "dist": "npm run bundle && electron-builder build",
-    "ship": "npm run bundle && electron-builder build --publish=always",
+    "pack": "npm run bundle && build --dir",
+    "dist": "npm run bundle && build",
+    "ship": "npm run bundle && build --publish=always",
     "bundle": "webpack --mode production --config webpack.prod.js --packing",
-    "builddir": "electron-builder build --dir"
+    "builddir": "build --dir",
+    "build": "build"
   },
   "build": {
     "appId": "chrome-theme-creator|loftyshaky@gmail.com",
@@ -57,7 +58,8 @@
       "artifactName": "macOS-${version}.${ext}"
     },
     "appImage": {
-      "artifactName": "linux-${version}.${ext}"
+      "artifactName": "linux-${version}.${ext}",
+      "systemIntegration": "ask"
     },
     "win": {
       "target": [
@@ -105,7 +107,7 @@
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.1",
     "electron": "^4.2.4",
-    "electron-builder": "^21.2.0",
+    "electron-builder": "^20.40.2",
     "electron-devtools-installer": "^2.2.4",
     "electron-store": "^3.2.0",
     "eslint": "^5.16.0",
@@ -139,6 +141,6 @@
     "zip-local": "^0.3.4"
   },
   "dependencies": {
-    "electron-updater": "^4.1.2"
+    "electron-updater": "^4.0.6"
   }
 }
