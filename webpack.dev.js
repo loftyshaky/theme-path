@@ -2,19 +2,19 @@ const { join } = require('path');
 const { spawn } = require('child_process');
 
 const webpack = require('webpack');
-const WebpackMerge = require('webpack-merge');
-const WriteFileWebpackPlugin = require('write-file-webpack-plugin'); // needed to create bundle folder and its content on npm start after it was deleted by clean_webpack_plugin
+const merge = require('webpack-merge');
+const Write_file_webpack_plugin = require('write-file-webpack-plugin'); // needed to create bundle folder and its content on npm start after it was deleted by clean_webpack_plugin
 
 const shared = require(join(__dirname, 'webpack.shared.js')); // eslint-disable-line import/no-dynamic-require
 
 //--
 
-module.exports = WebpackMerge(shared, {
+module.exports = merge(shared, {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development'),
         }),
-        new WriteFileWebpackPlugin(),
+        new Write_file_webpack_plugin(),
     ],
 
     devtool: 'cheap-module-eval-source-map',

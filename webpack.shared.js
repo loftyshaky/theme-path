@@ -1,8 +1,8 @@
 const { join, resolve } = require('path');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Html_webpack_plugin = require('html-webpack-plugin');
+const Copy_webpack_plugin = require('copy-webpack-plugin');
+const Clean_webpack_plugin = require('clean-webpack-plugin');
 
 //--
 
@@ -40,18 +40,18 @@ module.exports = {
     },
 
     plugins: [
-        new HtmlWebpackPlugin({
+        new Html_webpack_plugin({
             template: join(__dirname, 'src', 'html', 'index.html'),
             filename: 'index.html',
             chunks: ['index'],
         }),
-        new CopyWebpackPlugin([
+        new Copy_webpack_plugin([
             { from: join(__dirname, 'src', 'css', 'mods'), to: join(__dirname, output_dir) },
             { from: join(__dirname, 'src', 'Roboto-Light.ttf'), to: join(__dirname, output_dir) },
             { from: join(__dirname, 'src', 'new_theme'), to: join(__dirname, output_dir, 'new_theme') },
             { from: join(__dirname, 'src', 'help_imgs'), to: join(__dirname, output_dir, 'help_imgs') },
         ]),
-        new CleanWebpackPlugin({
+        new Clean_webpack_plugin({
             verbose: true,
             cleanStaleWebpackAssets: false,
             cleanOnceBeforeBuildPatterns: [join(__dirname, 'dist'), join(__dirname, 'bundle'), join(__dirname, 'resources')],
