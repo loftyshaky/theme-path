@@ -105,7 +105,7 @@
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.1",
     "electron": "^4.2.4",
-    "electron-builder": "^20.40.2",
+    "electron-builder": "^21.2.0",
     "electron-store": "^3.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -138,6 +138,6 @@
     "zip-local": "^0.3.4"
   },
   "dependencies": {
-    "electron-updater": "^4.0.6"
+    "electron-updater": "^4.1.2"
   }
 }
