@@ -82,12 +82,18 @@ function create_window() {
     main_window.once('ready-to-show', () => {
         main_window.maximize();
         main_window.show();
-
-        if (global.dev) { // open the DevTools automatically if developing
-            main_window.webContents.openDevTools();
-        }
     });
     //< don't show until we are ready and loaded
+
+    main_window.webContents.on('did-frame-finish-load', () => {
+        if (global.dev) { // open the DevTools automatically if developing
+            main_window.webContents.openDevTools();
+
+            main_window.webContents.on('devtools-opened', () => {
+                main_window.focus();
+            });
+        }
+    });
 
     //> Emitted when the window is closed.
     main_window.on('closed', () => {
