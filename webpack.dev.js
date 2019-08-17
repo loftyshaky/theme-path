@@ -20,6 +20,7 @@ module.exports = WebpackMerge(shared, {
     devtool: 'cheap-module-eval-source-map',
 
     devServer: {
+        port: 8080,
         stats: {
             colors: true,
             chunks: false,
