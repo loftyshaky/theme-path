@@ -57,16 +57,6 @@ function create_window() {
                 slashes: true,
             });
 
-            //> install react chrome extension
-            // eslint-disable-next-line global-require
-            const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer'); // needs to be here, otherwise packaged app will not start
-
-            installExtension(REACT_DEVELOPER_TOOLS)
-                /* eslint-disable no-console */
-                .then(name => console.log(`Added Extension: ${name} `))
-                .catch(er => console.log('An error occurred: ', er));
-            //< install react chrome extension
-
             return index_path;
         })()
         : (() => {
