@@ -61,6 +61,7 @@ export const create_solid_color_image = (family, name, hex, alpha) => {
 export const handle_files = async (mode, file, family, name) => {
     try {
         let img_extension;
+        let uploaded_file_is_valid;
         let reuploaded_img;
 
         if (mode === 'upload') {
@@ -71,7 +72,9 @@ export const handle_files = async (mode, file, family, name) => {
                 [r.T, () => ['image/png']],
             ])(name);
 
-            if (valid_file_types.indexOf(file[0].type) > -1) {
+            uploaded_file_is_valid = valid_file_types.indexOf(file[0].type) > -1;
+
+            if (uploaded_file_is_valid) {
                 record_img_change(family, name);
                 remove_img_by_name(name);
 
@@ -120,7 +123,7 @@ export const handle_files = async (mode, file, family, name) => {
             });
         }
 
-        if (mode === 'upload' || reuploaded_img) {
+        if ((mode === 'upload' && uploaded_file_is_valid) || reuploaded_img) {
             change_val.change_val(family, name, name, img_extension, true);
 
             picked_colors.remove_picked_color(family, name);
