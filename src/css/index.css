@@ -36,6 +36,7 @@
 body {
     margin: 0 0 16px 16px;
     overflow-x: hidden;
+    user-select: none;
 }
 
 body, .btn, .legend_line, .fieldset_w .cover, .popup, .help_viewer_expanded_img_w, .help_viewer_w {
@@ -635,6 +636,7 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 
 .help_viewer_name {
     padding-bottom: 4px;
+    user-select: text;
 }
 
 .help_viewer_img {
