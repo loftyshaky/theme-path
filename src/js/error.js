@@ -8,7 +8,7 @@ configure({ enforceActions: 'observed' });
 window.err = action((er_obj, er_code, er_msg_param, silent, persistent, exit) => {
     if (!er_obj.silent && !silent) {
         const er_msg = x.msg(`${er_obj.msg || er_msg_param}_er`);
-        const er_msg_final = er_msg ? ` ${er_msg}.` : '';
+        const er_msg_final = er_msg ? ` ${er_msg}` : '';
 
         show_or_hide_er_more_info(false);
         ob.er_msg = `${x.msg('an_error_occured_msg') + er_msg_final}`;
@@ -21,7 +21,7 @@ window.err = action((er_obj, er_code, er_msg_param, silent, persistent, exit) =>
         clear_all_timeouts();
 
         if (!er_obj.persistent && !persistent) {
-            run_timeout('er_is_visible', 20000);
+            run_timeout('er_is_visible', 5200);
         }
 
         run_timeout('er_is_highlighted', 200);
