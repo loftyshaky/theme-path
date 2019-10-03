@@ -120,12 +120,12 @@ const settings_export_import = name => {
 
 const inputs = {
     theme_metadata: [
-        textarea('version'),
         img_selector('icon'),
         select('locale', null, true),
+        select('default_locale', null, true),
+        textarea('version'),
         textarea('name', true, true, 45),
         textarea('description', true, true, 132),
-        select('default_locale', null, true),
     ],
     images: [
         img_selector('theme_ntp_background'),

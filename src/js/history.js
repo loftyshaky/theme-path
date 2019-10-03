@@ -70,15 +70,6 @@ export const accept_history_change = () => {
                             removeSync(path_to_old_img);
                         }
 
-                        if (from_picked_color_val) {
-                            color_pickiers.mut.current_pickied_color.rgb = from_picked_color_val;
-
-                            picked_colors.record_picked_color(family, name);
-
-                        } else {
-                            picked_colors.remove_picked_color(family, name);
-                        }
-
                     } else {
                         change_val.set_default_bool(family, name, true);
                         picked_colors.remove_picked_color(family, name);
@@ -106,6 +97,7 @@ export const accept_history_change = () => {
                         }
 
                     } else {
+                        picked_colors.remove_picked_color(family, name);
                         set_default_or_disabled.delete_key_from_manifest(family, name);
                     }
 
@@ -128,6 +120,18 @@ export const accept_history_change = () => {
                         }
 
                         change_val.update_name_or_description(name, from, locale);
+                    }
+
+                }
+
+                if (imgs_cond(family, name) || colors_cond(family)) {
+                    if (from_picked_color_val) {
+                        color_pickiers.mut.current_pickied_color = from_picked_color_val;
+
+                        picked_colors.record_picked_color(family, name);
+
+                    } else {
+                        picked_colors.remove_picked_color(family, name);
                     }
                 }
             }
@@ -377,10 +381,10 @@ export const revert_tinker = revert_position => {
                         () => options.ob.theme_vals[store.get('theme')].color_input_default,
                     )();
 
-                    color_pickiers.set_color_input_vizualization_color(family, name, color, false);
+                    color_pickiers.set_color_input_vizualization_color(family, name, color);
 
                 } else if (colors_cond(family)) {
-                    color_pickiers.set_color_input_vizualization_color(family, name, from_hex, false);
+                    color_pickiers.set_color_input_vizualization_color(family, name, from_hex);
 
                     change_val.set_default_bool(family, name, was_default);
 

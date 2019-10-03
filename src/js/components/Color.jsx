@@ -1,17 +1,20 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { ChromePicker } from 'react-color';
-import * as analytics from 'js/analytics';
+import Pickr from '@simonwep/pickr';
+import tinycolor from 'tinycolor2';
 
 import x from 'x';
+import * as analytics from 'js/analytics';
 import { inputs_data } from 'js/inputs_data';
 import * as els_state from 'js/els_state';
 import * as color_pickiers from 'js/color_pickiers';
 import * as enter_click from 'js/enter_click';
+import * as options from 'js/options';
 
-import { Tr } from 'components/Tr';
 import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
+
+import '@simonwep/pickr/dist/themes/nano.min.css';
 
 export class Color extends React.Component {
     constructor(props) {
@@ -50,19 +53,10 @@ export class Color extends React.Component {
 
     componentDidMount() {
         try {
-            sb(this.color_input.current, '.chrome-picker div').addEventListener('mousedown', color_pickiers.defocus_color_field);
+            sb(this.color_input.current, '.pcr-result').addEventListener('mousedown', color_pickiers.defocus_color_field);
 
         } catch (er) {
             err(er, 175);
-        }
-    }
-
-    componentWillUnmount() {
-        try {
-            sb(this.color_input.current, '.chrome-picker div').removeEventListener('mousedown', color_pickiers.defocus_color_field);
-
-        } catch (er) {
-            err(er, 176);
         }
     }
 
@@ -91,114 +85,114 @@ export class Color extends React.Component {
     }
 }
 
-const Color_input_vizualization = observer(props => {
-    const { family, name, type } = props;
-    const color = inputs_data.obj[family][name].color || inputs_data.obj[family][name].val;
+class Color_input_vizualization extends React.Component {
+    constructor(props) {
+        super(props);
 
-    return (
-        <span
-            className={x.cls([
-                'color_input_vizualization',
-                type === 'img_selector' ? 'tall_color_input_vizualization' : null,
-            ])}
-            role="button"
-            tabIndex={els_state.com2.inputs_disabled_1}
-            data-family={family}
-            data-name={name}
-            style={{ backgroundColor: color }}
-            onMouseUp={color_pickiers.focus_input_and_select_all_text_in_it}
-            onKeyUp={enter_click.open_color_pickier_on_enter}
-        >
-            <Color_pickier
-                family={family}
-                name={name}
-                color={color}
-            />
-        </span>
-    );
-});
+        ({
+            name: this.name,
+            family: this.family,
+            type: this.type,
+        } = this.props);
 
-const Color_pickier = observer(props => {
-    const { family, name, color } = props;
-    const { color_pickiers_position } = inputs_data.obj[family][name] || false;
-    const { color_pickier_is_visible } = inputs_data.obj[family][name] || false;
+        this.pickr = null;
+        this.alpha_enabled = this.family === 'images' && color_pickiers.con.no_alpha.indexOf(this.name) === -1;
+        this.color_pickier_w = React.createRef();
+        this.color_input_vizualization = React.createRef();
+    }
 
-    return (
-        <div
-            className="color_pickier_w"
-            style={{ [color_pickiers_position]: family === 'images' || name === 'icon' ? '40px' : '26px' }}
-        >
-            <Tr
-                attr={{
-                    className: 'color_pickier',
-                }}
-                tag="div"
-                name="gen"
-                state={color_pickier_is_visible}
-            >
-                <Chrome_picker
-                    family={family}
-                    name={name}
-                    color={color}
-                />
-                <Color_pickier_ok_btn
-                    family={family}
-                    name={name}
-                />
-            </Tr>
-        </div>
-    );
-});
+    componentDidMount() {
+        this.pickr = new Pickr({
+            container: this.color_pickier_w.current,
+            el: this.color_input_vizualization.current,
+            theme: 'nano',
+            default: options.ob.theme_vals[options.ob.theme].color_input_default,
+            useAsButton: true,
+            autoReposition: false,
+            lockOpacity: !this.alpha_enabled,
+            components: {
+                palette: true,
+                preview: true,
+                opacity: this.alpha_enabled,
+                hue: true,
+                interaction: {
+                    hex: true,
+                    rgba: true,
+                    hsva: true,
+                    input: true,
+                    save: true,
+                },
+            },
+            strings: {
+                save: 'OK',
+            },
+        });
 
-const Chrome_picker = observer(props => {
-    const { family, name } = props;
+        this.pickr.on('init', async () => {
+            this.pickr.setColorRepresentation('HEXA');
 
-    const on_change = picked_color => {
-        try {
-            color_pickiers.mut.current_pickied_color = picked_color;
-            color_pickiers.set_color_input_vizualization_color(family, name, picked_color, false);
+        }).on('show', async () => {
+            const hsva = tinycolor(inputs_data.obj[this.family][this.name].color || inputs_data.obj[this.family][this.name].val).toHsv();
 
-            if (!inputs_data.obj[family][name].changed_color_once_after_focus) {
-                inputs_data.obj[family][name].changed_color_once_after_focus = true;
+            this.pickr.setHSVA(hsva.h, hsva.s * 100, hsva.v * 100, hsva.a, true);
 
-                analytics.send_event('color_pickiers', `changed_color-${family}-${name}`);
+            color_pickiers.focus_input_and_select_all_text_in_it(this.color_pickier_w.current);
+
+        }).on('save', () => {
+            color_pickiers.accept_color(this.family, this.name);
+
+        }).on('change', color => {
+            if (inputs_data.obj[this.family][this.name].color_pickier_is_visible) {
+                color_pickiers.unpack_rgba(color);
+
+                color_pickiers.set_color_input_vizualization_color(this.family, this.name, color_pickiers.mut.current_pickied_color);
+
+                if (!inputs_data.obj[this.family][this.name].changed_color_once_after_focus) {
+                    inputs_data.obj[this.family][this.name].changed_color_once_after_focus = true;
+
+                    analytics.send_event('color_pickiers', `changed_color-${this.family}-${this.name}`);
+                }
             }
+        });
+    }
 
-        } catch (er) {
-            err(er, 95);
+    componentDidUpdate() {
+        if (color_pickiers.mut.accepted_by_enter_key) {
+            this.pickr.hide();
+
+            color_pickiers.mut.accepted_by_enter_key = false;
         }
-    };
+    }
 
-    return (
-        <ChromePicker
-            color={props.color}
-            disableAlpha={family !== 'images' || color_pickiers.con.no_alpha.indexOf(name) > -1}
-            onChange={on_change}
-        />
-    );
-});
+    render() {
+        // eslint-disable-next-line no-unused-expressions
+        inputs_data.obj[this.family][this.name].color_pickier_is_visible;
 
-const Color_pickier_ok_btn = observer(props => {
-    const { family, name } = props;
+        const color = inputs_data.obj[this.family][this.name].color || inputs_data.obj[this.family][this.name].val;
 
-    const on_click = () => {
-        try {
-            color_pickiers.accept_color(family, name);
-
-        } catch (er) {
-            err(er, 96);
-        }
-    };
-
-    return (
-        <button
-            className="color_ok_btn"
-            type="button"
-            onClick={on_click}
-        >
-            OK
-        </button>
-    );
-});
+        return (
+            <React.Fragment>
+                <span
+                    className={x.cls([
+                        'color_input_vizualization',
+                        this.type === 'img_selector' ? 'tall_color_input_vizualization' : null,
+                    ])}
+                    role="button"
+                    tabIndex={els_state.com2.inputs_disabled_1}
+                    data-family={this.family}
+                    data-name={this.name}
+                    style={{ backgroundColor: color }}
+                    onKeyUp={enter_click.open_color_pickier_on_enter}
+                    ref={this.color_input_vizualization}
+                />
+                <div
+                    className="color_pickier_w"
+                    ref={this.color_pickier_w}
+                />
+            </React.Fragment>
+        );
+    }
+}
 
 observer(Color);
+observer(Color_input_vizualization);

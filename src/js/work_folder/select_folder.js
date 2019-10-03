@@ -56,20 +56,19 @@ export const select_folder = action((is_work_folder, folder_path, children, nest
 
                 set_val('theme_metadata', 'locale', default_locale);
 
-                const picked_colors_path = join(chosen_folder_path.ob.chosen_folder_path, picked_colors.con.picked_colors_sdb_path);
-
-                const picked_colors_obj = existsSync(picked_colors_path) ? json_file.parse_json(picked_colors_path) : null;
+                const picked_colors_obj = picked_colors.get_picked_colors_obj();
 
                 if (picked_colors_obj && picked_colors_obj.theme_metadata && picked_colors_obj.theme_metadata.icon) {
-                    color_pickiers.set_color_input_vizualization_color('theme_metadata', 'icon', picked_colors_obj.theme_metadata.icon, true);
+                    color_pickiers.set_color_input_vizualization_color('theme_metadata', 'icon', picked_colors_obj.theme_metadata.icon);
                 }
 
                 if (manifest.mut.manifest.theme) {
                     Object.entries(manifest.mut.manifest.theme).forEach(([family, family_obj]) => {
                         Object.entries(family_obj).forEach(([name, val]) => {
                             set_val(family, name, val);
+
                             if (picked_colors_obj && picked_colors_obj[family] && picked_colors_obj[family][name]) {
-                                color_pickiers.set_color_input_vizualization_color(family, name, picked_colors_obj[family][name], true);
+                                color_pickiers.set_color_input_vizualization_color(family, name, picked_colors_obj[family][name]);
                             }
                         });
                     });

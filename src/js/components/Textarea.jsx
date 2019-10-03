@@ -102,7 +102,7 @@ export class Textarea extends React.Component {
 
     count_char = () => {
         try {
-            if (this.counter) {
+            if (this.textarea && this.counter) {
                 const number_of_chars = this.textarea.value.length;
                 const { val: locale } = inputs_data.obj[this.family].locale;
                 const { val: default_locale } = inputs_data.obj[this.family].default_locale;
@@ -115,6 +115,7 @@ export class Textarea extends React.Component {
                 } else {
                     this.set_char_limit_exceeded_bool(false);
                 }
+
             }
 
         } catch (er) {

@@ -79,6 +79,10 @@ fieldset:not(.work_folder_fieldset) > div {
     overflow: auto;
 }
 
+fieldset > div {
+    overflow-x: hidden!important;
+}
+
 .theme_metadata_fieldset > div {
     overflow: unset;
 }
@@ -162,7 +166,7 @@ hr {
     cursor: pointer;
 }
 
-.folder_arrow, .folder_icon, .folder_name, .work_folder_path, body.using_mouse .help_link, body.using_mouse .upload_box_browse_label:focus, body.using_mouse .close_btn, .search_input, .header_btn, .color_ok_btn, textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus, body.using_mouse a:focus, body.using_mouse .skip_tutorial_btn:focus, .er_close_btn:focus {
+.folder_arrow, .folder_icon, .folder_name, .work_folder_path, body.using_mouse .help_link, body.using_mouse .upload_box_browse_label:focus, body.using_mouse .close_btn, .search_input, .header_btn, textarea:focus, .btn:focus, .color_input_vizualization:focus, .popup, .checkbox_checkmark_w:focus, body.using_mouse a:focus, body.using_mouse .skip_tutorial_btn:focus, .er_close_btn:focus {
     outline: none;
 }
 
@@ -260,11 +264,11 @@ textarea, .option  {
     align-items: center;
 }
 
-.img_selector_box > span:not(:last-child), .color_input_label, .ordinary_color_input .color_input_vizualization, .img_selector_checkbox_w:not(:last-child) {
+.img_selector_box > .upload_box, .color_input_label, .color_input_vizualization, .img_selector_checkbox_w:not(:last-child) {
     margin-right: 12px;
 }
 
-hr, .color_input_vizualization, .color_ok_btn, .header_btn:hover, body.using_mouse .header_btn:hover:focus, body.using_mouse .color_ok_btn:focus, .er_more_info_btn:hover  {
+hr, .color_input_vizualization, .header_btn:hover, body.using_mouse .header_btn:hover:focus, .er_more_info_btn:hover  {
     background-color: white;
 }
 
@@ -287,32 +291,12 @@ textarea, .checkbox_checkmark_w {
     justify-content: center;
 }
 
-.color_pickier_w {
-    z-index: 2;
-    position: absolute;
-}
-
-.color_ok_btn {   
-    top: 283px;
-    width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 8px 16px;
-    border: none;
-    font-size: 14px;
-    height: 21px;
-    cursor: pointer;
-    vertical-align: top;
-}
-
-.color_ok_btn:hover, .color_ok_btn:focus, body.using_mouse .color_ok_btn:hover:focus, .header_btn:focus {
+.header_btn:focus {
     background-color: #3892ff;
 }
 
-.flexbox-fix input, .color_ok_btn {
+.flexbox-fix input {
     color: #222222;
-}
-
-.sketch-picker {
-    border-radius: 0!important;
 }
 
 .help, .counter {
@@ -497,6 +481,7 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 .work_folder_fieldset > div {
     overflow: unset;
     height: calc(100vh - 78px);
+    overflow: hidden!important;
 }
 
 .folder_w, .folder, .folder_inner {
@@ -1121,6 +1106,33 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 }
 /*< ordinary color inputs */
 
+.color_pickier_w {
+    position: relative;
+    right: 149px;
+}
+
+/*> color pickier */
+.pcr-app {
+    position: absolute!important;
+    left: unset!important;
+    top: unset!important;
+    width: 242px!important;
+    box-shadow: 0px 0px 22px -3px rgba(0,0,0,0.75)!important;
+}
+
+.pcr-type:not(.active), .pcr-result {
+    background: #e1e7eb!important;
+}
+
+.pcr-interaction {
+    display: unset!important;
+}
+
+.pcr-result {
+    width: calc(100% - 5px);
+}
+/*< color pickier */
+
 /*> error */
 .err {
     position: fixed;
@@ -1186,7 +1198,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .color_pickier, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn, .using_mouse .history_item {
+.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn, .using_mouse .history_item {
     transition: all 0.2s ease-out;
 }
 
@@ -1198,7 +1210,7 @@ body.using_mouse .header_btn:focus {
     transition-property: border-color, box-shadow!important;
 }
 
-.checkbox_checkmark_w svg, .checkbox_input, .protecting_screen, .fieldset_protecting_screen, .popup, .color_pickier, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item {
+.checkbox_checkmark_w svg, .checkbox_input, .protecting_screen, .fieldset_protecting_screen, .popup, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item {
     transition-property: opacity;
 }
 
@@ -1262,6 +1274,23 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
 
 .char_limit_exceeded_counter {
     color: #ff7878;
+}
+
+
+.color_pickier_tall_offset_top {
+    bottom: 40px!important;
+}
+
+.color_pickier_ordinary_offset_top {
+    bottom: 26px!important;
+}
+
+.color_pickier_tall_offset_bottom {
+    top: 40px!important;
+}
+
+.color_pickier_ordinary_offset_bottom {
+    top: 26px!important; 
 }
 /*< mods */
 

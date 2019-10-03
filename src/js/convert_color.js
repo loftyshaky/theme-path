@@ -1,79 +1,83 @@
 import * as r from 'ramda';
 import Store from 'electron-store';
-import colorConvert from 'color-convert';
+import tinycolor from 'tinycolor2';
 
 import { inputs_data } from 'js/inputs_data';
+import * as manifest from 'js/manifest';
 import * as change_val from 'js/change_val';
+import * as color_pickiers from 'js/color_pickiers';
 import * as options from 'js/options';
 import * as folders from 'js/work_folder/folders';
+import * as picked_colors from 'js/picked_colors';
 
 const store = new Store();
 
 const convert_theme_color_props_to_color = item => {
     try {
-        const { color_input_default } = options.ob.theme_vals[store.get('theme')];
+        const { color_input_default, color_input_disabled } = options.ob.theme_vals[store.get('theme')];
         const val_is_arr = Array.isArray(item.val);
-        const color_is_not_set_in_picked_colors_json = item.color === options.ob.theme_vals.dark.color_input_default || item.color === options.ob.theme_vals.light.color_input_default;
         const { family, name, val } = item;
+        const val_is_default = !manifest.mut.manifest.theme[family] || !manifest.mut.manifest.theme[family][name];
 
         if (family === 'images') {
-            if (color_is_not_set_in_picked_colors_json) {
+            const no_picked_color_for_this_element = !mut.picked_colors_obj || !mut.picked_colors_obj[family] || !mut.picked_colors_obj[family][name];
+
+            if (no_picked_color_for_this_element) {
                 change_val.set_inputs_data_color(family, name, color_input_default);
             }
 
-            if (val !== '') {
+            if (!val_is_default) {
                 change_val.set_default_bool(family, name, false);
             }
 
         } else if (family === 'colors') {
-            change_val.set_inputs_data_val(family, name, color_input_default);
+            if (val_is_default) {
+                change_val.set_inputs_data_val(family, name, color_input_default);
+                change_val.set_inputs_data_color(family, name, color_input_default);
+            }
 
             if (val_is_arr) {
-                const rgb_val = val.length === 4 ? r.dropLast(1, val) : val;
-                if (val !== '') {
-                    change_val.set_inputs_data_val(family, name, `#${colorConvert.rgb.hex(rgb_val)}`);
+                if (!val_is_default) {
+                    change_val.set_inputs_data_val(family, name, color_pickiers.convert_rgba_arr_into_string(val));
                     change_val.set_default_bool(family, name, false);
                 }
             }
 
         } else if (family === 'tints') {
-            change_val.set_inputs_data_val(family, name, color_input_default);
+            if (val_is_default) {
+                change_val.set_inputs_data_val(family, name, color_input_default);
+                change_val.set_inputs_data_color(family, name, color_input_default);
+            }
+
+            //> on theme change
+            if (item.disabled) {
+                change_val.set_inputs_data_val(family, name, color_input_disabled);
+                change_val.set_inputs_data_color(family, name, color_input_disabled);
+            }
+            //< on theme change
 
             if (val_is_arr) {
-                if (val !== '') {
-                    const hsl_arr = val.map((number, number_i) => {
-                        if (number_i === 0) {
-                            if (number < 0 || number > 1) {
-                                return '-1';
-
-                            }
-
-                            return `${360 * number}`;
-                        }
-
-                        if (number < 0 || number > 1) {
-                            return '-1';
-                        }
-
-                        return `${number * 100}`;
-                    });
-
-                    const every_number_in_hsla_arr_is_minus_1 = hsl_arr.every(number => number.indexOf('-1') > -1);
+                if (!val_is_default) {
+                    const hsl_arr = r.values(val);
+                    const every_number_in_hsla_arr_is_minus_1 = hsl_arr.every(number => number.toString().indexOf('-1') > -1);
 
                     if (every_number_in_hsla_arr_is_minus_1) {
-                        change_val.set_inputs_data_val(family, name, options.ob.theme_vals[store.get('theme')].color_input_disabled);
+                        change_val.set_inputs_data_val(family, name, color_input_disabled);
                         change_val.set_default_bool(family, name, false);
                         change_val.set_disabled_bool(family, name, true);
 
                     } else {
-                        change_val.set_inputs_data_val(family, name, `#${colorConvert.hsl.hex(hsl_arr)}`);
+                        const rgba_string = tinycolor.fromRatio({ h: hsl_arr[0], s: hsl_arr[1], l: hsl_arr[2] }).toRgbString();
+
+                        change_val.set_inputs_data_val(family, name, rgba_string);
                         change_val.set_default_bool(family, name, false);
                     }
                 }
             }
 
+
         } else if (family === 'theme_metadata') {
-            if (item.type === 'img_selector' && color_is_not_set_in_picked_colors_json) {
+            if (item.type === 'img_selector' && val_is_default) {
                 change_val.set_inputs_data_color(family, name, color_input_default);
             }
 
@@ -91,6 +95,8 @@ const convert_theme_color_props_to_color = item => {
 };
 
 export const convert_all = () => {
+    mut.picked_colors_obj = picked_colors.get_picked_colors_obj();
+
     convert_family('images');
     convert_family('colors');
     convert_family('tints');
@@ -107,4 +113,8 @@ const convert_family = family => {
     } catch (er) {
         err(er, 37);
     }
+};
+
+const mut = {
+    picked_colors_obj: null,
 };

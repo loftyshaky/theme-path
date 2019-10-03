@@ -47,12 +47,12 @@ export const ob = observable({
     theme: store.get('theme'),
     theme_vals: {
         dark: {
-            color_input_default: '#fbff75',
-            color_input_disabled: '#212121',
+            color_input_default: 'rgba(251, 255, 117, 1)',
+            color_input_disabled: 'rgba(33, 33, 33, 1)',
         },
         light: {
-            color_input_default: '#3892ff',
-            color_input_disabled: 'white',
+            color_input_default: 'rgba(56, 146, 255, 1)',
+            color_input_disabled: 'rgba(255, 255, 255, 1)',
         },
     },
 });

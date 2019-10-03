@@ -5,7 +5,6 @@ import { existsSync, unlinkSync, copySync, readdirSync } from 'fs-extra';
 
 import * as r from 'ramda';
 import Store from 'electron-store';
-import colorConvert from 'color-convert';
 
 import * as manifest from 'js/manifest';
 import * as json_file from 'js/json_file';
@@ -69,7 +68,7 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
                     if (history.colors_cond(family)) {
                         const previous_color = get_previous_color(family, name);
 
-                        history.record_change(() => history.generate_color_history_obj(family, name, false, Boolean(inputs_data.obj[family][name].disabled), previous_color.previous_hex, previous_color.previous_manifest_val, null, true, false));
+                        history.record_change(() => history.generate_color_history_obj(family, name, false, Boolean(inputs_data.obj[family][name].disabled), previous_color.previous_color, previous_color.previous_manifest_val, null, true, false));
                     }
 
                     change_val.set_default_bool(family, name, true);
@@ -89,15 +88,16 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
             } else if (special_checkbox === 'disabled') {
                 if (!inputs_data.obj[family][name].disabled) {
                     const previous_color = get_previous_color(family, name);
+                    const disabled_color = options.ob.theme_vals[store.get('theme')].color_input_disabled;
 
-                    history.record_change(() => history.generate_color_history_obj(family, name, inputs_data.obj[family][name].default, false, previous_color.previous_hex, previous_color.previous_manifest_val, null, false, true));
+                    history.record_change(() => history.generate_color_history_obj(family, name, inputs_data.obj[family][name].default, false, previous_color.previous_color, previous_color.previous_manifest_val, null, false, true));
 
                     change_val.set_disabled_bool(family, name, true);
                     change_val.set_default_bool(family, name, false);
 
                     change_val.change_val(family, name, con.disabled_manifest_val, null, true);
-
-                    change_val.set_inputs_data_val(family, name, options.ob.theme_vals[store.get('theme')].color_input_disabled);
+                    change_val.set_inputs_data_val(family, name, disabled_color);
+                    color_pickiers.set_color_input_vizualization_color(family, name, disabled_color);
 
                 } else {
                     change_val.set_disabled_bool(family, name, false);
@@ -164,16 +164,17 @@ export const delete_key_from_manifest = (family, name) => {
 };
 
 const get_previous_color = (family, name) => {
-    const previous_hex = inputs_data.obj[family][name].val;
+    const previous_color = inputs_data.obj[family][name].color || inputs_data.obj[family][name].val;
+
     const previous_manifest_val = r.ifElse(
         () => family === 'colors',
-        () => colorConvert.hex.rgb(previous_hex),
+        () => previous_color,
 
-        () => color_pickiers.convert_hex_to_tints_val(previous_hex),
+        () => color_pickiers.convert_rgba_strings_to_tint_val(previous_color),
     )();
 
     return {
-        previous_hex,
+        previous_color,
         previous_manifest_val,
     };
 };

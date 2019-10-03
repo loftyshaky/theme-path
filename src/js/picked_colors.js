@@ -17,7 +17,7 @@ export const record_picked_color = (family, name) => {
             picked_colors_obj[family] = {};
         }
 
-        picked_colors_obj[family][name] = color_pickiers.mut.current_pickied_color.rgb;
+        picked_colors_obj[family][name] = color_pickiers.mut.current_pickied_color;
 
         json_file.write_to_json(picked_colors_obj, picked_colors_path);
 
@@ -27,17 +27,37 @@ export const record_picked_color = (family, name) => {
 };
 
 export const remove_picked_color = (family, name) => {
-    const picked_colors_path = join(chosen_folder_path.ob.chosen_folder_path, con.picked_colors_sdb_path);
+    try {
+        const picked_colors_path = join(chosen_folder_path.ob.chosen_folder_path, con.picked_colors_sdb_path);
 
-    if (existsSync(picked_colors_path)) {
-        const picked_colors_obj = json_file.parse_json(picked_colors_path);
+        if (existsSync(picked_colors_path)) {
+            const picked_colors_obj = json_file.parse_json(picked_colors_path);
 
-        if (picked_colors_obj[family]) {
-            delete picked_colors_obj[family][name];
+            if (picked_colors_obj[family]) {
+                delete picked_colors_obj[family][name];
+            }
+
+            json_file.write_to_json(picked_colors_obj, picked_colors_path);
         }
 
-        json_file.write_to_json(picked_colors_obj, picked_colors_path);
+    } catch (er) {
+        err(er, 249);
     }
+};
+
+export const get_picked_colors_obj = () => {
+    try {
+        const picked_colors_path = join(chosen_folder_path.ob.chosen_folder_path, con.picked_colors_sdb_path);
+
+        const picked_colors_obj = existsSync(picked_colors_path) ? json_file.parse_json(picked_colors_path) : null;
+
+        return picked_colors_obj;
+
+    } catch (er) {
+        err(er, 250);
+    }
+
+    return undefined;
 };
 
 export const con = {
