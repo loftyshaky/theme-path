@@ -42,7 +42,7 @@ textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmar
     border-color: #212121;
 }
 
-.selected_folder, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span {
+.selected_folder, .selected_folder_bulk, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span {
     color: white;
 }
 
@@ -138,8 +138,16 @@ textarea:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualizat
     color: white;
 }
 
+.selected_folder_bulk {
+    background-color: #18c944;
+}
+
 .selected_folder, .header_btn:focus {
     background-color: #3892ff;
+}
+
+.selected_folder_bulk_over {
+    background-color: #e42162;
 }
 
 .upload_box_browse_label:focus, .close_btn:focus, a:focus, a:focus {

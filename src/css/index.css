@@ -222,7 +222,7 @@ body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.
     background-color: #f493ff!important;
 }
 
-.btn:hover, .option:hover, .header_btn:hover, .header_btn:hover label, .header_btn:active, .header_btn:active label, .selected_folder, .er_more_info_btn:hover, .er_more_info_btn:active {
+.btn:hover, .option:hover, .header_btn:hover, .header_btn:hover label, .header_btn:active, .header_btn:active label, .selected_folder, .selected_folder_bulk, .er_more_info_btn:hover, .er_more_info_btn:active {
     color: #212121;
 }
 
@@ -1198,7 +1198,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .selected_folder, .popup, .upload_box, fieldset, .legend, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn, .using_mouse .history_item {
+.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .folder_name, .popup, .upload_box, fieldset, .legend, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn, .using_mouse .history_item {
     transition: all 0.2s ease-out;
 }
 
@@ -1234,7 +1234,7 @@ fieldset, .tutorial_outline {
     transition-property: background-color;
 }
 
-.selected_folder {
+.folder_name {
     transition-property: background-color, color;
 }
 
@@ -1252,8 +1252,16 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
     display: none;
 }
 
+.selected_folder_bulk {
+    background-color: #15de47;
+}
+
 .selected_folder, .er_highlighted {
     background-color: #fbff75;
+}
+
+.selected_folder_bulk_over {
+    background-color: #e62d6b;
 }
 
 .er_highlighted .er_msg, .er_highlighted .er_more_info_btn {
