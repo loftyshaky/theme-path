@@ -5,7 +5,6 @@ import { action, configure, observable, toJS } from 'mobx';
 import Store from 'electron-store';
 import { remote } from 'electron';
 
-import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as json_file from 'js/json_file';
 import * as chosen_folder_path from 'js/chosen_folder_path';
