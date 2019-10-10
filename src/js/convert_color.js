@@ -81,7 +81,7 @@ const convert_theme_color_props_to_color = item => {
             }
 
         } else if (name === 'clear_new_tab_video') {
-            const clear_new_tab_video_exist = folders.find_file_with_exist('clear_new_tab_video');
+            const clear_new_tab_video_exist = folders.find_file_name_by_element_name('clear_new_tab_video');
 
             if (clear_new_tab_video_exist) {
                 change_val.set_default_bool(family, name, false);

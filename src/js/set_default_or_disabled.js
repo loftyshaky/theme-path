@@ -19,7 +19,6 @@ import * as history from 'js/history';
 import * as color_pickiers from 'js/color_pickiers';
 import * as conds from 'js/conds';
 import * as choose_folder from 'js/work_folder/choose_folder';
-import * as folders from 'js/work_folder/folders';
 
 const store = new Store();
 
@@ -165,7 +164,7 @@ const set_default = (family, name, target_path, manifest_obj) => {
             clear_new_tab_video_name = files.find(file => file.indexOf('clear_new_tab_video') > -1) || '';
         }
 
-        const img_name = folders.find_file_with_exist(name, target_path) || inputs_data.obj[family][name].val || clear_new_tab_video_name;
+        const img_name = inputs_data.obj[family][name].val || clear_new_tab_video_name;
         const file_to_delete_path = join(target_path || chosen_folder_path.ob.chosen_folder_path, img_name);
 
         if (existsSync(file_to_delete_path) && img_name) {

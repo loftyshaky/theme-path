@@ -224,10 +224,10 @@ export const dehighlight_upload_box_on_drag_leave = action((family, name) => {
 
 export const remove_img_by_name = (name, target_folder_path) => {
     try {
-        const file_with_name = folders.find_file_with_exist(name, target_folder_path);
+        const file_name = folders.find_file_name_by_element_name(name, target_folder_path);
 
-        if (file_with_name) {
-            removeSync(join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, file_with_name));
+        if (file_name) {
+            removeSync(join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, file_name));
         }
 
     } catch (er) {

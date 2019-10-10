@@ -267,7 +267,7 @@ export const bulk_copy = theme_paths => {
                                             history.record_change(() => history.generate_img_history_obj(family, name, target_is_default, src_color_arr, false, target_path), target_path);
                                         }
 
-                                        const new_image_name = folders.find_file_with_exist(name); // ex: toolbar.png
+                                        const new_image_name = folders.find_file_name_by_element_name(name); // ex: toolbar.png
                                         const img_extension = extname(new_image_name); // .png
 
                                         imgs.remove_img_by_name(new_image_name, target_path); // remove old image from target theme
