@@ -358,11 +358,11 @@
 
 
   "confirm_title": "Подтверждение",
+  "confirm_answer_cancel": "Отменить",
   "app_close_confirm_msg": "Вы уверены, что хотите выйти из Chrome Theme Creator?",
   "app_close_confirm_answer_quit": "Выйти",
-  "app_close_confirm_answer_cancel": "Отменить",
-  "bulk_copy_confirm_msg": "Вы уверены что вы хотите копировать свойства из текущей темы во все выбранные темы?",
+  "bulk_copy_confirm_msg": "Вы уверены, что вы хотите копировать свойства из текущей темы во все выбранные темы?",
   "bulk_copy_confirm_answer_copy": "Копировать",
-  "pack_confirm_msg": "Вы уверены что вы хотите упаковать все выбранные темы?",
+  "pack_confirm_msg": "Вы уверены, что вы хотите упаковать все выбранные темы?",
   "pack_confirm_answer_pack": "Упаковать"
 }
