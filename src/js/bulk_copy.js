@@ -191,7 +191,7 @@ export const bulk_copy = theme_paths => {
                                     target_is_disabled = check_if_disabled(target_hsl_arr);
 
                                     if (target_is_disabled) {
-                                        target_hsl_arr = color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_disabled).pop();
+                                        target_hsl_arr = color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_disabled);
                                     }
 
                                     src_hsl_string = src_is_default ? null : color_pickiers.convert_hsl_arr_to_hsl_string(src_hsl_arr);
@@ -387,7 +387,7 @@ const get_messages_obj = theme_path => {
 
 const get_rgba_color = (family, name, manifest_obj, picked_colors_obj, is_default, picked_colors_obj_has_picked_colors_record, is_textarea, is_select) => {
     try {
-        if (!is_textarea && !is_select) {
+        if (!is_textarea && !is_select && family !== 'tints') {
             const rgba_obj = picked_colors_obj_has_picked_colors_record ? picked_colors_obj[family][name] : null;
             let manifest_rgba_arr = null;
             let rgba_string_from_manifest = null;
