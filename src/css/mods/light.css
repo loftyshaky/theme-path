@@ -42,7 +42,7 @@ textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmar
     border-color: #212121;
 }
 
-.selected_folder, .selected_folder_bulk, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span {
+.selected_folder, .selected_folder_bulk, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg, .er_msg div, .er_msg button, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span {
     color: white;
 }
 
