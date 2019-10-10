@@ -192,7 +192,7 @@ export const bulk_copy = () => {
                                         target_is_disabled = check_if_disabled(target_hsl_arr);
 
                                         if (target_is_disabled) {
-                                            target_hsl_arr = color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_disabled);
+                                            target_hsl_arr = color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_disabled).pop();
                                         }
 
                                         src_hsl_string = src_is_default ? null : color_pickiers.convert_hsl_arr_to_hsl_string(src_hsl_arr);
