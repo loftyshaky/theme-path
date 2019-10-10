@@ -20,9 +20,8 @@ import * as set_defaults from 'js/set_defaults';
 import * as options from 'js/options';
 import * as msg from 'js/msg';
 import * as conds from 'js/conds';
+import * as confirm from 'js/confirm';
 import * as folders from 'js/work_folder/folders';
-
-const { dialog } = remote;
 
 configure({ enforceActions: 'observed' });
 const store = new Store();
@@ -117,17 +116,9 @@ export const accept = () => {
             store.set('default_bulk_copy_checkboxes', toJS(ob.bulk_copy_checkboxes));
 
         } else if (chosen_folder_path.ob.chosen_folder_bulk_paths.length > chosen_folder_path.mut.confirm_breakpoint) {
-            const dialog_options = {
-                type: 'question',
-                title: x.msg('confirm_title'),
-                buttons: [
-                    x.msg('bulk_copy_confirm_answer_copy'),
-                    x.msg('confirm_answer_cancel'),
-                ],
-                message: x.msg('bulk_copy_confirm_msg'),
-            };
+            const dialog_options = confirm.generate_confirm_options('bulk_copy_confirm_msg', 'bulk_copy_confirm_answer_copy');
 
-            const choice = dialog.showMessageBox(con.win, dialog_options);
+            const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
 
             if (choice === 0) {
                 bulk_copy();
@@ -414,7 +405,3 @@ export const ob = observable({
     bulk_copy_checkboxes: store.get('default_bulk_copy_checkboxes'),
     set_default_mode_is_activated: false,
 });
-
-const con = {
-    win: remote.getCurrentWindow(),
-};

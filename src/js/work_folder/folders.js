@@ -28,24 +28,53 @@ export const check_if_selected_folder_is_theme = callback => {
     }
 };
 
-export const check_if_multiple_themes_is_selected = callback => {
+export const check_if_multiple_themes_is_selected = (return_result, callback) => {
     try {
         const number_of_themes = chosen_folder_path.ob.chosen_folder_bulk_paths.filter(path => check_if_folder_is_theme(path)).length;
         const one_bulk_theme_is_also_chosen_as_main_theme = chosen_folder_path.ob.chosen_folder_bulk_paths.some(path => path === chosen_folder_path.ob.chosen_folder_path);
 
         if ((one_bulk_theme_is_also_chosen_as_main_theme && number_of_themes >= 2) || (!one_bulk_theme_is_also_chosen_as_main_theme && number_of_themes >= 1)) {
+            if (return_result) {
+                return true;
+            }
+
             callback();
 
         } else {
+            if (return_result) {
+                return false;
+            }
+
             err(er_obj('Wrong bulk theme selection'), 274, 'wrong_bulk_theme_selection');
         }
 
     } catch (er) {
         err(er, 272);
     }
+
+    return undefined;
 };
 
-const check_if_folder_is_theme = folder_path => {
+export const check_if_at_least_one_theme_is_selected = callback => {
+    try {
+        if (choose_folder.reset_work_folder(false)) {
+            const at_least_on_theme_is_selected = check_if_folder_is_theme(chosen_folder_path.ob.chosen_folder_path) || chosen_folder_path.ob.chosen_folder_bulk_paths.some(path => check_if_folder_is_theme(path));
+
+            if (at_least_on_theme_is_selected) {
+                callback();
+
+            } else {
+                err(er_obj('No theme is selected'), 283, 'no_themes_is_selected');
+            }
+        }
+
+    } catch (er) {
+        err(er, 284);
+    }
+};
+
+
+export const check_if_folder_is_theme = folder_path => {
     try {
         const manifest_path = join(folder_path, 'manifest.json');
         const is_theme = existsSync(manifest_path);

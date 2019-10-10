@@ -1,15 +1,10 @@
-import x from 'x';
+import { remote, ipcRenderer } from 'electron';
 
-const { ipcRenderer, remote } = require('electron');
+import * as confirm from 'js/confirm';
 
 ipcRenderer.on('close_app', () => {
-    const choice = remote.dialog.showMessageBox(remote.getCurrentWindow(),
-        {
-            type: 'question',
-            title: x.msg('confirm_title'),
-            message: x.msg('app_close_confirm_msg'),
-            buttons: [x.msg('app_close_confirm_answer_quit'), x.msg('confirm_answer_cancel')],
-        });
+    const dialog_options = confirm.generate_confirm_options('app_close_confirm_msg', 'app_close_confirm_answer_quit');
+    const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
 
     if (choice === 0) {
         ipcRenderer.send('set_let_app_close_var_to_true_and_close_app');

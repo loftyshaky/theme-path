@@ -5,6 +5,7 @@ import { homedir, platform } from 'os';
 import { existsSync, unlinkSync, moveSync } from 'fs-extra';
 import { execFile, execFileSync } from 'child_process';
 import glob from 'glob';
+import { remote } from 'electron';
 
 import kill from 'tree-kill';
 import zipLocal from 'zip-local';
@@ -14,6 +15,7 @@ import getChrome from 'get-chrome';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
+import * as confirm from 'js/confirm';
 import * as folders from 'js/work_folder/folders';
 import { observable, action, configure } from 'mobx';
 
@@ -105,15 +107,47 @@ export const update_chrome_user_data_folders_observable = action(() => {
 });
 
 export const pack = type => {
-    folders.check_if_selected_folder_is_theme(async () => {
+    folders.check_if_at_least_one_theme_is_selected(async () => {
         try {
-            const directory_to_save_package_in = chosen_folder_path.ob.chosen_folder_path.substring(
+            const multiple_themes_is_selected = folders.check_if_multiple_themes_is_selected(true);
+            let theme_paths_to_pack = [chosen_folder_path.ob.chosen_folder_path];
+
+            if (multiple_themes_is_selected) {
+                theme_paths_to_pack = chosen_folder_path.ob.chosen_folder_bulk_paths.filter(path => path !== chosen_folder_path.ob.chosen_folder_path && folders.check_if_folder_is_theme(path));
+
+                if (folders.check_if_folder_is_theme(chosen_folder_path.ob.chosen_folder_path)) {
+                    theme_paths_to_pack.unshift(chosen_folder_path.ob.chosen_folder_path);
+                }
+            }
+
+            if (theme_paths_to_pack.length > chosen_folder_path.mut.confirm_breakpoint) {
+                const dialog_options = confirm.generate_confirm_options('pack_confirm_msg', 'pack_confirm_answer_pack');
+                const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
+
+                if (choice === 0) {
+                    pack_inner(type, theme_paths_to_pack);
+                }
+
+            } else {
+                pack_inner(type, theme_paths_to_pack);
+            }
+
+        } catch (er) {
+            err(er, 285);
+        }
+    });
+};
+
+const pack_inner = (type, theme_paths_to_pack) => {
+    try {
+        for (const theme_path of theme_paths_to_pack) {
+            const directory_to_save_package_in = theme_path.substring(
                 0,
-                chosen_folder_path.ob.chosen_folder_path.lastIndexOf(sep),
+                theme_path.lastIndexOf(sep),
             );
-            const package_name = chosen_folder_path.ob.chosen_folder_path.substring(chosen_folder_path.ob.chosen_folder_path.lastIndexOf(sep) + 1);
-            const pak_path = join(chosen_folder_path.ob.chosen_folder_path, 'Cached Theme.pak');
-            const system_path = join(chosen_folder_path.ob.chosen_folder_path, 'system');
+            const package_name = theme_path.substring(theme_path.lastIndexOf(sep) + 1);
+            const pak_path = join(theme_path, 'Cached Theme.pak');
+            const system_path = join(theme_path, 'system');
             const work_folder_system_path = join(choose_folder.ob.work_folder, 'system');
 
             move_system_folder(system_path, work_folder_system_path);
@@ -140,7 +174,7 @@ export const pack = type => {
                 }
 
 
-                zipLocal.zip(chosen_folder_path.ob.chosen_folder_path, (er, zip) => {
+                zipLocal.zip(theme_path, (er, zip) => {
                     if (!er) {
                         zip.compress().save(zip_path);
 
@@ -178,7 +212,7 @@ export const pack = type => {
                 });
                 //< remove pems
 
-                execFileSync(getChrome(platform()), [`--pack-extension=${chosen_folder_path.ob.chosen_folder_path}`]);
+                execFileSync(getChrome(platform()), [`--pack-extension=${theme_path}`]);
 
                 move_system_folder(work_folder_system_path, system_path);
             }
@@ -186,11 +220,11 @@ export const pack = type => {
             if (tutorial.ob.tutorial_stage === 7) {
                 tutorial.increment_tutorial_stage(true, true);
             }
-
-        } catch (er) {
-            err(er, 17);
         }
-    });
+
+    } catch (er) {
+        err(er, 17);
+    }
 };
 
 const move_system_folder = (src, destination) => {

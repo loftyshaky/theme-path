@@ -339,6 +339,7 @@
   "invalid_file_type_er": "Invalid file type.\nSupported formats:\nIcon: .png, .jpg\nBackground image: .png, .jpg, .gif\nBackground video: .mp4, .webm, .ogg, .gif\nOther elements: .png",
   "chosen_folder_is_not_theme_er": "Chosen folder is not a theme.",
   "wrong_bulk_theme_selection_er": "Choose themes into which you want to copy properties from the current theme by right-clicking on them.",
+  "no_themes_is_selected_er": "No theme is selected.",
   "pak_is_locked_er": "Can't delete Cached Theme.pak file because it's locked.",
   "zip_is_locked_er": "Can't delete *.zip file because it's locked.",
   "crx_is_locked_er": "Can't delete *.crx file because it's locked.",
@@ -360,6 +361,8 @@
   "confirm_answer_cancel": "Cancel",
   "app_close_confirm_msg": "Are you sure you want to quit Chrome Theme Creator?",
   "app_close_confirm_answer_quit": "Quit",
-  "bulk_copy_confirm_msg": "Are you sure you want to copy properties from the current theme into selected themes?",
-  "bulk_copy_confirm_answer_copy": "Copy"
+  "bulk_copy_confirm_msg": "Are you sure you want to copy properties from the current theme into all selected themes?",
+  "bulk_copy_confirm_answer_copy": "Copy",
+  "pack_confirm_msg": "Are you sure you want to pack all selected themes?",
+  "pack_confirm_answer_pack": "Pack"
 }
