@@ -164,23 +164,11 @@ export const bulk_copy = () => {
                                     const is_select_default = inputs_data.obj[family][name].val === 'default';
                                     const src_is_default = is_select ? is_select_default : inputs_data.obj[family][name].default;
                                     const src_picked_colors_obj_has_picked_colors_record = picked_colors.check_if_property_exists_on_picked_colors_obj(family, name, src_picked_colors_obj);
-                                    const src_rgba_obj = src_picked_colors_obj_has_picked_colors_record ? src_picked_colors_obj[family][name] : null;
-                                    const src_rgba_string = src_rgba_obj ? color_pickiers.stringify_unpacked_rgba(src_rgba_obj) : null;
-                                    const src_rgba_arr = src_rgba_obj ? color_pickiers.convert_rgba_string_into_rgb_arr(src_rgba_string) : null;
+                                    const src_rgba_color = get_rgba_color(family, name, src_manifest_obj, src_picked_colors_obj, src_is_default, src_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
                                     const img_is_default = name === 'icon' ? false : !target_manifest_obj.theme || !target_manifest_obj.theme[family] || !target_manifest_obj.theme[family][name];
                                     const target_is_default = name === 'clear_new_tab_video' ? clear_new_tab_video_is_in_theme_folder : img_is_default;
                                     const target_picked_colors_obj_has_picked_colors_record = picked_colors.check_if_property_exists_on_picked_colors_obj(family, name, target_picked_colors_obj);
-                                    const target_rgba_obj = target_picked_colors_obj_has_picked_colors_record ? target_picked_colors_obj[family][name] : null;
-                                    const target_rgba_string_from_picked_colors = target_rgba_obj ? color_pickiers.stringify_unpacked_rgba(target_rgba_obj) : null;
-                                    let target_rgba_arr = null;
-                                    let target_rgba_string_from_manifest = null;
-
-                                    if (family !== 'images' && name !== 'icon' && name !== 'clear_new_tab_video') {
-                                        target_rgba_arr = target_is_default ? null : target_manifest_obj.theme[family][name];
-                                        target_rgba_string_from_manifest = Array.isArray(target_rgba_arr) ? color_pickiers.convert_rgba_arr_into_string(target_rgba_arr) : null;
-                                    }
-
-                                    const target_rgba_string = target_rgba_string_from_picked_colors || target_rgba_string_from_manifest;
+                                    const target_rgba_color = get_rgba_color(family, name, target_manifest_obj, target_picked_colors_obj, target_is_default, target_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
                                     let src_is_disabled = false;
                                     let target_is_disabled = false;
                                     let src_hsl_string = null;
@@ -239,10 +227,10 @@ export const bulk_copy = () => {
                                     }
 
                                     if (family === 'images' || name === 'clear_new_tab_video' || family === 'colors') {
-                                        src_color_arr = src_rgba_arr;
-                                        src_color_string = src_rgba_string;
-                                        target_color_string = target_rgba_string;
-                                        target_color_arr = target_rgba_arr;
+                                        src_color_string = src_rgba_color.string;
+                                        src_color_arr = src_rgba_color.arr;
+                                        target_color_string = target_rgba_color.string;
+                                        target_color_arr = target_rgba_color.arr;
                                     }
 
                                     if (is_color) {
@@ -317,7 +305,7 @@ export const bulk_copy = () => {
                                         }
 
                                         if (src_picked_colors_obj_has_picked_colors_record) {
-                                            picked_colors.record_picked_color(family, name, src_rgba_obj, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
+                                            picked_colors.record_picked_color(family, name, src_rgba_color.obj, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
 
                                         } else {
                                             picked_colors.remove_picked_color(family, name, target_path); // remove picked color from target picked_colors.json file
@@ -394,6 +382,37 @@ const get_messages_obj = theme_path => {
 
     } catch (er) {
         err(er, 278);
+    }
+
+    return undefined;
+};
+
+const get_rgba_color = (family, name, manifest_obj, picked_colors_obj, is_default, picked_colors_obj_has_picked_colors_record, is_textarea, is_select) => {
+    try {
+        if (!is_textarea && !is_select) {
+            const rgba_obj = picked_colors_obj_has_picked_colors_record ? picked_colors_obj[family][name] : null;
+            let manifest_rgba_arr = null;
+            let rgba_string_from_manifest = null;
+
+            if (family !== 'images' && name !== 'icon' && name !== 'clear_new_tab_video') {
+                manifest_rgba_arr = is_default ? null : manifest_obj.theme[family][name];
+                rgba_string_from_manifest = manifest_rgba_arr ? color_pickiers.convert_rgba_arr_into_string(manifest_rgba_arr) : null;
+            }
+
+            const rgba_string_from_rgba_obj = rgba_obj ? color_pickiers.stringify_unpacked_rgba(rgba_obj) : null;
+            const rgba_arr_from_rgba_obj = rgba_obj ? color_pickiers.convert_rgba_string_into_rgb_arr(rgba_string_from_rgba_obj) : null;
+            const rgba_string = rgba_string_from_rgba_obj || rgba_string_from_manifest;
+            const rgba_arr = rgba_arr_from_rgba_obj || manifest_rgba_arr;
+
+            return {
+                obj: rgba_obj,
+                string: rgba_string,
+                arr: rgba_arr,
+            };
+        }
+
+    } catch (er) {
+        err(er, 287);
     }
 
     return undefined;
