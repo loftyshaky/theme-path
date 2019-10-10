@@ -303,11 +303,20 @@ export const bulk_copy = theme_paths => {
                                             });
                                         }
                                     }
+                                }
 
-                                    if (src_picked_colors_obj_has_picked_colors_record) {
-                                        picked_colors.record_picked_color(family, name, src_rgba_color.obj, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
+                                if ((family === 'images' || family === 'colors')) {
+                                    let color;
 
-                                    } else {
+                                    if (family === 'colors' && !src_is_default) {
+                                        color = color_pickiers.convert_rgba_arr_into_obj(src_rgba_color.arr);
+
+                                        picked_colors.record_picked_color(family, name, src_rgba_color.obj || color, chosen_folder_path.ob.chosen_folder_path);
+                                    }
+
+                                    picked_colors.record_picked_color(family, name, src_rgba_color.obj || color, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
+
+                                    if (src_is_default) {
                                         picked_colors.remove_picked_color(family, name, target_path); // remove picked color from target picked_colors.json file
                                     }
                                 }

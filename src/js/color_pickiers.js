@@ -302,6 +302,22 @@ export const convert_rgba_arr_into_string = rgba_arr => {
     return undefined;
 };
 
+export const convert_rgba_arr_into_obj = rgba_arr => {
+    try {
+        return {
+            r: rgba_arr[0],
+            g: rgba_arr[1],
+            b: rgba_arr[2],
+            a: 1,
+        };
+
+    } catch (er) {
+        err(er, 289);
+    }
+
+    return undefined;
+};
+
 export const convert_rgba_strings_to_tint_val = rgba_string => {
     try {
         const hsl = r.values(tinycolor(rgba_string).toHsl());
