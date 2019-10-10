@@ -1,5 +1,7 @@
 import React from 'react';
 
+import x from 'x';
+
 export const Btn = props => {
     const { name, on_click } = props;
 
@@ -7,8 +9,9 @@ export const Btn = props => {
         <button
             type="button"
             className="btn"
-            data-text={`${name}_btn_text`}
             onClick={on_click}
-        />
+        >
+            {x.msg(`${name}_btn_text`)}
+        </button>
     );
 };

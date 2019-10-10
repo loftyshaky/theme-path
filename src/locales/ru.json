@@ -3,6 +3,7 @@
   "theme_metadata_legend_text": "Метаданные темы",
   "theme_legend_text": "Тема",
 
+  "theme_metadata_hr_text": "Метаданные темы",
   "images_hr_text": "Изображения",
   "colors_hr_text": "Цвета",
   "tints_hr_text": "Оттенки",
@@ -11,6 +12,7 @@
   "options_hr_text": "Настройки",
   "links_hr_text": "Ссылки",
   "history_hr_text": "History",
+  "bulk_copy_hr_text": "Массовое копирование",
 
   "version_label_text": "Версия",
   "name_label_text": "Название",
@@ -134,6 +136,7 @@
   "pack_as_crx_btn_title": "Упаковать (CRX)",
   "collapse_all_folders_btn_title": "Свернуть все папки",
   "history_btn_title": "История изменений",
+  "bulk_copy_btn_title": "Копировать свойства темы в другие темы",
   "show_folder_btn_title": "Показать папку",
   "open_folder_btn_title": "Открыть папку",
   "open_in_chrome_btn_title": "Открыть в Chrome (левый клик = нормальный режим, правый клик = режим инкогнито, средний клик = нормальный режим + режим инкогнито)",
@@ -294,9 +297,15 @@
   "skip_tutorial_btn_text": "Пропустить обучение",
 
 
-  "history_accept_btn_text": "Принять",
-  "history_cancel_btn_text": "Отменить",
+  "side_popup_accept_btn_text": "Принять",
+  "side_popup_cancel_btn_text": "Отменить",
   "history_revert_all_btn_text": "Откатить все изменения",
+  "bulk_copy_select_all_btn_text": "Выбрать всё",
+  "bulk_copy_deselect_all_btn_text": "Отключить всё",
+  "bulk_copy_select_default_btn_text": "Выбрать пользовательские",
+  "bulk_copy_set_default_btn_text": "Установить пользовательские",
+
+  "bulk_copy_set_default_message_text": "Чтобы установить, какие чекбоксы будут выбраны при запуске Chrome Theme Creator или при нажатии кнопки \"Выбрать пользовательские\", пометьте все чекбоксы которые вы хотите и нажмите \"Принять\".",
 
   "history_changed_text": "Изменено",
   "history_changed_to_text": "Изменено на",
@@ -328,8 +337,8 @@
 
   "cant_render_ui_er": "Не удалось отобразить пользовательский интерфейс",
   "invalid_file_type_er": "Недопустимый тип файла\nПоддерживаемые форматы:\nИконка: .png, .jpg\nФоновое изображение: .png, .jpg, .gif\nФоновое видео: .mp4, .webm, .ogg, .gif\nДругие элементы: .png",
-  "theme_folder_is_not_chosen_er": "Папка с темой не выбранна",
   "chosen_folder_is_not_theme_er": "Выбранная папка не является темой",
+  "wrong_bulk_theme_selection_er": "Выберите темы, в которые вы хотите копировать свойства из текущей темы, кликнув по ним правой кнопкой мыши.",
   "pak_is_locked_er": "Не удалось удалить файл Cached Theme.pak потому что он занят другим процессом",
   "pem_is_locked_er": "Не удалось удалить файл *.pem потому что он занят другим процессом",
   "zip_is_locked_er": "Не удалось удалить файл *.zip потому что он занят другим процессом",
@@ -347,8 +356,10 @@
   "reload_ui_btn_text": "Перезагрузить",
 
 
-  "app_close_confirm": "Подтверждение",
-  "app_close_msg": "Вы уверены, что хотите выйти из Chrome Theme Creator?",
-  "app_close_answer_1": "Выйти",
-  "app_close_answer_2": "Отменить"
+  "confirm_title": "Подтверждение",
+  "app_close_confirm_msg": "Вы уверены, что хотите выйти из Chrome Theme Creator?",
+  "app_close_confirm_answer_quit": "Выйти",
+  "app_close_confirm_answer_cancel": "Отменить",
+  "bulk_copy_confirm_msg": "Вы уверены что вы хотите копировать свойства из текущей темы в выбранные темы?",
+  "bulk_copy_confirm_answer_copy": "Копировать"
 }

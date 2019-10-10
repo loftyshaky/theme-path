@@ -18,6 +18,7 @@ import * as color_pickiers from 'js/color_pickiers';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as picked_colors from 'js/picked_colors';
 import * as options from 'js/options';
+import * as conds from 'js/conds';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as folders from 'js/work_folder/folders';
 
@@ -57,7 +58,7 @@ export const accept_history_change = () => {
             for (const change of mut.changes_to_revert) {
                 const { family, name, locale, from, from_manifest_val, from_img_id, from_picked_color_val, was_default, was_disabled } = change;
 
-                if (imgs_cond(family, name)) {
+                if (conds.imgs(family, name)) {
                     const path_to_current_img = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
 
                     if (!was_default) {
@@ -83,7 +84,7 @@ export const accept_history_change = () => {
                         }
                     }
 
-                } else if (colors_cond(family)) {
+                } else if (conds.colors(family)) {
                     if (!was_default) {
                         if (!manifest.mut.manifest.theme[family]) {
                             manifest.mut.manifest.theme[family] = {};
@@ -101,7 +102,7 @@ export const accept_history_change = () => {
                         set_default_or_disabled.delete_key_from_manifest(family, name);
                     }
 
-                } else if (selects_cond(family, name)) {
+                } else if (conds.selects(family, name)) {
                     if (!was_default) {
                         change_val.change_val(family, name, from, null, false);
 
@@ -109,7 +110,7 @@ export const accept_history_change = () => {
                         set_default_or_disabled.set_default_or_disabled(family, name, 'select');
                     }
 
-                } else if (textareas_cond(family, name)) {
+                } else if (conds.textareas(family, name)) {
                     if (name === 'version') {
                         change_val.change_val(family, name, from, null, false);
                         change_val.set_previous_val(family, name, from);
@@ -124,7 +125,7 @@ export const accept_history_change = () => {
 
                 }
 
-                if (imgs_cond(family, name) || colors_cond(family)) {
+                if (conds.imgs(family, name) || conds.colors(family)) {
                     if (from_picked_color_val) {
                         color_pickiers.mut.current_pickied_color = from_picked_color_val;
 
@@ -174,29 +175,20 @@ export const cancel_history_change = () => {
     }
 };
 
-export const generate_img_history_obj = (family, name, was_default, to_rgba, set_to_default) => {
+export const generate_img_history_obj = (family, name, was_default, to_rgba, set_to_default, target_folder_path) => {
     try {
-        const from_img_path = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
+        const from_img_path = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
         const from_img_id = Date.now();
         const copy_img = existsSync(from_img_path) && (name !== 'icon' || (name === 'icon' && !was_default));
 
         if (copy_img) {
             copySync(
                 from_img_path,
-                join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`),
+                join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`),
             );
         }
 
-        const picked_colors_path = join(chosen_folder_path.ob.chosen_folder_path, picked_colors.con.picked_colors_sdb_path);
-        let from_picked_color_val;
-
-        if (existsSync(picked_colors_path)) {
-            const picked_colors_obj = json_file.parse_json(picked_colors_path);
-
-            if (picked_colors_obj[family] && picked_colors_obj[family][name]) {
-                from_picked_color_val = picked_colors_obj[family][name];
-            }
-        }
+        const from_picked_color_val = get_from_picked_color_val(family, name, target_folder_path);
 
         const rgba_css_val = r.ifElse(
             () => to_rgba,
@@ -223,15 +215,18 @@ export const generate_img_history_obj = (family, name, was_default, to_rgba, set
     return undefined;
 };
 
-export const generate_color_history_obj = (family, name, was_default, was_disabled, from_hex, from_manifest_val, to_hex, set_to_default, set_to_disabled) => {
+export const generate_color_history_obj = (family, name, was_default, was_disabled, from_hex, from_manifest_val, to_hex, set_to_default, set_to_disabled, target_folder_path) => {
+    const from_picked_color_val = get_from_picked_color_val(family, name, target_folder_path);
+
     try {
         return {
             family,
             name,
             was_default,
             was_disabled,
-            from_hex,
-            from_manifest_val,
+            ...(from_hex && { from_hex }),
+            ...(from_manifest_val && { from_manifest_val }),
+            ...(from_picked_color_val && { from_picked_color_val }),
             to_hex,
             set_to_default,
             set_to_disabled,
@@ -265,12 +260,12 @@ export const generate_select_history_obj = (family, name, was_default, from, to,
 };
 
 
-export const generate_textarea_history_obj = (family, name, from, to) => {
+export const generate_textarea_history_obj = (family, name, from, to, locale) => {
     try {
         return {
             family,
             name,
-            ...((name === 'name' || name === 'description') && { locale: inputs_data.obj.theme_metadata.locale.val }),
+            ...((name === 'name' || name === 'description') && { locale: locale || inputs_data.obj.theme_metadata.locale.val }),
             from,
             to,
             timestamp: get_timestamp(),
@@ -283,14 +278,14 @@ export const generate_textarea_history_obj = (family, name, from, to) => {
     return undefined;
 };
 
-export const record_change = generate_history_obj_f => {
+export const record_change = (generate_history_obj_f, target_folder_path) => {
     try {
         const max_number_of_history_records = store.get('max_number_of_history_records');
         const is_digit = /^\d+$/.test(max_number_of_history_records); // true even if number is of type string
 
         if (is_digit && max_number_of_history_records > 0) {
-            const history_arr = get_history_arr();
-            const history_path = get_history_path();
+            const history_arr = get_history_arr(target_folder_path);
+            const history_path = get_history_path(target_folder_path);
 
             const history_obj = generate_history_obj_f();
 
@@ -300,7 +295,7 @@ export const record_change = generate_history_obj_f => {
                 const { from_img_id } = history_arr[0];
 
                 if (from_img_id) { // is image record with image in old_imgs folder
-                    const path_to_img_to_delete = join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
+                    const path_to_img_to_delete = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
 
                     removeSync(path_to_img_to_delete);
                 }
@@ -318,9 +313,9 @@ export const record_change = generate_history_obj_f => {
 
 const get_timestamp = () => new Date().getTime();
 
-const get_history_arr = () => {
+const get_history_arr = target_folder_path => {
     try {
-        const history_path = get_history_path();
+        const history_path = get_history_path(target_folder_path);
 
         const history_arr = r.ifElse(
             () => existsSync(history_path),
@@ -338,7 +333,7 @@ const get_history_arr = () => {
     return undefined;
 };
 
-const get_history_path = () => join(chosen_folder_path.ob.chosen_folder_path, con.history_path);
+const get_history_path = target_folder_path => join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.history_path);
 
 export const get_date_from_timestamp = timestamp => {
     try {
@@ -373,7 +368,7 @@ export const revert_tinker = revert_position => {
             for (const change of mut.changes_to_revert) {
                 const { family, name, locale, from, from_hex, from_picked_color_val, was_default, was_disabled } = change;
 
-                if (imgs_cond(family, name)) {
+                if (conds.imgs(family, name)) {
                     const color = r.ifElse(
                         () => from_picked_color_val,
                         () => conver_rgba_arr_into_css_val(from_picked_color_val),
@@ -383,8 +378,8 @@ export const revert_tinker = revert_position => {
 
                     color_pickiers.set_color_input_vizualization_color(family, name, color);
 
-                } else if (colors_cond(family)) {
-                    color_pickiers.set_color_input_vizualization_color(family, name, from_hex);
+                } else if (conds.colors(family)) {
+                    color_pickiers.set_color_input_vizualization_color(family, name, from_hex || options.ob.theme_vals[options.ob.theme].color_input_default);
 
                     change_val.set_default_bool(family, name, was_default);
 
@@ -392,16 +387,16 @@ export const revert_tinker = revert_position => {
                         change_val.set_disabled_bool(family, name, was_disabled);
                     }
 
-                } else if (selects_cond(family, name)) {
+                } else if (conds.selects(family, name)) {
                     change_val.set_inputs_data_val(family, name, from);
 
-                } else if (textareas_cond(family, name)) {
+                } else if (conds.textareas(family, name)) {
                     if (locale === inputs_data.obj.theme_metadata.locale.val || name === 'version') {
                         change_val.set_inputs_data_val(family, name, from);
                     }
                 }
 
-                if (colors_cond(family) || imgs_cond(family, name)) {
+                if (conds.colors(family) || conds.imgs(family, name)) {
                     change_val.set_default_bool(family, name, was_default);
                 }
             }
@@ -412,6 +407,28 @@ export const revert_tinker = revert_position => {
     } catch (er) {
         err(er, 209);
     }
+};
+
+const get_from_picked_color_val = (family, name, target_folder_path) => {
+    try {
+        const picked_colors_path = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, picked_colors.con.picked_colors_sdb_path);
+        let from_picked_color_val;
+
+        if (existsSync(picked_colors_path)) {
+            const picked_colors_obj = json_file.parse_json(picked_colors_path);
+
+            if (picked_colors_obj[family] && picked_colors_obj[family][name]) {
+                from_picked_color_val = picked_colors_obj[family][name];
+            }
+        }
+
+        return from_picked_color_val;
+
+    } catch (er) {
+        err(er, 263);
+    }
+
+    return undefined;
 };
 
 export const show_or_hide_history = action(bool => {
@@ -452,27 +469,19 @@ const get_changes_to_revert = revert_position => {
     }
 };
 
-export const set_history_popup_width = () => {
+export const set_history_side_popup_width = () => {
     try {
-        s('.history_popup').style.width = `${store.get('history_popup_width')}px`;
+        s('.history_side_popup').style.width = `${store.get('history_side_popup_width')}px`;
 
     } catch (er) {
         err(er, 213);
     }
 };
 
-export const imgs_cond = (family, name) => (family === 'images' && name !== 'theme_ntp_background') || name === 'icon';
-
-export const colors_cond = family => family === 'colors' || family === 'tints';
-
-export const selects_cond = (family, name) => family === 'properties' || (family === 'clear_new_tab' && name !== 'clear_new_tab_video') || (family === 'theme_metadata' && name === 'default_locale');
-
-export const textareas_cond = (family, name) => family === 'theme_metadata' && (name === 'name' || name === 'description' || name === 'version');
-
 const conver_rgba_arr_into_css_val = to_rgba => `rgba(${r.values(to_rgba).join(',')})`;
 
 export const met = {
-    reset_history_popup_content: null,
+    reset_history_side_popup_content: null,
 };
 
 const con = {
@@ -491,5 +500,5 @@ export const ob = observable({
     history: [],
     history_is_visible: false,
     revert_position: Infinity,
-    reset_history_popup_content: null,
+    reset_history_side_popup_content: null,
 });

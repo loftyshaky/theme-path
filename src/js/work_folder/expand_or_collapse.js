@@ -45,7 +45,7 @@ export const expand_or_collapse_folder = (mode, folder_path, nest_level, custom_
             const folder_is_opened = folders.mut.opened_folders.indexOf(folder_path) !== -1;
 
             if (mode === 'new_theme') {
-                new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, null, custom_folder_path);
+                new_theme_or_rename.create_new_theme_or_rename_theme_folder('creating_folder', folder_path, null, false, custom_folder_path);
             }
 
             const files = folders.get_folders(folder_path);
@@ -152,6 +152,7 @@ export const create_new_theme_or_folder = async custom_folder_path => {
                 'creating_folder',
                 chosen_folder_path.ob.chosen_folder_path,
                 null,
+                false,
                 custom_folder_path,
             );
 

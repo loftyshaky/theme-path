@@ -11,6 +11,7 @@ import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
 import * as picked_colors from 'js/picked_colors';
 import * as history from 'js/history';
+import * as conds from 'js/conds';
 
 configure({ enforceActions: 'observed' });
 
@@ -122,7 +123,7 @@ export const accept_color = (family, name) => {
         if (family === 'images' || name === 'icon') {
             const hex = tinycolor(rgba_string).toHex();
 
-            if (history.imgs_cond(family, name)) {
+            if (conds.imgs(family, name)) {
                 history.record_change(() => history.generate_img_history_obj(family, name, was_default, mut.current_pickied_color, false));
             }
 
@@ -133,7 +134,6 @@ export const accept_color = (family, name) => {
             picked_colors.record_picked_color(family, name);
 
         } else if (family === 'colors') {
-            picked_colors.record_picked_color(family, name);
             previous_manifest_val = convert_rgba_string_into_rgb_arr(previous_rgba_string);
             change_val.change_val(family, name, rgba_arr, null, true);
 
@@ -152,8 +152,12 @@ export const accept_color = (family, name) => {
 
         mut.current_color_pickier.el = null;
 
-        if (history.colors_cond(family)) {
+        if (conds.colors(family)) {
             history.record_change(() => history.generate_color_history_obj(family, name, was_default, was_disabled, previous_rgba_string, previous_manifest_val, rgba_string, false, false));
+        }
+
+        if (family === 'colors') {
+            picked_colors.record_picked_color(family, name);
         }
 
         analytics.send_event('color_pickiers', `accepted_color-${family}-${name}`);
@@ -162,15 +166,6 @@ export const accept_color = (family, name) => {
         err(er, 35);
     }
 };
-
-export const convert_rgba_strings_to_tint_val = rgba_string => {
-    const hsl = r.values(tinycolor(rgba_string).toHsl());
-    hsl.pop();
-    hsl[0] /= 360;
-
-    return hsl;
-};
-
 //< accept color when clicking OK t
 
 const cancel_color_picking = () => {
@@ -261,7 +256,7 @@ export const unpack_rgba = pickr_color_obj => {
     return undefined;
 };
 
-const stringify_unpacked_rgba = rgba_obj => {
+export const stringify_unpacked_rgba = rgba_obj => {
     try {
         return `rgba(${rgba_obj.r},${rgba_obj.g},${rgba_obj.b},${rgba_obj.a})`;
 
@@ -272,7 +267,7 @@ const stringify_unpacked_rgba = rgba_obj => {
     return undefined;
 };
 
-const convert_rgba_string_into_rgb_arr = rgba_string => {
+export const convert_rgba_string_into_rgb_arr = rgba_string => {
     try {
         const rgba_string_splitted = rgba_string.split(',');
 
@@ -302,6 +297,33 @@ export const convert_rgba_arr_into_string = rgba_arr => {
 
     } catch (er) {
         err(er, 248);
+    }
+
+    return undefined;
+};
+
+export const convert_rgba_strings_to_tint_val = rgba_string => {
+    try {
+        const hsl = r.values(tinycolor(rgba_string).toHsl());
+        hsl.pop();
+        hsl[0] /= 360;
+
+        return hsl;
+
+    } catch (er) {
+        err(er, 275);
+    }
+
+    return undefined;
+};
+
+
+export const convert_hsl_arr_to_hsl_string = hsl_arr => {
+    try {
+        return tinycolor.fromRatio({ h: hsl_arr[0], s: hsl_arr[1], l: hsl_arr[2] }).toRgbString();
+
+    } catch (er) {
+        err(er, 276);
     }
 
     return undefined;

@@ -3,6 +3,7 @@
   "theme_metadata_legend_text": "Theme metadata",
   "theme_legend_text": "Theme",
   
+  "theme_metadata_hr_text": "Theme metadata",
   "images_hr_text": "Images",
   "colors_hr_text": "Colors",
   "tints_hr_text": "Tints",
@@ -11,6 +12,7 @@
   "options_hr_text": "Options",
   "links_hr_text": "Links",
   "history_hr_text": "History",
+  "bulk_copy_hr_text": "Bulk copy",
 
   "version_label_text": "Version",
   "name_label_text": "Name",
@@ -134,6 +136,7 @@
   "pack_as_crx_btn_title": "Pack as CRX",
   "collapse_all_folders_btn_title": "Collapse all folders",
   "history_btn_title": "Changes history",
+  "bulk_copy_btn_title": "Copy theme properties to other themes",
   "show_folder_btn_title": "Show folder",
   "open_folder_btn_title": "Open folder",
   "open_in_chrome_btn_title": "Open in Chrome (left-click = normal mode, right-click = incognito mode, middle-click = normal mode + incognito mode)",
@@ -294,9 +297,15 @@
   "skip_tutorial_btn_text": "Skip tutorial",
 
 
-  "history_accept_btn_text": "Accept",
-  "history_cancel_btn_text": "Cancel",
+  "side_popup_accept_btn_text": "Accept",
+  "side_popup_cancel_btn_text": "Cancel",
   "history_revert_all_btn_text": "Revert all changes",
+  "bulk_copy_select_all_btn_text": "Select all",
+  "bulk_copy_deselect_all_btn_text": "Desselect all",
+  "bulk_copy_select_default_btn_text": "Select default",
+  "bulk_copy_set_default_btn_text": "Set default",
+
+  "bulk_copy_set_default_message_text": "To set what checkboxes will be checked when you start the Chrome Theme Creator or click \"Select default\" button check all checkboxes you wish and click \"Accept\".",
 
   "history_changed_text": "Changed",
   "history_changed_to_text": "Changed to",
@@ -328,8 +337,8 @@
 
   "cant_render_ui_er": "Can't render user interface.",
   "invalid_file_type_er": "Invalid file type.\nSupported formats:\nIcon: .png, .jpg\nBackground image: .png, .jpg, .gif\nBackground video: .mp4, .webm, .ogg, .gif\nOther elements: .png",
-  "theme_folder_is_not_chosen_er": "Theme folder is not chosen.",
   "chosen_folder_is_not_theme_er": "Chosen folder is not a theme.",
+  "wrong_bulk_theme_selection_er": "Choose themes into which you want to copy properties from the current theme by right-clicking on them.",
   "pak_is_locked_er": "Can't delete Cached Theme.pak file because it's locked.",
   "zip_is_locked_er": "Can't delete *.zip file because it's locked.",
   "crx_is_locked_er": "Can't delete *.crx file because it's locked.",
@@ -347,8 +356,10 @@
   "reload_ui_btn_text": "Reload",
 
   
-  "app_close_confirm": "Confirm",
-  "app_close_msg": "Are you sure you want to quit Chrome Theme Creator?",
-  "app_close_answer_1": "Quit",
-  "app_close_answer_2": "Cancel"
+  "confirm_title": "Confirm",
+  "confirm_answer_cancel": "Cancel",
+  "app_close_confirm_msg": "Are you sure you want to quit Chrome Theme Creator?",
+  "app_close_confirm_answer_quit": "Quit",
+  "bulk_copy_confirm_msg": "Are you sure you want to copy properties from the current theme into selected themes?",
+  "bulk_copy_confirm_answer_copy": "Copy"
 }

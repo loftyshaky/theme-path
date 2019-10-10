@@ -20,6 +20,7 @@ const textarea = (name, add_help, counter, char_limit) => {
             add_help,
             counter,
             char_limit,
+            bulk_copy_checkbox_checked_by_default: false,
         };
 
     } catch (er) {
@@ -36,6 +37,7 @@ const select = (name, val, add_help) => {
             type: 'select',
             val: val || '',
             add_help,
+            bulk_copy_checkbox_checked_by_default: true,
         };
 
     } catch (er) {
@@ -72,6 +74,7 @@ const color = name => {
             default: true,
             changed_color_once_after_focus: false,
             add_help: true,
+            bulk_copy_checkbox_checked_by_default: true,
         };
 
     } catch (er) {
@@ -81,7 +84,7 @@ const color = name => {
     return undefined;
 };
 
-const img_selector = name => {
+const img_selector = (name, bulk_copy_checkbox_checked_by_default) => {
     try {
         return {
             name,
@@ -94,6 +97,7 @@ const img_selector = name => {
             default: true,
             changed_color_once_after_focus: false,
             add_help: true,
+            bulk_copy_checkbox_checked_by_default: typeof bulk_copy_checkbox_checked_by_default === 'boolean' ? bulk_copy_checkbox_checked_by_default : true,
         };
 
     } catch (er) {
@@ -128,7 +132,7 @@ const inputs = {
         textarea('description', true, true, 132),
     ],
     images: [
-        img_selector('theme_ntp_background'),
+        img_selector('theme_ntp_background', false),
         img_selector('theme_toolbar'),
         img_selector('theme_frame'),
         img_selector('theme_frame_inactive'),
@@ -177,7 +181,7 @@ const inputs = {
         select('ntp_logo_alternate', 'default', true),
     ],
     clear_new_tab: [
-        img_selector('clear_new_tab_video'),
+        img_selector('clear_new_tab_video', false),
         select('video_volume', 'default', true),
         select('size', 'default', true),
     ],

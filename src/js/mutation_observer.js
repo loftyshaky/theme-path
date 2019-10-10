@@ -10,9 +10,9 @@ export const observer = new window.MutationObserver(mutations => {
         for (const mutation of mutations) {
             const { target } = mutation;
 
-            if (x.matches(target, '.history_popup')) {
-                history.met.reset_history_popup_content();
-                set_history_popup_width(mutation);
+            if (x.matches(target, '.history_side_popup')) {
+                history.met.reset_history_side_popup_content();
+                set_history_side_popup_width(mutation);
             }
         }
 
@@ -22,14 +22,14 @@ export const observer = new window.MutationObserver(mutations => {
     }
 });
 
-const set_history_popup_width = x.debounce(mutation => {
+const set_history_side_popup_width = x.debounce(mutation => {
     try {
         const width_style = mutation.target.attributes['1'].nodeValue; // ex: width: 1122px;
 
         if (width_style) {
-            const history_popup_width = +width_style.match(/\d+/)[0]; // ex: 1122 (type: number)
+            const history_side_popup_width = +width_style.match(/\d+/)[0]; // ex: 1122 (type: number)
 
-            store.set('history_popup_width', history_popup_width);
+            store.set('history_side_popup_width', history_side_popup_width);
         }
 
 

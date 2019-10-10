@@ -13,25 +13,50 @@ configure({ enforceActions: 'observed' });
 export const check_if_selected_folder_is_theme = callback => {
     try {
         if (choose_folder.reset_work_folder(false)) {
-            if (mut.chosen_folder_info.is_theme) {
-                const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
-                const folder_is_theme = files.find(file => file === 'manifest.json');
+            const folder_is_theme = check_if_folder_is_theme(chosen_folder_path.ob.chosen_folder_path);
 
-                if (folder_is_theme) {
-                    callback();
-
-                } else {
-                    err(er_obj('Chosen folder is not a theme'), 4, 'chosen_folder_is_not_theme');
-                }
+            if (folder_is_theme) {
+                callback();
 
             } else {
-                err(er_obj('Theme folder is not chosen'), 3, 'theme_folder_is_not_chosen');
+                err(er_obj('Chosen folder is not a theme'), 3, 'chosen_folder_is_not_theme');
             }
         }
 
     } catch (er) {
         err(er, 16);
     }
+};
+
+export const check_if_multiple_themes_is_selected = callback => {
+    try {
+        const number_of_themes = chosen_folder_path.ob.chosen_folder_bulk_paths.filter(path => check_if_folder_is_theme(path)).length;
+        const one_bulk_theme_is_also_chosen_as_main_theme = chosen_folder_path.ob.chosen_folder_bulk_paths.some(path => path === chosen_folder_path.ob.chosen_folder_path);
+
+        if ((one_bulk_theme_is_also_chosen_as_main_theme && number_of_themes >= 2) || (!one_bulk_theme_is_also_chosen_as_main_theme && number_of_themes >= 1)) {
+            callback();
+
+        } else {
+            err(er_obj('Wrong bulk theme selection'), 274, 'wrong_bulk_theme_selection');
+        }
+
+    } catch (er) {
+        err(er, 272);
+    }
+};
+
+const check_if_folder_is_theme = folder_path => {
+    try {
+        const manifest_path = join(folder_path, 'manifest.json');
+        const is_theme = existsSync(manifest_path);
+
+        return is_theme;
+
+    } catch (er) {
+        err(er, 273);
+    }
+
+    return undefined;
 };
 
 export const rerender_work_folder = action(() => {
@@ -52,6 +77,7 @@ export const get_folders = folder_path => {
 
             return files.map(file => {
                 const child_path = join(folder_path, file);
+
                 if (existsSync(child_path)) {
                     return {
                         name: file,
@@ -163,8 +189,8 @@ export const deselect_theme = action(() => {
     }
 });
 
-export const find_file_with_exist = name => {
-    const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
+export const find_file_with_exist = (name, target_folder_path) => {
+    const files = readdirSync(target_folder_path || chosen_folder_path.ob.chosen_folder_path);
     const file_with_name = files.find(file => file.indexOf(name) > -1);
 
     return file_with_name;

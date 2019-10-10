@@ -29,16 +29,26 @@ const { getCurrentWindow } = require('electron').remote;
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
-export const change_val = async (family, name, new_val, img_extension, reload_manifest) => {
+export const change_val = async (family, name, new_val, img_extension, reload_manifest, target_folder_path, forced_locale, forced_default_locale) => {
     try {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
         if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
+            const bulk_copying = target_folder_path;
+            const manifest_path = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, 'manifest.json');
+            let manifest_obj;
+
             if (reload_manifest) {
                 manifest.reload_manifest();
+                manifest_obj = manifest.mut.manifest;
+
+            } else if (bulk_copying) {
+                manifest_obj = json_file.parse_json(manifest_path);
+
+            } else {
+                manifest_obj = manifest.mut.manifest;
             }
 
-            const manifest_path = join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json');
             const default_locale = family === 'theme_metadata' ? inputs_data.obj[family].default_locale.val : null;
             const first_if_strings = ['name', 'description'];
             const second_if_strings = ['version', 'default_locale'];
@@ -52,10 +62,10 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
             }
 
             if (first_if_strings.indexOf(name) > -1) {
-                update_name_or_description(name, new_val, null);
+                update_name_or_description(name, new_val, forced_locale, forced_default_locale, reload_manifest ? null : manifest_obj, target_folder_path);
 
             } else if (second_if_strings.indexOf(name) > -1) {
-                write_to_json(manifest.mut.manifest, manifest_path, name, new_val, 'theme_metadata');
+                write_to_json(manifest_obj, manifest_path, name, new_val, 'theme_metadata');
 
                 if (name === 'default_locale') {
                     add_locale_folder(new_val);
@@ -66,16 +76,16 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
                 select_folder.get_theme_name_or_descrption_inner(chosen_folder_path.ob.chosen_folder_path, new_val, default_locale);
 
             } else if (third_if_strings.indexOf(family) > -1 || five_if_strings.indexOf(name) > -1) {
-                write_to_json(manifest.mut.manifest, manifest_path, name, new_val, family);
+                write_to_json(manifest_obj, manifest_path, name, new_val, family);
 
             } else if (family === 'images' || name === 'icon') {
-                write_to_json(manifest.mut.manifest, manifest_path, name, new_val + img_extension_final, family);
+                write_to_json(manifest_obj, manifest_path, name, new_val + img_extension_final, family);
 
                 const created_solid_color_background_img = !img_extension && name === 'theme_ntp_background';
 
                 if (created_solid_color_background_img) {
                     set_inputs_data_val('properties', 'ntp_background_repeat', 'repeat');
-                    write_to_json(manifest.mut.manifest, manifest_path, 'ntp_background_repeat', 'repeat', 'properties');
+                    write_to_json(manifest_obj, manifest_path, 'ntp_background_repeat', 'repeat', 'properties');
                 }
 
             } else if (family === 'options') {
@@ -124,19 +134,19 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
     }
 };
 
-export const update_name_or_description = (name, new_val, forced_locale) => {
+export const update_name_or_description = (name, new_val, forced_locale, forced_default_locale, mainfest_obj, target_folder_path) => {
     try {
-        set_name_or_description(name, new_val, forced_locale);
+        set_name_or_description(name, new_val, forced_locale, mainfest_obj, target_folder_path);
 
-        const locale = inputs_data.obj.theme_metadata.locale.val;
-        const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
+        const locale = forced_locale || inputs_data.obj.theme_metadata.locale.val;
+        const default_locale = forced_default_locale || inputs_data.obj.theme_metadata.default_locale.val;
 
         if (name === 'name') {
-            if (locale === default_locale && !forced_locale) {
-                new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_val);
+            if (locale === default_locale) {
+                new_theme_or_rename.rename_theme_folder(target_folder_path || chosen_folder_path.ob.chosen_folder_path, new_val, !!forced_locale);
 
             } else {
-                els_state.set_applying_textarea_val_val(false);
+                els_state.set_applying_textarea_val_val(false, target_folder_path);
             }
 
         }
@@ -148,12 +158,13 @@ export const update_name_or_description = (name, new_val, forced_locale) => {
     }
 };
 
-const set_name_or_description = (name, new_val, forced_locale) => {
+const set_name_or_description = (name, new_val, forced_locale, mainfest_obj, target_folder_path) => {
     try {
-        const val = manifest.mut.manifest[name];
+        const mainfest_obj_final = mainfest_obj || manifest.mut.manifest;
+        const val = mainfest_obj_final[name];
         const val_is_localized = msg.val_is_localized(val);
         const locale = forced_locale || inputs_data.obj.theme_metadata.locale.val;
-        const messages_path = get_messages_path(locale);
+        const messages_path = get_messages_path(locale, target_folder_path);
 
         check_if_localisation_folders_exists_create_them_if_dont(locale);
 
@@ -167,7 +178,7 @@ const set_name_or_description = (name, new_val, forced_locale) => {
 
         } else {
             json_file.create_json_file(messages_path, '{}');
-            write_to_json(manifest.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
+            write_to_json(mainfest_obj_final, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
             const messages = json_file.parse_json(messages_path);
 
@@ -253,14 +264,14 @@ const check_if_folder_exists_create_it_if_dont = folder_path => {
 };
 
 //> delete locale folder when both name and description is ''
-const delete_locale_folder = async (locale, default_locale) => {
+const delete_locale_folder = async (locale, default_locale, target_folder_path) => {
     try {
         const name = inputs_data.obj.theme_metadata.name.val;
         const description = inputs_data.obj.theme_metadata.description.val;
 
         if (name === '' && description === '' && locale !== default_locale) {
             try {
-                removeSync(join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale));
+                removeSync(join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, '_locales', locale));
 
             } catch (er) {
                 err(er, 123, 'locale_is_locked');
@@ -413,9 +424,9 @@ export const set_disabled_bool = action((family, name, bool) => {
     }
 });
 
-const get_messages_path = locale => {
+const get_messages_path = (locale, target_folder_path) => {
     try {
-        return join(chosen_folder_path.ob.chosen_folder_path, '_locales', locale, 'messages.json');
+        return join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, '_locales', locale, 'messages.json');
 
     } catch (er) {
         err(er, 193);

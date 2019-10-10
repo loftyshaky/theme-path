@@ -13,6 +13,7 @@ import { Fieldset } from 'components/Fieldset';
 import { Work_folder } from 'components/Work_folder';
 import { Input_block } from 'components/Input_block';
 import { History } from 'components/History';
+import { Bulk_copy } from 'components/Bulk_copy';
 import { Options } from 'components/Options';
 import { Links } from 'components/Links';
 import { Help_viewer } from 'components/Help_viewer';
@@ -30,9 +31,9 @@ export class All extends React.Component {
             document.body.addEventListener('keydown', help_viewer.close_help_viewer_by_keyboard);
             window.addEventListener('resize', tutorial.rerender_Tutorial_item);
 
-            history.set_history_popup_width();
+            history.set_history_side_popup_width();
 
-            mutation_observer.observer.observe(s('.history_popup'), { attributes: true });
+            mutation_observer.observer.observe(s('.history_side_popup'), { attributes: true });
 
         } catch (er) {
             err(er, 93);
@@ -100,6 +101,7 @@ export class All extends React.Component {
                     <Protecting_screen tr_name="gen" state_key="protecting_screen_is_visible" />
                     <Protecting_screen tr_name="analytics_privacy_protecting_screen" state_key="analytics_privacy_is_visible" />
                     <History />
+                    <Bulk_copy />
                     <Options />
                     <Links />
                     <Help_viewer />

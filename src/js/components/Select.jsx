@@ -12,6 +12,7 @@ import * as change_val from 'js/change_val';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as els_state from 'js/els_state';
 import * as history from 'js/history';
+import * as conds from 'js/conds';
 
 import { Help } from 'components/Help';
 
@@ -58,8 +59,8 @@ export class Select extends React.Component {
                 set_to_default = false;
             }
 
-            if (history.selects_cond(this.family, this.name)) {
-                history.record_change(() => history.generate_select_history_obj(this.family, this.name, was_default, previous_val, value, set_to_default));
+            if (conds.selects(this.family, this.name)) {
+                history.record_change(() => history.generate_select_history_obj(this.family, this.name, was_default, previous_val === 'default' ? null : previous_val, value, set_to_default));
             }
 
             analytics.send_event('selects', `selected_option-${this.family}-${this.name}-${value}`);

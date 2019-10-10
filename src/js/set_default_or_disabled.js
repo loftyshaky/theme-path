@@ -17,36 +17,44 @@ import * as change_val from 'js/change_val';
 import { inputs_data } from 'js/inputs_data';
 import * as history from 'js/history';
 import * as color_pickiers from 'js/color_pickiers';
+import * as conds from 'js/conds';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as folders from 'js/work_folder/folders';
 
 const store = new Store();
 
-export const set_default_icon = (family, name) => {
+export const set_default_icon = (family, name, target_path, target_mainifest_oobj) => {
     try {
-        imgs.remove_img_by_name(name);
+        const theme_path = target_path || chosen_folder_path.ob.chosen_folder_path;
+        const manifest_obj = target_mainifest_oobj || manifest.mut.manifest;
 
-        history.record_change(() => history.generate_img_history_obj(family, name, false, null, true));
+        imgs.remove_img_by_name(name, theme_path);
+
+        history.record_change(() => history.generate_img_history_obj(family, name, false, null, true, theme_path), theme_path);
 
         //> set default icon name
         change_val.set_default_bool(family, name, true);
 
-        icons.construct_icons_obj(manifest.mut.manifest);
+        icons.construct_icons_obj(manifest_obj);
 
-        manifest.mut.manifest.icons['128'] = 'icon.png';
+        manifest_obj.icons['128'] = 'icon.png';
 
-        json_file.write_to_manifest_json();
+        json_file.write_to_json(manifest_obj, join(theme_path, 'manifest.json'));
         //< set default icon name
 
         //> copy default icon
-        const icon_paths = icons.get_icon_paths();
+        const icon_paths = icons.get_icon_paths(target_path);
 
         copySync(icon_paths.source, icon_paths.target);
         //< copy default icon
 
         //> restore default color_input_vizualization color
-        const { color_input_default } = options.ob.theme_vals[store.get('theme')];
 
-        change_val.set_inputs_data_color(family, name, color_input_default);
+        if (!target_path) {
+            const { color_input_default } = options.ob.theme_vals[store.get('theme')];
+
+            change_val.set_inputs_data_color(family, name, color_input_default);
+        }
         //< restore default color_input_vizualization color
 
         picked_colors.remove_picked_color(family, name);
@@ -56,19 +64,34 @@ export const set_default_icon = (family, name) => {
     }
 };
 
-export const set_default_or_disabled = (family, name, special_checkbox) => {
+export const set_default_or_disabled = (family, name, special_checkbox, force_set, was_default, was_disabled, previous_color, previous_manifest_val, target_path, manifest_obj) => {
     try {
         if (choose_folder.reset_work_folder(false)) {
+            const theme_path = target_path || chosen_folder_path.ob.chosen_folder_path;
+
             if (special_checkbox === 'default') {
-                if (!inputs_data.obj[family][name].default) {
-                    if (history.imgs_cond(family, name)) {
-                        history.record_change(() => history.generate_img_history_obj(family, name, false, null, true));
+                if (!inputs_data.obj[family][name].default || force_set) {
+                    if (conds.imgs(family, name)) {
+                        history.record_change(() => history.generate_img_history_obj(family, name, false, null, true, theme_path), theme_path);
                     }
 
-                    if (history.colors_cond(family)) {
-                        const previous_color = get_previous_color(family, name);
+                    if (conds.colors(family)) {
+                        const previous_color_obj = get_previous_color(family, name);
 
-                        history.record_change(() => history.generate_color_history_obj(family, name, false, Boolean(inputs_data.obj[family][name].disabled), previous_color.previous_color, previous_color.previous_manifest_val, null, true, false));
+                        history.record_change(
+                            () => history.generate_color_history_obj(
+                                family,
+                                name,
+                                false,
+                                was_disabled || Boolean(inputs_data.obj[family][name].disabled),
+                                previous_color || previous_color_obj.previous_color,
+                                previous_manifest_val || previous_color_obj.previous_manifest_val,
+                                null,
+                                true,
+                                false,
+                                target_path,
+                            ), target_path,
+                        );
                     }
 
                     change_val.set_default_bool(family, name, true);
@@ -77,25 +100,39 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
                         change_val.set_disabled_bool(family, name, false);
                     }
 
-                    set_default(family, name, special_checkbox);
+                    set_default(family, name, target_path, manifest_obj);
 
-                    picked_colors.remove_picked_color(family, name);
+                    picked_colors.remove_picked_color(family, name, theme_path);
                 }
 
             } else if (special_checkbox === 'select') {
-                set_default(family, name, special_checkbox);
+                set_default(family, name, target_path, manifest_obj);
 
             } else if (special_checkbox === 'disabled') {
-                if (!inputs_data.obj[family][name].disabled) {
-                    const previous_color = get_previous_color(family, name);
+                if (!inputs_data.obj[family][name].disabled || force_set) {
+                    const previous_color_obj = get_previous_color(family, name);
                     const disabled_color = options.ob.theme_vals[store.get('theme')].color_input_disabled;
 
-                    history.record_change(() => history.generate_color_history_obj(family, name, inputs_data.obj[family][name].default, false, previous_color.previous_color, previous_color.previous_manifest_val, null, false, true));
+                    history.record_change(
+                        () => history.generate_color_history_obj(
+                            family,
+                            name,
+                            was_default || inputs_data.obj[family][name].default,
+                            false,
+                            previous_color || previous_color_obj.previous_color,
+                            previous_manifest_val || previous_color_obj.previous_manifest_val,
+                            null,
+                            false,
+                            true,
+                            target_path,
+                        ), target_path,
+                    );
 
                     change_val.set_disabled_bool(family, name, true);
                     change_val.set_default_bool(family, name, false);
 
-                    change_val.change_val(family, name, con.disabled_manifest_val, null, true);
+                    change_val.change_val(family, name, con.disabled_manifest_val, null, !force_set, theme_path);
+
                     change_val.set_inputs_data_val(family, name, disabled_color);
                     color_pickiers.set_color_input_vizualization_color(family, name, disabled_color);
 
@@ -104,7 +141,7 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
                     change_val.set_disabled_bool(family, name, false);
                     change_val.set_default_bool(family, name, true);
 
-                    set_default(family, name, 'default');
+                    set_default(family, name);
                 }
             }
         }
@@ -114,22 +151,24 @@ export const set_default_or_disabled = (family, name, special_checkbox) => {
     }
 };
 
-const set_default = (family, name) => {
+const set_default = (family, name, target_path, manifest_obj) => {
     try {
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];
         let clear_new_tab_video_name = '';
+        let new_manifest_obj;
 
         if (name !== 'clear_new_tab_video') {
-            delete_key_from_manifest(family, name);
+            new_manifest_obj = delete_key_from_manifest(family, name, manifest_obj);
 
         } else {
-            const files = readdirSync(chosen_folder_path.ob.chosen_folder_path);
+            const files = readdirSync(target_path || chosen_folder_path.ob.chosen_folder_path);
             clear_new_tab_video_name = files.find(file => file.indexOf('clear_new_tab_video') > -1) || '';
         }
 
-        const file_to_delete_path = join(chosen_folder_path.ob.chosen_folder_path, inputs_data.obj[family][name].val || clear_new_tab_video_name);
+        const img_name = folders.find_file_with_exist(name, target_path) || inputs_data.obj[family][name].val || clear_new_tab_video_name;
+        const file_to_delete_path = join(target_path || chosen_folder_path.ob.chosen_folder_path, img_name);
 
-        if (existsSync(file_to_delete_path)) {
+        if (existsSync(file_to_delete_path) && img_name) {
             try {
                 unlinkSync(file_to_delete_path);
 
@@ -138,7 +177,7 @@ const set_default = (family, name) => {
             }
         }
 
-        json_file.write_to_manifest_json();
+        json_file.write_to_manifest_json(target_path, new_manifest_obj);
 
         if (inputs_data.obj[family][name].type === 'select') {
             change_val.set_inputs_data_val(family, name, 'default');
@@ -155,28 +194,48 @@ const set_default = (family, name) => {
     }
 };
 
-export const delete_key_from_manifest = (family, name) => {
-    delete manifest.mut.manifest.theme[family][name];
+export const delete_key_from_manifest = (family, name, manifest_obj) => {
+    try {
+        const new_manifest_obj = manifest_obj || manifest.mut.manifest;
 
-    if (r.isEmpty(manifest.mut.manifest.theme[family])) {
-        delete manifest.mut.manifest.theme[family];
+        if (new_manifest_obj.theme && new_manifest_obj.theme[family] && new_manifest_obj.theme[family][name]) {
+            delete new_manifest_obj.theme[family][name];
+
+            if (r.isEmpty(new_manifest_obj.theme[family])) {
+                delete new_manifest_obj.theme[family];
+            }
+        }
+
+        return new_manifest_obj;
+
+    } catch (er) {
+        err(er, 260);
     }
+
+    return undefined;
 };
 
 const get_previous_color = (family, name) => {
-    const previous_color = inputs_data.obj[family][name].color || inputs_data.obj[family][name].val;
+    try {
+        const previous_color = inputs_data.obj[family][name].color || inputs_data.obj[family][name].val;
 
-    const previous_manifest_val = r.ifElse(
-        () => family === 'colors',
-        () => previous_color,
+        const previous_manifest_val = r.ifElse(
+            () => family === 'colors',
+            () => previous_color,
 
-        () => color_pickiers.convert_rgba_strings_to_tint_val(previous_color),
-    )();
+            () => color_pickiers.convert_rgba_strings_to_tint_val(previous_color),
+        )();
 
-    return {
-        previous_color,
-        previous_manifest_val,
-    };
+        return {
+            previous_color,
+            previous_manifest_val,
+        };
+
+    } catch (er) {
+        err(er, 261);
+    }
+
+    return undefined;
 };
 
 export const con = {

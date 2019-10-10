@@ -57,6 +57,8 @@ export class Work_folder extends React.Component {
     render_row = ({ index, key, style }) => {
         const folder = search.mut.filtered_folders[index];
         const folder_is_opened = folders.mut.opened_folders.indexOf(folder.path) > -1;
+        const folder_is_selected = folder.path === chosen_folder_path.ob.chosen_folder_path;
+        const folder_is_bulk_selected = chosen_folder_path.check_if_folder_is_bulk_selected(folder.path);
 
         const on_click_folder_arrow = () => {
             expand_or_collapse.expand_or_collapse_folder('arrow', folder.path, folder.nest_level + 1);
@@ -98,15 +100,20 @@ export class Work_folder extends React.Component {
                             className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
                             type="button"
                             tabIndex="-1"
-                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
+                            onMouseUp={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
                         >
                             <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
                         </button>
                         <button
-                            className={x.cls(['folder_name', folder.path === chosen_folder_path.ob.chosen_folder_path ? 'selected_folder' : null])}
+                            className={x.cls([
+                                'folder_name',
+                                folder_is_selected ? 'selected_folder' : '',
+                                folder_is_bulk_selected ? 'selected_folder_bulk' : '',
+                                folder_is_selected && folder_is_bulk_selected ? 'selected_folder_bulk_over' : '',
+                            ])}
                             type="button"
                             tabIndex={els_state.com2.inputs_disabled_3}
-                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
+                            onMouseUp={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
                             title={folder.name}
                         >
                             {folder.name}
@@ -121,9 +128,7 @@ export class Work_folder extends React.Component {
         search.search();
 
         const number_of_rows = search.mut.filtered_folders.length; // needs to be here, not in rowCount={}, otherwise scroll container wont resize on folder opening
-        folders.ob.folders; // eslint-disable-line no-unused-expressions
-        chosen_folder_path.ob.chosen_folder_path; // eslint-disable-line no-unused-expressions
-        els_state.com2.inputs_disabled_4; // eslint-disable-line no-unused-expressions
+        folders.ob.folders; chosen_folder_path.ob.chosen_folder_path; els_state.com2.inputs_disabled_4; chosen_folder_path.ob.chosen_folder_bulk_paths.slice(); // eslint-disable-line no-unused-expressions
 
         return (
             <Fieldset name="work_folder">
@@ -160,12 +165,13 @@ export class Work_folder extends React.Component {
     }
 }
 
-
 class Work_folder_selector extends React.Component {
     render() {
         folders.ob.folders; // eslint-disable-line no-unused-expressions
 
         const { set_ref } = this.props;
+        const work_folder_is_selected = choose_folder.ob.work_folder === chosen_folder_path.ob.chosen_folder_path;
+        const work_folder_is_bulk_selected = chosen_folder_path.check_if_folder_is_bulk_selected(choose_folder.ob.work_folder);
 
         const message_key = r.ifElse(
             () => choose_folder.ob.work_folder === '',
@@ -215,11 +221,16 @@ class Work_folder_selector extends React.Component {
                         />
                     </div>
                     <button
-                        className={x.cls(['work_folder_path', chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder ? 'selected_folder' : null])}
+                        className={x.cls([
+                            'work_folder_path',
+                            work_folder_is_selected ? 'selected_folder' : '',
+                            work_folder_is_bulk_selected ? 'selected_folder_bulk' : '',
+                            work_folder_is_selected && work_folder_is_bulk_selected ? 'selected_folder_bulk_over' : '',
+                        ])}
                         type="button"
                         tabIndex={els_state.com2.inputs_disabled_3}
                         title={choose_folder.ob.work_folder}
-                        onClick={component_methods.select_work_folder}
+                        onMouseUp={component_methods.select_work_folder}
                     >
                         {choose_folder.ob.work_folder}
                     </button>

@@ -11,6 +11,7 @@ import * as toggle_popup from 'js/toggle_popup';
 import * as show_or_open_folder from 'js/show_or_open_folder';
 import * as custom_paths_btns from 'js/custom_paths_btns';
 import * as history from 'js/history';
+import * as bulk_copy from 'js/bulk_copy';
 import * as imgs from 'js/imgs';
 import * as reupload_img from 'js/reupload_img';
 import * as search from 'js/work_folder/search';
@@ -30,6 +31,7 @@ import gear_svg from 'svg/gear';
 import list_svg from 'svg/list';
 import history_svg from 'svg/history';
 import upload_svg from 'svg/upload';
+import queue_svg from 'svg/queue';
 
 export class Header extends React.Component {
     constructor(props) {
@@ -140,6 +142,12 @@ export class Header extends React.Component {
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         on_click={history.load_history}
                         svg={history_svg}
+                    />
+                    <Btn
+                        name="bulk_copy"
+                        btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
+                        on_click={() => bulk_copy.show_or_hide_bulk_copy(true)}
+                        svg={queue_svg}
                     />
                     <Btn
                         name="collapse_all_folders"
