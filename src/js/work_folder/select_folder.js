@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join, sep } from 'path';
 import { existsSync } from 'fs-extra';
 import recursiveReaddir from 'recursive-readdir';
 
@@ -226,10 +226,11 @@ export const select_bulk_by_ctrl_clicking_on_folder = async folder_path => {
     const files = await recursiveReaddir(folder_path);
     const chosen_folder_path_is_already_selected = chosen_folder_path.check_if_folder_is_bulk_selected(folder_path);
     const manifest_files_paths = files.filter(file => file.indexOf('manifest.json') > -1);
-    const theme_paths = manifest_files_paths.map(path => path.substr(0, path.lastIndexOf('\\')));
+    const theme_paths = manifest_files_paths.map(path => path.substr(0, path.lastIndexOf(sep)));
     const at_least_one_theme_in_chosen_folder_is_selected = theme_paths.some(path => chosen_folder_path.check_if_folder_is_bulk_selected(path));
     const all_themes_in_chosen_folder_is_selected = theme_paths.every(path => chosen_folder_path.check_if_folder_is_bulk_selected(path));
-    const force_remove = chosen_folder_path_is_already_selected && (at_least_one_theme_in_chosen_folder_is_selected || !all_themes_in_chosen_folder_is_selected);
+    const chosen_folder_doesnt_contain_themes = theme_paths.length === 0;
+    const force_remove = chosen_folder_path_is_already_selected && (at_least_one_theme_in_chosen_folder_is_selected || !all_themes_in_chosen_folder_is_selected || chosen_folder_doesnt_contain_themes);
 
     for (const theme_path of theme_paths) {
         if (force_remove) {
