@@ -30,6 +30,18 @@ export const set_chosen_folder_bulk_path = action((mode, chosen_folder_path) => 
     }
 });
 
+
+export const rename_chosen_folder_bulk_path = (old_name, new_name) => {
+    try {
+        const folder_name_i = ob.chosen_folder_bulk_paths.indexOf(old_name);
+
+        ob.chosen_folder_bulk_paths[folder_name_i] = new_name;
+
+    } catch (er) {
+        err(er, 279);
+    }
+};
+
 export const check_if_folder_is_bulk_selected = folder_path => {
     try {
         return ob.chosen_folder_bulk_paths.indexOf(folder_path) > -1;
@@ -45,3 +57,7 @@ export const ob = observable({
     chosen_folder_path: choose_folder.ob.work_folder,
     chosen_folder_bulk_paths: [],
 });
+
+export const mut = {
+    confirm_breakpoint: 10,
+};

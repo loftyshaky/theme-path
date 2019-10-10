@@ -16,6 +16,7 @@ import * as options from 'js/options';
 import * as history from 'js/history';
 import * as reupload_img from 'js/reupload_img';
 import * as json_file from 'js/json_file';
+import * as conds from 'js/conds';
 import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
@@ -80,7 +81,7 @@ export const handle_files = async (mode, file, family, name) => {
 
                 img_extension = extname(file[0].path); // .png
 
-                copy_img(file[0].path, name, img_extension);
+                copy_img(name, img_extension, file[0].path);
 
                 reupload_img.record_img_path(file[0].path, family, name);
 
@@ -105,7 +106,7 @@ export const handle_files = async (mode, file, family, name) => {
 
                             img_extension = extname(img_path); // .png
 
-                            copy_img(img_path, name, img_extension);
+                            copy_img(name, img_extension, img_path);
 
                             reuploaded_img = true;
 
@@ -142,9 +143,9 @@ const previously_uploaded_img_doesnt_exists_err = () => {
     err(er_obj('Previously uploaded image doesn\'t exists'), 241, 'previously_uploaded_img_doesnt_exists');
 };
 
-const copy_img = (path, name, img_extension) => {
+export const copy_img = (name, img_extension, src_img_path, target_folder_path) => {
     try {
-        copySync(path, join(chosen_folder_path.ob.chosen_folder_path, `${name}${img_extension}`)); // copy image
+        copySync(src_img_path, join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, `${name}${img_extension}`)); // copy image
 
     } catch (er) {
         err(er, 242);
@@ -155,7 +156,7 @@ const record_img_change = (family, name) => {
     try {
         const was_default = inputs_data.obj[family][name].default;
 
-        if (history.imgs_cond(family, name)) {
+        if (conds.imgs(family, name)) {
             history.record_change(() => history.generate_img_history_obj(family, name, was_default, null, false));
         }
 
@@ -221,12 +222,12 @@ export const dehighlight_upload_box_on_drag_leave = action((family, name) => {
 //< drag and drop
 
 
-export const remove_img_by_name = name => {
+export const remove_img_by_name = (name, target_folder_path) => {
     try {
-        const file_with_name = folders.find_file_with_exist(name);
+        const file_with_name = folders.find_file_with_exist(name, target_folder_path);
 
         if (file_with_name) {
-            removeSync(join(chosen_folder_path.ob.chosen_folder_path, file_with_name));
+            removeSync(join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, file_with_name));
         }
 
     } catch (er) {

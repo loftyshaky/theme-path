@@ -78,6 +78,14 @@ svg, body.using_mouse .folder_arrow:focus svg {
     fill:#3892ff;
 }
 
+.side_popup_content .ReactVirtualized__List, .bulk_copy_side_popup_content {
+    border: 1px solid #212121;
+}
+
+.bulk_copy_set_default_message {
+    background-color: #a5f3ab;
+}
+
 /*> selects */
 .select__control {
     border-color: #212121!important;
@@ -177,10 +185,6 @@ textarea:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualizat
 
 .reverted_history_item:nth-child(even) {
     background-color: #adadad;
-}
-
-.history .ReactVirtualized__List {
-    border: 1px solid #212121;
 }
 /*< history */
 

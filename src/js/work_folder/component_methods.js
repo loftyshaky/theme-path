@@ -13,7 +13,7 @@ export const select_work_folder = action(e => {
         if (choose_folder.reset_work_folder(false)) {
             const folder_is_already_selected = chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder;
 
-            if (e.ctrlKey) {
+            if (e.button !== 0) {
                 select_folder.select_bulk_by_ctrl_clicking_on_folder(choose_folder.ob.work_folder);
 
             } else if (!folder_is_already_selected) {

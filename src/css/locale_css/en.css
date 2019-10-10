@@ -2,6 +2,10 @@
     width: 374px;
 }
 
-.history_popup {
+.history_side_popup {
     min-width: 301px;
+}
+
+.bulk_copy_side_popup {
+    width: 349px;
 }

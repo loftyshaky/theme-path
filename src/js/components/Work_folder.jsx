@@ -100,7 +100,7 @@ export class Work_folder extends React.Component {
                             className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
                             type="button"
                             tabIndex="-1"
-                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
+                            onMouseUp={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
                         >
                             <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
                         </button>
@@ -113,7 +113,7 @@ export class Work_folder extends React.Component {
                             ])}
                             type="button"
                             tabIndex={els_state.com2.inputs_disabled_3}
-                            onClick={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
+                            onMouseUp={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
                             title={folder.name}
                         >
                             {folder.name}
@@ -230,7 +230,7 @@ class Work_folder_selector extends React.Component {
                         type="button"
                         tabIndex={els_state.com2.inputs_disabled_3}
                         title={choose_folder.ob.work_folder}
-                        onClick={component_methods.select_work_folder}
+                        onMouseUp={component_methods.select_work_folder}
                     >
                         {choose_folder.ob.work_folder}
                     </button>

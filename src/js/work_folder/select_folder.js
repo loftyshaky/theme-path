@@ -19,7 +19,7 @@ import * as convert_color from 'js/convert_color';
 import * as choose_folder from 'js/work_folder/choose_folder';
 import * as color_pickiers from 'js/color_pickiers';
 import * as picked_colors from 'js/picked_colors';
-import * as history from 'js/history';
+import * as conds from 'js/conds';
 import * as change_val from 'js/change_val';
 import * as reupload_img from 'js/reupload_img';
 
@@ -32,7 +32,7 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
             const folder_is_already_selected = folder_path === chosen_folder_path.ob.chosen_folder_path;
             const folder_info = folders.get_info_about_folder(folder_path);
 
-            if (e.ctrlKey) {
+            if (e.button !== 0) {
                 if (folder_info.is_theme) {
                     chosen_folder_path.set_chosen_folder_bulk_path('decide', folder_path);
 
@@ -202,7 +202,7 @@ const set_val = action((family, name, val) => {
         if (item) {
             item.val = name === 'ntp_logo_alternate' ? val.toString() : val;
 
-            if (history.textareas_cond(family, name)) {
+            if (conds.textareas(family, name)) {
                 change_val.set_previous_val(family, name, val);
             }
         }
@@ -225,8 +225,8 @@ const uncheck_icon_input_default_checkbox = action(() => {
 export const select_bulk_by_ctrl_clicking_on_folder = async folder_path => {
     const files = await recursiveReaddir(folder_path);
     const chosen_folder_path_is_already_selected = chosen_folder_path.check_if_folder_is_bulk_selected(folder_path);
-    const mainifest_files_paths = files.filter(file => file.indexOf('manifest.json') > -1);
-    const theme_paths = mainifest_files_paths.map(path => path.substr(0, path.lastIndexOf('\\')));
+    const manifest_files_paths = files.filter(file => file.indexOf('manifest.json') > -1);
+    const theme_paths = manifest_files_paths.map(path => path.substr(0, path.lastIndexOf('\\')));
     const at_least_one_theme_in_chosen_folder_is_selected = theme_paths.some(path => chosen_folder_path.check_if_folder_is_bulk_selected(path));
     const all_themes_in_chosen_folder_is_selected = theme_paths.every(path => chosen_folder_path.check_if_folder_is_bulk_selected(path));
     const force_remove = chosen_folder_path_is_already_selected && (at_least_one_theme_in_chosen_folder_is_selected || !all_themes_in_chosen_folder_is_selected);

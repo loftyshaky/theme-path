@@ -37,14 +37,14 @@ export class Color extends React.Component {
         this.default_checkbox = this.type === 'color' ? (
             <Checkbox
                 {...props}
-                special_checkbox="default"
+                checkbox_type="default"
             />
         ) : null;
 
         this.disabled_checkbox = this.family === 'tints' ? (
             <Checkbox
                 {...props}
-                special_checkbox="disabled"
+                checkbox_type="disabled"
             />
         ) : null;
 

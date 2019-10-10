@@ -1,6 +1,5 @@
 import * as r from 'ramda';
 import Store from 'electron-store';
-import tinycolor from 'tinycolor2';
 
 import { inputs_data } from 'js/inputs_data';
 import * as manifest from 'js/manifest';
@@ -67,7 +66,7 @@ const convert_theme_color_props_to_color = item => {
                         change_val.set_disabled_bool(family, name, true);
 
                     } else {
-                        const rgba_string = tinycolor.fromRatio({ h: hsl_arr[0], s: hsl_arr[1], l: hsl_arr[2] }).toRgbString();
+                        const rgba_string = color_pickiers.convert_hsl_arr_to_hsl_string(hsl_arr);
 
                         change_val.set_inputs_data_val(family, name, rgba_string);
                         change_val.set_default_bool(family, name, false);

@@ -272,7 +272,7 @@ hr, .color_input_vizualization, .header_btn:hover, body.using_mouse .header_btn:
     background-color: white;
 }
 
-textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .history_item_color, .history .ReactVirtualized__List, .er_more_info_btn {
+textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .history_item_color, .side_popup_content .ReactVirtualized__List, .bulk_copy_side_popup_content, .er_more_info_btn {
     border: 1px solid white;
 }
 
@@ -329,7 +329,7 @@ svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
     margin-bottom: 11px;
 }
 
-.history_popup .btn:not(:last-child), .auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child), .export_settings_btn {
+.side_popup .btn:not(:last-child), .auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child), .export_settings_btn {
     margin-right: 10px
 }
 /*< general */
@@ -934,12 +934,20 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     z-index: 4;
 }
 
-.history_popup {
+.side_popup {
     resize: horizontal;
     max-width: calc(100% - 126px);
     right: unset;
     left: 50px;
     max-height: unset;
+    display: flex;
+    flex-flow: column;
+}
+
+.side_popup_content {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    height: 100%;
 }
 
 .close_btn {
@@ -968,13 +976,6 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 /*< popup */
 
 /*> history */
-.history {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    height: 100%;
-    height: calc(100% - 85px);
-}
-
 .history_item {
     cursor: pointer;
     outline: none;
@@ -1020,6 +1021,43 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     padding-left: 0;
 }
 /*< history */
+
+/*> bulk copy */
+.bulk_copy_side_popup {
+    resize: none;
+}
+
+.bulk_copy_side_popup_content, .bulk_copy_side_popup_content_btns {
+    padding: 10px;
+}
+
+.bulk_copy_side_popup_content {
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.bulk_copy_side_popup_content_btns {
+    text-align: center;
+}
+
+.bulk_copy_set_default_message {
+    margin: 0;
+    padding: 10px;
+    background-color: #4c9051;
+}
+
+.bulk_copy_side_popup_content_checkboxes, .bulk_copy_set_default_message {
+    margin-bottom: 10px;
+}
+
+.bulk_copy_side_popup_btns .btn:nth-child(-n+4)  {
+    margin-bottom: 10px;
+}
+
+.bulk_copy_side_popup_btns .btn:nth-child(4)  {
+    margin-right: 0;
+}
+/*< bulk copy */
 
 /*> analytics_privacy */
 .analytics_privacy {
@@ -1198,7 +1236,7 @@ body.using_mouse .header_btn:focus {
 }
 
 /*> transitions */
-.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .folder_name, .popup, .upload_box, fieldset, .legend, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn, .using_mouse .history_item {
+.checkbox_checkmark_w svg, .checkbox_input, a, .help_link, .upload_box_browse_label, .using_mouse .btn, .using_mouse textarea, .color_input_vizualization, .protecting_screen, .fieldset_protecting_screen, .folder_name, .popup, .upload_box, fieldset, .legend, .select__control--is-focused, .select__menu, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .tutorial_outline, .skip_tutorial_btn, .using_mouse .history_item, .bulk_copy_set_default_message {
     transition: all 0.2s ease-out;
 }
 
@@ -1210,7 +1248,7 @@ body.using_mouse .header_btn:focus {
     transition-property: border-color, box-shadow!important;
 }
 
-.checkbox_checkmark_w svg, .checkbox_input, .protecting_screen, .fieldset_protecting_screen, .popup, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item {
+.checkbox_checkmark_w svg, .checkbox_input, .protecting_screen, .fieldset_protecting_screen, .popup, .help_viewer_w, .help_viewer_expanded_img_w, .tutorial_item, .bulk_copy_set_default_message {
     transition-property: opacity;
 }
 

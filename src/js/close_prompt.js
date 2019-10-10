@@ -6,9 +6,9 @@ ipcRenderer.on('close_app', () => {
     const choice = remote.dialog.showMessageBox(remote.getCurrentWindow(),
         {
             type: 'question',
-            title: x.msg('app_close_confirm'),
-            message: x.msg('app_close_msg'),
-            buttons: [x.msg('app_close_answer_1'), x.msg('app_close_answer_2')],
+            title: x.msg('confirm_title'),
+            message: x.msg('app_close_confirm_msg'),
+            buttons: [x.msg('app_close_confirm_answer_quit'), x.msg('confirm_answer_cancel')],
         });
 
     if (choice === 0) {

@@ -5,6 +5,7 @@ import x from 'x';
 import * as toggle_popup from 'js/toggle_popup';
 import * as els_state from 'js/els_state';
 import * as history from 'js/history';
+import * as bulk_copy from 'js/bulk_copy';
 
 import { Tr } from 'components/Tr';
 
@@ -65,7 +66,7 @@ export const History_fieldset_protecting_screen = observer(props => {
 
     return (
         <div
-            className={x.cls(['history_fieldset_protecting_screen', history.ob.history_is_visible || (name === 'work_folder' && els_state.ob.applying_textarea_val) ? null : 'none'])}
+            className={x.cls(['history_fieldset_protecting_screen', history.ob.history_is_visible || bulk_copy.ob.bulk_copy_is_visible || (name === 'work_folder' && els_state.ob.applying_textarea_val) ? null : 'none'])}
         />
     );
 });

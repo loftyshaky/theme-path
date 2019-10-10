@@ -13,7 +13,7 @@ import * as els_state from 'js/els_state';
 configure({ enforceActions: 'observed' });
 
 //> create new theme when clicking on "New theme" or rename theme folder when typing in name input
-export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, name_input_val, custom_folder_path) => { // action( need to be here otherwise renamed folder will be deselected
+export const create_new_theme_or_rename_theme_folder = action((mode, folder_path, name_input_val, renaming_after_bulk_copy_the_name, custom_folder_path) => { // action( need to be here otherwise renamed folder will be deselected
     try {
         if (choose_folder.reset_work_folder(false)) {
             if (mode === 'renaming_folder' || (mode === 'creating_folder' && !folders.mut.chosen_folder_info.is_theme)) {
@@ -42,6 +42,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
 
                             } else if (mode === 'renaming_folder' && folder_name_final.length <= 255) {
                                 const new_folder_path = join(parent_of_renamed_folder_path, folder_name_final);
+                                const folder_chosen_as_main_and_bulk_at_the_same_time = chosen_folder_path.ob.chosen_folder_path === folder_path;
 
                                 try {
                                     if (existsSync(source_folder_path)) {
@@ -53,17 +54,25 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                     t('folder_is_locked'); // eslint-disable-line no-throw-literal
                                 }
 
-                                chosen_folder_path.set_chosen_folder_path(new_folder_path);
+                                if (!renaming_after_bulk_copy_the_name || folder_chosen_as_main_and_bulk_at_the_same_time) {
+                                    chosen_folder_path.set_chosen_folder_path(new_folder_path);
+                                }
+
+                                if (renaming_after_bulk_copy_the_name || folder_chosen_as_main_and_bulk_at_the_same_time) {
+                                    chosen_folder_path.rename_chosen_folder_bulk_path(folder_path, new_folder_path);
+                                }
 
                                 const renamed_folder_i = folders.ob.folders.findIndex(item => item.path === source_folder_path);
                                 const work_folder_is_theme_folder = folders.ob.folders.length === 0;
 
-                                if (!work_folder_is_theme_folder) {
-                                    folders.ob.folders[renamed_folder_i].name = folder_name_final;
-                                    folders.ob.folders[renamed_folder_i].path = new_folder_path;
+                                if (folders.ob.folders[renamed_folder_i]) {
+                                    if (!work_folder_is_theme_folder) {
+                                        folders.ob.folders[renamed_folder_i].name = folder_name_final;
+                                        folders.ob.folders[renamed_folder_i].path = new_folder_path;
 
-                                } else {
-                                    choose_folder.change_work_folder(new_folder_path);
+                                    } else if (renaming_after_bulk_copy_the_name) {
+                                        choose_folder.change_work_folder(new_folder_path);
+                                    }
                                 }
 
                                 els_state.set_applying_textarea_val_val(false);
@@ -97,7 +106,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
     }
 });
 
-export const rename_theme_folder = x.debounce((folder_path, name_input_val) => create_new_theme_or_rename_theme_folder('renaming_folder', folder_path, name_input_val), 1000);
+export const rename_theme_folder = x.debounce((folder_path, name_input_val, renaming_after_bulk_copy_the_name) => create_new_theme_or_rename_theme_folder('renaming_folder', folder_path, name_input_val, renaming_after_bulk_copy_the_name), 1000);
 //< create new theme when clicking on "New theme" or rename theme folder when typing in name input
 
 export const put_new_folder_first = parent_folder_path => {

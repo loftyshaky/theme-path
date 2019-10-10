@@ -39,6 +39,11 @@ export const write_to_json = (json, json_path) => {
     }
 };
 
-export const write_to_manifest_json = () => {
-    write_to_json(manifest.mut.manifest, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
+export const write_to_manifest_json = (target_path, manifest_obj) => {
+    try {
+        write_to_json(manifest_obj || manifest.mut.manifest, join(target_path || chosen_folder_path.ob.chosen_folder_path, 'manifest.json'));
+
+    } catch (er) {
+        err(er, 262);
+    }
 };

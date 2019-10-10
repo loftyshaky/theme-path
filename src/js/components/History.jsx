@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Svg from 'svg-inline-react';
 import { List, AutoSizer, CellMeasurerCache, CellMeasurer } from 'react-virtualized';
 
 import x from 'x';
@@ -8,12 +7,9 @@ import { selects_options } from 'js/selects_options';
 import * as analytics from 'js/analytics';
 import * as enter_click from 'js/enter_click';
 import * as history from 'js/history';
+import * as conds from 'js/conds';
 
-import { Tr } from 'components/Tr';
-import { Btn } from 'components/Btn';
-import { Hr } from 'components/Hr';
-
-import close_svg from 'svg/close';
+import { Side_popup } from 'components/Side_popup';
 
 export class History extends React.Component {
     cache = new CellMeasurerCache({
@@ -24,7 +20,7 @@ export class History extends React.Component {
     constructor(props) {
         super(props);
 
-        history.met.reset_history_popup_content = () => {
+        history.met.reset_history_side_popup_content = () => {
             try {
                 this.cache.clearAll();
 
@@ -47,7 +43,7 @@ export class History extends React.Component {
             this.list.scrollToRow(Infinity);
 
             await x.delay(0);
-            const history_scroll_container = s('.history_popup .ReactVirtualized__Grid');
+            const history_scroll_container = s('.history_side_popup .ReactVirtualized__Grid');
             history_scroll_container.scrollTop = history_scroll_container.scrollHeight;
         }
     }
@@ -55,7 +51,7 @@ export class History extends React.Component {
     render_history_item_content = item => {
         try {
 
-            if (history.imgs_cond(item.family, item.name)) {
+            if (conds.imgs(item.family, item.name)) {
                 if (!item.set_to_default) {
                     if (item.to_rgba) {
                         return <Color_and_img_changed_to color={item.to_rgba} />;
@@ -69,7 +65,7 @@ export class History extends React.Component {
                     return <Color_and_img_changed_to color={item.to_hex} />;
                 }
 
-            } else if (history.selects_cond(item.family, item.name)) {
+            } else if (conds.selects(item.family, item.name)) {
                 return (
                     <Selects_changed_to
                         name={item.name}
@@ -77,7 +73,7 @@ export class History extends React.Component {
                     />
                 );
 
-            } else if (history.textareas_cond(item.family, item.name)) {
+            } else if (conds.textareas(item.family, item.name)) {
                 return (
                     <Textarea_changed_to
                         val={item.to}
@@ -169,51 +165,35 @@ export class History extends React.Component {
         history.ob.revert_position; // eslint-disable-line no-unused-expressions
 
         return (
-            <Tr
-                attr={{
-                    className: 'popup history_popup',
-                }}
-                tag="div"
-                name="gen"
-                state={history.ob.history_is_visible}
+            <Side_popup
+                popup_is_visible={history.ob.history_is_visible}
+                name="history"
+                additional_btns={[
+                    {
+                        key: x.unique_id(),
+                        name: 'history_revert_all',
+                        on_click: this.revert_all,
+                    },
+                ]}
+                close_f={this.close_history}
+                accept_f={history.accept_history_change}
+                cancel_f={this.cancel}
             >
-                <button
-                    className="close_btn"
-                    type="button"
-                    onClick={this.close_history}
-                >
-                    <Svg src={close_svg} />
-                </button>
-                <Hr name="history" />
-                <div className="history">
-                    <AutoSizer>
-                        {({ width, height }) => (
-                            <List
-                                width={width}
-                                height={height}
-                                deferredMeasurementCache={this.cache}
-                                rowHeight={this.cache.rowHeight}
-                                rowRenderer={this.render_row}
-                                rowCount={number_of_rows}
-                                tabIndex={null}
-                                ref={ref => this.list = ref} // eslint-disable-line no-return-assign
-                            />
-                        )}
-                    </AutoSizer>
-                </div>
-                <Btn
-                    name="history_accept"
-                    on_click={history.accept_history_change}
-                />
-                <Btn
-                    name="history_cancel"
-                    on_click={this.cancel}
-                />
-                <Btn
-                    name="history_revert_all"
-                    on_click={this.revert_all}
-                />
-            </Tr>
+                <AutoSizer>
+                    {({ width, height }) => (
+                        <List
+                            width={width}
+                            height={height}
+                            deferredMeasurementCache={this.cache}
+                            rowHeight={this.cache.rowHeight}
+                            rowRenderer={this.render_row}
+                            rowCount={number_of_rows}
+                            tabIndex={null}
+                            ref={ref => this.list = ref} // eslint-disable-line no-return-assign
+                        />
+                    )}
+                </AutoSizer>
+            </Side_popup>
         );
     }
 }
