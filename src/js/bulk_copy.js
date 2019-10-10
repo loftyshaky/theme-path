@@ -66,7 +66,7 @@ export const show_or_hide_bulk_copy = action(bool => {
     try {
         if (bool) {
             folders.check_if_selected_folder_is_theme(() => {
-                folders.check_if_multiple_themes_is_selected(() => {
+                folders.check_if_multiple_themes_is_selected(false, () => {
                     ob.bulk_copy_is_visible = bool;
                 });
             });
@@ -116,7 +116,7 @@ export const accept = () => {
 
             store.set('default_bulk_copy_checkboxes', toJS(ob.bulk_copy_checkboxes));
 
-        } else if (chosen_folder_path.ob.chosen_folder_bulk_paths.length >= chosen_folder_path.mut.confirm_breakpoint) {
+        } else if (chosen_folder_path.ob.chosen_folder_bulk_paths.length > chosen_folder_path.mut.confirm_breakpoint) {
             const dialog_options = {
                 type: 'question',
                 title: x.msg('confirm_title'),
@@ -185,7 +185,7 @@ export const bulk_copy = () => {
                                     let target_rgba_arr = null;
                                     let target_rgba_string_from_manifest = null;
 
-                                    if (family !== 'images' && name !== 'clear_new_tab_video') {
+                                    if (family !== 'images' && name !== 'icon' && name !== 'clear_new_tab_video') {
                                         target_rgba_arr = target_is_default ? null : target_manifest_obj.theme[family][name];
                                         target_rgba_string_from_manifest = Array.isArray(target_rgba_arr) ? color_pickiers.convert_rgba_arr_into_string(target_rgba_arr) : null;
                                     }
