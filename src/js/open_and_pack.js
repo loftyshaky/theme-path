@@ -113,7 +113,7 @@ export const pack = type => {
             let theme_paths_to_pack = [chosen_folder_path.ob.chosen_folder_path];
 
             if (multiple_themes_is_selected) {
-                theme_paths_to_pack = chosen_folder_path.ob.chosen_folder_bulk_paths.filter(path => path !== chosen_folder_path.ob.chosen_folder_path && folders.check_if_folder_is_theme(path));
+                theme_paths_to_pack = chosen_folder_path.exclude_non_themes();
 
                 if (folders.check_if_folder_is_theme(chosen_folder_path.ob.chosen_folder_path)) {
                     theme_paths_to_pack.unshift(chosen_folder_path.ob.chosen_folder_path);

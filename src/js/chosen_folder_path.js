@@ -1,5 +1,6 @@
 import { action, observable, configure } from 'mobx';
 
+import * as folders from 'js/work_folder/folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
 configure({ enforceActions: 'observed' });
@@ -48,6 +49,18 @@ export const check_if_folder_is_bulk_selected = folder_path => {
 
     } catch (er) {
         err(er, 252);
+    }
+
+    return undefined;
+};
+
+
+export const exclude_non_themes = () => {
+    try {
+        return ob.chosen_folder_bulk_paths.filter(path => path !== ob.chosen_folder_path && folders.check_if_folder_is_theme(path));
+
+    } catch (er) {
+        err(er, 288);
     }
 
     return undefined;
