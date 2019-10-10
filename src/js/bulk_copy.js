@@ -1,6 +1,7 @@
 import { join, extname } from 'path';
 import { existsSync, readdirSync } from 'fs-extra';
 
+import * as r from 'ramda';
 import { action, configure, observable, toJS } from 'mobx';
 import Store from 'electron-store';
 import { remote } from 'electron';
@@ -164,7 +165,7 @@ export const bulk_copy = theme_paths => {
                                 const src_is_default = is_select ? is_select_default : inputs_data.obj[family][name].default;
                                 const src_picked_colors_obj_has_picked_colors_record = picked_colors.check_if_property_exists_on_picked_colors_obj(family, name, src_picked_colors_obj);
                                 const src_rgba_color = get_rgba_color(family, name, src_manifest_obj, src_picked_colors_obj, src_is_default, src_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
-                                const img_is_default = name === 'icon' ? false : !target_manifest_obj.theme || !target_manifest_obj.theme[family] || !target_manifest_obj.theme[family][name];
+                                const img_is_default = name === 'icon' ? false : !target_manifest_obj.theme || !target_manifest_obj.theme[family] || r.isNil(target_manifest_obj.theme[family][name]);
                                 const target_is_default = name === 'clear_new_tab_video' ? clear_new_tab_video_is_in_theme_folder : img_is_default;
                                 const target_picked_colors_obj_has_picked_colors_record = picked_colors.check_if_property_exists_on_picked_colors_obj(family, name, target_picked_colors_obj);
                                 const target_rgba_color = get_rgba_color(family, name, target_manifest_obj, target_picked_colors_obj, target_is_default, target_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
@@ -311,7 +312,7 @@ export const bulk_copy = theme_paths => {
                                     }
                                 }
 
-                                if (((special_checkbox === 'default' || 'select') && src_is_default && !target_is_default) || (special_checkbox === 'disabled' && src_is_disabled && !target_is_disabled)) {
+                                if (((special_checkbox === 'default' || special_checkbox === 'select') && src_is_default && !target_is_default) || (special_checkbox === 'disabled' && src_is_disabled && !target_is_disabled)) {
                                     if (is_select) {
                                         record_select_change(true);
                                     }

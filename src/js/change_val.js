@@ -57,7 +57,7 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
             const five_if_strings = ['video_volume', 'size'];
             const img_extension_final = `${img_extension || '.png'}`;
 
-            if (name !== 'clear_new_tab_video') {
+            if (name !== 'clear_new_tab_video' && reload_manifest) {
                 set_inputs_data_val(family, name, fourth_if_strings.indexOf(family) > -1 ? new_val + img_extension_final : new_val);
             }
 

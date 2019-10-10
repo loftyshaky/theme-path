@@ -198,7 +198,7 @@ export const delete_key_from_manifest = (family, name, manifest_obj) => {
     try {
         const new_manifest_obj = manifest_obj || manifest.mut.manifest;
 
-        if (new_manifest_obj.theme && new_manifest_obj.theme[family] && new_manifest_obj.theme[family][name]) {
+        if (new_manifest_obj.theme && new_manifest_obj.theme[family] && !r.isNil(new_manifest_obj.theme[family][name])) {
             delete new_manifest_obj.theme[family][name];
 
             if (r.isEmpty(new_manifest_obj.theme[family])) {

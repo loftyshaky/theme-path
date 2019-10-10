@@ -49,18 +49,19 @@ export class Select extends React.Component {
             const was_default = previous_val === 'default';
             let set_to_default;
 
-            change_val.change_val(this.family, this.name, value, null, true);
-
             if (value === 'default') {
                 set_to_default = true;
+
                 set_default_or_disabled.set_default_or_disabled(this.family, this.name, 'select');
 
             } else {
+                change_val.change_val(this.family, this.name, value, null, true);
+
                 set_to_default = false;
             }
 
             if (conds.selects(this.family, this.name)) {
-                history.record_change(() => history.generate_select_history_obj(this.family, this.name, was_default, previous_val === 'default' ? null : previous_val, value, set_to_default));
+                history.record_change(() => history.generate_select_history_obj(this.family, this.name, was_default, previous_val, value, set_to_default));
             }
 
             analytics.send_event('selects', `selected_option-${this.family}-${this.name}-${value}`);
