@@ -1,3 +1,4 @@
+import * as r from 'ramda';
 import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
@@ -15,6 +16,7 @@ import * as imgs from 'js/imgs';
 import * as reupload_img from 'js/reupload_img';
 import * as enter_click from 'js/enter_click';
 import * as header from 'js/header';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as search from 'js/work_folder/search';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as custom_folders from 'js/work_folder/custom_folders';
@@ -75,7 +77,7 @@ export class Header extends React.Component {
         const chrome_exe_paths = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_exe_paths);
         const chrome_user_data_folders = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_user_data_folders);
         const custom_folders_var = custom_paths_btns.create_paths_arr(custom_folders.ob.custom_folders);
-
+l(5)
         return (
             <header>
                 <span className="header_section header_left">
@@ -151,6 +153,7 @@ export class Header extends React.Component {
                     <Btn
                         name="bulk_copy"
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
+                        label_text={chosen_folder_path.ob.bulk_theme_count}
                         svg={queue_svg}
                         f={() => bulk_copy.show_or_hide_bulk_copy(true)}
                     />
@@ -222,7 +225,7 @@ const Btn = props => {
     const { name, btn_is_inactive_class, label_text, title, no, svg, custom_action, attach_action_to_on_key_up_too, f } = props;
     let btn_content = <Svg src={svg} />;
 
-    if (label_text) {
+    if (!r.isNil(label_text)) {
         btn_content = (
             <React.Fragment>
                 <span>
@@ -255,7 +258,7 @@ const Btn = props => {
 
     return (
         <button
-            className={x.cls(['header_btn', 'header_btn_icon', label_text ? 'label_btn' : null, `${name}_btn`, btn_is_inactive_class ? els_state.try_to_set_btn_is_inactive_class() : null])}
+            className={x.cls(['header_btn', 'header_btn_icon', !r.isNil(label_text) ? 'label_btn' : null, `${name}_btn`, btn_is_inactive_class ? els_state.try_to_set_btn_is_inactive_class() : null])}
             type="button"
             title={title || x.msg(`${name}_btn_title`)}
             disabled={els_state.com2.inputs_disabled_5}

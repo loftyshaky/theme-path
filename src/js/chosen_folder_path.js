@@ -66,9 +66,20 @@ export const exclude_non_themes = () => {
     return undefined;
 };
 
+export const count_bulk_themes = action(() => {
+    try {
+        ob.bulk_theme_count = exclude_non_themes(ob.chosen_folder_bulk_paths).length;
+
+    } catch (er) {
+        err(er, 291);
+    }
+
+});
+
 export const ob = observable({
     chosen_folder_path: choose_folder.ob.work_folder,
     chosen_folder_bulk_paths: [],
+    bulk_theme_count: 0,
 });
 
 export const mut = {

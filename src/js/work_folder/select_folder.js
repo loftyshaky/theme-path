@@ -247,4 +247,7 @@ export const select_bulk_by_ctrl_clicking_on_folder = async folder_path => {
     } else {
         chosen_folder_path.set_chosen_folder_bulk_path('force_add', folder_path);
     }
+
+    chosen_folder_path.count_bulk_themes();
 };
+
