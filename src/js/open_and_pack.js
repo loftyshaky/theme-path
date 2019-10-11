@@ -7,7 +7,7 @@ import { execFile, execFileSync } from 'child_process';
 import glob from 'glob';
 import { remote } from 'electron';
 
-import kill from 'tree-kill';
+import psTree from 'ps-tree';
 import zipLocal from 'zip-local';
 import Store from 'electron-store';
 import getChrome from 'get-chrome';
@@ -33,12 +33,26 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
             const user_data_path = folder_path || join(join(homedir(), 'chrome-theme-creator'), 'chrome-preview-user-data');
             const incognito = !left_button_clicked ? ' --incognito' : '--x';
             const chrome_process_ids = !left_button_clicked ? 'chrome_incognito_process_ids' : 'chrome_process_ids';
+            const chrome_process_id = mut[chrome_process_ids][user_data_path];
 
             folders.check_if_selected_folder_is_theme(() => {
-                kill(mut[chrome_process_ids][user_data_path], 'SIGKILL', async er => {
+                psTree(chrome_process_id, async (er, children) => {
                     if (er) {
                         err(er, 15, null, true);
                     }
+
+                    //> kill al chrome processes
+                    try {
+                        process.kill(chrome_process_id, 'SIGTERM');
+
+                        for (const child of children) {
+                            process.kill(child.PID, 'SIGTERM');
+                        }
+
+                    } catch (er2) {
+                        err(er2, 292, null, true);
+                    }
+                    //< kill al chrome processes
 
                     try {
                         const name = chrome_exe_path ? 'open_in_profiled_chrome' : 'open_in_chrome';
