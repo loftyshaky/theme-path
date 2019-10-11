@@ -36,6 +36,8 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
                 if (folder_info.is_theme) {
                     chosen_folder_path.set_chosen_folder_bulk_path('decide', folder_path);
 
+                    chosen_folder_path.count_bulk_themes();
+
                 } else if (!folder_info.is_theme) {
                     await select_bulk_by_ctrl_clicking_on_folder(folder_path);
                 }
@@ -250,4 +252,3 @@ export const select_bulk_by_ctrl_clicking_on_folder = async folder_path => {
 
     chosen_folder_path.count_bulk_themes();
 };
-

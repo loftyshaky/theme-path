@@ -77,7 +77,7 @@ export class Header extends React.Component {
         const chrome_exe_paths = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_exe_paths);
         const chrome_user_data_folders = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_user_data_folders);
         const custom_folders_var = custom_paths_btns.create_paths_arr(custom_folders.ob.custom_folders);
-l(5)
+
         return (
             <header>
                 <span className="header_section header_left">
