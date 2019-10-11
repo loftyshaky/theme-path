@@ -19,9 +19,9 @@ import { Fieldset } from 'components/Fieldset';
 import { Tutorial_item } from 'components/Tutorial_item';
 
 import folder_svg from 'svg/folder';
-import folder_opened_svg from 'svg/folder_opened';
-import arrow_right_svg from 'svg/arrow_right';
-import arrow_down_svg from 'svg/arrow_down';
+import folder_open_svg from 'svg/folder_open';
+import keyboard_arrow_right_svg from 'svg/keyboard_arrow_right';
+import keyboard_arrow_down_svg from 'svg/keyboard_arrow_down';
 
 export class Work_folder extends React.Component {
     constructor(props) {
@@ -80,7 +80,7 @@ export class Work_folder extends React.Component {
                     disabled={els_state.com2.inputs_disabled_4}
                     onClick={on_click_folder_arrow}
                 >
-                    <Svg src={folder_is_opened ? arrow_down_svg : arrow_right_svg} />
+                    <Svg src={folder_is_opened ? keyboard_arrow_down_svg : keyboard_arrow_right_svg} />
                 </button>
             );
 
@@ -102,7 +102,7 @@ export class Work_folder extends React.Component {
                             tabIndex="-1"
                             onMouseUp={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
                         >
-                            <Svg src={folder_is_opened ? folder_opened_svg : folder_svg} />
+                            <Svg src={folder_is_opened ? folder_open_svg : folder_svg} />
                         </button>
                         <button
                             className={x.cls([

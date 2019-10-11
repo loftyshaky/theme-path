@@ -24,14 +24,14 @@ import * as custom_folders from 'js/work_folder/custom_folders';
 import { Tutorial_item } from 'components/Tutorial_item';
 import { History_fieldset_protecting_screen } from 'components/Protecting_screen';
 
-import plus_svg from 'svg/plus';
+import add_svg from 'svg/add';
 import dehaze_svg from 'svg/dehaze';
-import arrow_up_2_svg from 'svg/arrow_up_2';
-import eye_svg from 'svg/eye';
+import arrow_upward_svg from 'svg/arrow_upward';
+import visibility_svg from 'svg/visibility';
 import open_in_browser_svg from 'svg/open_in_browser';
 import archive_svg from 'svg/archive';
-import gear_svg from 'svg/gear';
-import list_svg from 'svg/list';
+import settings_applications_svg from 'svg/settings_applications';
+import help_svg from 'svg/help';
 import history_svg from 'svg/history';
 import upload_svg from 'svg/upload';
 import queue_svg from 'svg/queue';
@@ -85,7 +85,7 @@ export class Header extends React.Component {
                         <Btn
                             name="new_theme"
                             label_text={x.msg('new_theme_btn_label_text')}
-                            svg={plus_svg}
+                            svg={add_svg}
                             f={this.create_new_theme}
                         />
                         <Tutorial_item
@@ -164,12 +164,12 @@ export class Header extends React.Component {
                     />
                     <Btn
                         name="show_folder"
-                        svg={arrow_up_2_svg}
+                        svg={arrow_upward_svg}
                         f={() => show_or_open_folder.show_or_open_folder('show')}
                     />
                     <Btn
                         name="open_folder"
-                        svg={eye_svg}
+                        svg={visibility_svg}
                         f={() => show_or_open_folder.show_or_open_folder('open')}
                     />
                     <Btn
@@ -203,14 +203,14 @@ export class Header extends React.Component {
                     </div>
                     <Btn
                         name="options"
-                        svg={gear_svg}
+                        svg={settings_applications_svg}
                         custom_action
                         f={() => header.toggle_popup_f('options')}
                     />
                     <Btn
                         name="links"
                         custom_action
-                        svg={list_svg}
+                        svg={help_svg}
                         f={() => header.toggle_popup_f('links')}
                     />
                 </span>

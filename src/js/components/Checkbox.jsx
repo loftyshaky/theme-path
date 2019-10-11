@@ -13,7 +13,7 @@ import * as change_val from 'js/change_val';
 
 import { Tr } from 'components/Tr';
 
-import checkmark_svg from 'svg/checkmark';
+import check_svg from 'svg/check';
 
 export const Checkbox = observer(props => {
     const { name, family, checkbox_type, on_change_bulk_copy } = props;
@@ -71,7 +71,7 @@ export const Checkbox = observer(props => {
                     tabIndex={is_special_checkbox ? els_state.com2.inputs_disabled_1 : 0}
                     onKeyUp={enter_click.simulate_click_on_enter}
                 >
-                    <Svg src={checkmark_svg} />
+                    <Svg src={check_svg} />
                 </span>
             </label>
             <label
