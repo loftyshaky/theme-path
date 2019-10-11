@@ -1,5 +1,20 @@
 import * as color_pickiers from 'js/color_pickiers';
 
+export const simulate_mouse_up_on_enter = e => {
+    try {
+
+        if (e.keyCode === sta.enter_key_code) {
+            const click_event = document.createEvent('MouseEvents');
+
+            click_event.initEvent('mouseup', true, true);
+            document.activeElement.dispatchEvent(click_event);
+        }
+
+    } catch (er) {
+        err(er, 290);
+    }
+};
+
 export const simulate_click_on_enter = e => {
     try {
         if (e.keyCode === sta.enter_key_code) {

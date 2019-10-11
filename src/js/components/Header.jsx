@@ -7,13 +7,14 @@ import * as analytics from 'js/analytics';
 import * as els_state from 'js/els_state';
 import * as folders from 'js/work_folder/folders';
 import * as open_and_pack from 'js/open_and_pack';
-import * as toggle_popup from 'js/toggle_popup';
 import * as show_or_open_folder from 'js/show_or_open_folder';
 import * as custom_paths_btns from 'js/custom_paths_btns';
 import * as history from 'js/history';
 import * as bulk_copy from 'js/bulk_copy';
 import * as imgs from 'js/imgs';
 import * as reupload_img from 'js/reupload_img';
+import * as enter_click from 'js/enter_click';
+import * as header from 'js/header';
 import * as search from 'js/work_folder/search';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as custom_folders from 'js/work_folder/custom_folders';
@@ -79,17 +80,12 @@ export class Header extends React.Component {
             <header>
                 <span className="header_section header_left">
                     <div className="btn_w">
-                        <button
-                            className="header_btn new_theme_btn"
-                            type="button"
-                            onClick={this.create_new_theme}
-                            disabled={els_state.com2.inputs_disabled_5}
-                        >
-                            <span className="header_btn_icon new_theme_btn_icon">
-                                <Svg src={plus_svg} />
-                            </span>
-                            <label data-text="new_theme_btn_label_text" />
-                        </button>
+                        <Btn
+                            name="new_theme"
+                            label_text={x.msg('new_theme_btn_label_text')}
+                            svg={plus_svg}
+                            f={this.create_new_theme}
+                        />
                         <Tutorial_item
                             name="create_new_theme"
                             tutorial_stage="3"
@@ -98,10 +94,12 @@ export class Header extends React.Component {
                     </div>
                     {
                         custom_folders_var.map((folder_path, i) => (
-                            <Create_custom_folder_btn
+                            <Btn
                                 key={x.unique_id()}
-                                path={folder_path.trim()}
+                                name="open_folder"
+                                title={`${x.msg('create_custom_folder_btn_title')} - ${folder_path}`}
                                 no={i + 1}
+                                f={() => header.create_custom_folder(folder_path)}
                             />
                         ))
                     }
@@ -116,20 +114,27 @@ export class Header extends React.Component {
                 </span>
                 <span className="header_section header_right">
                     {
-                        chrome_user_data_folders.map((folder_path, i) => (
-                            <Open_in_profiled_chrome_btn
-                                key={x.unique_id()}
-                                exe={chrome_exe_paths[i] ? chrome_exe_paths[i] : chrome_exe_paths[0]}
-                                path={folder_path}
-                                no={i + 1}
-                            />
-                        ))
+                        chrome_user_data_folders.map((folder_path, i) => {
+                            const exe = chrome_exe_paths[i] ? chrome_exe_paths[i] : chrome_exe_paths[0];
+
+                            return (
+                                <Btn
+                                    key={x.unique_id()}
+                                    name="open_folder"
+                                    title={`${x.msg('open_in_chrome_btn_title')} - ${folder_path}`}
+                                    attach_action_to_on_key_up_too
+                                    no={i + 1}
+                                    f={e => open_and_pack.open_in_chrome(exe, folder_path, e)}
+                                />
+                            );
+                        })
                     }
                     <div className="btn_w">
                         <Btn
                             name="open_in_chrome"
-                            on_click={e => open_and_pack.open_in_chrome(null, null, e)}
+                            attach_action_to_on_key_up_too
                             svg={open_in_browser_svg}
+                            f={e => open_and_pack.open_in_chrome(null, null, e)}
                         />
                         <Tutorial_item
                             name="open_in_chrome"
@@ -140,48 +145,70 @@ export class Header extends React.Component {
                     <Btn
                         name="history"
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
-                        on_click={history.load_history}
                         svg={history_svg}
+                        f={history.load_history}
                     />
                     <Btn
                         name="bulk_copy"
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
-                        on_click={() => bulk_copy.show_or_hide_bulk_copy(true)}
                         svg={queue_svg}
+                        f={() => bulk_copy.show_or_hide_bulk_copy(true)}
                     />
                     <Btn
                         name="collapse_all_folders"
-                        on_click={folders.collapse_all_folders}
                         svg={dehaze_svg}
+                        f={folders.collapse_all_folders}
                     />
                     <Btn
                         name="show_folder"
-                        on_click={() => show_or_open_folder.show_or_open_folder('show')}
                         svg={arrow_up_2_svg}
+                        f={() => show_or_open_folder.show_or_open_folder('show')}
                     />
                     <Btn
                         name="open_folder"
-                        on_click={() => show_or_open_folder.show_or_open_folder('open')}
                         svg={eye_svg}
+                        f={() => show_or_open_folder.show_or_open_folder('open')}
                     />
-                    <Reupload_img_btn name="reupload_img" />
+                    <Btn
+                        name="reupload_img"
+                        title={`${x.msg('reupload_img_btn_title')}${reupload_img.ob.previous_img_path ? ` - ${reupload_img.ob.previous_img_path}` : ''}`}
+                        svg={upload_svg}
+                        f={() => imgs.handle_files('reupload')}
+                    />
                     <div className="btn_w">
-                        <Pack_btn name="zip" />
-                        <Pack_btn name="crx" />
+                        <Btn
+                            name="pack_as_zip"
+                            label_text="ZIP"
+                            btn_is_inactive_class
+                            custom_action
+                            svg={archive_svg}
+                            f={() => header.pack('zip')}
+                        />
+                        <Btn
+                            name="pack_as_crx"
+                            label_text="CRX"
+                            btn_is_inactive_class
+                            custom_action
+                            svg={archive_svg}
+                            f={() => header.pack('crx')}
+                        />
                         <Tutorial_item
                             name="pack"
                             tutorial_stage="7"
                             outline={false}
                         />
                     </div>
-                    <Popup_btn
+                    <Btn
                         name="options"
                         svg={gear_svg}
+                        custom_action
+                        f={() => header.toggle_popup_f('options')}
                     />
-
-                    <Popup_btn
+                    <Btn
                         name="links"
+                        custom_action
                         svg={list_svg}
+                        f={() => header.toggle_popup_f('links')}
                     />
                 </span>
                 <History_fieldset_protecting_screen />
@@ -190,147 +217,55 @@ export class Header extends React.Component {
     }
 }
 
-const Open_in_profiled_chrome_btn = props => {
-    const { exe, path, no } = props;
-
-    return (
-        <button
-            className="header_btn open_in_chrome_btn"
-            type="button"
-            title={`${x.msg('open_in_chrome_btn_title')} - ${path}`}
-            disabled={els_state.com2.inputs_disabled_5}
-            onMouseUp={open_and_pack.open_in_chrome.bind(null, exe, path)}
-            onKeyUp={open_and_pack.open_in_chrome.bind(null, exe, path)}
-        >
-            {no}
-        </button>
-    );
-};
-
-const Create_custom_folder_btn = props => {
-    const { path, no } = props;
-
-    const create_custom_folder = () => {
-        analytics.add_header_btns_analytics('create_custom_folder');
-
-        expand_or_collapse.create_new_theme_or_folder(path);
-    };
-
-    return (
-        <button
-            className="header_btn open_in_chrome_btn"
-            type="button"
-            title={`${x.msg('create_custom_folder_btn_title')} - ${path}`}
-            disabled={els_state.com2.inputs_disabled_5}
-            onClick={create_custom_folder}
-        >
-            {no}
-        </button>
-    );
-};
 
 const Btn = props => {
-    const { name, btn_is_inactive_class, on_click, svg } = props;
+    const { name, btn_is_inactive_class, label_text, title, no, svg, custom_action, attach_action_to_on_key_up_too, f } = props;
+    let btn_content = <Svg src={svg} />;
 
-    const on_click_inner = e => {
+    if (label_text) {
+        btn_content = (
+            <React.Fragment>
+                <span>
+                    <Svg src={svg} />
+                </span>
+                <label>{label_text}</label>
+            </React.Fragment>
+        );
+
+    } else if (no) {
+        btn_content = no;
+    }
+
+    const action = e => {
         try {
-            on_click(e);
-
-            if (name !== 'open_in_chrome') {
-                analytics.add_header_btns_analytics(name);
-            }
+            f(e);
+            analytics.add_header_btns_analytics(name);
 
         } catch (er) {
             err(er, 165);
         }
     };
 
+    const on_mouse_up = custom_action ? f : action;
+    let on_key_up = enter_click.simulate_mouse_up_on_enter;
+
+    if (attach_action_to_on_key_up_too) {
+        on_key_up = custom_action ? f : action;
+    }
 
     return (
         <button
-            className={x.cls(['header_btn', 'header_btn_icon', btn_is_inactive_class])}
+            className={x.cls(['header_btn', 'header_btn_icon', label_text ? 'label_btn' : null, `${name}_btn`, btn_is_inactive_class ? els_state.try_to_set_btn_is_inactive_class() : null])}
             type="button"
-            data-title={`${name}_btn_title`}
+            title={title || x.msg(`${name}_btn_title`)}
             disabled={els_state.com2.inputs_disabled_5}
-            {...(name === 'open_in_chrome' ? { onMouseUp: on_click_inner, onKeyUp: on_click_inner } : { onClick: on_click_inner })}
+            onMouseUp={on_mouse_up}
+            onKeyUp={on_key_up}
         >
-            <Svg src={svg} />
-        </button>
-    );
-};
-
-const Reupload_img_btn = observer(props => {
-    const { name } = props;
-
-    return (
-        <button
-            className="header_btn header_btn_icon"
-            type="button"
-            title={`${x.msg(`${name}_btn_title`)}${reupload_img.ob.previous_img_path ? ` - ${reupload_img.ob.previous_img_path}` : ''}`}
-            disabled={els_state.com2.inputs_disabled_5}
-            onClick={imgs.handle_files.bind(null, 'reupload')}
-        >
-            <Svg src={upload_svg} />
-        </button>
-    );
-});
-
-
-const Popup_btn = props => {
-    const { name, svg } = props;
-
-    const on_click = () => {
-        try {
-            toggle_popup.toggle_popup(name);
-
-            analytics.add_header_btns_analytics(name);
-
-        } catch (er) {
-            err(er, 166);
-        }
-    };
-
-    return (
-        <button
-            className={x.cls(['header_btn header_btn_icon', `${name}_btn`])}
-            type="button"
-            data-title={`${name}_btn_title`}
-            disabled={els_state.com2.inputs_disabled_5}
-            onClick={on_click}
-        >
-            <Svg src={svg} />
-        </button>
-    );
-};
-
-const Pack_btn = props => {
-    const { name } = props;
-
-    const on_click = () => {
-        try {
-            open_and_pack.pack(name);
-
-            analytics.add_header_btns_analytics(name);
-
-        } catch (er) {
-            err(er, 167);
-        }
-    };
-
-    return (
-        <button
-            className={x.cls(['header_btn', 'pack_btn', els_state.try_to_set_btn_is_inactive_class()])}
-            type="button"
-            data-title={`pack_as_${name}_btn_title`}
-            disabled={els_state.com2.inputs_disabled_5}
-            onClick={on_click}
-        >
-            <span className="header_btn_icon pack_btn_icon">
-                <Svg src={archive_svg} />
-            </span>
-            <label>{name.toUpperCase()}</label>
+            {btn_content}
         </button>
     );
 };
 
 observer(Header);
+observer(Btn);
