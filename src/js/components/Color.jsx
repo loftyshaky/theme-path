@@ -13,7 +13,7 @@ import * as enter_click from 'js/enter_click';
 import * as options from 'js/options';
 
 import { Checkbox } from 'components/Checkbox';
-import { Help } from 'components/Help';
+import { Help_btn } from 'components/Help_btn';
 
 import '@simonwep/pickr/dist/themes/nano.min.css';
 
@@ -82,7 +82,7 @@ export class Color extends React.Component {
                     {this.disabled_checkbox}
                     {this.default_checkbox}
                 </span>
-                <Help {...this.props} />
+                <Help_btn {...this.props} />
             </span>
         );
     }

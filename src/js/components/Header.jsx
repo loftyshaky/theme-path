@@ -208,10 +208,10 @@ export class Header extends React.Component {
                         f={() => header.toggle_popup_f('options')}
                     />
                     <Btn
-                        name="links"
+                        name="help"
                         custom_action
                         svg={help_svg}
-                        f={() => header.toggle_popup_f('links')}
+                        f={() => header.toggle_popup_f('help')}
                     />
                 </span>
                 <History_fieldset_protecting_screen />

@@ -15,7 +15,7 @@ import { Input_block } from 'components/Input_block';
 import { History } from 'components/History';
 import { Bulk_copy } from 'components/Bulk_copy';
 import { Options } from 'components/Options';
-import { Links } from 'components/Links';
+import { Help } from 'components/Help';
 import { Help_viewer } from 'components/Help_viewer';
 import { Protecting_screen } from 'components/Protecting_screen';
 import { Tutorial_item } from 'components/Tutorial_item';
@@ -103,7 +103,7 @@ export class All extends React.Component {
                     <History />
                     <Bulk_copy />
                     <Options />
-                    <Links />
+                    <Help />
                     <Help_viewer />
                     <Auto_updater />
                     <Analytics_privacy />

@@ -9,7 +9,7 @@ import * as change_val from 'js/change_val';
 import * as els_state from 'js/els_state';
 import * as history from 'js/history';
 
-import { Help } from 'components/Help';
+import { Help_btn } from 'components/Help_btn';
 
 configure({ enforceActions: 'observed' });
 
@@ -188,7 +188,7 @@ export class Textarea extends React.Component {
                     onChange={() => null}
                     onBlur={this.reset_entered_one_char_in_textarea_after_focus}
                 />
-                <Help {...this.props} />
+                <Help_btn {...this.props} />
                 <Counter
                     counter={this.counter}
                     ob={this.ob}

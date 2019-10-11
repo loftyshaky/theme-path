@@ -21,7 +21,7 @@ export const Help_viewer = observer(() => {
         <img
             className="help_viewer_img"
             src={help_viewer.ob.help_viewer_img}
-            alt="Help"
+            alt="Help_btn"
         />
     )
         : null;

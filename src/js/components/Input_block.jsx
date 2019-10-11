@@ -9,7 +9,7 @@ import { Img_selector } from 'components/Img_selector';
 import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
 import { Settings_export_import } from 'components/Settings_export_import';
-import { Help } from 'components/Help';
+import { Help_btn } from 'components/Help_btn';
 
 export class Input_block extends React.Component {
     constructor(props) {
@@ -45,7 +45,7 @@ export class Input_block extends React.Component {
             <React.Fragment>
                 <div className="hr_and_help">
                     {this.hr_el}
-                    <Help {...this.props} />
+                    <Help_btn {...this.props} />
                 </div>
                 <div className={this.name === 'colors' || this.name === 'tints' ? 'colors_and_tints_input_block' : null}>
                     {

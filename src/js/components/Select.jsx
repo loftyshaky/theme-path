@@ -14,7 +14,7 @@ import * as els_state from 'js/els_state';
 import * as history from 'js/history';
 import * as conds from 'js/conds';
 
-import { Help } from 'components/Help';
+import { Help_btn } from 'components/Help_btn';
 
 const store = new Store();
 
@@ -163,7 +163,7 @@ export class Select extends React.Component {
                         onChange={this.change_select_val}
                         onMenuOpen={this.on_menu_open}
                     />
-                    <Help {...this.props} />
+                    <Help_btn {...this.props} />
                 </div>
             </div>
         );

@@ -10,7 +10,7 @@
   "properties_hr_text": "Properties",
   "clear_new_tab_hr_text": "Clear New Tab",
   "options_hr_text": "Options",
-  "links_hr_text": "Links",
+  "help_hr_text": "Links",
   "history_hr_text": "History",
   "bulk_copy_hr_text": "Bulk copy",
 
@@ -143,7 +143,6 @@
   "open_in_chrome_btn_title": "Open in Chrome (left-click = normal mode, right-click = incognito mode, middle-click = normal mode + incognito mode)",
   "options_btn_title": "Options",
   "help_btn_title": "Help",
-  "links_btn_title": "Links",
 
 
   "privacy_policy_link_text": "📜 Privacy policy",

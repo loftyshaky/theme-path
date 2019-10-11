@@ -69,7 +69,7 @@ export const close_all_popups_by_keyboard = e => {
 export const ob = observable({
     popup_visibility: {
         options: false,
-        links: false,
+        help: false,
     },
     analytics_privacy_is_visible: !store.get('answered_to_analytics_privacy_question'),
     get protecting_screen_is_visible() {

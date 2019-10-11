@@ -10,7 +10,7 @@ import * as els_state from 'js/els_state';
 import { Tr } from 'components/Tr';
 import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
-import { Help } from 'components/Help';
+import { Help_btn } from 'components/Help_btn';
 
 export class Img_selector extends React.Component {
     constructor(props) {
@@ -117,7 +117,7 @@ export class Img_selector extends React.Component {
                         checkbox_type="default"
                     />
                 </div>
-                <Help {...this.props} />
+                <Help_btn {...this.props} />
             </div>
         );
     }
