@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Pickr from '@simonwep/pickr';
 import tinycolor from 'tinycolor2';
+import Store from 'electron-store';
 
 import x from 'x';
 import * as analytics from 'js/analytics';
@@ -15,6 +16,8 @@ import { Checkbox } from 'components/Checkbox';
 import { Help } from 'components/Help';
 
 import '@simonwep/pickr/dist/themes/nano.min.css';
+
+const store = new Store();
 
 export class Color extends React.Component {
     constructor(props) {
@@ -129,7 +132,7 @@ class Color_input_vizualization extends React.Component {
         });
 
         this.pickr.on('init', async () => {
-            this.pickr.setColorRepresentation('HEXA');
+            this.pickr.setColorRepresentation(store.get('color_picker_default_mode'));
 
         }).on('show', async () => {
             const hsva = tinycolor(inputs_data.obj[this.family][this.name].color || inputs_data.obj[this.family][this.name].val).toHsv();

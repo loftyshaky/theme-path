@@ -101,6 +101,7 @@ const con = {
         locales_whitelist: '',
         tutorial_stage: 1,
         show_help: true,
+        color_picker_default_mode: 'HSVA',
         answered_to_analytics_privacy_question: false,
         enable_analytics: false,
         default_bulk_copy_checkboxes: {},

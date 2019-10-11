@@ -88,6 +88,7 @@
   "max_number_of_history_records_label_text": "Максимальное количество записей в истории изменений",
   "locales_whitelist_label_text": "Языки показываемые в языковых выпадающих меню",
   "show_help_label_text": "Показывать кнопки \"Помощь\"",
+  "color_picker_default_mode_label_text": "Начальный режим цветоподборщика",
   "enable_analytics_label_text": "Разрешить Chrome Theme Creator отправлять анонимную статистику использования",
   "export_settings_btn_text": "Экспортировать настройки",
   "import_settings_btn_text": "Импортировать настройки",

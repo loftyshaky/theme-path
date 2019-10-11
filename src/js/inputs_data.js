@@ -188,6 +188,7 @@ const inputs = {
     options: [
         select('theme', 'default', false),
         select('language', 'default', false),
+        select('color_picker_default_mode'),
         textarea('chrome_exe_paths', true),
         textarea('chrome_user_data_folders', true),
         textarea('custom_folders', true),

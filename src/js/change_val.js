@@ -124,7 +124,7 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
                 }
             }
 
-            if (name === 'language') {
+            if (name === 'language' || name === 'color_picker_default_mode') {
                 getCurrentWindow().reload();
             }
         }

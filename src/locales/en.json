@@ -88,6 +88,7 @@
   "max_number_of_history_records_label_text": "Maximum number of records in changes history",
   "locales_whitelist_label_text": "Locales to show in locale selects",
   "show_help_label_text": "Show help buttons",
+  "color_picker_default_mode_label_text": "Color picker default mode",
   "enable_analytics_label_text": "Allow Chrome Theme Creator to send anonymous usage information",
   "export_settings_btn_text": "Export settings",
   "import_settings_btn_text": "Import settings",

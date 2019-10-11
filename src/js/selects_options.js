@@ -3,7 +3,7 @@ import x from 'x';
 const option = (is_locale_option, label_modifier, val) => {
     try {
         return {
-            label: create_option_data_text_val(is_locale_option, label_modifier),
+            label: label_modifier ? create_option_data_text_val(is_locale_option, label_modifier) : val,
             value: val || label_modifier,
         };
 
@@ -162,5 +162,10 @@ export const selects_options = {
         option(false, 'system'),
         option(false, 'en'),
         option(false, 'ru'),
+    ],
+    color_picker_default_mode: [
+        option(false, null, 'HEX'),
+        option(false, null, 'RGBA'),
+        option(false, null, 'HSVA'),
     ],
 };
