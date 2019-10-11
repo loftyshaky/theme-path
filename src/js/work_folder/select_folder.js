@@ -146,6 +146,8 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
 
                     reupload_img.set_current_previous_img_path_ob();
                 });
+
+                chosen_folder_path.count_bulk_themes();
             }
         }
 

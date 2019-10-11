@@ -68,7 +68,9 @@ export const exclude_non_themes = () => {
 
 export const count_bulk_themes = action(() => {
     try {
-        ob.bulk_theme_count = exclude_non_themes(ob.chosen_folder_bulk_paths).length;
+        const themes = exclude_non_themes(ob.chosen_folder_bulk_paths);
+
+        ob.bulk_theme_count = themes.filter(path => path !== ob.chosen_folder_path).length;
 
     } catch (er) {
         err(er, 291);
