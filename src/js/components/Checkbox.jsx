@@ -68,7 +68,7 @@ export const Checkbox = observer(props => {
                 <span
                     className="checkbox_checkmark_w"
                     role="button"
-                    tabIndex={els_state.com2.inputs_disabled_1}
+                    tabIndex={is_special_checkbox ? els_state.com2.inputs_disabled_1 : 0}
                     onKeyUp={enter_click.simulate_click_on_enter}
                 >
                     <Svg src={checkmark_svg} />
