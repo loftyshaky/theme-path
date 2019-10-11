@@ -121,7 +121,7 @@ export const update_chrome_user_data_folders_observable = action(() => {
 });
 
 export const pack = type => {
-    folders.check_if_at_least_one_theme_is_selected(async () => {
+    folders.check_if_at_least_one_theme_is_selected(() => {
         try {
             const multiple_themes_is_selected = folders.check_if_multiple_themes_is_selected(true);
             let theme_paths_to_pack = [chosen_folder_path.ob.chosen_folder_path];
