@@ -21,6 +21,7 @@ import * as options from 'js/options';
 import * as msg from 'js/msg';
 import * as conds from 'js/conds';
 import * as confirm from 'js/confirm';
+import * as processing_msg from 'js/processing_msg';
 import * as folders from 'js/work_folder/folders';
 
 configure({ enforceActions: 'observed' });
@@ -138,221 +139,223 @@ export const accept = () => {
 };
 
 export const bulk_copy = theme_paths => {
-    try {
-        const src_manifest_obj = manifest.mut.manifest;
-        const src_messages_obj = get_messages_obj(chosen_folder_path.ob.chosen_folder_path);
-        const src_picked_colors_obj = picked_colors.get_picked_colors_obj();
+    processing_msg.process(() => {
+        try {
+            const src_manifest_obj = manifest.mut.manifest;
+            const src_messages_obj = get_messages_obj(chosen_folder_path.ob.chosen_folder_path);
+            const src_picked_colors_obj = picked_colors.get_picked_colors_obj();
 
-        theme_paths.forEach(target_path => {
-            if (target_path !== chosen_folder_path.ob.chosen_folder_path) {
-                const target_manifest_path = join(target_path, 'manifest.json');
-                const target_messages_obj = get_messages_obj(target_path);
-                const target_manifest_obj = json_file.parse_json(target_manifest_path);
-                const target_picked_colors_obj = picked_colors.get_picked_colors_obj(target_path);
-                const theme_folder = readdirSync(target_path);
-                const clear_new_tab_video_is_in_theme_folder = theme_folder.some(file => file === 'clear_new_tab_video.');
+            theme_paths.forEach(target_path => {
+                if (target_path !== chosen_folder_path.ob.chosen_folder_path) {
+                    const target_manifest_path = join(target_path, 'manifest.json');
+                    const target_messages_obj = get_messages_obj(target_path);
+                    const target_manifest_obj = json_file.parse_json(target_manifest_path);
+                    const target_picked_colors_obj = picked_colors.get_picked_colors_obj(target_path);
+                    const theme_folder = readdirSync(target_path);
+                    const clear_new_tab_video_is_in_theme_folder = theme_folder.some(file => file === 'clear_new_tab_video.');
 
-                Object.keys(inputs_data.obj).forEach(family => {
-                    if (family !== 'options') {
-                        Object.values(inputs_data.obj[family]).forEach(({ name }) => {
-                            const bulk_copy_checkbox_is_checked = ob.bulk_copy_checkboxes[family][name];
+                    Object.keys(inputs_data.obj).forEach(family => {
+                        if (family !== 'options') {
+                            Object.values(inputs_data.obj[family]).forEach(({ name }) => {
+                                const bulk_copy_checkbox_is_checked = ob.bulk_copy_checkboxes[family][name];
 
-                            if (bulk_copy_checkbox_is_checked) {
-                                const is_color = conds.colors(family);
-                                const is_textarea = conds.textareas(family, name);
-                                const is_select = conds.selects(family, name);
-                                const is_select_default = inputs_data.obj[family][name].val === 'default';
-                                const src_is_default = is_select ? is_select_default : inputs_data.obj[family][name].default;
-                                const src_picked_colors_obj_has_picked_colors_record = picked_colors.check_if_property_exists_on_picked_colors_obj(family, name, src_picked_colors_obj);
-                                const src_rgba_color = get_rgba_color(family, name, src_manifest_obj, src_picked_colors_obj, src_is_default, src_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
-                                const img_is_default = name === 'icon' ? false : !target_manifest_obj.theme || !target_manifest_obj.theme[family] || r.isNil(target_manifest_obj.theme[family][name]);
-                                const target_is_default = name === 'clear_new_tab_video' ? clear_new_tab_video_is_in_theme_folder : img_is_default;
-                                const target_picked_colors_obj_has_picked_colors_record = picked_colors.check_if_property_exists_on_picked_colors_obj(family, name, target_picked_colors_obj);
-                                const target_rgba_color = get_rgba_color(family, name, target_manifest_obj, target_picked_colors_obj, target_is_default, target_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
-                                let src_is_disabled = false;
-                                let target_is_disabled = false;
-                                let src_hsl_string = null;
-                                let src_hsl_arr = null;
-                                let target_hsl_string = null;
-                                let target_hsl_arr = null;
-                                let src_color_string = null;
-                                let src_color_arr = null;
-                                let target_color_string = null;
-                                let target_color_arr = null;
-                                let src_select_val = null;
-                                let target_select_val = null;
-                                let src_messages_key = null;
-                                let target_messages_key = null;
-                                let src_textarea_val = null;
-                                let target_textarea_val = null;
+                                if (bulk_copy_checkbox_is_checked) {
+                                    const is_color = conds.colors(family);
+                                    const is_textarea = conds.textareas(family, name);
+                                    const is_select = conds.selects(family, name);
+                                    const is_select_default = inputs_data.obj[family][name].val === 'default';
+                                    const src_is_default = is_select ? is_select_default : inputs_data.obj[family][name].default;
+                                    const src_picked_colors_obj_has_picked_colors_record = picked_colors.check_if_property_exists_on_picked_colors_obj(family, name, src_picked_colors_obj);
+                                    const src_rgba_color = get_rgba_color(family, name, src_manifest_obj, src_picked_colors_obj, src_is_default, src_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
+                                    const img_is_default = name === 'icon' ? false : !target_manifest_obj.theme || !target_manifest_obj.theme[family] || r.isNil(target_manifest_obj.theme[family][name]);
+                                    const target_is_default = name === 'clear_new_tab_video' ? clear_new_tab_video_is_in_theme_folder : img_is_default;
+                                    const target_picked_colors_obj_has_picked_colors_record = picked_colors.check_if_property_exists_on_picked_colors_obj(family, name, target_picked_colors_obj);
+                                    const target_rgba_color = get_rgba_color(family, name, target_manifest_obj, target_picked_colors_obj, target_is_default, target_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
+                                    let src_is_disabled = false;
+                                    let target_is_disabled = false;
+                                    let src_hsl_string = null;
+                                    let src_hsl_arr = null;
+                                    let target_hsl_string = null;
+                                    let target_hsl_arr = null;
+                                    let src_color_string = null;
+                                    let src_color_arr = null;
+                                    let target_color_string = null;
+                                    let target_color_arr = null;
+                                    let src_select_val = null;
+                                    let target_select_val = null;
+                                    let src_messages_key = null;
+                                    let target_messages_key = null;
+                                    let src_textarea_val = null;
+                                    let target_textarea_val = null;
 
-                                if (family === 'tints') {
-                                    src_hsl_arr = src_is_default ? null : src_manifest_obj.theme[family][name];
-                                    target_hsl_arr = target_is_default ? color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_default) : target_manifest_obj.theme[family][name];
-                                    target_is_disabled = check_if_disabled(target_hsl_arr);
+                                    if (family === 'tints') {
+                                        src_hsl_arr = src_is_default ? null : src_manifest_obj.theme[family][name];
+                                        target_hsl_arr = target_is_default ? color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_default) : target_manifest_obj.theme[family][name];
+                                        target_is_disabled = check_if_disabled(target_hsl_arr);
 
-                                    if (target_is_disabled) {
-                                        target_hsl_arr = color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_disabled);
-                                    }
-
-                                    src_hsl_string = src_is_default ? null : color_pickiers.convert_hsl_arr_to_hsl_string(src_hsl_arr);
-                                    target_hsl_string = color_pickiers.convert_hsl_arr_to_hsl_string(target_hsl_arr);
-
-                                } else if (is_select) {
-                                    if (name === 'default_locale') {
-                                        src_select_val = src_manifest_obj[name] || 'en';
-                                        target_select_val = target_manifest_obj[name] || 'en';
-
-                                    } else {
-                                        src_select_val = src_is_default ? 'default' : src_manifest_obj.theme[family][name];
-                                        target_select_val = target_is_default ? 'default' : target_manifest_obj.theme[family][name];
-                                    }
-
-                                } else if (is_textarea) {
-                                    if (name === 'version') {
-                                        src_textarea_val = src_manifest_obj[name];
-                                        target_textarea_val = target_manifest_obj[name];
-
-                                    } else {
-                                        src_messages_key = msg.get_message_name(src_manifest_obj[name]);
-                                        target_messages_key = msg.get_message_name(target_manifest_obj[name]);
-                                    }
-                                }
-
-                                if (family === 'tints') {
-                                    src_color_string = src_hsl_string;
-                                    src_color_arr = src_hsl_arr;
-                                    target_color_string = target_hsl_string;
-                                    target_color_arr = target_hsl_arr;
-                                }
-
-                                if (family === 'images' || name === 'clear_new_tab_video' || family === 'colors') {
-                                    src_color_string = src_rgba_color.string;
-                                    src_color_arr = src_rgba_color.arr;
-                                    target_color_string = target_rgba_color.string;
-                                    target_color_arr = target_rgba_color.arr;
-                                }
-
-                                if (is_color) {
-                                    src_is_disabled = check_if_disabled(src_hsl_arr);
-                                }
-
-                                const same_colors = src_color_string === target_color_string;
-                                const same_select_vals = src_select_val === target_select_val;
-                                let special_checkbox;
-
-                                if (is_select) {
-                                    special_checkbox = 'select';
-
-                                } else if (src_is_disabled) {
-                                    special_checkbox = 'disabled';
-
-                                } else if (!src_is_disabled) {
-                                    special_checkbox = 'default';
-                                }
-
-                                const record_select_change = set_to_default => history.record_change(() => history.generate_select_history_obj(family, name, name === 'default_locale' ? false : target_is_default, target_select_val, src_select_val, set_to_default), target_path);
-
-                                const change_textarea_val = (locale, default_locale) => {
-                                    if (src_textarea_val !== target_textarea_val) {
-                                        change_val.change_val(family, name, src_textarea_val, null, false, target_path, locale, default_locale);
-
-                                        history.record_change(() => history.generate_textarea_history_obj(family, name, target_textarea_val, src_textarea_val, locale), target_path);
-                                    }
-                                };
-
-                                if (!src_is_default && !src_is_disabled) {
-                                    if ((family === 'images' || name === 'clear_new_tab_video') && (!same_colors || (!src_color_string && !target_color_string))) {
-                                        if (name !== 'theme_ntp_background' && name !== 'icon' && name !== 'clear_new_tab_video') {
-                                            history.record_change(() => history.generate_img_history_obj(family, name, target_is_default, src_color_arr, false, target_path), target_path);
+                                        if (target_is_disabled) {
+                                            target_hsl_arr = color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_disabled);
                                         }
 
-                                        const new_image_name = folders.find_file_name_by_element_name(name); // ex: toolbar.png
-                                        const img_extension = extname(new_image_name); // .png
+                                        src_hsl_string = src_is_default ? null : color_pickiers.convert_hsl_arr_to_hsl_string(src_hsl_arr);
+                                        target_hsl_string = color_pickiers.convert_hsl_arr_to_hsl_string(target_hsl_arr);
 
-                                        imgs.remove_img_by_name(new_image_name, target_path); // remove old image from target theme
+                                    } else if (is_select) {
+                                        if (name === 'default_locale') {
+                                            src_select_val = src_manifest_obj[name] || 'en';
+                                            target_select_val = target_manifest_obj[name] || 'en';
 
-                                        imgs.copy_img(name, img_extension, join(chosen_folder_path.ob.chosen_folder_path, new_image_name), target_path); // copy image from source theme to target theme on place of removed image in previous line
-                                        if (name !== 'clear_new_tab_video') {
-                                            change_val.change_val(family, name, name, img_extension, false, target_path);
+                                        } else {
+                                            src_select_val = src_is_default ? 'default' : src_manifest_obj.theme[family][name];
+                                            target_select_val = target_is_default ? 'default' : target_manifest_obj.theme[family][name];
                                         }
-
-                                    } else if (is_color && !same_colors) {
-                                        change_val.change_val(family, name, src_color_arr, null, false, target_path);
-
-                                        history.record_change(() => history.generate_color_history_obj(family, name, target_is_default, false, target_color_string, target_color_arr, src_color_string, false, false, target_path), target_path);
-
-                                    } else if (is_select && !same_select_vals) {
-                                        record_select_change(false);
-
-                                        change_val.change_val(family, name, src_select_val, null, false, target_path);
 
                                     } else if (is_textarea) {
                                         if (name === 'version') {
                                             src_textarea_val = src_manifest_obj[name];
                                             target_textarea_val = target_manifest_obj[name];
 
-                                            change_textarea_val();
-
                                         } else {
-                                            Object.keys(src_messages_obj).forEach(locale => {
-                                                src_textarea_val = src_messages_obj[locale] && src_messages_obj[locale][src_messages_key] ? src_messages_obj[locale][src_messages_key].message : null;
-                                                target_textarea_val = target_messages_obj[locale] && target_messages_obj[locale][target_messages_key] ? target_messages_obj[locale][target_messages_key].message : null;
-
-                                                change_textarea_val(locale, target_manifest_obj.default_locale);
-                                            });
+                                            src_messages_key = msg.get_message_name(src_manifest_obj[name]);
+                                            target_messages_key = msg.get_message_name(target_manifest_obj[name]);
                                         }
                                     }
-                                }
 
-                                if ((family === 'images' || family === 'colors')) {
-                                    let color;
-
-                                    if (family === 'colors' && !src_is_default) {
-                                        color = color_pickiers.convert_rgba_arr_into_obj(src_rgba_color.arr);
+                                    if (family === 'tints') {
+                                        src_color_string = src_hsl_string;
+                                        src_color_arr = src_hsl_arr;
+                                        target_color_string = target_hsl_string;
+                                        target_color_arr = target_hsl_arr;
                                     }
 
-                                    picked_colors.record_picked_color(family, name, src_rgba_color.obj || color, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
-
-                                    if (src_is_default) {
-                                        picked_colors.remove_picked_color(family, name, target_path); // remove picked color from target picked_colors.json file
+                                    if (family === 'images' || name === 'clear_new_tab_video' || family === 'colors') {
+                                        src_color_string = src_rgba_color.string;
+                                        src_color_arr = src_rgba_color.arr;
+                                        target_color_string = target_rgba_color.string;
+                                        target_color_arr = target_rgba_color.arr;
                                     }
-                                }
 
-                                if (((special_checkbox === 'default' || special_checkbox === 'select') && src_is_default && !target_is_default) || (special_checkbox === 'disabled' && src_is_disabled && !target_is_disabled)) {
+                                    if (is_color) {
+                                        src_is_disabled = check_if_disabled(src_hsl_arr);
+                                    }
+
+                                    const same_colors = src_color_string === target_color_string;
+                                    const same_select_vals = src_select_val === target_select_val;
+                                    let special_checkbox;
+
                                     if (is_select) {
-                                        record_select_change(true);
+                                        special_checkbox = 'select';
+
+                                    } else if (src_is_disabled) {
+                                        special_checkbox = 'disabled';
+
+                                    } else if (!src_is_disabled) {
+                                        special_checkbox = 'default';
                                     }
 
-                                    if (name !== 'icon') {
-                                        set_default_or_disabled.set_default_or_disabled(
-                                            family,
-                                            name,
-                                            special_checkbox,
-                                            true,
-                                            target_is_default,
-                                            target_is_disabled,
-                                            target_color_string,
-                                            target_color_arr,
-                                            target_path,
-                                            target_manifest_obj,
-                                        );
+                                    const record_select_change = set_to_default => history.record_change(() => history.generate_select_history_obj(family, name, name === 'default_locale' ? false : target_is_default, target_select_val, src_select_val, set_to_default), target_path);
 
-                                    } else {
-                                        set_default_or_disabled.set_default_icon(family, name, target_path);
+                                    const change_textarea_val = (locale, default_locale) => {
+                                        if (src_textarea_val !== target_textarea_val) {
+                                            change_val.change_val(family, name, src_textarea_val, null, false, target_path, locale, default_locale);
+
+                                            history.record_change(() => history.generate_textarea_history_obj(family, name, target_textarea_val, src_textarea_val, locale), target_path);
+                                        }
+                                    };
+
+                                    if (!src_is_default && !src_is_disabled) {
+                                        if ((family === 'images' || name === 'clear_new_tab_video') && (!same_colors || (!src_color_string && !target_color_string))) {
+                                            if (name !== 'theme_ntp_background' && name !== 'icon' && name !== 'clear_new_tab_video') {
+                                                history.record_change(() => history.generate_img_history_obj(family, name, target_is_default, src_color_arr, false, target_path), target_path);
+                                            }
+
+                                            const new_image_name = folders.find_file_name_by_element_name(name); // ex: toolbar.png
+                                            const img_extension = extname(new_image_name); // .png
+
+                                            imgs.remove_img_by_name(new_image_name, target_path); // remove old image from target theme
+
+                                            imgs.copy_img(name, img_extension, join(chosen_folder_path.ob.chosen_folder_path, new_image_name), target_path); // copy image from source theme to target theme on place of removed image in previous line
+                                            if (name !== 'clear_new_tab_video') {
+                                                change_val.change_val(family, name, name, img_extension, false, target_path);
+                                            }
+
+                                        } else if (is_color && !same_colors) {
+                                            change_val.change_val(family, name, src_color_arr, null, false, target_path);
+
+                                            history.record_change(() => history.generate_color_history_obj(family, name, target_is_default, false, target_color_string, target_color_arr, src_color_string, false, false, target_path), target_path);
+
+                                        } else if (is_select && !same_select_vals) {
+                                            record_select_change(false);
+
+                                            change_val.change_val(family, name, src_select_val, null, false, target_path);
+
+                                        } else if (is_textarea) {
+                                            if (name === 'version') {
+                                                src_textarea_val = src_manifest_obj[name];
+                                                target_textarea_val = target_manifest_obj[name];
+
+                                                change_textarea_val();
+
+                                            } else {
+                                                Object.keys(src_messages_obj).forEach(locale => {
+                                                    src_textarea_val = src_messages_obj[locale] && src_messages_obj[locale][src_messages_key] ? src_messages_obj[locale][src_messages_key].message : null;
+                                                    target_textarea_val = target_messages_obj[locale] && target_messages_obj[locale][target_messages_key] ? target_messages_obj[locale][target_messages_key].message : null;
+
+                                                    change_textarea_val(locale, target_manifest_obj.default_locale);
+                                                });
+                                            }
+                                        }
                                     }
+
+                                    if ((family === 'images' || family === 'colors')) {
+                                        let color;
+
+                                        if (family === 'colors' && !src_is_default) {
+                                            color = color_pickiers.convert_rgba_arr_into_obj(src_rgba_color.arr);
+                                        }
+
+                                        picked_colors.record_picked_color(family, name, src_rgba_color.obj || color, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
+
+                                        if (src_is_default) {
+                                            picked_colors.remove_picked_color(family, name, target_path); // remove picked color from target picked_colors.json file
+                                        }
+                                    }
+
+                                    if (((special_checkbox === 'default' || special_checkbox === 'select') && src_is_default && !target_is_default) || (special_checkbox === 'disabled' && src_is_disabled && !target_is_disabled)) {
+                                        if (is_select) {
+                                            record_select_change(true);
+                                        }
+
+                                        if (name !== 'icon') {
+                                            set_default_or_disabled.set_default_or_disabled(
+                                                family,
+                                                name,
+                                                special_checkbox,
+                                                true,
+                                                target_is_default,
+                                                target_is_disabled,
+                                                target_color_string,
+                                                target_color_arr,
+                                                target_path,
+                                                target_manifest_obj,
+                                            );
+
+                                        } else {
+                                            set_default_or_disabled.set_default_icon(family, name, target_path);
+                                        }
+                                    }
+
                                 }
+                            });
+                        }
+                    });
+                }
+            });
 
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-    } catch (er) {
-        err(er, 280);
-    }
+        } catch (er) {
+            err(er, 280);
+        }
+    });
 };
 
 const check_if_disabled = hsl_arr => {

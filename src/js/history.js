@@ -19,6 +19,7 @@ import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as picked_colors from 'js/picked_colors';
 import * as options from 'js/options';
 import * as conds from 'js/conds';
+import * as processing_msg from 'js/processing_msg';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as folders from 'js/work_folder/folders';
 
@@ -46,122 +47,124 @@ export const load_history = () => {
 };
 
 export const accept_history_change = () => {
-    try {
-        manifest.reload_manifest();
+    processing_msg.process(() => {
+        try {
+            manifest.reload_manifest();
 
-        const number_of_changes = mut.changes_to_revert.length;
-        const clicked_on_last_item = number_of_changes === 0;
+            const number_of_changes = mut.changes_to_revert.length;
+            const clicked_on_last_item = number_of_changes === 0;
 
-        if (!clicked_on_last_item) {
-            let updated_name = false;
+            if (!clicked_on_last_item) {
+                let updated_name = false;
 
-            for (const change of mut.changes_to_revert) {
-                const { family, name, locale, from, from_manifest_val, from_img_id, from_picked_color_val, was_default, was_disabled } = change;
+                for (const change of mut.changes_to_revert) {
+                    const { family, name, locale, from, from_manifest_val, from_img_id, from_picked_color_val, was_default, was_disabled } = change;
 
-                if (conds.imgs(family, name)) {
-                    const path_to_current_img = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
+                    if (conds.imgs(family, name)) {
+                        const path_to_current_img = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
 
-                    if (!was_default) {
-                        change_val.change_val(family, name, name, '.png', false);
+                        if (!was_default) {
+                            change_val.change_val(family, name, name, '.png', false);
 
-                        if (from_img_id) {
-                            const path_to_old_img = join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
-                            copySync(path_to_old_img, path_to_current_img);
+                            if (from_img_id) {
+                                const path_to_old_img = join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
+                                copySync(path_to_old_img, path_to_current_img);
 
-                            removeSync(path_to_old_img);
+                                removeSync(path_to_old_img);
+                            }
+
+                        } else {
+                            change_val.set_default_bool(family, name, true);
+                            picked_colors.remove_picked_color(family, name);
+                            removeSync(path_to_current_img);
+
+                            if (name !== 'icon') {
+                                set_default_or_disabled.delete_key_from_manifest(family, name);
+
+                            } else {
+                                set_default_or_disabled.set_default_icon(family, name);
+                            }
                         }
 
-                    } else {
-                        change_val.set_default_bool(family, name, true);
-                        picked_colors.remove_picked_color(family, name);
-                        removeSync(path_to_current_img);
+                    } else if (conds.colors(family)) {
+                        if (!was_default) {
+                            if (!manifest.mut.manifest.theme[family]) {
+                                manifest.mut.manifest.theme[family] = {};
+                            }
 
-                        if (name !== 'icon') {
+                            if (!was_disabled) {
+                                manifest.mut.manifest.theme[family][name] = from_manifest_val;
+
+                            } else {
+                                manifest.mut.manifest.theme[family][name] = set_default_or_disabled.con.disabled_manifest_val;
+                            }
+
+                        } else {
+                            picked_colors.remove_picked_color(family, name);
                             set_default_or_disabled.delete_key_from_manifest(family, name);
+                        }
+
+                    } else if (conds.selects(family, name)) {
+                        if (!was_default) {
+                            change_val.change_val(family, name, from, null, false);
 
                         } else {
-                            set_default_or_disabled.set_default_icon(family, name);
-                        }
-                    }
-
-                } else if (conds.colors(family)) {
-                    if (!was_default) {
-                        if (!manifest.mut.manifest.theme[family]) {
-                            manifest.mut.manifest.theme[family] = {};
+                            set_default_or_disabled.set_default_or_disabled(family, name, 'select');
                         }
 
-                        if (!was_disabled) {
-                            manifest.mut.manifest.theme[family][name] = from_manifest_val;
+                    } else if (conds.textareas(family, name)) {
+                        if (name === 'version') {
+                            change_val.change_val(family, name, from, null, false);
+                            change_val.set_previous_val(family, name, from);
 
                         } else {
-                            manifest.mut.manifest.theme[family][name] = set_default_or_disabled.con.disabled_manifest_val;
+                            if (name === 'name') {
+                                updated_name = true;
+                            }
+
+                            change_val.update_name_or_description(name, from, locale);
                         }
 
-                    } else {
-                        picked_colors.remove_picked_color(family, name);
-                        set_default_or_disabled.delete_key_from_manifest(family, name);
                     }
 
-                } else if (conds.selects(family, name)) {
-                    if (!was_default) {
-                        change_val.change_val(family, name, from, null, false);
+                    if (conds.imgs(family, name) || conds.colors(family)) {
+                        if (from_picked_color_val) {
+                            color_pickiers.mut.current_pickied_color = from_picked_color_val;
 
-                    } else {
-                        set_default_or_disabled.set_default_or_disabled(family, name, 'select');
-                    }
+                            picked_colors.record_picked_color(family, name);
 
-                } else if (conds.textareas(family, name)) {
-                    if (name === 'version') {
-                        change_val.change_val(family, name, from, null, false);
-                        change_val.set_previous_val(family, name, from);
-
-                    } else {
-                        if (name === 'name') {
-                            updated_name = true;
+                        } else {
+                            picked_colors.remove_picked_color(family, name);
                         }
-
-                        change_val.update_name_or_description(name, from, locale);
                     }
-
                 }
 
-                if (conds.imgs(family, name) || conds.colors(family)) {
-                    if (from_picked_color_val) {
-                        color_pickiers.mut.current_pickied_color = from_picked_color_val;
+                change_val.set_previous_val('theme_metadata', 'name', inputs_data.obj.theme_metadata.name.val);
+                change_val.set_previous_val('theme_metadata', 'description', inputs_data.obj.theme_metadata.description.val);
 
-                        picked_colors.record_picked_color(family, name);
+                const history_arr = toJS(r.dropLast(number_of_changes, ob.history));
 
-                    } else {
-                        picked_colors.remove_picked_color(family, name);
-                    }
+                json_file.write_to_json(history_arr, get_history_path());
+                json_file.write_to_manifest_json();
+
+                const new_folder_name = inputs_data.obj.theme_metadata.name.val;
+                const locale = inputs_data.obj.theme_metadata.locale.val;
+                const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
+
+                if (updated_name && locale === default_locale) {
+                    new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_folder_name);
                 }
             }
 
-            change_val.set_previous_val('theme_metadata', 'name', inputs_data.obj.theme_metadata.name.val);
-            change_val.set_previous_val('theme_metadata', 'description', inputs_data.obj.theme_metadata.description.val);
+            change_revert_position(Infinity);
+            show_or_hide_history(false);
 
-            const history_arr = toJS(r.dropLast(number_of_changes, ob.history));
+            analytics.add_history_analytics('history_accept');
 
-            json_file.write_to_json(history_arr, get_history_path());
-            json_file.write_to_manifest_json();
-
-            const new_folder_name = inputs_data.obj.theme_metadata.name.val;
-            const locale = inputs_data.obj.theme_metadata.locale.val;
-            const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
-
-            if (updated_name && locale === default_locale) {
-                new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_folder_name);
-            }
+        } catch (er) {
+            err(er, 205);
         }
-
-        change_revert_position(Infinity);
-        show_or_hide_history(false);
-
-        analytics.add_history_analytics('history_accept');
-
-    } catch (er) {
-        err(er, 205);
-    }
+    });
 };
 
 export const cancel_history_change = () => {

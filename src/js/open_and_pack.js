@@ -16,6 +16,7 @@ import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
 import * as confirm from 'js/confirm';
+import * as processing_msg from 'js/processing_msg';
 import * as folders from 'js/work_folder/folders';
 import { observable, action, configure } from 'mobx';
 
@@ -153,92 +154,102 @@ export const pack = type => {
 };
 
 const pack_inner = (type, theme_paths_to_pack) => {
-    try {
-        for (const theme_path of theme_paths_to_pack) {
-            const directory_to_save_package_in = theme_path.substring(
-                0,
-                theme_path.lastIndexOf(sep),
-            );
-            const package_name = theme_path.substring(theme_path.lastIndexOf(sep) + 1);
-            const pak_path = join(theme_path, 'Cached Theme.pak');
-            const system_path = join(theme_path, 'system');
-            const work_folder_system_path = join(choose_folder.ob.work_folder, 'system');
+    processing_msg.process(async () => {
+        try {
+            await Promise.all(theme_paths_to_pack.map(async theme_path => {
+                const directory_to_save_package_in = theme_path.substring(
+                    0,
+                    theme_path.lastIndexOf(sep),
+                );
+                const package_name = theme_path.substring(theme_path.lastIndexOf(sep) + 1);
+                const pak_path = join(theme_path, 'Cached Theme.pak');
+                const system_path = join(theme_path, 'system');
+                const work_folder_system_path = join(choose_folder.ob.work_folder, 'system');
 
-            move_system_folder(system_path, work_folder_system_path);
-
-            try {
-                if (existsSync(pak_path)) {
-                    unlinkSync(pak_path);
-                }
-
-            } catch (er) {
-                err(er, 6, 'pak_is_locked', false, false, true);
-            }
-
-            if (type === 'zip') {
-                const zip_path = join(directory_to_save_package_in, `${package_name}.zip`);
+                move_system_folder(system_path, work_folder_system_path);
 
                 try {
-                    if (existsSync(zip_path)) {
-                        unlinkSync(zip_path);
+                    if (existsSync(pak_path)) {
+                        unlinkSync(pak_path);
                     }
 
                 } catch (er) {
-                    err(er, 18, 'zip_is_locked', false, false, true);
+                    err(er, 6, 'pak_is_locked', false, false, true);
                 }
 
+                if (type === 'zip') {
+                    const zip_path = join(directory_to_save_package_in, `${package_name}.zip`);
 
-                zipLocal.zip(theme_path, (er, zip) => {
-                    if (!er) {
-                        zip.compress().save(zip_path);
-
-                        move_system_folder(work_folder_system_path, system_path);
-
-                    } else {
-                        err(er, 5, null, false, false, true);
-                    }
-                });
-
-            } if (type === 'crx') {
-                const crx_path = join(directory_to_save_package_in, `${package_name}.crx`);
-
-                try {
-                    if (existsSync(crx_path)) {
-                        unlinkSync(crx_path);
-                    }
-
-                } catch (er) {
-                    err(er, 19, 'crx_is_locked', false, false, true);
-                }
-
-                //> remove pems
-                const pem_files = glob.sync(`${directory_to_save_package_in + sep}*.pem`);
-
-                pem_files.forEach(pem_file => {
                     try {
-                        if (existsSync(pem_file)) {
-                            unlinkSync(pem_file);
+                        if (existsSync(zip_path)) {
+                            unlinkSync(zip_path);
                         }
 
                     } catch (er) {
-                        err(er, 7, 'pem_is_locked', false, false, true);
+                        err(er, 18, 'zip_is_locked', false, false, true);
                     }
-                });
-                //< remove pems
 
-                execFileSync(getChrome(platform()), [`--pack-extension=${theme_path}`]);
+                    // eslint-disable-next-line no-new
+                    await new Promise(resolve => {
+                        zipLocal.zip(theme_path, (er, zip) => {
+                            if (!er) {
+                                zip.compress().save(zip_path);
 
-                move_system_folder(work_folder_system_path, system_path);
-            }
+                                move_system_folder(work_folder_system_path, system_path);
 
-            if (tutorial.ob.tutorial_stage === 7) {
-                tutorial.increment_tutorial_stage(true, true);
-            }
+                                resolve();
+
+                            } else {
+                                resolve();
+
+                                err(er, 5, null, false, false, true);
+                            }
+                        });
+                    });
+
+                } if (type === 'crx') {
+                    const crx_path = join(directory_to_save_package_in, `${package_name}.crx`);
+
+                    try {
+                        if (existsSync(crx_path)) {
+                            unlinkSync(crx_path);
+                        }
+
+                    } catch (er) {
+                        err(er, 19, 'crx_is_locked', false, false, true);
+                    }
+
+                    //> remove pems
+                    const pem_files = glob.sync(`${directory_to_save_package_in + sep}*.pem`);
+
+                    pem_files.forEach(pem_file => {
+                        try {
+                            if (existsSync(pem_file)) {
+                                unlinkSync(pem_file);
+                            }
+
+                        } catch (er) {
+                            err(er, 7, 'pem_is_locked', false, false, true);
+                        }
+                    });
+                    //< remove pems
+
+                    execFileSync(getChrome(platform()), [`--pack-extension=${theme_path}`]);
+
+                    move_system_folder(work_folder_system_path, system_path);
+                }
+
+                if (tutorial.ob.tutorial_stage === 7) {
+                    tutorial.increment_tutorial_stage(true, true);
+                }
+
+                return undefined;
+            }));
+
+        } catch (er) {
+            err(er, 17);
         }
-
-    } catch (er) {
-        err(er, 17);
-    }
+    });
 };
 
 const move_system_folder = (src, destination) => {

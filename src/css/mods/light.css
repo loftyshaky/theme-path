@@ -42,7 +42,7 @@ textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmar
     border-color: #212121;
 }
 
-.selected_folder, .selected_folder_bulk, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg, .er_msg div, .er_msg button, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span {
+.selected_folder, .selected_folder_bulk, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg, .er_msg div, .er_msg button, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span, .processing_msg {
     color: white;
 }
 
@@ -187,6 +187,10 @@ textarea:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualizat
     background-color: #adadad;
 }
 /*< history */
+
+.processing_msg {
+    background-color: #68c2e8;
+}
 
 /*> mods */
 .char_limit_exceeded_textarea {

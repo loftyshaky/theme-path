@@ -332,6 +332,13 @@ svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
 .side_popup .btn:not(:last-child), .auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child), .export_settings_btn {
     margin-right: 10px
 }
+
+.reload_ui_btn, .processing_msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 /*< general */
 
 /*> header */
@@ -1170,6 +1177,14 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     width: calc(100% - 5px);
 }
 /*< color pickier */
+.processing_msg {
+    background-color: #3ca1cd;
+    padding: 30px;
+    font-size: 30px;
+    display: inline-block;
+    position: fixed;
+    z-index: 4;
+}
 
 /*> error */
 .err {
@@ -1203,13 +1218,6 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 .er_close_btn svg {
     height: 20px;
     width: 20px;
-}
-
-.reload_ui_btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .er_more_info_btn {

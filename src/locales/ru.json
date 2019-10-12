@@ -329,6 +329,9 @@
   "new_theme_folder_name_text": "Новая тема",
 
 
+  "processing_message_text": "Операция выполняется, пожалуйста, подождите...",
+
+
   "an_error_occured_msg": "Произошла ошибка.",
   "error_code_label": "Код ошибки: ",
   "error_type_label": "Тип: ",

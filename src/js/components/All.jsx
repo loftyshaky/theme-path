@@ -21,6 +21,7 @@ import { Protecting_screen } from 'components/Protecting_screen';
 import { Tutorial_item } from 'components/Tutorial_item';
 import { Auto_updater } from 'components/Auto_updater';
 import { Analytics_privacy } from 'components/Analytics_privacy';
+import { Processing_msg } from 'components/Processing_msg';
 
 export class All extends React.Component {
     componentDidMount() {
@@ -105,6 +106,7 @@ export class All extends React.Component {
                     <Options />
                     <Help />
                     <Help_viewer />
+                    <Processing_msg />
                     <Auto_updater />
                     <Analytics_privacy />
                 </div>
