@@ -314,7 +314,11 @@ export const bulk_copy = theme_paths => {
                                             color = color_pickiers.convert_rgba_arr_into_obj(src_rgba_color.arr);
                                         }
 
-                                        picked_colors.record_picked_color(family, name, src_rgba_color.obj || color, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
+                                        const color_final = src_rgba_color.obj || color;
+
+                                        if (!r.isEmpty(color_final) && !r.isNil(color_final)) {
+                                            picked_colors.record_picked_color(family, name, src_rgba_color.obj || color, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
+                                        }
 
                                         if (src_is_default) {
                                             picked_colors.remove_picked_color(family, name, target_path); // remove picked color from target picked_colors.json file
