@@ -22,7 +22,7 @@
     background-color: #eb36ff;
 }
 
-a, .help_link, .upload_box_browse_label {
+a, .help_link, .upload_box_browse_label, .help_viewer_name {
     color: #3892ff!important;
 }
 
