@@ -86,6 +86,10 @@ svg, body.using_mouse .folder_arrow:focus svg {
     background-color: #a5f3ab;
 }
 
+.ordinary_color_input:nth-child(odd) .ordinary_color_input_inner, .ordinary_color_input:nth-child(odd) .ordinary_color_input_inner:after, .ordinary_color_input:nth-child(odd) .help, .ordinary_color_input:nth-child(odd) .help:after {
+    background-color: #e6e6e6;
+}
+
 /*> selects */
 .select__control {
     border-color: #212121!important;

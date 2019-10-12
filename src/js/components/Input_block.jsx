@@ -1,6 +1,8 @@
 import React from 'react';
 
+import x from 'x';
 import { inputs_data } from 'js/inputs_data';
+import * as conds from 'js/conds';
 
 import { Hr } from 'components/Hr';
 import { Textarea } from 'components/Textarea';
@@ -43,7 +45,7 @@ export class Input_block extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="hr_and_help">
+                <div className={x.cls(['hr_and_help', conds.colors(this.name) ? 'colors_and_tints_hr_and_help' : null])}>
                     {this.hr_el}
                     <Help_btn {...this.props} />
                 </div>
