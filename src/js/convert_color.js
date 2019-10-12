@@ -16,7 +16,7 @@ const convert_theme_color_props_to_color = item => {
         const { color_input_default, color_input_disabled } = options.ob.theme_vals[store.get('theme')];
         const val_is_arr = Array.isArray(item.val);
         const { family, name, val } = item;
-        const val_is_default = !manifest.mut.manifest || !manifest.mut.manifest.theme[family] || !manifest.mut.manifest.theme[family][name];
+        const val_is_default = !manifest.mut.manifest || !manifest.mut.manifest.theme || !manifest.mut.manifest.theme[family] || !manifest.mut.manifest.theme[family][name];
 
         if (family === 'images') {
             const no_picked_color_for_this_element = !mut.picked_colors_obj || !mut.picked_colors_obj[family] || !mut.picked_colors_obj[family][name];
