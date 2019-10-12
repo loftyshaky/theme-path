@@ -164,6 +164,7 @@ hr {
     width: 75%;
     margin: auto;
     margin-top: 10px;
+    flex-shrink: 0;
 }
 
 .hr:first-child {
