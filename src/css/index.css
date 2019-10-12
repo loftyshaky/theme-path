@@ -333,7 +333,7 @@ svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
     margin-right: 10px
 }
 
-.reload_ui_btn, .processing_msg {
+.reload_ui_btn {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1177,13 +1177,25 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     width: calc(100% - 5px);
 }
 /*< color pickier */
+
 .processing_msg {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+}
+
+.processing_msg > div {
     background-color: #3ca1cd;
+    width: max-content;
+    height: max-content;
     padding: 30px;
     font-size: 30px;
-    display: inline-block;
-    position: fixed;
-    z-index: 4;
 }
 
 /*> error */

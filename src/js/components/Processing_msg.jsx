@@ -21,10 +21,11 @@ export class Processing_msg extends React.Component {
 
     render() {
         return (
-            <div
-                className={x.cls(['processing_msg', processing_msg.ob.processing_msg_is_visible ? '' : 'none'])}
-                data-text="processing_message_text"
-            />
+            <div className={x.cls(['processing_msg', processing_msg.ob.processing_msg_is_visible ? '' : 'none'])}>
+                <div
+                    data-text="processing_message_text"
+                />
+            </div>
         );
     }
 }
