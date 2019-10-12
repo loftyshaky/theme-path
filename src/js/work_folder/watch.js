@@ -140,6 +140,8 @@ watcher
                 }
             }
 
+            chosen_folder_path.count_bulk_themes();
+
         } catch (er) {
             err(er, 87);
         }
