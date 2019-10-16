@@ -46,7 +46,7 @@ export const create_solid_color_image = (family, name, hex, alpha, history_obj) 
                     writeFileSync(join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`), base_64_data, 'base64');
 
                     if (history_obj) {
-                        history.copy_to_history_folder(family, name, history_obj.to_img_id, join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`))
+                        history.copy_to_history_folder(family, name, history_obj.to_img_id, join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`));
                     }
 
                 } catch (er3) {
