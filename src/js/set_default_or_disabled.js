@@ -1,5 +1,4 @@
-import { join } from 'path';
-import { existsSync, unlinkSync, copySync, readdirSync } from 'fs-extra';
+import { copySync } from 'fs-extra';
 
 import * as r from 'ramda';
 import Store from 'electron-store';
