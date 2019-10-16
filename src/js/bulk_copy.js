@@ -32,7 +32,11 @@ set_defaults.set_default_bulk_copy_checkboxes_obj(inputs_data);
 
 export const toggle_checkbox = action((family, name) => {
     try {
-        ob.bulk_copy_checkboxes[family][name] = !ob.bulk_copy_checkboxes[family][name];
+        const bool = !ob.bulk_copy_checkboxes[family][name];
+
+        ob.bulk_copy_checkboxes[family][name] = bool;
+
+        store.set(`bulk_copy_checkboxes.${family}.${name}`, bool);
 
     } catch (er) {
         err(er, 253);
@@ -43,22 +47,30 @@ export const select_or_deselect_all_global = action(bool => {
     try {
         Object.keys(inputs_data.obj).forEach(family => {
             if (family !== 'options') {
-                select_or_deselect_all_family(family, bool);
+                select_or_deselect_all_family(family, bool, false);
             }
         });
+
+        store.set('bulk_copy_checkboxes', ob.bulk_copy_checkboxes);
 
     } catch (er) {
         err(er, 254);
     }
 });
 
-export const select_or_deselect_all_family = action((family, bool) => {
+export const select_or_deselect_all_family = action((family, bool, set_to_store) => {
     try {
         Object.values(inputs_data.obj[family]).forEach(item => {
-            if (item.name !== 'locale') {
-                ob.bulk_copy_checkboxes[family][item.name] = bool;
+            const { name } = item;
+
+            if (name !== 'locale') {
+                ob.bulk_copy_checkboxes[family][name] = bool;
             }
         });
+
+        if (set_to_store) {
+            store.set('bulk_copy_checkboxes', ob.bulk_copy_checkboxes);
+        }
 
     } catch (er) {
         err(er, 255);
@@ -452,6 +464,6 @@ const get_rgba_color = (family, name, manifest_obj, picked_colors_obj, is_defaul
 
 export const ob = observable({
     bulk_copy_is_visible: false,
-    bulk_copy_checkboxes: store.get('default_bulk_copy_checkboxes'),
+    bulk_copy_checkboxes: store.get('bulk_copy_checkboxes'),
     set_default_mode_is_activated: false,
 });

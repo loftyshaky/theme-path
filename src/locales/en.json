@@ -309,7 +309,7 @@
   "bulk_copy_select_default_btn_text": "Select default",
   "bulk_copy_set_default_btn_text": "Set default",
 
-  "bulk_copy_set_default_message_text": "To set what checkboxes will be checked when you start the Chrome Theme Creator or click \"Select default\" button check all checkboxes you wish and click \"Accept\".",
+  "bulk_copy_set_default_message_text": "To set what checkboxes will be checked when you click \"Select default\" button check all checkboxes you wish and click \"Accept\".",
 
   "history_changed_text": "Changed",
   "history_changed_to_text": "Changed to",

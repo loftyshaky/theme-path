@@ -73,11 +73,11 @@ export class Bulk_copy extends React.Component {
                                     <div className="bulk_copy_side_popup_content_btns">
                                         <Btn
                                             name="bulk_copy_select_all"
-                                            on_click={() => bulk_copy.select_or_deselect_all_family(family, true)}
+                                            on_click={() => bulk_copy.select_or_deselect_all_family(family, true, true)}
                                         />
                                         <Btn
                                             name="bulk_copy_deselect_all"
-                                            on_click={() => bulk_copy.select_or_deselect_all_family(family, false)}
+                                            on_click={() => bulk_copy.select_or_deselect_all_family(family, false, true)}
                                         />
                                     </div>
                                     <div className="bulk_copy_side_popup_content_checkboxes">

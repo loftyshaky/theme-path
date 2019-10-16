@@ -29,30 +29,30 @@ const normalize = () => {
     }
 };
 
-const normalize_default_bulk_copy_checkboxes_obj = () => {
+const normalize_bulk_copy_checkboxes_obj = key => {
     try {
-        const { default_bulk_copy_checkboxes } = store.get();
+        const bulk_copy_checkboxes = store.get(key);
 
-        Object.keys(con.default_settings.default_bulk_copy_checkboxes).forEach(family => {
-            if (default_bulk_copy_checkboxes[family] == null) {
-                default_bulk_copy_checkboxes[family] = {};
+        Object.keys(con.default_settings.bulk_copy_checkboxes).forEach(family => {
+            if (bulk_copy_checkboxes[family] == null) {
+                bulk_copy_checkboxes[family] = {};
             }
 
-            Object.entries(con.default_settings.default_bulk_copy_checkboxes[family]).forEach(([name, val]) => {
-                if (name !== 'locale' && (default_bulk_copy_checkboxes[family] == null || default_bulk_copy_checkboxes[family][name] == null)) {
-                    default_bulk_copy_checkboxes[family][name] = val;
+            Object.entries(con.default_settings.bulk_copy_checkboxes[family]).forEach(([name, val]) => {
+                if (name !== 'locale' && (bulk_copy_checkboxes[family] == null || bulk_copy_checkboxes[family][name] == null)) {
+                    bulk_copy_checkboxes[family][name] = val;
                 }
             });
         });
 
-        store.set('default_bulk_copy_checkboxes', default_bulk_copy_checkboxes);
+        store.set(key, bulk_copy_checkboxes);
 
     } catch (er) {
         err(er, 267);
     }
 };
 
-const generate_default_bulk_copy_checkboxes_obj = inputs_data => {
+const generate_bulk_copy_checkboxes_obj = inputs_data => {
     try {
         const bulk_copy_checkboxes_obj = {};
 
@@ -79,9 +79,13 @@ const generate_default_bulk_copy_checkboxes_obj = inputs_data => {
 
 export const set_default_bulk_copy_checkboxes_obj = inputs_data => {
     try {
-        con.default_settings.default_bulk_copy_checkboxes = generate_default_bulk_copy_checkboxes_obj(inputs_data);
+        const bulk_copy_checkboxes_obj = generate_bulk_copy_checkboxes_obj(inputs_data);
 
-        normalize_default_bulk_copy_checkboxes_obj();
+        con.default_settings.bulk_copy_checkboxes = bulk_copy_checkboxes_obj;
+        con.default_settings.default_bulk_copy_checkboxes = bulk_copy_checkboxes_obj;
+
+        normalize_bulk_copy_checkboxes_obj('bulk_copy_checkboxes');
+        normalize_bulk_copy_checkboxes_obj('default_bulk_copy_checkboxes');
 
     } catch (er) {
         err(er, 266);
@@ -104,6 +108,7 @@ const con = {
         color_picker_default_mode: 'HSVA',
         answered_to_analytics_privacy_question: false,
         enable_analytics: false,
+        bulk_copy_checkboxes: {},
         default_bulk_copy_checkboxes: {},
     },
 };
