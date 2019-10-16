@@ -19,25 +19,27 @@ import * as open_and_pack from 'js/open_and_pack';
 import * as convert_color from 'js/convert_color';
 import * as custom_folders from 'js/work_folder/custom_folders';
 import * as tutorial from 'js/tutorial';
-import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
+import * as history from 'js/history';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
-import * as els_state from 'js/els_state';
 
 const { getCurrentWindow } = require('electron').remote;
 
 const store = new Store();
 configure({ enforceActions: 'observed' });
 
-export const change_val = async (family, name, new_val, img_extension, reload_manifest, target_folder_path, forced_locale, forced_default_locale) => {
+export const change_val = async (family, name, new_val, img_extension, reload_manifest, remove_reverted_history, target_folder_path, forced_locale, forced_default_locale) => {
     try {
         const theme_families = ['theme_metadata', 'images', 'colors', 'tints', 'properties'];
 
         if (theme_families.indexOf(family) === -1 || choose_folder.reset_work_folder(true)) {
+            if (remove_reverted_history && name !== 'locale') {
+                history.remove_reverted_history();
+            }
+
             const bulk_copying = target_folder_path;
             const manifest_path = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, 'manifest.json');
             let manifest_obj;
-
             if (reload_manifest) {
                 manifest.reload_manifest();
                 manifest_obj = manifest.mut.manifest;
@@ -77,6 +79,7 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
 
             } else if (third_if_strings.indexOf(family) > -1 || five_if_strings.indexOf(name) > -1) {
                 write_to_json(manifest_obj, manifest_path, name, new_val, family);
+                set_inputs_data_val(family, name, new_val);
 
             } else if (family === 'images' || name === 'icon') {
                 write_to_json(manifest_obj, manifest_path, name, new_val + img_extension_final, family);
@@ -140,16 +143,6 @@ export const update_name_or_description = (name, new_val, forced_locale, forced_
 
         const locale = forced_locale || inputs_data.obj.theme_metadata.locale.val;
         const default_locale = forced_default_locale || inputs_data.obj.theme_metadata.default_locale.val;
-
-        if (name === 'name') {
-            if (locale === default_locale) {
-                new_theme_or_rename.rename_theme_folder(target_folder_path || chosen_folder_path.ob.chosen_folder_path, new_val, !!forced_locale);
-
-            } else {
-                els_state.set_applying_textarea_val_val(false, target_folder_path);
-            }
-
-        }
 
         delete_locale_folder(locale, default_locale);
 

@@ -1,7 +1,8 @@
+
 'use_strict';
 
 import { join } from 'path';
-import { existsSync, copySync, removeSync } from 'fs-extra';
+import { existsSync, copySync, moveSync, removeSync } from 'fs-extra';
 
 import * as r from 'ramda';
 import { observable, action, toJS, configure } from 'mobx';
@@ -35,6 +36,7 @@ export const load_history = () => {
 
                 show_or_hide_history(true);
                 set_history();
+                change_revert_position(Infinity, false);
 
             } catch (er) {
                 err(er, 204);
@@ -46,95 +48,171 @@ export const load_history = () => {
     }
 };
 
+export const revert_tinker = revert_position => {
+    try {
+        const direction = revert_position > mut.reverted_history.revert_position ? 'forward' : 'backward';
+        let clicked_on_start_record;
+        let changes_to_revert;
+        mut.changes_to_revert = ob.history.filter((not_used, i) => i + 1 > revert_position);
+
+        change_revert_position(revert_position, true);
+        set_inputs_data(mut.initial_inputs_data);
+
+        if (direction === 'forward') {
+            changes_to_revert = ob.history.filter((not_used, i) => i + 1 > mut.reverted_history.revert_position && i + 1 <= revert_position);
+            clicked_on_start_record = revert_position === mut.reverted_history.revert_position;
+
+        } else if (direction === 'backward') {
+            // eslint-disable-next-line prefer-destructuring
+            changes_to_revert = mut.changes_to_revert.slice().reverse();
+            clicked_on_start_record = mut.changes_to_revert.length === 0;
+        }
+
+        if (!clicked_on_start_record) {
+            for (const change_to_revert of changes_to_revert) {
+                const change = unpack_change(change_to_revert, direction);
+
+                if (conds.imgs(change.family, change.name)) {
+                    color_pickiers.set_color_input_vizualization_color(change.family, change.name, change.val || options.ob.theme_vals[options.ob.theme].color_input_default);
+
+                } else if (conds.colors(change.family)) {
+                    color_pickiers.set_color_input_vizualization_color(change.family, change.name, change.val || (change.default ? options.ob.theme_vals[options.ob.theme].color_input_default : options.ob.theme_vals[options.ob.theme].color_input_disabled));
+
+                    if (change.family === 'tints') {
+                        change_val.set_disabled_bool(change.family, change.name, change.disabled);
+                    }
+
+                } else if (conds.selects(change.family, change.name)) {
+                    change_val.set_inputs_data_val(change.family, change.name, change.val);
+
+                } else if (conds.textareas(change.family, change.name)) {
+                    if (change.locale === inputs_data.obj.theme_metadata.locale.val || change.name === 'version') {
+                        change_val.set_inputs_data_val(change.family, change.name, change.val);
+                    }
+                }
+
+                if (conds.colors(change.family) || conds.imgs(change.family, change.name)) {
+                    change_val.set_default_bool(change.family, change.name, change.default);
+                }
+            }
+        }
+
+        analytics.add_history_analytics('history_item');
+
+    } catch (er) {
+        err(er, 209);
+    }
+};
+
 export const accept_history_change = () => {
     processing_msg.process(() => {
         try {
             manifest.reload_manifest();
 
-            const number_of_changes = mut.changes_to_revert.length;
-            const clicked_on_last_item = number_of_changes === 0;
+            const direction = ob.revert_position > mut.reverted_history.revert_position ? 'forward' : 'backward';
+            const reverting_last_history_record = ob.history.length === ob.revert_position;
+            let changes_to_revert;
+            let number_of_changes;
+            let clicked_on_start_record;
+            let new_folder_name = null;
 
-            if (!clicked_on_last_item) {
-                let updated_name = false;
+            if (direction === 'forward') {
+                clicked_on_start_record = ob.revert_position === mut.reverted_history.revert_position;
 
-                for (const change of mut.changes_to_revert) {
-                    const { family, name, locale, from, from_manifest_val, from_img_id, from_picked_color_val, was_default, was_disabled } = change;
+                changes_to_revert = ob.history.filter((not_used, i) => i + 1 > mut.reverted_history.revert_position && i + 1 <= ob.revert_position);
 
-                    if (conds.imgs(family, name)) {
-                        const path_to_current_img = join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
+            } else if (direction === 'backward') {
+                clicked_on_start_record = number_of_changes === 0;
+                changes_to_revert = mut.changes_to_revert.slice().reverse();
+            }
 
-                        if (!was_default) {
-                            change_val.change_val(family, name, name, '.png', false);
+            if (!clicked_on_start_record) {
+                for (const change_to_revert of changes_to_revert) {
+                    const change = unpack_change(change_to_revert, direction);
 
-                            if (from_img_id) {
-                                const path_to_old_img = join(chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
-                                copySync(path_to_old_img, path_to_current_img);
+                    if (conds.imgs(change.family, change.name)) {
+                        const path_to_manifest_img = join(chosen_folder_path.ob.chosen_folder_path, `${change.name}.png`);
 
-                                removeSync(path_to_old_img);
+                        if (!change.default) {
+                            change_val.change_val(change.family, change.name, change.name, '.png', false, false);
+
+                            if (direction === 'forward') {
+                                move_images_revert(change, path_to_manifest_img, 'reverted_history', 'history', 'all', false, true);
+
+                            } else if (direction === 'backward') {
+                                move_images_revert(change, path_to_manifest_img, 'history', 'reverted_history', 'all', true, false);
                             }
 
                         } else {
-                            change_val.set_default_bool(family, name, true);
-                            picked_colors.remove_picked_color(family, name);
-                            removeSync(path_to_current_img);
+                            change_val.set_default_bool(change.family, change.name, true);
+                            picked_colors.remove_picked_color(change.family, change.name);
 
-                            if (name !== 'icon') {
-                                set_default_or_disabled.delete_key_from_manifest(family, name);
+                            if (direction === 'forward') {
+                                move_images_revert(change, path_to_manifest_img, 'reverted_history', 'history', 1, false, false);
+
+                            } else if (direction === 'backward') {
+                                move_images_revert(change, path_to_manifest_img, 'history', 'reverted_history', 2, false, false);
+                            }
+
+                            removeSync(path_to_manifest_img);
+
+                            if (change.name !== 'icon') {
+                                set_default_or_disabled.delete_key_from_manifest(change.family, change.name);
 
                             } else {
-                                set_default_or_disabled.set_default_icon(family, name);
+                                set_default_or_disabled.set_default_icon(change.family, change.name, false);
                             }
                         }
 
-                    } else if (conds.colors(family)) {
-                        if (!was_default) {
-                            if (!manifest.mut.manifest.theme[family]) {
-                                manifest.mut.manifest.theme[family] = {};
+                    } else if (conds.colors(change.family)) {
+                        if (!change.default) {
+                            if (!manifest.mut.manifest.theme[change.family]) {
+                                manifest.mut.manifest.theme[change.family] = {};
                             }
 
-                            if (!was_disabled) {
-                                manifest.mut.manifest.theme[family][name] = from_manifest_val;
+                            if (!change.disabled) {
+                                manifest.mut.manifest.theme[change.family][change.name] = change.manifest_val;
 
                             } else {
-                                manifest.mut.manifest.theme[family][name] = set_default_or_disabled.con.disabled_manifest_val;
+                                manifest.mut.manifest.theme[change.family][change.name] = set_default_or_disabled.con.disabled_manifest_val;
                             }
 
                         } else {
-                            picked_colors.remove_picked_color(family, name);
-                            set_default_or_disabled.delete_key_from_manifest(family, name);
+                            picked_colors.remove_picked_color(change.family, change.name);
+                            set_default_or_disabled.delete_key_from_manifest(change.family, change.name);
                         }
 
-                    } else if (conds.selects(family, name)) {
-                        if (!was_default) {
-                            change_val.change_val(family, name, from, null, false);
+                    } else if (conds.selects(change.family, change.name)) {
+                        if (change.val === 'default') {
+                            set_default_or_disabled.set_default_or_disabled(change.family, change.name, 'select', false);
 
                         } else {
-                            set_default_or_disabled.set_default_or_disabled(family, name, 'select');
+                            change_val.change_val(change.family, change.name, change.val, null, false, false);
                         }
 
-                    } else if (conds.textareas(family, name)) {
-                        if (name === 'version') {
-                            change_val.change_val(family, name, from, null, false);
-                            change_val.set_previous_val(family, name, from);
+
+                    } else if (conds.textareas(change.family, change.name)) {
+                        if (change.name === 'version') {
+                            change_val.change_val(change.family, change.name, change.val, null, false, false);
+                            change_val.set_previous_val(change.family, change.name, change.val);
 
                         } else {
-                            if (name === 'name') {
-                                updated_name = true;
+                            if (change.name === 'name' && change.locale === inputs_data.obj[change.family].default_locale.val) {
+                                new_folder_name = change.val;
                             }
 
-                            change_val.update_name_or_description(name, from, locale);
+                            change_val.update_name_or_description(change.name, change.val, change.locale);
                         }
-
                     }
 
-                    if (conds.imgs(family, name) || conds.colors(family)) {
-                        if (from_picked_color_val) {
-                            color_pickiers.mut.current_pickied_color = from_picked_color_val;
+                    if (conds.imgs(change.family, change.name) || conds.colors(change.family)) {
+                        if (change.picked_color_val) {
+                            color_pickiers.mut.current_pickied_color = change.picked_color_val;
 
-                            picked_colors.record_picked_color(family, name);
+                            picked_colors.record_picked_color(change.family, change.name);
 
                         } else {
-                            picked_colors.remove_picked_color(family, name);
+                            picked_colors.remove_picked_color(change.family, change.name);
                         }
                     }
                 }
@@ -142,22 +220,35 @@ export const accept_history_change = () => {
                 change_val.set_previous_val('theme_metadata', 'name', inputs_data.obj.theme_metadata.name.val);
                 change_val.set_previous_val('theme_metadata', 'description', inputs_data.obj.theme_metadata.description.val);
 
-                const history_arr = toJS(r.dropLast(number_of_changes, ob.history));
+                let history_arr;
 
-                json_file.write_to_json(history_arr, get_history_path());
-                json_file.write_to_manifest_json();
+                if (!reverting_last_history_record) {
+                    history_arr = ob.history.filter((not_used, i) => i < ob.revert_position);
 
-                const new_folder_name = inputs_data.obj.theme_metadata.name.val;
-                const locale = inputs_data.obj.theme_metadata.locale.val;
-                const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
+                } else {
+                    history_arr = ob.history;
 
-                if (updated_name && locale === default_locale) {
-                    new_theme_or_rename.rename_theme_folder(chosen_folder_path.ob.chosen_folder_path, new_folder_name);
+                    remove_reverted_history();
                 }
+
+                json_file.write_to_json(history_arr, get_history('history'));
+                json_file.write_to_manifest_json();
             }
 
-            change_revert_position(Infinity);
+            if (!reverting_last_history_record) {
+                const reverted_history = {};
+                reverted_history.history = mut.changes_to_revert;
+                reverted_history.revert_position = ob.revert_position;
+
+                json_file.write_to_json(reverted_history, get_history('reverted_history'));
+            }
+
+            change_revert_position(Infinity, false);
             show_or_hide_history(false);
+
+            if (new_folder_name) {
+                new_theme_or_rename.rename_theme_folder(new_folder_name);
+            }
 
             analytics.add_history_analytics('history_accept');
 
@@ -170,7 +261,7 @@ export const accept_history_change = () => {
 export const cancel_history_change = () => {
     try {
         set_inputs_data(mut.initial_inputs_data);
-        change_revert_position(Infinity);
+        change_revert_position(Infinity, false);
         show_or_hide_history(false);
 
     } catch (er) {
@@ -178,37 +269,38 @@ export const cancel_history_change = () => {
     }
 };
 
-export const generate_img_history_obj = (family, name, was_default, to_rgba, set_to_default, target_folder_path) => {
+export const generate_img_history_obj = (family, name, was_default, to_val, set_to_default, target_folder_path) => {
     try {
         const from_img_path = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, `${name}.png`);
-        const from_img_id = Date.now();
-        const copy_img = existsSync(from_img_path) && (name !== 'icon' || (name === 'icon' && !was_default));
+        const from_img_id = x.unique_id();
+        const to_img_id = x.unique_id();
+        const copy_img = existsSync(from_img_path) && !was_default;
 
         if (copy_img) {
-            copySync(
-                from_img_path,
-                join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`),
-            );
+            copy_to_history_folder(family, name, from_img_id, from_img_path, target_folder_path);
         }
 
-        const from_picked_color_val = get_from_picked_color_val(family, name, target_folder_path);
+        const from_picked_color_val = get_picked_color_from(family, name, target_folder_path);
 
         const rgba_css_val = r.ifElse(
-            () => to_rgba,
-            () => conver_rgba_arr_into_css_val(to_rgba),
+            () => to_val,
+            () => conver_rgba_arr_into_css_val(to_val),
 
             () => null,
         )();
 
         return {
+            timestamp: get_timestamp(),
             family,
             name,
             was_default,
-            ...(copy_img && { from_img_id }),
-            ...(from_picked_color_val && { from_picked_color_val }),
-            ...(rgba_css_val && { to_rgba: rgba_css_val }),
             set_to_default,
-            timestamp: get_timestamp(),
+            ...(from_picked_color_val && { from_val: color_pickiers.convert_rgba_obj_into_string(from_picked_color_val) }),
+            ...(from_picked_color_val && { from_picked_color_val }),
+            ...(rgba_css_val && { to_val: rgba_css_val }),
+            ...(rgba_css_val && { to_picked_color_val: to_val }),
+            ...(copy_img && { from_img_id }),
+            ...(!set_to_default && { to_img_id }),
         };
 
     } catch (er) {
@@ -218,22 +310,25 @@ export const generate_img_history_obj = (family, name, was_default, to_rgba, set
     return undefined;
 };
 
-export const generate_color_history_obj = (family, name, was_default, was_disabled, from_hex, from_manifest_val, to_hex, set_to_default, set_to_disabled, target_folder_path) => {
-    const from_picked_color_val = get_from_picked_color_val(family, name, target_folder_path);
+export const generate_color_history_obj = (family, name, was_default, was_disabled, from_val, from_manifest_val, to_val, to_picked_color_val, to_manifest_val, set_to_default, set_to_disabled, target_folder_path) => {
+    const from_picked_color_val = get_picked_color_from(family, name, target_folder_path);
+    const switched_from_default_to_disabled_or_from_disabled_to_default = (was_default && set_to_disabled) || (was_disabled && set_to_default);
 
     try {
         return {
+            timestamp: get_timestamp(),
             family,
             name,
             was_default,
             was_disabled,
-            ...(from_hex && { from_hex }),
-            ...(from_manifest_val && { from_manifest_val }),
-            ...(from_picked_color_val && { from_picked_color_val }),
-            to_hex,
             set_to_default,
             set_to_disabled,
-            timestamp: get_timestamp(),
+            ...(from_val && !switched_from_default_to_disabled_or_from_disabled_to_default && { from_val }),
+            ...(family === 'colors' && from_picked_color_val && { from_picked_color_val }),
+            ...(from_manifest_val && !switched_from_default_to_disabled_or_from_disabled_to_default && { from_manifest_val }),
+            ...(to_val && { to_val }),
+            ...(family === 'colors' && to_picked_color_val && { to_picked_color_val }),
+            ...(to_manifest_val && { to_manifest_val }),
         };
 
     } catch (er) {
@@ -243,16 +338,16 @@ export const generate_color_history_obj = (family, name, was_default, was_disabl
     return undefined;
 };
 
-export const generate_select_history_obj = (family, name, was_default, from, to, set_to_default) => {
+export const generate_select_history_obj = (family, name, was_default, from_val, to_val, set_to_default) => {
     try {
         return {
+            timestamp: get_timestamp(),
             family,
             name,
             was_default,
-            from: from !== null ? from.toString() : null,
-            to: to.toString(),
             set_to_default,
-            timestamp: get_timestamp(),
+            from_val: from_val.toString(),
+            to_val: to_val.toString(),
         };
 
     } catch (er) {
@@ -263,15 +358,15 @@ export const generate_select_history_obj = (family, name, was_default, from, to,
 };
 
 
-export const generate_textarea_history_obj = (family, name, from, to, locale) => {
+export const generate_textarea_history_obj = (family, name, from_val, to_val, locale) => {
     try {
         return {
+            timestamp: get_timestamp(),
             family,
             name,
             ...((name === 'name' || name === 'description') && { locale: locale || inputs_data.obj.theme_metadata.locale.val }),
-            from,
-            to,
-            timestamp: get_timestamp(),
+            from_val: from_val ? from_val.toString() : '',
+            to_val: to_val ? to_val.toString() : '',
         };
 
     } catch (er) {
@@ -287,8 +382,8 @@ export const record_change = (generate_history_obj_f, target_folder_path) => {
         const is_digit = /^\d+$/.test(max_number_of_history_records); // true even if number is of type string
 
         if (is_digit && max_number_of_history_records > 0) {
-            const history_arr = get_history_arr(target_folder_path);
-            const history_path = get_history_path(target_folder_path);
+            const history_arr = get_history_arr('history', target_folder_path);
+            const history = get_history('history', target_folder_path);
 
             const history_obj = generate_history_obj_f();
 
@@ -297,8 +392,8 @@ export const record_change = (generate_history_obj_f, target_folder_path) => {
             while (history_arr.length > max_number_of_history_records) {
                 const { from_img_id } = history_arr[0];
 
-                if (from_img_id) { // is image record with image in old_imgs folder
-                    const path_to_img_to_delete = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.old_imgs_path, `${from_img_id}.png`);
+                if (from_img_id) { // is image record with image in history folder
+                    const path_to_img_to_delete = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.folder_paths.history, `${from_img_id}.png`);
 
                     removeSync(path_to_img_to_delete);
                 }
@@ -306,25 +401,30 @@ export const record_change = (generate_history_obj_f, target_folder_path) => {
                 history_arr.shift();
             }
 
-            json_file.create_json_file(history_path, '[]');
-            json_file.write_to_json(history_arr, history_path);
+            json_file.create_json_file(history, '[]');
+            json_file.write_to_json(history_arr, history);
+
+            return history_obj;
         }
+
     } catch (er) {
         err(er, 223);
     }
+
+    return undefined;
 };
 
 const get_timestamp = () => new Date().getTime();
 
-const get_history_arr = target_folder_path => {
+const get_history_arr = (history_key, target_folder_path) => {
     try {
-        const history_path = get_history_path(target_folder_path);
+        const history = get_history(history_key, target_folder_path);
 
         const history_arr = r.ifElse(
-            () => existsSync(history_path),
-            () => json_file.parse_json(history_path),
+            () => existsSync(history),
+            () => json_file.parse_json(history),
 
-            () => [],
+            () => (history_key === 'reverted_history' ? { history: [], revert_position: Infinity } : []),
         )();
 
         return history_arr;
@@ -336,7 +436,7 @@ const get_history_arr = target_folder_path => {
     return undefined;
 };
 
-const get_history_path = target_folder_path => join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.history_path);
+const get_history = (history_key, target_folder_path) => join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.file_paths[history_key]);
 
 export const get_date_from_timestamp = timestamp => {
     try {
@@ -358,61 +458,7 @@ export const get_date_from_timestamp = timestamp => {
     return undefined;
 };
 
-export const revert_tinker = revert_position => {
-    try {
-        change_revert_position(revert_position);
-        set_inputs_data(mut.initial_inputs_data);
-
-        mut.changes_to_revert = r.drop(revert_position, ob.history).reverse();
-
-        const clicked_on_last_item = mut.changes_to_revert.length === 0;
-
-        if (!clicked_on_last_item) {
-            for (const change of mut.changes_to_revert) {
-                const { family, name, locale, from, from_hex, from_picked_color_val, was_default, was_disabled } = change;
-
-                if (conds.imgs(family, name)) {
-                    const color = r.ifElse(
-                        () => from_picked_color_val,
-                        () => conver_rgba_arr_into_css_val(from_picked_color_val),
-
-                        () => options.ob.theme_vals[store.get('theme')].color_input_default,
-                    )();
-
-                    color_pickiers.set_color_input_vizualization_color(family, name, color);
-
-                } else if (conds.colors(family)) {
-                    color_pickiers.set_color_input_vizualization_color(family, name, from_hex || options.ob.theme_vals[options.ob.theme].color_input_default);
-
-                    change_val.set_default_bool(family, name, was_default);
-
-                    if (family === 'tints') {
-                        change_val.set_disabled_bool(family, name, was_disabled);
-                    }
-
-                } else if (conds.selects(family, name)) {
-                    change_val.set_inputs_data_val(family, name, from);
-
-                } else if (conds.textareas(family, name)) {
-                    if (locale === inputs_data.obj.theme_metadata.locale.val || name === 'version') {
-                        change_val.set_inputs_data_val(family, name, from);
-                    }
-                }
-
-                if (conds.colors(family) || conds.imgs(family, name)) {
-                    change_val.set_default_bool(family, name, was_default);
-                }
-            }
-        }
-
-        analytics.add_history_analytics('history_item');
-
-    } catch (er) {
-        err(er, 209);
-    }
-};
-
-const get_from_picked_color_val = (family, name, target_folder_path) => {
+const get_picked_color_from = (family, name, target_folder_path) => {
     try {
         const picked_colors_path = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, picked_colors.con.picked_colors_sdb_path);
         let from_picked_color_val;
@@ -445,18 +491,23 @@ export const show_or_hide_history = action(bool => {
 
 const set_history = action(() => {
     try {
-        ob.history = get_history_arr();
+        const history = get_history_arr('history');
+        const reverted_history = get_history_arr('reverted_history');
 
-        get_changes_to_revert(ob.history.length);
+        ob.history = r.concat(history, reverted_history.history);
+        mut.reverted_history = reverted_history;
+
+        get_changes_to_revert(history.length);
 
     } catch (er) {
         err(er, 210);
     }
 });
 
-const change_revert_position = action(revert_position => {
+const change_revert_position = action((revert_position, force_provided) => {
     try {
-        ob.revert_position = revert_position;
+        const old_revert_position = r.isNil(mut.reverted_history.revert_position) ? revert_position : mut.reverted_history.revert_position;
+        ob.revert_position = force_provided ? revert_position : old_revert_position;
 
     } catch (er) {
         err(er, 211);
@@ -465,7 +516,7 @@ const change_revert_position = action(revert_position => {
 
 const get_changes_to_revert = revert_position => {
     try {
-        mut.changes_to_revert = r.drop(revert_position, ob.history).reverse();
+        mut.changes_to_revert = r.drop(revert_position, ob.history);
 
     } catch (er) {
         err(er, 221);
@@ -483,18 +534,109 @@ export const set_history_side_popup_width = () => {
 
 const conver_rgba_arr_into_css_val = to_rgba => `rgba(${r.values(to_rgba).join(',')})`;
 
+const unpack_change = (change, direction) => {
+    try {
+        const { family, name, locale, from_img_id, to_img_id, from_val, from_picked_color_val, from_manifest_val, to_picked_color_val, to_manifest_val, to_val, was_default, was_disabled, set_to_default, set_to_disabled } = change;
+
+        return {
+            family,
+            name,
+            locale,
+            default: direction === 'forward' ? set_to_default : was_default,
+            disabled: direction === 'forward' ? set_to_disabled : was_disabled,
+            val: direction === 'forward' ? to_val : from_val,
+            picked_color_val: direction === 'forward' ? to_picked_color_val : from_picked_color_val,
+            manifest_val: direction === 'forward' ? to_manifest_val : from_manifest_val,
+            img_id: direction === 'forward' ? to_img_id : from_img_id,
+            from_img_id,
+            to_img_id,
+        };
+
+    } catch (er) {
+        err(er, 297);
+    }
+
+    return undefined;
+};
+
+export const remove_reverted_history = target_folder_path => {
+    try {
+        removeSync(get_history('reverted_history', target_folder_path));
+        removeSync(join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.folder_paths.reverted_history));
+
+    } catch (er) {
+        err(er, 296);
+    }
+};
+
+export const copy_to_history_folder = (family, name, img_id, img_path, target_folder_path) => {
+    try {
+        if (conds.imgs(family, name)) {
+            copySync(
+                img_path,
+                join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.folder_paths.history, `${img_id}.png`),
+            );
+        }
+
+    } catch (er) {
+        err(er, 298);
+    }
+};
+
+
+const move_images_revert = (change, path_to_manifest_img, imgs_folder_1_name, imgs_folder_2_name, run_block, copy_in_block_1, copy_in_block_2) => {
+    try {
+        if (change.from_img_id && (run_block === 'all' || run_block === 1)) {
+            const from_img_src = join(chosen_folder_path.ob.chosen_folder_path, con.folder_paths[imgs_folder_1_name], `${change.from_img_id}.png`);
+            const from_img_target = join(chosen_folder_path.ob.chosen_folder_path, con.folder_paths[imgs_folder_2_name], `${change.from_img_id}.png`);
+
+            if (existsSync(from_img_src)) {
+                if (copy_in_block_1) {
+                    copySync(from_img_src, path_to_manifest_img);
+                }
+
+                moveSync(from_img_src, from_img_target);
+            }
+        }
+
+        if (change.to_img_id && (run_block === 'all' || run_block === 2)) {
+            const to_img_src = join(chosen_folder_path.ob.chosen_folder_path, con.folder_paths[imgs_folder_1_name], `${change.to_img_id}.png`);
+            const to_img_target = join(chosen_folder_path.ob.chosen_folder_path, con.folder_paths[imgs_folder_2_name], `${change.to_img_id}.png`);
+
+            if (existsSync(to_img_src)) {
+                if (copy_in_block_2) {
+                    copySync(to_img_src, path_to_manifest_img);
+                }
+
+                moveSync(to_img_src, to_img_target);
+            }
+        }
+
+    } catch (er) {
+        err(er, 299);
+    }
+};
+
+
 export const met = {
     reset_history_side_popup_content: null,
 };
 
 const con = {
-    history_path: join('system', 'history.json'),
-    old_imgs_path: join('system', 'old_imgs'),
+    file_paths: {
+        history: join('system', 'history.json'),
+        reverted_history: join('system', 'reverted_history.json'),
+    },
+    folder_paths: {
+        history: join('system', 'history'),
+        reverted_history: join('system', 'reverted_history'),
+    },
     months: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].map(month => x.msg(month)),
 };
 
 export const mut = {
-    changes_to_revert: null,
+    reverted_history: {},
+    changes_to_revert: [],
     initial_inputs_data: null,
     scroll_to_bottom_of_history: false,
 };

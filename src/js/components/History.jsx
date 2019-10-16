@@ -53,8 +53,8 @@ export class History extends React.Component {
 
             if (conds.imgs(item.family, item.name)) {
                 if (!item.set_to_default) {
-                    if (item.to_rgba) {
-                        return <Color_and_img_changed_to color={item.to_rgba} />;
+                    if (item.to_val) {
+                        return <Color_and_img_changed_to color={item.to_val} />;
                     }
 
                     return <String name="changed" />;
@@ -62,21 +62,21 @@ export class History extends React.Component {
 
             } else if (item.family === 'colors' || item.family === 'tints') {
                 if (!item.set_to_default && !item.set_to_disabled) {
-                    return <Color_and_img_changed_to color={item.to_hex} />;
+                    return <Color_and_img_changed_to color={item.to_val} />;
                 }
 
             } else if (conds.selects(item.family, item.name)) {
                 return (
                     <Selects_changed_to
                         name={item.name}
-                        val={item.to}
+                        val={item.to_val}
                     />
                 );
 
             } else if (conds.textareas(item.family, item.name)) {
                 return (
                     <Textarea_changed_to
-                        val={item.to}
+                        val={item.to_val}
                     />
                 );
             }

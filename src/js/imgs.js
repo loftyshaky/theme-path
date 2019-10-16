@@ -23,7 +23,7 @@ configure({ enforceActions: 'observed' });
 
 const store = new Store();
 
-export const create_solid_color_image = (family, name, hex, alpha) => {
+export const create_solid_color_image = (family, name, hex, alpha, history_obj) => {
     try {
         const width = sta.width[name] ? sta.width[name] : 1;
         const height = sta.height[name] ? sta.height[name] : 1;
@@ -46,6 +46,10 @@ export const create_solid_color_image = (family, name, hex, alpha) => {
                     const base_64_data = data.replace(/^data:image\/png;base64,/, '');
 
                     writeFileSync(join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`), base_64_data, 'base64');
+
+                    if (history_obj) {
+                        history.copy_to_history_folder(family, name, history_obj.to_img_id, join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`))
+                    }
 
                 } catch (er3) {
                     err(er3, 1);
@@ -76,12 +80,15 @@ export const handle_files = async (mode, file, family, name) => {
             uploaded_file_is_valid = valid_file_types.indexOf(file[0].type) > -1;
 
             if (uploaded_file_is_valid) {
-                record_img_change(family, name);
+                const history_obj = record_img_change(family, name);
+
                 remove_img_by_name(name);
 
                 img_extension = extname(file[0].path); // .png
 
                 copy_img(name, img_extension, file[0].path);
+
+                history.copy_to_history_folder(family, name, history_obj ? history_obj.to_img_id : null, file[0].path);
 
                 reupload_img.record_img_path(file[0].path, family, name);
 
@@ -101,12 +108,15 @@ export const handle_files = async (mode, file, family, name) => {
 
                     if (img_path && family && name) {
                         if (existsSync(img_path)) {
-                            record_img_change(family, name);
+                            const history_obj = record_img_change(family, name);
+
                             remove_img_by_name(name);
 
                             img_extension = extname(img_path); // .png
 
                             copy_img(name, img_extension, img_path);
+
+                            history.copy_to_history_folder(family, name, history_obj ? history_obj.to_img_id : null, img_path);
 
                             reuploaded_img = true;
 
@@ -125,7 +135,7 @@ export const handle_files = async (mode, file, family, name) => {
         }
 
         if ((mode === 'upload' && uploaded_file_is_valid) || reuploaded_img) {
-            change_val.change_val(family, name, name, img_extension, true);
+            change_val.change_val(family, name, name, img_extension, true, true);
 
             picked_colors.remove_picked_color(family, name);
 
@@ -157,12 +167,14 @@ const record_img_change = (family, name) => {
         const was_default = inputs_data.obj[family][name].default;
 
         if (conds.imgs(family, name)) {
-            history.record_change(() => history.generate_img_history_obj(family, name, was_default, null, false));
+            return history.record_change(() => history.generate_img_history_obj(family, name, was_default, null, false));
         }
 
     } catch (er) {
         err(er, 244);
     }
+
+    return undefined;
 };
 //< image upload
 

@@ -52,10 +52,10 @@ export class Select extends React.Component {
             if (value === 'default') {
                 set_to_default = true;
 
-                set_default_or_disabled.set_default_or_disabled(this.family, this.name, 'select');
+                set_default_or_disabled.set_default_or_disabled(this.family, this.name, 'select', true);
 
             } else {
-                change_val.change_val(this.family, this.name, value, null, true);
+                change_val.change_val(this.family, this.name, value, null, true, true);
 
                 set_to_default = false;
             }

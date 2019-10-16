@@ -39,7 +39,7 @@ const normalize_default_bulk_copy_checkboxes_obj = () => {
             }
 
             Object.entries(con.default_settings.default_bulk_copy_checkboxes[family]).forEach(([name, val]) => {
-                if (default_bulk_copy_checkboxes[family] == null || default_bulk_copy_checkboxes[family][name] == null) {
+                if (name !== 'locale' && (default_bulk_copy_checkboxes[family] == null || default_bulk_copy_checkboxes[family][name] == null)) {
                     default_bulk_copy_checkboxes[family][name] = val;
                 }
             });

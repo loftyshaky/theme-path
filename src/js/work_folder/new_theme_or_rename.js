@@ -4,6 +4,7 @@ import { existsSync, copySync, renameSync } from 'fs-extra';
 import { action, configure } from 'mobx';
 
 import x from 'x';
+import { inputs_data } from 'js/inputs_data';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
 import * as folders from 'js/work_folder/folders';
@@ -23,10 +24,13 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                 const folder_to_create_path = custom_folder_path || join(app_root, 'resources', 'app', 'bundle', 'new_theme');
                 const source_folder_path = mode === 'renaming_folder' ? folder_path : folder_to_create_path;
                 const parent_of_renamed_folder_path = dirname(folder_path);
+                const same_name_er_obj = 'Found folder with the same name or named empty';
+                const same_name_t = 'found_folder_with_the_same_name_or_named_empty';
 
                 for (let i = 0; i < 22; i++) {
                     const unique_identifier = i < 21 ? i : timne_id;
                     const folder_name_final = folder_name + (i !== 0 ? ` (${unique_identifier})` : '');
+                    const new_folder_path = join(parent_of_renamed_folder_path, folder_name_final);
 
                     try {
                         if (!existsSync(join(folder_path, folder_name_final))) {
@@ -41,7 +45,6 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                 }
 
                             } else if (mode === 'renaming_folder' && folder_name_final.length <= 255) {
-                                const new_folder_path = join(parent_of_renamed_folder_path, folder_name_final);
                                 const folder_chosen_as_main_and_bulk_at_the_same_time = chosen_folder_path.ob.chosen_folder_path === folder_path;
 
                                 try {
@@ -50,8 +53,15 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                                     }
 
                                 } catch (er) {
-                                    err(er, 9, 'folder_is_locked');
-                                    t('folder_is_locked'); // eslint-disable-line no-throw-literal
+
+                                    if (i < 21) {
+                                        err(er_obj(same_name_er_obj), 301, null, true);
+                                        t(same_name_t);
+
+                                    } else {
+                                        err(er, 9, 'folder_is_locked');
+                                        t('folder_is_locked');
+                                    }
                                 }
 
                                 if (!renaming_after_bulk_copy_the_name || folder_chosen_as_main_and_bulk_at_the_same_time) {
@@ -79,8 +89,8 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
                             }
 
                         } else {
-                            err(er_obj('Found folder with the same name or named empty'), 9, null, true);
-                            t('found_folder_with_the_same_name_or_named_empty'); // eslint-disable-line no-throw-literal
+                            err(er_obj(same_name_er_obj), 300, null, true);
+                            t(same_name_t);
                         }
 
                         break;
@@ -91,11 +101,12 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
 
                             break;
 
-                        } else if (er.message !== 'found_folder_with_the_same_name_or_named_empty') {
+                        } else if (er.message !== same_name_t) {
                             err(er, 20);
                         }
                     }
                 }
+
             } else if (mode === 'creating_folder') {
                 err(er_obj('Cant create theme in theme'), 125, 'cant_create_theme_in_theme');
             }
@@ -106,7 +117,16 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
     }
 });
 
-export const rename_theme_folder = x.debounce((folder_path, name_input_val, renaming_after_bulk_copy_the_name) => create_new_theme_or_rename_theme_folder('renaming_folder', folder_path, name_input_val, renaming_after_bulk_copy_the_name), 1000);
+export const rename_theme_folder = (new_folder_name, target_folder_path, renaming_after_bulk_copy_the_name) => {
+    const target_folder_path_final = target_folder_path || chosen_folder_path.ob.chosen_folder_path;
+    const new_folder_name_final = new_folder_name || inputs_data.obj.theme_metadata.name.val;
+    const locale = inputs_data.obj.theme_metadata.locale.val;
+    const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
+
+    if (locale === default_locale || new_folder_name) {
+        create_new_theme_or_rename_theme_folder('renaming_folder', target_folder_path_final, new_folder_name_final, renaming_after_bulk_copy_the_name);
+    }
+};
 //< create new theme when clicking on "New theme" or rename theme folder when typing in name input
 
 export const put_new_folder_first = parent_folder_path => {

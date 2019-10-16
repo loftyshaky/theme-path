@@ -3,6 +3,7 @@
 import * as r from 'ramda';
 import { action, configure } from 'mobx';
 import tinycolor from 'tinycolor2';
+import Store from 'electron-store';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -11,9 +12,11 @@ import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
 import * as picked_colors from 'js/picked_colors';
 import * as history from 'js/history';
+import * as options from 'js/options';
 import * as conds from 'js/conds';
 
 configure({ enforceActions: 'observed' });
+const store = new Store();
 
 export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualization = e => {
     try {
@@ -115,45 +118,59 @@ export const accept_color = (family, name) => {
     try {
         const was_default = inputs_data.obj[family][name].default;
         const was_disabled = Boolean(inputs_data.obj[family][name].disabled);
-        const rgba_string = stringify_unpacked_rgba(mut.current_pickied_color);
-        const rgba_arr = convert_rgba_string_into_rgb_arr(rgba_string);
-        const previous_rgba_string = mut.previous_pickied_color;
-        let previous_manifest_val;
+        const app_theme = store.get('theme');
+        const from_rgba_string = mut.previous_pickied_color === options.ob.theme_vals[app_theme].color_input_default || mut.previous_pickied_color === options.ob.theme_vals[app_theme].color_input_disabled ? null : mut.previous_pickied_color;
+        const to_rgba_string = stringify_unpacked_rgba(mut.current_pickied_color);
+        let from_manifest_val;
+        let to_manifest_val;
 
         if (family === 'images' || name === 'icon') {
-            const hex = tinycolor(rgba_string).toHex();
+            const hex = tinycolor(to_rgba_string).toHex();
+            let history_obj;
 
             if (conds.imgs(family, name)) {
-                history.record_change(() => history.generate_img_history_obj(family, name, was_default, mut.current_pickied_color, false));
+                history_obj = history.record_change(() => history.generate_img_history_obj(family, name, was_default, mut.current_pickied_color, false));
             }
 
-            imgs.create_solid_color_image(family, name, hex, mut.current_pickied_color.a);
+            imgs.create_solid_color_image(family, name, hex, mut.current_pickied_color.a, history_obj);
 
-            change_val.change_val(family, name, name, null, true);
+            change_val.change_val(family, name, name, null, true, true);
 
             picked_colors.record_picked_color(family, name);
 
         } else if (family === 'colors') {
-            previous_manifest_val = convert_rgba_string_into_rgb_arr(previous_rgba_string);
-            change_val.change_val(family, name, rgba_arr, null, true);
+            if (from_rgba_string) {
+                from_manifest_val = convert_rgba_string_into_rgb_arr(from_rgba_string);
+            }
+
+            if (to_rgba_string) {
+                to_manifest_val = convert_rgba_string_into_rgb_arr(to_rgba_string);
+            }
+
+            change_val.change_val(family, name, to_manifest_val, null, true, true);
 
         } else if (family === 'tints') {
-            const val = convert_rgba_strings_to_tint_val(rgba_string);
-            previous_manifest_val = convert_rgba_strings_to_tint_val(previous_rgba_string);
+            if (from_rgba_string) {
+                from_manifest_val = convert_rgba_strings_to_tint_val(from_rgba_string);
+            }
 
-            change_val.change_val(family, name, val, null, true);
+            if (to_rgba_string) {
+                to_manifest_val = convert_rgba_strings_to_tint_val(to_rgba_string);
+            }
+
+            change_val.change_val(family, name, to_manifest_val, null, true, true);
         }
 
         change_color_pickier_display_status(family, name, false);
 
         if (family !== 'images') {
-            change_val.set_inputs_data_val(family, name, rgba_string);
+            change_val.set_inputs_data_val(family, name, to_rgba_string);
         }
 
         mut.current_color_pickier.el = null;
 
         if (conds.colors(family)) {
-            history.record_change(() => history.generate_color_history_obj(family, name, was_default, was_disabled, previous_rgba_string, previous_manifest_val, rgba_string, false, false));
+            history.record_change(() => history.generate_color_history_obj(family, name, was_default, was_disabled, from_rgba_string, from_manifest_val, to_rgba_string, mut.current_pickied_color, to_manifest_val, false));
         }
 
         if (family === 'colors') {
@@ -313,6 +330,18 @@ export const convert_rgba_arr_into_obj = rgba_arr => {
 
     } catch (er) {
         err(er, 289);
+    }
+
+    return undefined;
+};
+
+
+export const convert_rgba_obj_into_string = rgba_obj => {
+    try {
+        return `rgba(${rgba_obj.r},${rgba_obj.g},${rgba_obj.b},${rgba_obj.a})`;
+
+    } catch (er) {
+        err(er, 295);
     }
 
     return undefined;

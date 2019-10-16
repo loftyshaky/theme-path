@@ -8,6 +8,7 @@ import { inputs_data } from 'js/inputs_data';
 import * as change_val from 'js/change_val';
 import * as els_state from 'js/els_state';
 import * as history from 'js/history';
+import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 
 import { Help_btn } from 'components/Help_btn';
 
@@ -134,7 +135,7 @@ export class Textarea extends React.Component {
 
     change_val_inner = x.debounce(val => { // eslint-disable-line react/sort-comp
         try {
-            change_val.change_val(this.family, this.name, val, null, true);
+            change_val.change_val(this.family, this.name, val, null, true, true);
 
             if (this.family === 'theme_metadata') {
                 history.record_change(() => history.generate_textarea_history_obj(this.family, this.name, inputs_data.obj[this.family][this.name].previous_val, val));
@@ -149,9 +150,8 @@ export class Textarea extends React.Component {
                 analytics.send_event('textareas', `input-${this.family}-${this.name}`);
             }
 
-            if (this.name !== 'name') {
-                els_state.set_applying_textarea_val_val(false);
-            }
+            new_theme_or_rename.rename_theme_folder();
+            els_state.set_applying_textarea_val_val(false);
 
         } catch (er) {
             err(er, 162);

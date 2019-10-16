@@ -22,14 +22,18 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 
 const store = new Store();
 
-export const set_default_icon = (family, name, target_path, target_mainifest_oobj) => {
+export const set_default_icon = (family, name, remove_reverted_history, target_path, target_mainifest_obj) => {
     try {
-        const theme_path = target_path || chosen_folder_path.ob.chosen_folder_path;
-        const manifest_obj = target_mainifest_oobj || manifest.mut.manifest;
+        if (remove_reverted_history) {
+            history.remove_reverted_history();
+        }
 
-        imgs.remove_img_by_name(name, theme_path);
+        const theme_path = target_path || chosen_folder_path.ob.chosen_folder_path;
+        const manifest_obj = target_mainifest_obj || manifest.mut.manifest;
 
         history.record_change(() => history.generate_img_history_obj(family, name, false, null, true, theme_path), theme_path);
+
+        imgs.remove_img_by_name(name, theme_path);
 
         //> set default icon name
         change_val.set_default_bool(family, name, true);
@@ -38,7 +42,7 @@ export const set_default_icon = (family, name, target_path, target_mainifest_oob
 
         manifest_obj.icons['128'] = 'icon.png';
 
-        json_file.write_to_json(manifest_obj, join(theme_path, 'manifest.json'));
+        json_file.write_to_manifest_json(theme_path, manifest_obj);
         //< set default icon name
 
         //> copy default icon
@@ -63,9 +67,13 @@ export const set_default_icon = (family, name, target_path, target_mainifest_oob
     }
 };
 
-export const set_default_or_disabled = (family, name, special_checkbox, force_set, was_default, was_disabled, previous_color, previous_manifest_val, target_path, manifest_obj) => {
+export const set_default_or_disabled = (family, name, special_checkbox, remove_reverted_history, force_set, was_default, was_disabled, previous_color, previous_manifest_val, target_path, manifest_obj) => {
     try {
         if (choose_folder.reset_work_folder(false)) {
+            if (remove_reverted_history) {
+                history.remove_reverted_history();
+            }
+
             const theme_path = target_path || chosen_folder_path.ob.chosen_folder_path;
 
             if (special_checkbox === 'default') {
@@ -86,10 +94,12 @@ export const set_default_or_disabled = (family, name, special_checkbox, force_se
                                 previous_color || previous_color_obj.previous_color,
                                 previous_manifest_val || previous_color_obj.previous_manifest_val,
                                 null,
+                                null,
+                                null,
                                 true,
                                 false,
-                                target_path,
-                            ), target_path,
+                                theme_path,
+                            ), theme_path,
                         );
                     }
 
@@ -99,13 +109,13 @@ export const set_default_or_disabled = (family, name, special_checkbox, force_se
                         change_val.set_disabled_bool(family, name, false);
                     }
 
-                    set_default(family, name, target_path, manifest_obj);
+                    set_default(family, name, theme_path, manifest_obj);
 
                     picked_colors.remove_picked_color(family, name, theme_path);
                 }
 
             } else if (special_checkbox === 'select') {
-                set_default(family, name, target_path, manifest_obj);
+                set_default(family, name, theme_path, manifest_obj);
 
             } else if (special_checkbox === 'disabled') {
                 if (!inputs_data.obj[family][name].disabled || force_set) {
@@ -121,16 +131,18 @@ export const set_default_or_disabled = (family, name, special_checkbox, force_se
                             previous_color || previous_color_obj.previous_color,
                             previous_manifest_val || previous_color_obj.previous_manifest_val,
                             null,
+                            null,
+                            null,
                             false,
                             true,
-                            target_path,
-                        ), target_path,
+                            theme_path,
+                        ), theme_path,
                     );
 
                     change_val.set_disabled_bool(family, name, true);
                     change_val.set_default_bool(family, name, false);
 
-                    change_val.change_val(family, name, con.disabled_manifest_val, null, !force_set, theme_path);
+                    change_val.change_val(family, name, con.disabled_manifest_val, null, !force_set, false, theme_path);
 
                     change_val.set_inputs_data_val(family, name, disabled_color);
                     color_pickiers.set_color_input_vizualization_color(family, name, disabled_color);
@@ -153,28 +165,13 @@ export const set_default_or_disabled = (family, name, special_checkbox, force_se
 const set_default = (family, name, target_path, manifest_obj) => {
     try {
         const { color_input_default } = options.ob.theme_vals[store.get('theme')];
-        let clear_new_tab_video_name = '';
         let new_manifest_obj;
 
         if (name !== 'clear_new_tab_video') {
             new_manifest_obj = delete_key_from_manifest(family, name, manifest_obj);
-
-        } else {
-            const files = readdirSync(target_path || chosen_folder_path.ob.chosen_folder_path);
-            clear_new_tab_video_name = files.find(file => file.indexOf('clear_new_tab_video') > -1) || '';
         }
 
-        const img_name = inputs_data.obj[family][name].val || clear_new_tab_video_name;
-        const file_to_delete_path = join(target_path || chosen_folder_path.ob.chosen_folder_path, img_name);
-
-        if (existsSync(file_to_delete_path) && img_name) {
-            try {
-                unlinkSync(file_to_delete_path);
-
-            } catch (er) {
-                err(er, 139, 'img_is_locked');
-            }
-        }
+        imgs.remove_img_by_name(name, target_path);
 
         json_file.write_to_manifest_json(target_path, new_manifest_obj);
 
@@ -220,7 +217,7 @@ const get_previous_color = (family, name) => {
 
         const previous_manifest_val = r.ifElse(
             () => family === 'colors',
-            () => previous_color,
+            () => color_pickiers.convert_rgba_string_into_rgb_arr(previous_color),
 
             () => color_pickiers.convert_rgba_strings_to_tint_val(previous_color),
         )();

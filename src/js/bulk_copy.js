@@ -1,5 +1,5 @@
 import { join, extname } from 'path';
-import { existsSync, readdirSync } from 'fs-extra';
+import { existsSync, readdirSync, removeSync } from 'fs-extra';
 
 import * as r from 'ramda';
 import { action, configure, observable, toJS } from 'mobx';
@@ -23,6 +23,7 @@ import * as conds from 'js/conds';
 import * as confirm from 'js/confirm';
 import * as processing_msg from 'js/processing_msg';
 import * as folders from 'js/work_folder/folders';
+import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 
 configure({ enforceActions: 'observed' });
 const store = new Store();
@@ -54,7 +55,9 @@ export const select_or_deselect_all_global = action(bool => {
 export const select_or_deselect_all_family = action((family, bool) => {
     try {
         Object.values(inputs_data.obj[family]).forEach(item => {
-            ob.bulk_copy_checkboxes[family][item.name] = bool;
+            if (item.name !== 'locale') {
+                ob.bulk_copy_checkboxes[family][item.name] = bool;
+            }
         });
 
     } catch (er) {
@@ -145,18 +148,21 @@ export const bulk_copy = theme_paths => {
             const src_messages_obj = get_messages_obj(chosen_folder_path.ob.chosen_folder_path);
             const src_picked_colors_obj = picked_colors.get_picked_colors_obj();
 
-            theme_paths.forEach(target_path => {
+            theme_paths.forEach(async target_path => {
                 if (target_path !== chosen_folder_path.ob.chosen_folder_path) {
-                    const target_manifest_path = join(target_path, 'manifest.json');
-                    const target_messages_obj = get_messages_obj(target_path);
-                    const target_manifest_obj = json_file.parse_json(target_manifest_path);
-                    const target_picked_colors_obj = picked_colors.get_picked_colors_obj(target_path);
-                    const theme_folder = readdirSync(target_path);
-                    const clear_new_tab_video_is_in_theme_folder = theme_folder.some(file => file === 'clear_new_tab_video.');
+                    history.remove_reverted_history(target_path);
 
-                    Object.keys(inputs_data.obj).forEach(family => {
+                    const target_manifest_path = join(target_path, 'manifest.json');
+                    let new_folder_name = null;
+
+                    await Promise.all(Object.keys(inputs_data.obj).map(async family => {
                         if (family !== 'options') {
-                            Object.values(inputs_data.obj[family]).forEach(({ name }) => {
+                            await Promise.all(Object.values(inputs_data.obj[family]).map(async ({ name }) => {
+                                const target_messages_obj = get_messages_obj(target_path);
+                                const target_manifest_obj = json_file.parse_json(target_manifest_path);
+                                const target_picked_colors_obj = picked_colors.get_picked_colors_obj(target_path);
+                                const theme_folder = readdirSync(target_path);
+                                const clear_new_tab_video_is_in_theme_folder = theme_folder.some(file => file === 'clear_new_tab_video.');
                                 const bulk_copy_checkbox_is_checked = ob.bulk_copy_checkboxes[family][name];
 
                                 if (bulk_copy_checkbox_is_checked) {
@@ -185,8 +191,6 @@ export const bulk_copy = theme_paths => {
                                     let target_select_val = null;
                                     let src_messages_key = null;
                                     let target_messages_key = null;
-                                    let src_textarea_val = null;
-                                    let target_textarea_val = null;
 
                                     if (family === 'tints') {
                                         src_hsl_arr = src_is_default ? null : src_manifest_obj.theme[family][name];
@@ -210,15 +214,9 @@ export const bulk_copy = theme_paths => {
                                             target_select_val = target_is_default ? 'default' : target_manifest_obj.theme[family][name];
                                         }
 
-                                    } else if (is_textarea) {
-                                        if (name === 'version') {
-                                            src_textarea_val = src_manifest_obj[name];
-                                            target_textarea_val = target_manifest_obj[name];
-
-                                        } else {
-                                            src_messages_key = msg.get_message_name(src_manifest_obj[name]);
-                                            target_messages_key = msg.get_message_name(target_manifest_obj[name]);
-                                        }
+                                    } else if (is_textarea && name !== 'version') {
+                                        src_messages_key = msg.get_message_name(src_manifest_obj[name]);
+                                        target_messages_key = msg.get_message_name(target_manifest_obj[name]);
                                     }
 
                                     if (family === 'tints') {
@@ -255,54 +253,69 @@ export const bulk_copy = theme_paths => {
 
                                     const record_select_change = set_to_default => history.record_change(() => history.generate_select_history_obj(family, name, name === 'default_locale' ? false : target_is_default, target_select_val, src_select_val, set_to_default), target_path);
 
-                                    const change_textarea_val = (locale, default_locale) => {
+                                    const change_textarea_val = async (src_textarea_val, target_textarea_val, locale, default_locale) => {
                                         if (src_textarea_val !== target_textarea_val) {
-                                            change_val.change_val(family, name, src_textarea_val, null, false, target_path, locale, default_locale);
+                                            await change_val.change_val(family, name, src_textarea_val, null, false, true, target_path, locale, default_locale);
 
                                             history.record_change(() => history.generate_textarea_history_obj(family, name, target_textarea_val, src_textarea_val, locale), target_path);
                                         }
                                     };
 
                                     if (!src_is_default && !src_is_disabled) {
-                                        if ((family === 'images' || name === 'clear_new_tab_video') && (!same_colors || (!src_color_string && !target_color_string))) {
-                                            if (name !== 'theme_ntp_background' && name !== 'icon' && name !== 'clear_new_tab_video') {
-                                                history.record_change(() => history.generate_img_history_obj(family, name, target_is_default, src_color_arr, false, target_path), target_path);
-                                            }
-
+                                        if ((family === 'images' || name === 'icon' || name === 'clear_new_tab_video') && (!same_colors || (!src_color_string && !target_color_string))) {
                                             const new_image_name = folders.find_file_name_by_element_name(name); // ex: toolbar.png
                                             const img_extension = extname(new_image_name); // .png
+                                            const src_img_path = join(chosen_folder_path.ob.chosen_folder_path, new_image_name);
+                                            let history_obj;
+
+                                            if (name !== 'clear_new_tab_video') {
+                                                history_obj = history.record_change(() => history.generate_img_history_obj(family, name, target_is_default, src_color_arr, false, target_path), target_path);
+                                            }
 
                                             imgs.remove_img_by_name(new_image_name, target_path); // remove old image from target theme
 
-                                            imgs.copy_img(name, img_extension, join(chosen_folder_path.ob.chosen_folder_path, new_image_name), target_path); // copy image from source theme to target theme on place of removed image in previous line
+
+                                            imgs.copy_img(name, img_extension, src_img_path, target_path); // copy image from source theme to target theme on place of removed image in previous line
                                             if (name !== 'clear_new_tab_video') {
-                                                change_val.change_val(family, name, name, img_extension, false, target_path);
+                                                history.copy_to_history_folder(family, name, history_obj.to_img_id, src_img_path, target_path);
+
+                                                await change_val.change_val(family, name, name, img_extension, false, true, target_path);
                                             }
 
                                         } else if (is_color && !same_colors) {
-                                            change_val.change_val(family, name, src_color_arr, null, false, target_path);
+                                            await change_val.change_val(family, name, src_color_arr, null, false, true, target_path);
 
-                                            history.record_change(() => history.generate_color_history_obj(family, name, target_is_default, false, target_color_string, target_color_arr, src_color_string, false, false, target_path), target_path);
+                                            history.record_change(() => history.generate_color_history_obj(family, name, target_is_default, false, target_color_string, target_color_arr, src_color_string, src_rgba_color.obj, src_color_arr, false, false, target_path), target_path);
 
                                         } else if (is_select && !same_select_vals) {
                                             record_select_change(false);
 
-                                            change_val.change_val(family, name, src_select_val, null, false, target_path);
+                                            await change_val.change_val(family, name, src_select_val, null, false, true, target_path);
 
                                         } else if (is_textarea) {
                                             if (name === 'version') {
-                                                src_textarea_val = src_manifest_obj[name];
-                                                target_textarea_val = target_manifest_obj[name];
+                                                const src_textarea_val = src_manifest_obj[name];
+                                                const target_textarea_val = target_manifest_obj[name];
 
-                                                change_textarea_val();
+                                                await change_textarea_val(src_textarea_val, target_textarea_val);
 
                                             } else {
-                                                Object.keys(src_messages_obj).forEach(locale => {
-                                                    src_textarea_val = src_messages_obj[locale] && src_messages_obj[locale][src_messages_key] ? src_messages_obj[locale][src_messages_key].message : null;
-                                                    target_textarea_val = target_messages_obj[locale] && target_messages_obj[locale][target_messages_key] ? target_messages_obj[locale][target_messages_key].message : null;
+                                                await Promise.all(Object.keys(src_messages_obj).map(async locale => {
+                                                    const src_textarea_val = src_messages_obj[locale] && src_messages_obj[locale][src_messages_key] ? src_messages_obj[locale][src_messages_key].message : null;
+                                                    const target_textarea_val = target_messages_obj[locale] && target_messages_obj[locale][target_messages_key] ? target_messages_obj[locale][target_messages_key].message : null;
 
-                                                    change_textarea_val(locale, target_manifest_obj.default_locale);
-                                                });
+                                                    await change_textarea_val(src_textarea_val, target_textarea_val, locale, target_manifest_obj.default_locale);
+
+                                                    if (name === 'name' && locale === target_manifest_obj.default_locale) {
+                                                        new_folder_name = src_textarea_val;
+                                                    }
+                                                }));
+
+                                                await Promise.all(Object.keys(target_messages_obj).map(async locale => {
+                                                    if (!src_messages_obj[locale]) {
+                                                        removeSync(join(target_path, '_locales', locale));
+                                                    }
+                                                }));
                                             }
                                         }
                                     }
@@ -320,7 +333,7 @@ export const bulk_copy = theme_paths => {
                                             picked_colors.record_picked_color(family, name, src_rgba_color.obj || color, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
                                         }
 
-                                        if (src_is_default) {
+                                        if (!src_picked_colors_obj_has_picked_colors_record) {
                                             picked_colors.remove_picked_color(family, name, target_path); // remove picked color from target picked_colors.json file
                                         }
                                     }
@@ -335,6 +348,7 @@ export const bulk_copy = theme_paths => {
                                                 family,
                                                 name,
                                                 special_checkbox,
+                                                false,
                                                 true,
                                                 target_is_default,
                                                 target_is_disabled,
@@ -345,14 +359,18 @@ export const bulk_copy = theme_paths => {
                                             );
 
                                         } else {
-                                            set_default_or_disabled.set_default_icon(family, name, target_path);
+                                            set_default_or_disabled.set_default_icon(family, name, false, target_path, target_manifest_obj);
                                         }
                                     }
 
                                 }
-                            });
+                            }));
                         }
-                    });
+                    }));
+
+                    if (new_folder_name) {
+                        new_theme_or_rename.rename_theme_folder(new_folder_name, target_path, true);
+                    }
                 }
             });
 
@@ -423,6 +441,8 @@ const get_rgba_color = (family, name, manifest_obj, picked_colors_obj, is_defaul
                 arr: rgba_arr,
             };
         }
+
+        return {};
 
     } catch (er) {
         err(er, 287);

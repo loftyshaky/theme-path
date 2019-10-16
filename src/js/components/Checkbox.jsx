@@ -25,7 +25,7 @@ export const Checkbox = observer(props => {
 
     const change_checkbox_val = e => {
         try {
-            change_val.change_val(family, name, e.target.checked, null, true);
+            change_val.change_val(family, name, e.target.checked, null, true, true);
 
             analytics.send_event('checkboxes', `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}`);
 
@@ -37,10 +37,10 @@ export const Checkbox = observer(props => {
     const on_change = r.ifElse(() => is_special_checkbox,
         e => {
             if (name !== 'icon') {
-                set_default_or_disabled.set_default_or_disabled(family, name, checkbox_type);
+                set_default_or_disabled.set_default_or_disabled(family, name, checkbox_type, true);
 
             } else {
-                set_default_or_disabled.set_default_icon(family, name);
+                set_default_or_disabled.set_default_icon(family, name, true);
             }
 
             analytics.send_event('checkboxes', `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}-${checkbox_type || ''}`);
