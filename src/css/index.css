@@ -348,7 +348,7 @@ svg, .header_btn:hover:focus svg, body.using_mouse .folder_arrow:focus svg {
     margin-bottom: 11px;
 }
 
-.side_popup .btn:not(:last-child), .auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child), .export_settings_btn {
+.side_popup .btn:not(:last-child), .auto_updater .btn:not(:last-child), .analytics_privacy .btn:not(:last-child) {
     margin-right: 10px
 }
 
@@ -1018,6 +1018,14 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 .app_version {
     text-align: right;
     margin-top: 10px;
+}
+
+.options_popup .input .btn {
+    display: block;
+}
+
+.options_popup .input .btn:not(:last-child) {
+    margin-bottom: 10px;
 }
 /*< popup */
 

@@ -107,11 +107,11 @@ const img_selector = (name, bulk_copy_checkbox_checked_by_default) => {
     return undefined;
 };
 
-const settings_export_import = name => {
+const options_btns = name => {
     try {
         return {
             name,
-            type: 'settings_export_import',
+            type: 'options_btns',
         };
 
     } catch (er) {
@@ -198,7 +198,7 @@ const inputs = {
         textarea('locales_whitelist', true),
         checkbox('show_help'),
         checkbox('enable_analytics'),
-        settings_export_import('settings_export_import'),
+        options_btns('options_btns'),
     ],
 };
 

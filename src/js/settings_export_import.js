@@ -16,15 +16,15 @@ export const export_settings = () => {
             filters: con.filters,
         });
 
-        analytics.add_settings_export_import_analytics('tried_to_export');
+        analytics.add_options_btns_analytics('tried_to_export');
 
         if (save_path) {
             json_file.write_to_json(store.get(), save_path);
 
-            analytics.add_settings_export_import_analytics('exported');
+            analytics.add_options_btns_analytics('exported');
 
         } else {
-            analytics.add_settings_export_import_analytics('canceled_export');
+            analytics.add_options_btns_analytics('canceled_export');
         }
 
     } catch (er) {
@@ -39,7 +39,7 @@ export const import_settings = () => {
             filters: con.filters,
         });
 
-        analytics.add_settings_export_import_analytics('tried_to_import');
+        analytics.add_options_btns_analytics('tried_to_import');
 
         if (file_path) {
             const file_content = readFileSync(file_path[0]);
@@ -50,10 +50,10 @@ export const import_settings = () => {
 
             getCurrentWindow().reload();
 
-            analytics.add_settings_export_import_analytics('imported');
+            analytics.add_options_btns_analytics('imported');
 
         } else {
-            analytics.add_settings_export_import_analytics('canceled_import');
+            analytics.add_options_btns_analytics('canceled_import');
         }
 
     } catch (er) {

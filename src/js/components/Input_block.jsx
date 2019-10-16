@@ -10,7 +10,7 @@ import { Select } from 'components/Select';
 import { Img_selector } from 'components/Img_selector';
 import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
-import { Settings_export_import } from 'components/Settings_export_import';
+import { Options_btns } from 'components/Options_btns';
 import { Help_btn } from 'components/Help_btn';
 
 export class Input_block extends React.Component {
@@ -59,7 +59,7 @@ export class Input_block extends React.Component {
                                     {...item}
                                     count_char={this.count_char}
                                     checkbox_type={item.type === 'checlbox' ? 'options' : null}
-                                    ref={item.name === 'settings_export_import' ? null : instance => { this.childs.push(this.child = instance); }}
+                                    ref={item.name === 'options_btns' ? null : instance => { this.childs.push(this.child = instance); }}
                                 />
                             );
                         })
@@ -77,6 +77,6 @@ const sta = {
         img_selector: Img_selector,
         color: Color,
         checkbox: Checkbox,
-        settings_export_import: Settings_export_import,
+        options_btns: Options_btns,
     },
 };

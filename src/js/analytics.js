@@ -79,8 +79,8 @@ export const add_tutorial_analytics = action => {
     send_event('tutorial', `${action}_at_stage_${tutorial.ob.tutorial_stage}`);
 };
 
-export const add_settings_export_import_analytics = action => {
-    send_event('settings_export_import', `${action}`);
+export const add_options_btns_analytics = action => {
+    send_event('options_btns', `${action}`);
 };
 
 export const add_popup_close_btns_analytics = name => {

@@ -94,6 +94,7 @@
   "enable_analytics_label_text": "Allow Chrome Theme Creator to send anonymous usage information",
   "export_settings_btn_text": "Export settings",
   "import_settings_btn_text": "Import settings",
+  "delete_all_history_btn_text": "Delete all history",
 
   "option_default_text": "Default",
 
@@ -371,5 +372,7 @@
   "bulk_copy_confirm_msg": "Are you sure you want to copy properties from the current theme into all selected themes?",
   "bulk_copy_confirm_answer_copy": "Copy",
   "pack_confirm_msg": "Are you sure you want to pack all selected themes?",
-  "pack_confirm_answer_pack": "Pack"
+  "pack_confirm_answer_pack": "Pack",
+  "delete_all_history_msg": "Are you sure you want to delete all changes history from all themes?",
+  "delete_all_history_answer_delete": "Delete"
 }

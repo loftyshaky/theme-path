@@ -1,9 +1,11 @@
-import { join } from 'path';
-import { existsSync, copySync, moveSync, removeSync } from 'fs-extra';
+import { join, basename, resolve } from 'path';
+import { promisify } from 'util';
+import { existsSync, copySync, moveSync, removeSync, readdir, stat } from 'fs-extra';
 
 import * as r from 'ramda';
 import { observable, action, toJS, configure } from 'mobx';
 import Store from 'electron-store';
+import { remote } from 'electron';
 
 import x from 'x';
 import { inputs_data, set_inputs_data } from 'js/inputs_data';
@@ -18,9 +20,13 @@ import * as picked_colors from 'js/picked_colors';
 import * as options from 'js/options';
 import * as conds from 'js/conds';
 import * as processing_msg from 'js/processing_msg';
+import * as confirm from 'js/confirm';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as folders from 'js/work_folder/folders';
+import * as choose_folder from 'js/work_folder/choose_folder';
 
+const readdir_p = promisify(readdir);
+const stat_p = promisify(stat);
 configure({ enforceActions: 'observed' });
 const store = new Store();
 
@@ -614,6 +620,51 @@ const move_images_revert = (change, path_to_manifest_img, imgs_folder_1_name, im
     }
 };
 
+export const delete_all_history = async () => {
+    try {
+        const dialog_options = confirm.generate_confirm_options('delete_all_history_msg', 'delete_all_history_answer_delete');
+        const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
+
+        if (choice === 0) {
+            const get_files_and_folders = async folder => {
+                const dirs = [];
+                const subdirs = await readdir_p(folder);
+                const files = await Promise.all(subdirs.map(async sub_folder => {
+                    const res = resolve(folder, sub_folder);
+                    const is_directory = (await stat_p(res)).isDirectory();
+
+                    if (is_directory) {
+                        dirs.push(res);
+                    }
+
+                    return is_directory ? get_files_and_folders(res) : res;
+                }));
+
+                return dirs.concat(files.reduce((a, f) => a.concat(f), []));
+            };
+
+            processing_msg.process(async () => {
+                try {
+                    const files = await get_files_and_folders(choose_folder.ob.work_folder);
+                    const files_to_delete = files.filter(file => {
+                        const file_name = basename(file);
+                        return file_name === 'history.json' || file_name === 'old_imgs';
+                    });
+
+                    for (const file_to_delete of files_to_delete) {
+                        removeSync(file_to_delete);
+                    }
+
+                } catch (er) {
+                    err(er, 304);
+                }
+            });
+        }
+
+    } catch (er) {
+        err(er, 303);
+    }
+};
 
 export const met = {
     reset_history_side_popup_content: null,

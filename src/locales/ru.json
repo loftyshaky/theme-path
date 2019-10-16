@@ -94,6 +94,7 @@
   "enable_analytics_label_text": "Разрешить Chrome Theme Creator отправлять анонимную статистику использования",
   "export_settings_btn_text": "Экспортировать настройки",
   "import_settings_btn_text": "Импортировать настройки",
+  "delete_all_history_btn_text": "Удалить всю историю",
 
   "option_default_text": "Стандарт",
 
@@ -370,6 +371,8 @@
   "app_close_confirm_answer_quit": "Выйти",
   "bulk_copy_confirm_msg": "Вы уверены, что хотите копировать свойства из текущей темы во все выбранные темы?",
   "bulk_copy_confirm_answer_copy": "Копировать",
-  "pack_confirm_answer_pack": "Упаковать"
   "pack_confirm_msg": "Вы уверены, что хотите упаковать все выбранные темы?",
+  "pack_confirm_answer_pack": "Упаковать",
+  "delete_all_history_msg": "Вы уверены, что хотите удалить всю историю изменений из всех тем?",
+  "delete_all_history_answer_delete": "Удалить"
 }
