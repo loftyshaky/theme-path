@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { List, AutoSizer, CellMeasurerCache, CellMeasurer } from 'react-virtualized';
+import tinycolor from 'tinycolor2';
 
 import x from 'x';
 import { selects_options } from 'js/selects_options';
@@ -213,13 +214,16 @@ const History_item_family_and_name = props => {
 
 const Color_and_img_changed_to = props => {
     const { color } = props;
+    const tinycolor_color = tinycolor(color);
+    // eslint-disable-next-line no-underscore-dangle
 
     return (
         <React.Fragment>
             <Changed_to_text />
             <span
                 className="history_item_color"
-                title={color}
+                // eslint-disable-next-line no-underscore-dangle
+                title={`${tinycolor_color._a === 1 ? tinycolor_color.toHexString() : tinycolor_color.toHex8String()} / ${tinycolor_color.toRgbString()} / ${tinycolor_color.toHsvString()}`}
                 style={{ backgroundColor: color }}
             />
             |
