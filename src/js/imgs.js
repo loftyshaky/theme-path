@@ -1,5 +1,3 @@
-'use_strict';
-
 import { join, extname } from 'path';
 import { existsSync, copySync, writeFileSync, removeSync } from 'fs-extra';
 

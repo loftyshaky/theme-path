@@ -1,5 +1,3 @@
-'use_strict';
-
 import Store from 'electron-store';
 import { observable, action, configure } from 'mobx';
 

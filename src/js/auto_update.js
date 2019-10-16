@@ -1,5 +1,3 @@
-'use_strict';
-
 import { ipcRenderer } from 'electron';
 
 import { observable, action, configure } from 'mobx';

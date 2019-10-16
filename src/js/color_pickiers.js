@@ -1,5 +1,3 @@
-'use_strict';
-
 import * as r from 'ramda';
 import { action, configure } from 'mobx';
 import tinycolor from 'tinycolor2';

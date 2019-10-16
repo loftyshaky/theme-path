@@ -1,5 +1,3 @@
-'use_strict';
-
 import { join, sep } from 'path';
 import { homedir, platform } from 'os';
 import { existsSync, unlinkSync, moveSync } from 'fs-extra';
