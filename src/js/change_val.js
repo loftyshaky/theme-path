@@ -77,7 +77,10 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
 
             } else if (third_if_strings.indexOf(family) > -1 || five_if_strings.indexOf(name) > -1) {
                 write_to_json(manifest_obj, manifest_path, name, new_val, family);
-                set_inputs_data_val(family, name, new_val);
+
+                if (!bulk_copying) {
+                    set_inputs_data_val(family, name, new_val);
+                }
 
             } else if (family === 'images' || name === 'icon') {
                 write_to_json(manifest_obj, manifest_path, name, new_val + img_extension_final, family);

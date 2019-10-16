@@ -289,7 +289,6 @@ export const bulk_copy = theme_paths => {
 
                                         } else if (is_select && !same_select_vals) {
                                             record_select_change(false);
-
                                             await change_val.change_val(family, name, src_select_val, null, false, true, target_path);
 
                                         } else if (is_textarea) {
