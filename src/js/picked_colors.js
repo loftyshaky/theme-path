@@ -28,6 +28,7 @@ export const record_picked_color = (family, name, color, target_folder_path) => 
 
 export const remove_picked_color = (family, name, target_folder_path) => {
     try {
+
         const picked_colors_path = join(target_folder_path || chosen_folder_path.ob.chosen_folder_path, con.picked_colors_sdb_path);
 
         if (existsSync(picked_colors_path)) {

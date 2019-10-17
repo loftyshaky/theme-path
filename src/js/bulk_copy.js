@@ -17,7 +17,6 @@ import * as imgs from 'js/imgs';
 import * as change_val from 'js/change_val';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as set_defaults from 'js/set_defaults';
-import * as options from 'js/options';
 import * as msg from 'js/msg';
 import * as conds from 'js/conds';
 import * as confirm from 'js/confirm';
@@ -206,15 +205,15 @@ export const bulk_copy = theme_paths => {
 
                                     if (family === 'tints') {
                                         src_hsl_arr = src_is_default ? null : src_manifest_obj.theme[family][name];
-                                        target_hsl_arr = target_is_default ? color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_default) : target_manifest_obj.theme[family][name];
+                                        target_hsl_arr = target_is_default ? null : target_manifest_obj.theme[family][name];
                                         target_is_disabled = check_if_disabled(target_hsl_arr);
 
                                         if (target_is_disabled) {
-                                            target_hsl_arr = color_pickiers.convert_rgba_strings_to_tint_val(options.ob.theme_vals[options.ob.theme].color_input_disabled);
+                                            target_hsl_arr = null;
                                         }
 
-                                        src_hsl_string = src_is_default ? null : color_pickiers.convert_hsl_arr_to_hsl_string(src_hsl_arr);
-                                        target_hsl_string = color_pickiers.convert_hsl_arr_to_hsl_string(target_hsl_arr);
+                                        src_hsl_string = src_is_default ? null : color_pickiers.convert_hsl_arr_to_rgba_string(src_hsl_arr);
+                                        target_hsl_string = target_hsl_arr ? color_pickiers.convert_hsl_arr_to_rgba_string(target_hsl_arr) : null;
 
                                     } else if (is_select) {
                                         if (name === 'default_locale') {
@@ -240,9 +239,9 @@ export const bulk_copy = theme_paths => {
 
                                     if (family === 'images' || name === 'clear_new_tab_video' || family === 'colors') {
                                         src_color_string = src_rgba_color.string;
-                                        src_color_arr = src_rgba_color.arr;
+                                        src_color_arr = src_rgba_color.rounded_arr;
                                         target_color_string = target_rgba_color.string;
-                                        target_color_arr = target_rgba_color.arr;
+                                        target_color_arr = target_rgba_color.rounded_arr;
                                     }
 
                                     if (is_color) {
@@ -281,11 +280,10 @@ export const bulk_copy = theme_paths => {
                                             let history_obj;
 
                                             if (name !== 'clear_new_tab_video') {
-                                                history_obj = history.record_change(() => history.generate_img_history_obj(family, name, target_is_default, src_color_arr, false, target_path), target_path);
+                                                history_obj = history.record_change(() => history.generate_img_history_obj(family, name, target_is_default, src_rgba_color.arr, false, target_path), target_path);
                                             }
 
                                             imgs.remove_img_by_name(new_image_name, target_path); // remove old image from target theme
-
 
                                             imgs.copy_img(name, img_extension, src_img_path, target_path); // copy image from source theme to target theme on place of removed image in previous line
                                             if (name !== 'clear_new_tab_video') {
@@ -297,7 +295,7 @@ export const bulk_copy = theme_paths => {
                                         } else if (is_color && !same_colors) {
                                             await change_val.change_val(family, name, src_color_arr, null, false, true, target_path);
 
-                                            history.record_change(() => history.generate_color_history_obj(family, name, target_is_default, false, target_color_string, target_color_arr, src_color_string, src_rgba_color.obj, src_color_arr, false, false, target_path), target_path);
+                                            history.record_change(() => history.generate_color_history_obj(family, name, target_is_default, target_is_disabled, target_color_string, target_color_arr, src_color_string, src_rgba_color.arr, src_color_arr, false, false, target_path), target_path);
 
                                         } else if (is_select && !same_select_vals) {
                                             record_select_change(false);
@@ -329,23 +327,23 @@ export const bulk_copy = theme_paths => {
                                                 }));
                                             }
                                         }
-                                    }
 
-                                    if ((family === 'images' || family === 'colors')) {
-                                        let color;
+                                        if ((family === 'images' || family === 'colors')) {
+                                            let color;
 
-                                        if (family === 'colors' && !src_is_default) {
-                                            color = color_pickiers.convert_rgba_arr_into_obj(src_rgba_color.arr);
-                                        }
+                                            if (family === 'colors' && !src_is_default) {
+                                                color = src_rgba_color.rounded_arr;
+                                            }
 
-                                        const color_final = src_rgba_color.obj || color;
+                                            const color_final = src_rgba_color.arr || color;
 
-                                        if (!r.isEmpty(color_final) && !r.isNil(color_final)) {
-                                            picked_colors.record_picked_color(family, name, src_rgba_color.obj || color, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
-                                        }
+                                            if (!r.isEmpty(color_final) && !r.isNil(color_final)) {
+                                                picked_colors.record_picked_color(family, name, color_final, target_path); //> record picked color from src picked_colors.json to target picked_colors.json file
+                                            }
 
-                                        if (!src_picked_colors_obj_has_picked_colors_record) {
-                                            picked_colors.remove_picked_color(family, name, target_path); // remove picked color from target picked_colors.json file
+                                            if (!src_picked_colors_obj_has_picked_colors_record) {
+                                                picked_colors.remove_picked_color(family, name, target_path); // remove picked color from target picked_colors.json file
+                                            }
                                         }
                                     }
 
@@ -432,24 +430,25 @@ const get_messages_obj = theme_path => {
 const get_rgba_color = (family, name, manifest_obj, picked_colors_obj, is_default, picked_colors_obj_has_picked_colors_record, is_textarea, is_select) => {
     try {
         if (!is_textarea && !is_select && family !== 'tints') {
-            const rgba_obj = picked_colors_obj_has_picked_colors_record ? picked_colors_obj[family][name] : null;
-            let manifest_rgba_arr = null;
+            const rgba_arr_from_picked_colors = picked_colors_obj_has_picked_colors_record ? picked_colors_obj[family][name] : null;
+            let rgba_arr_from_manifest = null;
             let rgba_string_from_manifest = null;
 
             if (family !== 'images' && name !== 'icon' && name !== 'clear_new_tab_video') {
-                manifest_rgba_arr = is_default ? null : manifest_obj.theme[family][name];
-                rgba_string_from_manifest = manifest_rgba_arr ? color_pickiers.convert_rgba_arr_into_string(manifest_rgba_arr) : null;
+                rgba_arr_from_manifest = !is_default ? manifest_obj.theme[family][name] : null;
+                rgba_string_from_manifest = rgba_arr_from_manifest ? color_pickiers.convert_rgba_arr_into_string(rgba_arr_from_manifest) : null;
             }
 
-            const rgba_string_from_rgba_obj = rgba_obj ? color_pickiers.stringify_unpacked_rgba(rgba_obj) : null;
-            const rgba_arr_from_rgba_obj = rgba_obj ? color_pickiers.convert_rgba_string_into_rgb_arr(rgba_string_from_rgba_obj) : null;
-            const rgba_string = rgba_string_from_rgba_obj || rgba_string_from_manifest;
-            const rgba_arr = rgba_arr_from_rgba_obj || manifest_rgba_arr;
+            const rgba_string_from_rgba_arr_from_picked_colors = rgba_arr_from_picked_colors ? color_pickiers.convert_rgba_arr_into_string(rgba_arr_from_picked_colors) : null;
+
+            const rgba_string = rgba_string_from_rgba_arr_from_picked_colors || rgba_string_from_manifest;
+            const rgba_arr = rgba_arr_from_picked_colors || rgba_arr_from_manifest;
+            const rgba_arr_rounded = rgba_arr ? color_pickiers.convert_rgba_arr_into_rounded_arr(rgba_arr) : null;
 
             return {
-                obj: rgba_obj,
                 string: rgba_string,
                 arr: rgba_arr,
+                rounded_arr: rgba_arr_rounded,
             };
         }
 

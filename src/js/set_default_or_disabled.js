@@ -214,9 +214,9 @@ const get_previous_color = (family, name) => {
 
         const previous_manifest_val = r.ifElse(
             () => family === 'colors',
-            () => color_pickiers.convert_rgba_string_into_rgb_arr(previous_color),
+            () => color_pickiers.convert_rgba_string_into_rounded_arr(previous_color),
 
-            () => color_pickiers.convert_rgba_strings_to_tint_val(previous_color),
+            () => color_pickiers.convert_rgba_string_to_hsl_arr(previous_color),
         )();
 
         return {

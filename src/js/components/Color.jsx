@@ -146,7 +146,7 @@ class Color_input_vizualization extends React.Component {
 
         }).on('change', color => {
             if (inputs_data.obj[this.family][this.name].color_pickier_is_visible) {
-                color_pickiers.unpack_rgba(color);
+                color_pickiers.convert_pickr_rgba_obj_into_arr(color);
 
                 color_pickiers.set_color_input_vizualization_color(this.family, this.name, color_pickiers.mut.current_pickied_color);
 

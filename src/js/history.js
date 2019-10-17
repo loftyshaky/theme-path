@@ -287,7 +287,7 @@ export const generate_img_history_obj = (family, name, was_default, to_val, set_
 
         const rgba_css_val = r.ifElse(
             () => to_val,
-            () => conver_rgba_arr_into_css_val(to_val),
+            () => color_pickiers.convert_rgba_arr_into_string(to_val),
 
             () => null,
         )();
@@ -298,7 +298,7 @@ export const generate_img_history_obj = (family, name, was_default, to_val, set_
             name,
             was_default,
             set_to_default,
-            ...(from_picked_color_val && { from_val: color_pickiers.convert_rgba_obj_into_string(from_picked_color_val) }),
+            ...(from_picked_color_val && { from_val: color_pickiers.convert_rgba_arr_into_string(from_picked_color_val) }),
             ...(from_picked_color_val && { from_picked_color_val }),
             ...(rgba_css_val && { to_val: rgba_css_val }),
             ...(rgba_css_val && { to_picked_color_val: to_val }),
@@ -534,8 +534,6 @@ export const set_history_side_popup_width = () => {
         err(er, 213);
     }
 };
-
-const conver_rgba_arr_into_css_val = to_rgba => `rgba(${r.values(to_rgba).join(',')})`;
 
 const unpack_change = (change, direction) => {
     try {

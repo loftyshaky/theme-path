@@ -16,6 +16,7 @@ const convert_theme_color_props_to_color = item => {
         const { color_input_default, color_input_disabled } = options.ob.theme_vals[store.get('theme')];
         const val_is_arr = Array.isArray(item.val);
         const { family, name, val } = item;
+
         const val_is_default = !manifest.mut.manifest || !manifest.mut.manifest.theme || !manifest.mut.manifest.theme[family] || !manifest.mut.manifest.theme[family][name];
 
         if (family === 'images') {
@@ -66,7 +67,7 @@ const convert_theme_color_props_to_color = item => {
                         change_val.set_disabled_bool(family, name, true);
 
                     } else {
-                        const rgba_string = color_pickiers.convert_hsl_arr_to_hsl_string(hsl_arr);
+                        const rgba_string = color_pickiers.convert_hsl_arr_to_rgba_string(hsl_arr);
 
                         change_val.set_inputs_data_val(family, name, rgba_string);
                         change_val.set_default_bool(family, name, false);
