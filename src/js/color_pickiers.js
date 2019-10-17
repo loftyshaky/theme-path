@@ -1,3 +1,5 @@
+import { basename } from 'path';
+
 import * as r from 'ramda';
 import { action, configure } from 'mobx';
 import tinycolor from 'tinycolor2';
@@ -11,6 +13,7 @@ import * as imgs from 'js/imgs';
 import * as picked_colors from 'js/picked_colors';
 import * as history from 'js/history';
 import * as options from 'js/options';
+import * as json_file from 'js/json_file';
 import * as conds from 'js/conds';
 
 configure({ enforceActions: 'observed' });
@@ -347,6 +350,34 @@ export const convert_hsl_arr_to_rgba_string = hsl_arr => {
     }
 
     return undefined;
+};
+
+export const convert_picked_colors_from_objects_to_arrays = files => {
+    try {
+        const files_to_update = files.filter(file => {
+            const file_name = basename(file);
+            return file_name === 'picked_colors.json';
+        });
+
+        for (const file of files_to_update) {
+            const picked_colors_obj = json_file.parse_json(file);
+
+            if (picked_colors_obj) {
+                for (const family of Object.keys(picked_colors_obj)) {
+                    for (const name of Object.keys(picked_colors_obj[family])) {
+                        picked_colors_obj[family][name] = Object.values(picked_colors_obj[family][name]);
+                    }
+                }
+            }
+
+            if (picked_colors_obj) {
+                json_file.write_to_json(picked_colors_obj, file);
+            }
+        }
+
+    } catch (er) {
+        err(er, 307);
+    }
 };
 
 export const con = {

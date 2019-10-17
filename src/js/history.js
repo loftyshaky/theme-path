@@ -650,8 +650,15 @@ export const delete_all_history = async () => {
                     });
 
                     for (const file_to_delete of files_to_delete) {
-                        removeSync(file_to_delete);
+                        try {
+                            removeSync(file_to_delete);
+
+                        } catch (er) {
+                            err(er, 308, null, true);
+                        }
                     }
+
+                    color_pickiers.convert_picked_colors_from_objects_to_arrays(files);
 
                 } catch (er) {
                     err(er, 304);
