@@ -168,7 +168,9 @@ const set_default = (family, name, target_path, manifest_obj) => {
             new_manifest_obj = delete_key_from_manifest(family, name, manifest_obj);
         }
 
-        imgs.remove_img_by_name(name, target_path);
+        if (family === 'images' || name === 'clear_new_tab_video') {
+            imgs.remove_img_by_name(name, target_path);
+        }
 
         json_file.write_to_manifest_json(target_path, new_manifest_obj);
 
