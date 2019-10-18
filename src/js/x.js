@@ -56,7 +56,6 @@ x.remove = el => { // remove child
     }
 };
 
-
 x.before = (el_to_insert_before, el_to_insert) => { // insert before
     if (el_to_insert_before && el_to_insert.nodeType === 1) { // if not document
         el_to_insert_before.parentNode.insertBefore(el_to_insert, el_to_insert_before);
