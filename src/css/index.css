@@ -428,6 +428,10 @@ header span, header label, header .open_in_chrome_btn {
     margin-right: 5px;
 }
 
+.numered_btn {
+    font-size: 20px;
+}
+
 .header_btn_icon svg {
     width: 24px;
     height: 24px;

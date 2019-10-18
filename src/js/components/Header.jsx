@@ -258,7 +258,14 @@ const Btn = props => {
 
     return (
         <button
-            className={x.cls(['header_btn', 'header_btn_icon', !r.isNil(label_text) ? 'label_btn' : null, `${name}_btn`, btn_is_inactive_class ? els_state.try_to_set_btn_is_inactive_class() : null])}
+            className={x.cls([
+                'header_btn',
+                'header_btn_icon',
+                !r.isNil(label_text) ? 'label_btn' : null,
+                no ? 'numered_btn' : null,
+                `${name}_btn`,
+                btn_is_inactive_class ? els_state.try_to_set_btn_is_inactive_class() : null
+            ])}
             type="button"
             title={title || x.msg(`${name}_btn_title`)}
             disabled={els_state.com2.inputs_disabled_5}
