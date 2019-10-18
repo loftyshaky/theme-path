@@ -9,3 +9,14 @@
 .bulk_copy_side_popup {
     width: 349px;
 }
+
+@media only screen and (max-width: 1369px) {
+    .work_folder_fieldset {
+        width: calc(100% - 300px);
+    }
+
+    .theme_metadata_and_theme_fieldset_w {
+        padding-left: 150px;
+        padding-right: 150px;
+    }
+}

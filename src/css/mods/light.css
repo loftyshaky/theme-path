@@ -3,15 +3,15 @@
 }
 
 ::-webkit-scrollbar {
-    width: 17px;
+    width: 15px;
     background-color: #dddddd;
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
     background-color: #3892ff;
     background-clip: content-box;
-    border-left: 5px solid #dddddd;
-	border-right: 5px solid #dddddd;
+    border-left: 4px solid #dddddd;
+	border-right: 4px solid #dddddd;
 }
 
 ::-webkit-scrollbar-thumb:hover {

@@ -57,11 +57,11 @@ body, .btn, .legend_line, .fieldset_w .cover, .popup, .help_viewer_expanded_img_
     flex-wrap: wrap;
 }
 
-fieldset:not(.work_folder_fieldset) > div, .input:not(.ordinary_color_input), .ordinary_color_input_inner, .popup, .bottom_link, .app_version, .side_popup {
+fieldset:not(.work_folder_fieldset) .fieldset_content_w, .input:not(.ordinary_color_input), .ordinary_color_input_inner, .popup, .bottom_link, .app_version, .side_popup {
     padding: 12px;
 }
 
-fieldset:not(.work_folder_fieldset) > div, .input .tall_color_input, .popup:not(.side_popup) {
+fieldset:not(.work_folder_fieldset) .fieldset_content_w, .input .tall_color_input, .popup:not(.side_popup) {
     padding-left: 0;
     padding-right: 0;
 }
@@ -86,7 +86,7 @@ fieldset:not(.theme_metadata_fieldset) {
     height: calc(100vh - 76px);
 }
 
-fieldset:not(.work_folder_fieldset) > div {
+fieldset:not(.work_folder_fieldset) .fieldset_content_w {
     padding-top: 22px;
     max-height: calc(100vh - 112px);
     min-width: 300px;
@@ -112,21 +112,23 @@ fieldset > div {
 
 .fieldset_w .cover {
     height: 20px;
-    width: calc(100% - 20px);
+    width: calc(100% - 16px);
     position: absolute;
-    top: 1px;
-    left: 1px;
+    top: 0px;
+    left: 0px;
     z-index: 1;
 }
 
 .legend {
     position: absolute;
-    margin-left: 13px;
+    top: -1px;
+    margin-left: 12px;
     margin-top: -14px;
     font-size: 24px;
     padding-left: 7px;
     padding-right: 6px;
     z-index: 2;
+    left: 0;
 }
 
 .legend_line {
@@ -502,9 +504,10 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
     width: 100%;
     box-sizing: border-box;
     border-color: white!important;
+    margin: auto;
 }
 
-.work_folder_fieldset > div {
+.work_folder_fieldset .fieldset_content {
     overflow: unset;
     height: calc(100vh - 78px);
     overflow: hidden!important;
@@ -1171,7 +1174,7 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 /*< history fieldset protecting screens */
 
 /*> ordinary color inputs */
-.colors_and_tints_input_block, .ordinary_color_input {
+.ordinary_color_input {
     width: fit-content;
 }
 
