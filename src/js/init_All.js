@@ -4,11 +4,13 @@ import { render } from 'react-dom';
 import x from 'x';
 import 'js/tab_focus';
 import * as options from 'js/options';
+import * as odd_elements_highlighting from 'js/odd_elements_highlighting';
 
 import { All } from 'components/All';
 
 options.load_setting();
 options.load_theme();
+odd_elements_highlighting.set_odd_elements_color();
 
 //> render options page ui
 render(

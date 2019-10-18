@@ -197,6 +197,7 @@ const inputs = {
         textarea('max_number_of_history_records', true),
         textarea('locales_whitelist', true),
         checkbox('show_help'),
+        checkbox('highlight_odd_elements'),
         checkbox('enable_analytics'),
         options_btns('options_btns'),
     ],

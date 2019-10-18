@@ -56,6 +56,14 @@ x.remove = el => { // remove child
     }
 };
 
+x.remove_a = els => { // remove child
+    if (els && Object.prototype.isPrototypeOf.call(NodeList.prototype, els)) { // NodeList.prototype.isPrototypeOf(els) * returns true if els is node list (querySelectorAll) not (querySelector)
+        for (const el of els) {
+            el.parentNode.removeChild(el);
+        }
+    }
+};
+
 x.before = (el_to_insert_before, el_to_insert) => { // insert before
     if (el_to_insert_before && el_to_insert.nodeType === 1) { // if not document
         el_to_insert_before.parentNode.insertBefore(el_to_insert, el_to_insert_before);

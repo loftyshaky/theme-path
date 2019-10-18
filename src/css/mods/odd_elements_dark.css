@@ -1,0 +1,12 @@
+.ordinary_color_input_inner:after, .help:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: -100%;
+}
+
+.ordinary_color_input:nth-child(odd) .ordinary_color_input_inner, .ordinary_color_input:nth-child(odd) .ordinary_color_input_inner:after, .ordinary_color_input:nth-child(odd) .help, .ordinary_color_input:nth-child(odd) .help:after {
+     background-color: #303030;
+}

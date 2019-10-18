@@ -18,6 +18,7 @@ import * as convert_color from 'js/convert_color';
 import * as custom_folders from 'js/work_folder/custom_folders';
 import * as tutorial from 'js/tutorial';
 import * as history from 'js/history';
+import * as odd_elements_highlighting from 'js/odd_elements_highlighting';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
@@ -104,9 +105,10 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
                 } else if (name === 'custom_folders') {
                     custom_folders.update_custom_folders_observable();
 
-                } else if (name === 'theme') {
+                } else if (name === 'theme' || name === 'highlight_odd_elements') {
                     x.load_css('no_tr');
 
+                    odd_elements_highlighting.set_odd_elements_color();
                     options.load_theme();
                     convert_color.convert_all();
 
