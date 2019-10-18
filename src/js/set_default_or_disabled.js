@@ -143,13 +143,6 @@ export const set_default_or_disabled = (family, name, special_checkbox, remove_r
 
                     change_val.set_inputs_data_val(family, name, disabled_color);
                     color_pickiers.set_color_input_vizualization_color(family, name, disabled_color);
-
-                } else {
-                    change_val.set_disabled_bool(family, name, false);
-                    change_val.set_disabled_bool(family, name, false);
-                    change_val.set_default_bool(family, name, true);
-
-                    set_default(family, name);
                 }
             }
         }
