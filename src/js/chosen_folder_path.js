@@ -75,7 +75,6 @@ export const count_bulk_themes = action(() => {
     } catch (er) {
         err(er, 291);
     }
-
 });
 
 export const ob = observable({
