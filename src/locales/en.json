@@ -10,7 +10,8 @@
   "properties_hr_text": "Properties",
   "clear_new_tab_hr_text": "Clear New Tab",
   "options_hr_text": "Options",
-  "help_hr_text": "Links",
+  "help_hr_text": "Help",
+  "links_hr_text": "Links",
   "history_hr_text": "Changes history",
   "bulk_copy_hr_text": "Bulk copy",
 
@@ -150,6 +151,13 @@
   "options_btn_title": "Options",
   "help_btn_title": "Help",
 
+
+  "delete_all_history_li_text": "If you updated from v1.3.1, it's recommended to delete all previously recorded history and convert previously picked colors of \"Images\" elements to the new format by going to options page and clicking \"Delete all history\" button. The old history is not compatible with v1.4.0.",
+  "preview_li_text": "To open a theme in Chrome in a normal mode, select a theme with left-click, and then left-click on the %@open_in_browser@% button. To open it in an incognito mode right-click (or if you selected the %@open_in_browser@% button with a tab key, hit Ctrl/Shift + Enter) on the same button. Middle-click (Ctrl + Shift + Enter) will open two browser windows, one in normal and the other in an incognito mode.",
+  "reupload_img_li_text": "Each time you upload image with a \"Choose image\" button Chrome Theme Creator remembers its location and element it was uploaded for. If you edit the same file in an image editing app and save it in the same location, you can quickly reupload it by clicking on the %@upload@% button.",
+  "bulk_select_li_text": "You can select multiple themes at once. To do this right-click on a theme or folder that contains themes (or select theme/folder with tab key, then hit Ctrl/Shift + Enter). To deselect all themes click on the %@layers_clear@% button.",
+  "bulk_copy_li_text": "When multiple themes are selected, you can copy properties from one theme to others. Select a theme you want to copy properties from by left clicking on it, then click on the %@queue@% button. In the opened window select all propierties you wanna copy and click \"Accept\".",
+  "bulk_pack_li_text": "You can also pack all selected themes at once by clicking on the %@archive@% button.",
 
   "privacy_policy_link_text": "📜 Privacy policy",
   "clear_new_tab_link_text": "⚗️ Hide everything from the new tab page with the Clear New Tab Chrome extension",

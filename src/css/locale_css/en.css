@@ -2,6 +2,10 @@
     width: 398px;
 }
 
+.help_popup {
+    width: 654px;
+}
+
 .history_side_popup {
     min-width: 301px;
 }

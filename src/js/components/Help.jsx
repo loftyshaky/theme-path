@@ -4,10 +4,24 @@ import x from 'x';
 import * as analytics from 'js/analytics';
 
 import { Popup } from 'components/Popup';
+import { Hr } from 'components/Hr';
+import { Help_item } from 'components/Help_item';
 
 export const Help = () => (
     <Popup name="help">
-        <div>
+        <ul className="help_block">
+            <Help_item
+                name="delete_all_history"
+                important
+            />
+            <Help_item name="preview" />
+            <Help_item name="reupload_img" />
+            <Help_item name="bulk_select" />
+            <Help_item name="bulk_copy" />
+            <Help_item name="bulk_pack" />
+        </ul>
+        <Hr name="links" />
+        <div className="help_block links_block">
             <Link
                 name="privacy_policy"
                 href="https://bit.ly/ctc-privacy-policy"

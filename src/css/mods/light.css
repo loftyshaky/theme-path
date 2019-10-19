@@ -134,6 +134,10 @@ textarea:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualizat
     box-shadow: 0 0 15px #3892ff;
 }
 
+ul.help_block .important {
+    color: #ff6565;
+}
+
 .btn:hover, .option:hover {
     background-color: #3892ff!important;
 }
