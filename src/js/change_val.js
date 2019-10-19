@@ -15,6 +15,7 @@ import * as json_file from 'js/json_file';
 import * as options from 'js/options';
 import * as open_and_pack from 'js/open_and_pack';
 import * as convert_color from 'js/convert_color';
+import * as settings from 'js/settings';
 import * as custom_folders from 'js/work_folder/custom_folders';
 import * as tutorial from 'js/tutorial';
 import * as history from 'js/history';
@@ -95,6 +96,7 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
 
             } else if (family === 'options') {
                 store.set(name, new_val);
+                settings.set_settings_observable();
 
                 if (name === 'chrome_user_data_folders') {
                     open_and_pack.update_chrome_user_data_folders_observable();

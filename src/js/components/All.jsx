@@ -1,11 +1,14 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 
+import x from 'x';
 import * as color_pickiers from 'js/color_pickiers';
 import * as toggle_popup from 'js/toggle_popup';
 import * as help_viewer from 'js/help_viewer';
 import * as tutorial from 'js/tutorial';
 import * as mutation_observer from 'js/mutation_observer';
 import * as history from 'js/history';
+import * as settings from 'js/settings';
 
 import { Error_boundary } from 'components/Error_boundary';
 import { Header } from 'components/Header';
@@ -26,6 +29,8 @@ import { Processing_msg } from 'components/Processing_msg';
 export class All extends React.Component {
     componentDidMount() {
         try {
+            settings.set_settings_observable();
+
             document.addEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
             document.body.addEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
             document.body.addEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
@@ -61,7 +66,11 @@ export class All extends React.Component {
                     <Header />
                     <div className="fieldsets">
                         <Work_folder />
-                        <span className="theme_metadata_and_theme_fieldset_w">
+                        <span className={x.cls([
+                            'theme_metadata_and_theme_fieldset_w',
+                            settings.ob.settings.wrap_theme_metadata_and_theme_fieldsets ? 'wrap_theme_metadata_and_theme_fieldsets' : '',
+                        ])}
+                        >
                             <Fieldset name="theme_metadata">
                                 <Input_block name="theme_metadata" />
                             </Fieldset>
@@ -114,3 +123,5 @@ export class All extends React.Component {
         );
     }
 }
+
+observer(All);

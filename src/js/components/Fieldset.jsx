@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 
 import x from 'x';
 import * as els_state from 'js/els_state';
+import * as settings from 'js/settings';
 
 import { Tr } from 'components/Tr';
 import { History_fieldset_protecting_screen } from 'components/Protecting_screen';
@@ -27,7 +28,7 @@ export const Fieldset = observer(props => {
         <div className={x.cls(['fieldset_w', `${name}_fieldset_w`])}>
             <Tr
                 attr={{
-                    className: `${name}_fieldset`,
+                    className: x.cls([`${name}_fieldset`, name === 'work_folder' && settings.ob.settings.wrap_theme_metadata_and_theme_fieldsets ? 'wrap_theme_metadata_and_theme_fieldsets' : '']),
                 }}
                 tag="fieldset"
                 name="fieldset"

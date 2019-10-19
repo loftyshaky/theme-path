@@ -1448,6 +1448,14 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
 .tutorial_outline_border_color_active {
     border-color: #cb87d4;
 }
+
+.work_folder_fieldset.wrap_theme_metadata_and_theme_fieldsets {
+    width: calc(100% - 300px);
+}
+
+.theme_metadata_and_theme_fieldset_w.wrap_theme_metadata_and_theme_fieldsets {
+    width: 100%;;
+}
 /*< Tr mods */
 
 .help_message {
