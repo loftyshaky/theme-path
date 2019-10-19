@@ -264,7 +264,7 @@ const Btn = props => {
                 !r.isNil(label_text) ? 'label_btn' : null,
                 no ? 'numered_btn' : null,
                 `${name}_btn`,
-                btn_is_inactive_class ? els_state.try_to_set_btn_is_inactive_class() : null
+                btn_is_inactive_class ? els_state.try_to_set_btn_is_inactive_class() : null,
             ])}
             type="button"
             title={title || x.msg(`${name}_btn_title`)}
