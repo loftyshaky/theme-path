@@ -58,7 +58,7 @@ export class Input_block extends React.Component {
                                 <Component
                                     {...item}
                                     count_char={this.count_char}
-                                    checkbox_type={item.type === 'checlbox' ? 'options' : null}
+                                    checkbox_type={item.type === 'checkbox' ? 'options' : null}
                                     ref={item.name === 'options_btns' ? null : instance => { this.childs.push(this.child = instance); }}
                                 />
                             );
