@@ -46,17 +46,12 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
             } else if (e.type === 'mouseup' || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code)) {
                 runInAction(() => { // runInAction( need to be here otherwise protecting screen will not lift
                     const i_to_insert_folder_in = folders.get_folder_i(folder_path) + 1;
-                    const selecting_work_folder = folder_path === choose_folder.ob.work_folder;
 
                     if (!is_work_folder) {
                         folders.deselect_theme();
                     }
 
                     chosen_folder_path.set_chosen_folder_path(folder_path);
-
-                    if (selecting_work_folder) {
-                        chosen_folder_path.set_chosen_folder_bulk_path(folder_path);
-                    }
 
                     if (!is_work_folder) {
                         folders.ob.folders[i_to_insert_folder_in - 1].is_theme = folder_info.is_theme;
