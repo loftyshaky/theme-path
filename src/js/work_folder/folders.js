@@ -219,11 +219,21 @@ export const deselect_theme = action(() => {
 });
 
 export const find_file_name_by_element_name = (name, target_folder_path) => {
-    const files = readdirSync(target_folder_path || chosen_folder_path.ob.chosen_folder_path);
-    const file_name = files.find(file => file.indexOf(`${name}.`) > -1);
+    try {
+        if (chosen_folder_path.ob.chosen_folder_path) {
+            const files = readdirSync(target_folder_path || chosen_folder_path.ob.chosen_folder_path);
+            const file_name = files.find(file => file.indexOf(`${name}.`) > -1);
 
-    return file_name;
+            return file_name;
+        }
+
+    } catch (er) {
+        err(er, 310);
+    }
+
+    return undefined;
 };
+
 
 export const get_folder_i = folder_path => ob.folders.findIndex(cur_folder => cur_folder.path === folder_path);
 
