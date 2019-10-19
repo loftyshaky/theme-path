@@ -42,8 +42,13 @@ textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmar
     border-color: #212121;
 }
 
-.selected_folder, .selected_folder_bulk, .btn:hover, .option:hover, .header_btn, .header_btn label, .header_btn:hover, .header_btn:hover label, .help_viewer_message, .search_input, .er_msg, .er_msg div, .er_msg button, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span, .processing_msg > div {
+.selected_folder, .selected_folder_bulk, .btn:hover, .option:hover, .header_btn, .header_btn:hover, body.using_mouse .header_btn:hover:focus, .header_btn label, .header_btn:hover label,
+body.using_mouse .header_btn:hover:focus label, .help_viewer_message, .search_input, .er_msg, .er_msg div, .er_msg button, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span, .processing_msg > div {
     color: white;
+}
+
+body.using_mouse .header_btn:hover:focus:active, body.using_mouse .header_btn:hover:focus:active label {
+     color: #212121;
 }
 
 .work_folder_fieldset {
@@ -58,7 +63,7 @@ hr {
     background-color: #212121!important;
 }
 
-.header_btn:hover {
+.header_btn:hover, body.using_mouse .header_btn:hover:focus {
     background-color: #212121;
 }
 
@@ -66,7 +71,7 @@ svg, body.using_mouse .folder_arrow:focus svg {
     fill: #212121;
 }
 
-.header_btn_icon svg, .header_btn:hover svg, .help_viewer .close_btn svg, .tutorial_item_close_btn svg, .er_close_btn svg {
+.header_btn_icon svg, .header_btn:hover svg, body.using_mouse .header_btn:hover:focus svg, .help_viewer .close_btn svg, .tutorial_item_close_btn svg, .er_close_btn svg {
     fill: white;
 }
 

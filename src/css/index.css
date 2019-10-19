@@ -516,7 +516,7 @@ body.using_mouse .header_btn:hover:focus svg {
 .header_btn:active label,
 body.using_mouse .header_btn:hover:focus,
 body.using_mouse .header_btn:hover:focus label {
-    color: #212121 !important;
+    color: #212121;
 }
 
 .header_btn:active svg {
