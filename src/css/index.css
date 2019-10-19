@@ -504,7 +504,7 @@ body.using_mouse .work_folder_path:focus, body.using_mouse .folder_name:focus {
 }
 
 .work_folder_fieldset {
-    min-width: 500px;
+    min-width: 330px;
     width: 100%;
     box-sizing: border-box;
     border-color: white!important;

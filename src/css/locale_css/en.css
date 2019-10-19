@@ -10,7 +10,7 @@
     width: 349px;
 }
 
-@media only screen and (max-width: 1369px) {
+@media only screen and (max-width: 1199px) {
     .work_folder_fieldset {
         width: calc(100% - 300px);
     }
