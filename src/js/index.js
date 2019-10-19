@@ -3,7 +3,7 @@ import 'css/index.css';
 import React from 'react';
 import { render } from 'react-dom';
 
-import 'js/settings';
+import 'js/set_defaults';
 import 'js/error';
 import 'js/close_prompt';
 import * as analytics from 'js/analytics';

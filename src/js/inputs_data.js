@@ -198,7 +198,6 @@ const inputs = {
         textarea('locales_whitelist', true),
         checkbox('show_help'),
         checkbox('highlight_odd_elements'),
-        checkbox('wrap_theme_metadata_and_theme_fieldsets'),
         checkbox('enable_analytics'),
         options_btns('options_btns'),
     ],

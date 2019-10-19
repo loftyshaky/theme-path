@@ -91,7 +91,6 @@
   "locales_whitelist_label_text": "Locales to show in locale selects",
   "show_help_label_text": "Show help buttons",
   "highlight_odd_elements_label_text": "Highlight odd colors and tints elements with a color",
-  "wrap_theme_metadata_and_theme_fieldsets_label_text": "Put \"Theme metadata\" and \"Theme\" blocks below the \"Work folder\" block",
   "color_picker_default_mode_label_text": "Color picker default mode",
   "enable_analytics_label_text": "Allow Chrome Theme Creator to send anonymous usage information",
   "export_settings_btn_text": "Export settings",
