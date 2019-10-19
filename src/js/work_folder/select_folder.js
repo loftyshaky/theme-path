@@ -33,7 +33,7 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
             const folder_is_already_selected = folder_path === chosen_folder_path.ob.chosen_folder_path;
             const folder_info = folders.get_info_about_folder(folder_path);
 
-            if ((e.type === 'mouseup' && e.button !== 0) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code && (e.ctrlKey || e.shiftKey))) {
+            if ((e.type === 'mouseup' && e.button === 2) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code && (e.ctrlKey || e.shiftKey))) {
                 if (folder_info.is_theme) {
                     chosen_folder_path.set_chosen_folder_bulk_path('decide', folder_path, true);
 
@@ -43,7 +43,7 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
                     await select_bulk_by_ctrl_clicking_on_folder(folder_path);
                 }
 
-            } else if (e.type === 'mouseup' || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code)) {
+            } else if ((e.type === 'mouseup' && e.button === 0) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code)) {
                 runInAction(() => { // runInAction( need to be here otherwise protecting screen will not lift
                     const i_to_insert_folder_in = folders.get_folder_i(folder_path) + 1;
 
