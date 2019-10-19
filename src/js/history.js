@@ -623,7 +623,11 @@ export const delete_all_history = async () => {
         const dialog_options = confirm.generate_confirm_options('delete_all_history_msg', 'delete_all_history_answer_delete');
         const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
 
+        analytics.add_options_btns_analytics('tried_to_delete_all_history');
+
         if (choice === 0) {
+            analytics.add_options_btns_analytics('deleted_all_history');
+
             const get_files_and_folders = async folder => {
                 const dirs = [];
                 const subdirs = await readdir_p(folder);
@@ -664,6 +668,8 @@ export const delete_all_history = async () => {
                     err(er, 304);
                 }
             });
+        } else {
+            analytics.add_options_btns_analytics('canceled_deleting_all_history');
         }
 
     } catch (er) {

@@ -91,6 +91,18 @@ export const add_history_analytics = name => {
     send_event('history', `clicked-${name}`);
 };
 
+export const add_bulk_copy_analytics = name => {
+    send_event('bulk_copy', `clicked-${name}`);
+};
+
+export const add_bulk_copy_action_analytics = action => {
+    send_event('bulk_copy', `${action}`);
+};
+
+export const add_pack_analytics = (type, action) => {
+    send_event('pack', `${type}-${action}`);
+};
+
 export const track_app_start = () => {
     send_pageview('main');
     send_event('app_version', app_version);

@@ -35,7 +35,7 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
 
             if ((e.type === 'mouseup' && e.button !== 0) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code && (e.ctrlKey || e.shiftKey))) {
                 if (folder_info.is_theme) {
-                    chosen_folder_path.set_chosen_folder_bulk_path('decide', folder_path);
+                    chosen_folder_path.set_chosen_folder_bulk_path('decide', folder_path, true);
 
                     chosen_folder_path.count_bulk_themes();
 
@@ -246,6 +246,13 @@ export const select_bulk_by_ctrl_clicking_on_folder = async folder_path => {
 
     } else {
         chosen_folder_path.set_chosen_folder_bulk_path('force_add', folder_path);
+    }
+
+    if (force_remove) {
+        analytics.add_work_folder_analytics('bulk_deselected_folder');
+
+    } else {
+        analytics.add_work_folder_analytics('bulk_selected_folder');
     }
 
     chosen_folder_path.count_bulk_themes();

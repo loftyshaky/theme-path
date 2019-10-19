@@ -134,14 +134,28 @@ export const pack = type => {
             }
 
             if (theme_paths_to_pack.length > chosen_folder_path.mut.confirm_breakpoint) {
+                analytics.add_pack_analytics(type, 'tried_to_bulk_pack_large_batch');
+
                 const dialog_options = confirm.generate_confirm_options('pack_confirm_msg', 'pack_confirm_answer_pack');
                 const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
 
                 if (choice === 0) {
+                    analytics.add_pack_analytics(type, 'bulk_packed_large_batch');
+
                     pack_inner(type, theme_paths_to_pack);
+
+                } else {
+                    analytics.add_pack_analytics(type, 'canceled_bulk_packing_large_batch');
                 }
 
             } else {
+                if (theme_paths_to_pack.length === 1) {
+                    analytics.add_pack_analytics(type, 'packed');
+
+                } else {
+                    analytics.add_pack_analytics(type, 'bulk_packed');
+                }
+
                 pack_inner(type, theme_paths_to_pack);
             }
 

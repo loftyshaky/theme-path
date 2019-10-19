@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as bulk_copy from 'js/bulk_copy';
+import * as analytics from 'js/analytics';
 
 import { Side_popup } from 'components/Side_popup';
 import { Checkbox } from 'components/Checkbox';
@@ -11,6 +12,18 @@ import { Btn } from 'components/Btn';
 import { Hr } from 'components/Hr';
 
 export class Bulk_copy extends React.Component {
+    close = () => {
+        analytics.add_popup_close_btns_analytics('bulk_copy');
+
+        bulk_copy.show_or_hide_bulk_copy(false);
+    };
+
+    cancel = () => {
+        analytics.add_bulk_copy_analytics('cancel');
+
+        bulk_copy.show_or_hide_bulk_copy(false);
+    };
+
     render() {
         return (
             <Side_popup
@@ -38,9 +51,9 @@ export class Bulk_copy extends React.Component {
                         on_click: () => bulk_copy.toggle_set_default_mode(true),
                     },
                 ]}
-                close_f={() => bulk_copy.show_or_hide_bulk_copy(false)}
+                close_f={this.close}
                 accept_f={bulk_copy.accept}
-                cancel_f={() => bulk_copy.show_or_hide_bulk_copy(false)}
+                cancel_f={this.cancel}
             >
                 {
                     Object.keys(inputs_data.obj).map((family, i) => {
