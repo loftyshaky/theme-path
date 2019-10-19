@@ -45,7 +45,9 @@ export class Textarea extends React.Component {
             : null;
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await x.delay(1000);
+
         this.resize_textarea(true);
     }
 
