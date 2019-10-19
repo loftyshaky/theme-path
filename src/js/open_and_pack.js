@@ -5,6 +5,7 @@ import { execFile, execFileSync } from 'child_process';
 import glob from 'glob';
 import { remote } from 'electron';
 
+import { observable, action, configure } from 'mobx';
 import psTree from 'ps-tree';
 import zipLocal from 'zip-local';
 import Store from 'electron-store';
@@ -16,8 +17,7 @@ import * as analytics from 'js/analytics';
 import * as confirm from 'js/confirm';
 import * as processing_msg from 'js/processing_msg';
 import * as folders from 'js/work_folder/folders';
-import { observable, action, configure } from 'mobx';
-
+import * as enter_click from 'js/enter_click';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
 configure({ enforceActions: 'observed' });
@@ -25,7 +25,7 @@ const store = new Store();
 
 export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
     try {
-        if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === con.enter_key_code && (!e.ctrlKey || !e.shiftKey))) {
+        if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === enter_click.sta.enter_key_code && (!e.ctrlKey || !e.shiftKey))) {
             const left_button_clicked = e.button === 0 || (e.type === 'keyup' && !e.ctrlKey && !e.shiftKey);
             const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
             const chrome_exe_path_final = chrome_exe_path || getChrome(platform());
@@ -85,7 +85,7 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
                 });
             });
 
-        } else if (e.button === 1 || (e.keyCode === con.enter_key_code && e.ctrlKey && e.shiftKey)) {
+        } else if (e.button === 1 || (e.keyCode === enter_click.sta.enter_key_code && e.ctrlKey && e.shiftKey)) {
             e.type = 'mouseup';
             e.button = 0;
 
@@ -254,10 +254,6 @@ const move_system_folder = (src, destination) => {
     if (existsSync(src)) {
         moveSync(src, destination, { overwrite: true });
     }
-};
-
-const con = {
-    enter_key_code: 13,
 };
 
 const mut = {

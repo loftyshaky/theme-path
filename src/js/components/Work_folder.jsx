@@ -8,7 +8,6 @@ import x from 'x';
 import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as els_state from 'js/els_state';
-import * as enter_click from 'js/enter_click';
 import * as folders from 'js/work_folder/folders';
 import * as component_methods from 'js/work_folder/component_methods';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
@@ -60,6 +59,7 @@ export class Work_folder extends React.Component {
         const folder_is_opened = folders.mut.opened_folders.indexOf(folder.path) > -1;
         const folder_is_selected = folder.path === chosen_folder_path.ob.chosen_folder_path;
         const folder_is_bulk_selected = chosen_folder_path.check_if_folder_is_bulk_selected(folder.path);
+        const select_folder_f = select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1);
 
         const on_click_folder_arrow = () => {
             expand_or_collapse.expand_or_collapse_folder('arrow', folder.path, folder.nest_level + 1);
@@ -101,7 +101,7 @@ export class Work_folder extends React.Component {
                             className={x.cls(['folder_icon', folder.is_theme ? 'folder_icon_theme' : ''])}
                             type="button"
                             tabIndex="-1"
-                            onMouseUp={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
+                            onMouseUp={select_folder_f}
                         >
                             <Svg src={folder_is_opened ? folder_open_svg : folder_svg} />
                         </button>
@@ -115,8 +115,8 @@ export class Work_folder extends React.Component {
                             type="button"
                             title={folder.name}
                             tabIndex={els_state.com2.inputs_disabled_3}
-                            onMouseUp={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
-                            onKeyUp={enter_click.simulate_mouse_up_on_enter}
+                            onMouseUp={select_folder_f}
+                            onKeyUp={select_folder_f}
                         >
                             {folder.name}
                         </button>
@@ -233,7 +233,7 @@ class Work_folder_selector extends React.Component {
                         tabIndex={els_state.com2.inputs_disabled_3}
                         title={choose_folder.ob.work_folder}
                         onMouseUp={component_methods.select_work_folder}
-                        onKeyUp={enter_click.simulate_mouse_up_on_enter}
+                        onKeyUp={component_methods.select_work_folder}
                     >
                         {choose_folder.ob.work_folder}
                     </button>

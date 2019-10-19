@@ -13,6 +13,7 @@ import * as msg from 'js/msg';
 import * as json_file from 'js/json_file';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
+import * as enter_click from 'js/enter_click';
 import * as folders from 'js/work_folder/folders';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as convert_color from 'js/convert_color';
@@ -32,7 +33,7 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
             const folder_is_already_selected = folder_path === chosen_folder_path.ob.chosen_folder_path;
             const folder_info = folders.get_info_about_folder(folder_path);
 
-            if (e.button !== 0) {
+            if ((e.type === 'mouseup' && e.button !== 0) || (e.type === 'keyup' && e.keyCode === enter_click.sta.enter_key_code && (e.ctrlKey || e.shiftKey))) {
                 if (folder_info.is_theme) {
                     chosen_folder_path.set_chosen_folder_bulk_path('decide', folder_path);
 
@@ -42,7 +43,7 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
                     await select_bulk_by_ctrl_clicking_on_folder(folder_path);
                 }
 
-            } else {
+            } else if (e.type === 'mouseup' || (e.type === 'keyup' && e.keyCode === enter_click.sta.enter_key_code)) {
                 runInAction(() => { // runInAction( need to be here otherwise protecting screen will not lift
                     const i_to_insert_folder_in = folders.get_folder_i(folder_path) + 1;
                     const selecting_work_folder = folder_path === choose_folder.ob.work_folder;

@@ -40,6 +40,6 @@ export const open_color_pickier_on_enter = e => {
     }
 };
 
-const sta = {
+export const sta = {
     enter_key_code: 13,
 };
