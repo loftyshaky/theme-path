@@ -155,8 +155,8 @@ export const selects_options = {
         option(false, 'stretch_browser'),
     ],
     theme: [
-        option(false, 'dark'),
         option(false, 'light'),
+        option(false, 'dark'),
     ],
     language: [
         option(false, 'system'),

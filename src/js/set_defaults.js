@@ -95,7 +95,7 @@ export const set_default_bulk_copy_checkboxes_obj = inputs_data => {
 const con = {
     default_settings: {
         work_folder: '',
-        theme: 'dark',
+        theme: 'light',
         language: 'system',
         history_side_popup_width: 700,
         chrome_exe_paths: '',
