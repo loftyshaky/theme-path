@@ -33,6 +33,7 @@ import archive_svg from 'svg/archive';
 import settings_applications_svg from 'svg/settings_applications';
 import help_svg from 'svg/help';
 import history_svg from 'svg/history';
+import layers_clear_svg from 'svg/layers_clear';
 import upload_svg from 'svg/upload';
 import queue_svg from 'svg/queue';
 
@@ -156,6 +157,12 @@ export class Header extends React.Component {
                         label_text={chosen_folder_path.ob.bulk_theme_count}
                         svg={queue_svg}
                         f={() => bulk_copy.show_or_hide_bulk_copy(true)}
+                    />
+                    <Btn
+                        name="deselect_all_bulk_folders"
+                        btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
+                        svg={layers_clear_svg}
+                        f={chosen_folder_path.deselect_all_bulk_folders}
                     />
                     <Btn
                         name="collapse_all_folders"

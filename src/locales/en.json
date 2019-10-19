@@ -139,6 +139,7 @@
   "reupload_img_btn_title": "Reupload the last uploaded image",
   "pack_as_zip_btn_title": "Pack as ZIP",
   "pack_as_crx_btn_title": "Pack as CRX",
+  "deselect_all_bulk_folders_btn_title": "Deselect all folders selected for bulk copying",
   "collapse_all_folders_btn_title": "Collapse all folders",
   "history_btn_title": "Changes history",
   "bulk_copy_btn_title": "Copy theme properties to other themes",
