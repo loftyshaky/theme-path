@@ -150,8 +150,10 @@ export class Textarea extends React.Component {
                 analytics.send_event('textareas', `input-${this.family}-${this.name}`);
             }
 
-            new_theme_or_rename.rename_theme_folder();
-            els_state.set_applying_textarea_val_val(false);
+            if (this.name === 'name') {
+                new_theme_or_rename.rename_theme_folder();
+                els_state.set_applying_textarea_val_val(false);
+            }
 
         } catch (er) {
             err(er, 162);
