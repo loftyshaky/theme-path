@@ -25,6 +25,7 @@ export const search = action(() => {
 export const trigger_work_folder_reload = x.debounce(action(() => {
     try {
         folders.collapse_all_folders();
+        chosen_folder_path.deselect_all_bulk_folders();
 
         //> trigger Work_folder component rerender
         const { chosen_folder_path: old_chosen_folder_path } = chosen_folder_path.ob;

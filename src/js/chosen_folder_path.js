@@ -77,6 +77,17 @@ export const count_bulk_themes = action(() => {
     }
 });
 
+export const deselect_all_bulk_folders = action(() => {
+    try {
+        ob.chosen_folder_bulk_paths = [];
+        ob.bulk_theme_count = 0;
+
+    } catch (er) {
+        err(er, 309);
+    }
+});
+
+
 export const ob = observable({
     chosen_folder_path: choose_folder.ob.work_folder,
     chosen_folder_bulk_paths: [],
