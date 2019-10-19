@@ -8,6 +8,7 @@ import x from 'x';
 import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as els_state from 'js/els_state';
+import * as enter_click from 'js/enter_click';
 import * as folders from 'js/work_folder/folders';
 import * as component_methods from 'js/work_folder/component_methods';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
@@ -112,9 +113,10 @@ export class Work_folder extends React.Component {
                                 folder_is_selected && folder_is_bulk_selected ? 'selected_folder_bulk_over' : '',
                             ])}
                             type="button"
+                            title={folder.name}
                             tabIndex={els_state.com2.inputs_disabled_3}
                             onMouseUp={select_folder.select_folder.bind(null, false, folder.path, folder.children, folder.nest_level + 1)}
-                            title={folder.name}
+                            onKeyUp={enter_click.simulate_mouse_up_on_enter}
                         >
                             {folder.name}
                         </button>
@@ -231,6 +233,7 @@ class Work_folder_selector extends React.Component {
                         tabIndex={els_state.com2.inputs_disabled_3}
                         title={choose_folder.ob.work_folder}
                         onMouseUp={component_methods.select_work_folder}
+                        onKeyUp={enter_click.simulate_mouse_up_on_enter}
                     >
                         {choose_folder.ob.work_folder}
                     </button>
