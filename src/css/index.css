@@ -14,14 +14,14 @@
 }
 
 ::-webkit-scrollbar {
-    width: 17px;
+    width: 15px;
     background-color: #3c3c3c;
 }
 
 ::-webkit-scrollbar-thumb {
     background-clip: content-box;
-    border-left: 5px solid #3c3c3c;
-    border-right: 5px solid #3c3c3c;
+    border-left: 4px solid #3c3c3c;
+    border-right: 4px solid #3c3c3c;
     background-color: #fbff75;
 }
 
