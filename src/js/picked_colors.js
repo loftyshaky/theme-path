@@ -11,7 +11,11 @@ export const record_picked_color = (family, name, color, target_folder_path) => 
 
         json_file.create_json_file(picked_colors_path, '{}');
 
-        const picked_colors_obj = json_file.parse_json(picked_colors_path);
+        let picked_colors_obj = json_file.parse_json(picked_colors_path);
+
+        if (!picked_colors_obj) {
+            picked_colors_obj = {};
+        }
 
         if (!picked_colors_obj[family]) {
             picked_colors_obj[family] = {};

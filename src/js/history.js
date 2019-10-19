@@ -469,7 +469,7 @@ const get_picked_color_from = (family, name, target_folder_path) => {
         if (existsSync(picked_colors_path)) {
             const picked_colors_obj = json_file.parse_json(picked_colors_path);
 
-            if (picked_colors_obj[family] && picked_colors_obj[family][name]) {
+            if (picked_colors_obj && picked_colors_obj[family] && picked_colors_obj[family][name]) {
                 from_picked_color_val = picked_colors_obj[family][name];
             }
         }
