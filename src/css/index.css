@@ -61,7 +61,7 @@ fieldset:not(.work_folder_fieldset) .fieldset_content_w, .input:not(.ordinary_co
     padding: 12px;
 }
 
-fieldset:not(.work_folder_fieldset) .fieldset_content_w, .input .tall_color_input, .popup:not(.side_popup) {
+fieldset:not(.work_folder_fieldset) .fieldset_content_w, .input .tall_color_input, .popup:not(.side_popup):not(.auto_updater):not(.analytics_privacy) {
     padding-left: 0;
     padding-right: 0;
 }
