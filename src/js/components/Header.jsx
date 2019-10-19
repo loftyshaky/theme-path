@@ -124,6 +124,7 @@ export class Header extends React.Component {
                                 <Btn
                                     key={x.unique_id()}
                                     name="open_folder"
+                                    btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                                     title={`${x.msg('open_in_chrome_btn_title')} - ${folder_path}`}
                                     attach_action_to_on_key_up_too
                                     no={i + 1}
@@ -135,6 +136,7 @@ export class Header extends React.Component {
                     <div className="btn_w">
                         <Btn
                             name="open_in_chrome"
+                            btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                             attach_action_to_on_key_up_too
                             svg={open_in_browser_svg}
                             f={e => open_and_pack.open_in_chrome(null, null, e)}
@@ -166,6 +168,7 @@ export class Header extends React.Component {
                     />
                     <Btn
                         name="collapse_all_folders"
+                        btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         svg={dehaze_svg}
                         f={folders.collapse_all_folders}
                     />
@@ -181,6 +184,7 @@ export class Header extends React.Component {
                     />
                     <Btn
                         name="reupload_img"
+                        btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         title={`${x.msg('reupload_img_btn_title')}${reupload_img.ob.previous_img_path ? ` - ${reupload_img.ob.previous_img_path}` : ''}`}
                         svg={upload_svg}
                         f={() => imgs.handle_files('reupload')}
