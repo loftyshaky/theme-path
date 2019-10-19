@@ -60,17 +60,18 @@ export class All extends React.Component {
     }
 
     render() {
+
         return (
             <Error_boundary>
                 <div className="all">
                     <Header />
-                    <div className="fieldsets">
+                    <div className={x.cls([
+                        'fieldsets',
+                        settings.ob.settings.wrap_theme_metadata_and_theme_fieldsets ? 'wrap_theme_metadata_and_theme_fieldsets' : '',
+                    ])}
+                    >
                         <Work_folder />
-                        <span className={x.cls([
-                            'theme_metadata_and_theme_fieldset_w',
-                            settings.ob.settings.wrap_theme_metadata_and_theme_fieldsets ? 'wrap_theme_metadata_and_theme_fieldsets' : '',
-                        ])}
-                        >
+                        <span className="theme_metadata_and_theme_fieldset_w">
                             <Fieldset name="theme_metadata">
                                 <Input_block name="theme_metadata" />
                             </Fieldset>

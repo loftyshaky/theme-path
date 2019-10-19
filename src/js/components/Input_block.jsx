@@ -25,6 +25,11 @@ export class Input_block extends React.Component {
         this.hr_el = this.hr ? <Hr name={this.name} /> : null;
 
         this.childs = [];
+        this.set_childs = false;
+    }
+
+    componentDidMount() {
+        this.set_childs = true;
     }
 
     //> call count_char method from </Textarea> instance when you change default locale in </Select>
@@ -53,13 +58,12 @@ export class Input_block extends React.Component {
                     {
                         Object.values(inputs_data.obj[this.name]).map(item => {
                             const Component = con.components[item.type];
-
                             return (
                                 <Component
                                     {...item}
                                     count_char={this.count_char}
                                     checkbox_type={item.type === 'checkbox' ? 'options' : null}
-                                    ref={item.name === 'options_btns' ? null : instance => { this.childs.push(this.child = instance); }}
+                                    ref={this.set_childs || item.name === 'options_btns' ? null : instance => { if (instance) this.childs.push(this.child = instance); }}
                                 />
                             );
                         })

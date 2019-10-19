@@ -1449,11 +1449,11 @@ body:not(.using_mouse) .select__control, body:not(.using_mouse) .select__menu {
     border-color: #cb87d4;
 }
 
-.work_folder_fieldset.wrap_theme_metadata_and_theme_fieldsets {
+.wrap_theme_metadata_and_theme_fieldsets .work_folder_fieldset {
     width: calc(100% - 300px);
 }
 
-.theme_metadata_and_theme_fieldset_w.wrap_theme_metadata_and_theme_fieldsets {
+.wrap_theme_metadata_and_theme_fieldsets .theme_metadata_and_theme_fieldset_w {
     width: 100%;;
 }
 /*< Tr mods */

@@ -207,7 +207,6 @@ const inputs = {
 Object.entries(inputs).forEach(([family, elements]) => {
     try {
         inputs[family] = elements.reduce((obj, item) => {
-
             obj[item.name] = item; // eslint-disable-line no-param-reassign
             obj[item.name].family = family; // eslint-disable-line no-param-reassign
             obj[item.name].key = x.unique_id(); // eslint-disable-line no-param-reassign
