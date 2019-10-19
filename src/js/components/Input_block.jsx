@@ -52,7 +52,7 @@ export class Input_block extends React.Component {
                 <div className={this.name === 'colors' || this.name === 'tints' ? 'colors_and_tints_input_block' : null}>
                     {
                         Object.values(inputs_data.obj[this.name]).map(item => {
-                            const Component = sta.components[item.type];
+                            const Component = con.components[item.type];
 
                             return (
                                 <Component
@@ -70,7 +70,7 @@ export class Input_block extends React.Component {
     }
 }
 
-const sta = {
+const con = {
     components: {
         textarea: Textarea,
         select: Select,

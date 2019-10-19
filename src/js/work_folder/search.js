@@ -8,7 +8,7 @@ configure({ enforceActions: 'observed' });
 
 export const search = action(() => {
     try {
-        const query = sta.search_input[0] ? sta.search_input[0].value : '';
+        const query = con.search_input[0] ? con.search_input[0].value : '';
 
         if (query !== '') {
             mut.filtered_folders = folders.ob.folders.filter(folder => folder.nest_level !== 0 || folder.name.toLowerCase().indexOf(query) > -1);
@@ -38,13 +38,13 @@ export const trigger_work_folder_reload = x.debounce(action(() => {
 }), 200);
 
 export const remove_search_val = () => {
-    sta.search_input[0].value = '';
+    con.search_input[0].value = '';
 };
 
 export const mut = {
     filtered_folders: null,
 };
 
-const sta = {
+const con = {
     search_input: document.getElementsByClassName('search_input'),
 };

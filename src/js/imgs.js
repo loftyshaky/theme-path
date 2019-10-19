@@ -23,8 +23,8 @@ const store = new Store();
 
 export const create_solid_color_image = (family, name, hex, alpha, history_obj) => {
     try {
-        const width = sta.width[name] ? sta.width[name] : 1;
-        const height = sta.height[name] ? sta.height[name] : 1;
+        const width = con.width[name] ? con.width[name] : 1;
+        const height = con.height[name] ? con.height[name] : 1;
 
         new Jimp(width, height, hex, (er, img) => { // eslint-disable-line no-new
             if (er) {
@@ -245,7 +245,7 @@ export const remove_img_by_name = (name, target_folder_path) => {
     }
 };
 
-const sta = {
+const con = {
     width: {
         icon: 128,
         theme_ntp_background: 1,

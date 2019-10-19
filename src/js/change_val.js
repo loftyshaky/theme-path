@@ -174,7 +174,7 @@ const set_name_or_description = (name, new_val, forced_locale, mainfest_obj, tar
 
         } else {
             json_file.create_json_file(messages_path, '{}');
-            write_to_json(mainfest_obj_final, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'), name, sta.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
+            write_to_json(mainfest_obj_final, join(chosen_folder_path.ob.chosen_folder_path, 'manifest.json'), name, con.msg_dict[name], 'theme_metadata'); // set message link (__MSG_name__ or __MSG_description__)
 
             const messages = json_file.parse_json(messages_path);
 
@@ -431,7 +431,7 @@ const get_messages_path = (locale, target_folder_path) => {
     return undefined;
 };
 
-const sta = {
+const con = {
     msg_dict: {
         name: '__MSG_name__',
         description: '__MSG_description__',

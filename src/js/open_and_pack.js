@@ -25,7 +25,7 @@ const store = new Store();
 
 export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
     try {
-        if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === enter_click.sta.enter_key_code && (!e.ctrlKey || !e.shiftKey))) {
+        if ((e.type === 'mouseup' && (e.button === 0 || e.button === 2)) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code && (!e.ctrlKey || !e.shiftKey))) {
             const left_button_clicked = e.button === 0 || (e.type === 'keyup' && !e.ctrlKey && !e.shiftKey);
             const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
             const chrome_exe_path_final = chrome_exe_path || getChrome(platform());
@@ -85,7 +85,7 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
                 });
             });
 
-        } else if (e.button === 1 || (e.keyCode === enter_click.sta.enter_key_code && e.ctrlKey && e.shiftKey)) {
+        } else if (e.button === 1 || (e.keyCode === enter_click.con.enter_key_code && e.ctrlKey && e.shiftKey)) {
             e.type = 'mouseup';
             e.button = 0;
 
