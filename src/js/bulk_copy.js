@@ -16,7 +16,7 @@ import * as history from 'js/history';
 import * as imgs from 'js/imgs';
 import * as change_val from 'js/change_val';
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
-import * as set_defaults from 'js/set_defaults';
+import * as settings from 'js/settings';
 import * as msg from 'js/msg';
 import * as conds from 'js/conds';
 import * as confirm from 'js/confirm';
@@ -28,7 +28,7 @@ import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 configure({ enforceActions: 'observed' });
 const store = new Store();
 
-set_defaults.set_default_bulk_copy_checkboxes_obj(inputs_data);
+settings.set_default_bulk_copy_checkboxes_obj(inputs_data);
 
 export const toggle_checkbox = action((family, name) => {
     try {

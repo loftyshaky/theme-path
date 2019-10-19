@@ -1,7 +1,10 @@
+import { configure, observable, action } from 'mobx';
 import Store from 'electron-store';
 import * as r from 'ramda';
 
+configure({ enforceActions: 'observed' });
 const store = new Store();
+
 
 export const set_defaults = () => {
     try {
@@ -92,6 +95,19 @@ export const set_default_bulk_copy_checkboxes_obj = inputs_data => {
     }
 };
 
+export const set_settings_observable = action(() => {
+    try {
+        ob.settings = store.get();
+
+    } catch (er) {
+        err(er, 311);
+    }
+});
+
+export const ob = observable({
+    settings: {},
+});
+
 const con = {
     default_settings: {
         work_folder: '',
@@ -106,6 +122,7 @@ const con = {
         tutorial_stage: 1,
         show_help: true,
         highlight_odd_elements: true,
+        wrap_theme_metadata_and_theme_fieldsets: false,
         color_picker_default_mode: 'HSVA',
         answered_to_analytics_privacy_question: false,
         enable_analytics: false,
