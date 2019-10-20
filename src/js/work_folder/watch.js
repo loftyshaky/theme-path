@@ -54,42 +54,39 @@ watcher
                     const parent_folder_is_root = parent_folder_path === choose_folder.ob.work_folder;
                     const parent_folder_i = folders.ob.folders.findIndex(folder => folder.path === parent_folder_path);
                     const start_i = parent_folder_is_root ? 0 : parent_folder_i + 1;
+                    const nest_level = parent_folder_is_root || !folders.ob.folders[parent_folder_i] ? 0 : folders.ob.folders[parent_folder_i].nest_level + 1;
+                    const parent_folder_info = folders.get_info_about_folder(parent_folder_path);
+                    const folder_info = folders.get_info_about_folder(folder_path);
+                    const parent_folder_is_opened = folders.mut.opened_folders.indexOf(parent_folder_path) > -1;
+                    const work_folder_is_empty = folders.mut.opened_folders.length === 0;
 
-                    if (folders.ob.folders[parent_folder_i]) {
-                        const nest_level = parent_folder_is_root ? 0 : folders.ob.folders[parent_folder_i].nest_level + 1;
-                        const parent_folder_info = folders.get_info_about_folder(parent_folder_path);
-                        const folder_info = folders.get_info_about_folder(folder_path);
-                        const parent_folder_is_opened = folders.mut.opened_folders.indexOf(parent_folder_path) > -1;
-                        const work_folder_is_empty = folders.mut.opened_folders.length === 0;
-
+                    if (parent_folder_is_opened) {
                         if (!parent_folder_is_root) {
                             folders.ob.folders[parent_folder_i].is_theme = parent_folder_info.is_theme;
                             folders.ob.folders[parent_folder_i].is_empty = parent_folder_info.is_empty;
                         }
 
-                        if (parent_folder_is_opened) {
-                            const new_folder = {
-                                key: x.unique_id(),
-                                name: basename(folder_path),
-                                path: folder_path,
-                                children: folder_info.children,
-                                nest_level,
-                                is_theme: folder_info.is_theme,
-                                is_empty: folder_info.is_empty,
-                            };
+                        const new_folder = {
+                            key: x.unique_id(),
+                            name: basename(folder_path),
+                            path: folder_path,
+                            children: folder_info.children,
+                            nest_level,
+                            is_theme: folder_info.is_theme,
+                            is_empty: folder_info.is_empty,
+                        };
 
-                            const folders_with_new_folder = r.insert(0, new_folder, folders.ob.folders);
+                        const folders_with_new_folder = r.insert(0, new_folder, folders.ob.folders);
 
-                            folders.set_folders(sort_folders.sort_folders(folders_with_new_folder, folder_path, start_i, nest_level));
+                        folders.set_folders(sort_folders.sort_folders(folders_with_new_folder, folder_path, start_i, nest_level));
 
-                            new_theme_or_rename.put_new_folder_first(parent_folder_path);
-                        }
+                        new_theme_or_rename.put_new_folder_first(parent_folder_path);
+                    }
 
-                        folders.rerender_work_folder();
+                    folders.rerender_work_folder();
 
-                        if (work_folder_is_empty) {
-                            expand_or_collapse.expand_or_collapse_folder('top_level', choose_folder.ob.work_folder, 0);
-                        }
+                    if (work_folder_is_empty) {
+                        expand_or_collapse.expand_or_collapse_folder('top_level', choose_folder.ob.work_folder, 0);
                     }
                 }
             }
