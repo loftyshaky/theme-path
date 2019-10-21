@@ -399,7 +399,6 @@ export const bulk_copy = theme_paths => {
                                             set_default_or_disabled.set_default_icon(family, name, false, target_path, target_manifest_obj);
                                         }
                                     }
-
                                 }
                             }));
                         }
