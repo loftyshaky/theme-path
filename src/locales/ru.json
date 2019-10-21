@@ -92,6 +92,7 @@
   "locales_whitelist_label_text": "Языки показываемые в языковых выпадающих меню",
   "show_help_label_text": "Показывать кнопки \"Помощь\"",
   "highlight_odd_elements_label_text": "Выделить нечётные элементы цветов и оттенков цветом",
+  "set_color_picker_to_default_mode_when_opening_it_label_text": "Всегда устанавливать цветоподборщик в начальный режим при его открытии",
   "wrap_theme_metadata_and_theme_fieldsets_label_text": "Размещать блоки \"Метаданные темы\" и \"Тема\" ниже блока \"Рабочая папка\"",
   "color_picker_default_mode_label_text": "Начальный режим цветоподборщика",
   "enable_analytics_label_text": "Разрешить Chrome Theme Creator отправлять анонимную статистику использования",

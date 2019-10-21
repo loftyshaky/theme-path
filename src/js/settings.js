@@ -124,6 +124,7 @@ const con = {
         highlight_odd_elements: true,
         wrap_theme_metadata_and_theme_fieldsets: false,
         color_picker_default_mode: 'HSVA',
+        set_color_picker_to_default_mode_when_opening_it: false,
         answered_to_analytics_privacy_question: false,
         enable_analytics: false,
         bulk_copy_checkboxes: {},

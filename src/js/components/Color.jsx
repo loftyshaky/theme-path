@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Pickr from '@simonwep/pickr';
 import tinycolor from 'tinycolor2';
-import Store from 'electron-store';
 
 import x from 'x';
 import * as analytics from 'js/analytics';
@@ -11,13 +10,12 @@ import * as els_state from 'js/els_state';
 import * as color_pickiers from 'js/color_pickiers';
 import * as enter_click from 'js/enter_click';
 import * as options from 'js/options';
+import * as settings from 'js/settings';
 
 import { Checkbox } from 'components/Checkbox';
 import { Help_btn } from 'components/Help_btn';
 
 import '@simonwep/pickr/dist/themes/nano.min.css';
-
-const store = new Store();
 
 export class Color extends React.Component {
     constructor(props) {
@@ -132,12 +130,16 @@ class Color_input_vizualization extends React.Component {
         });
 
         this.pickr.on('init', async () => {
-            this.pickr.setColorRepresentation(store.get('color_picker_default_mode'));
+            this.set_default_color_representation();
 
         }).on('show', async () => {
             const hsva = tinycolor(inputs_data.obj[this.family][this.name].color || inputs_data.obj[this.family][this.name].val).toHsv();
 
             this.pickr.setHSVA(hsva.h, hsva.s * 100, hsva.v * 100, hsva.a, true);
+
+            if (settings.ob.settings.set_color_picker_to_default_mode_when_opening_it) {
+                this.set_default_color_representation();
+            }
 
             color_pickiers.focus_input_and_select_all_text_in_it(this.color_pickier_w.current);
 
@@ -166,6 +168,10 @@ class Color_input_vizualization extends React.Component {
             color_pickiers.mut.accepted_by_enter_key = false;
         }
     }
+
+    set_default_color_representation = () => {
+        this.pickr.setColorRepresentation(settings.ob.settings.color_picker_default_mode);
+    };
 
     render() {
         // eslint-disable-next-line no-unused-expressions
