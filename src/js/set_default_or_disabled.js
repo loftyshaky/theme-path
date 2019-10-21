@@ -165,7 +165,9 @@ const set_default = (family, name, target_path, manifest_obj) => {
             imgs.remove_img_by_name(name, target_path);
         }
 
-        json_file.write_to_manifest_json(target_path, new_manifest_obj);
+        if (name !== 'clear_new_tab_video') {
+            json_file.write_to_manifest_json(target_path, new_manifest_obj);
+        }
 
         if (inputs_data.obj[family][name].type === 'select') {
             change_val.set_inputs_data_val(family, name, 'default');
