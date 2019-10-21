@@ -261,7 +261,7 @@ export const defocus_color_field = () => {
 
 export const convert_pickr_rgba_obj_into_arr = pickr_color_obj => {
     try {
-        const rgba_obj = tinycolor.fromRatio({ h: pickr_color_obj.h, s: pickr_color_obj.s, v: pickr_color_obj.v, a: pickr_color_obj.a });
+        const rgba_obj = tinycolor(pickr_color_obj.toHSVA().toString());
 
         // eslint-disable-next-line no-underscore-dangle
         mut.current_pickied_color = [rgba_obj._r, rgba_obj._g, rgba_obj._b, rgba_obj._a];
