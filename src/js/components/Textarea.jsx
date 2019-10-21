@@ -154,8 +154,9 @@ export class Textarea extends React.Component {
 
             if (this.name === 'name') {
                 new_theme_or_rename.rename_theme_folder();
-                els_state.set_applying_textarea_val_val(false);
             }
+
+            els_state.set_applying_textarea_val_val(false);
 
         } catch (er) {
             err(er, 162);
