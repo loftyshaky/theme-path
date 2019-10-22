@@ -6,6 +6,7 @@ import Store from 'electron-store';
 import * as tutorial from 'js/tutorial';
 import * as processing_msg from 'js/processing_msg';
 import * as analytics from 'js/analytics';
+import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as folders from 'js/work_folder/folders';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as watch from 'js/work_folder/watch';
@@ -29,6 +30,7 @@ export const choose_folder = callback => {
                 change_work_folder(folder_path[0]);
 
                 folders.deselect_theme();
+                chosen_folder_path.deselect_all_bulk_folders();
 
                 callback();
 
