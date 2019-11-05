@@ -11,6 +11,7 @@ import zipLocal from 'zip-local';
 import Store from 'electron-store';
 import getChrome from 'get-chrome';
 
+import x from 'x';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
 import * as analytics from 'js/analytics';
@@ -176,7 +177,7 @@ const pack_inner = (type, theme_paths_to_pack) => {
                 const package_name = theme_path.substring(theme_path.lastIndexOf(sep) + 1);
                 const pak_path = join(theme_path, 'Cached Theme.pak');
                 const system_path = join(theme_path, 'system');
-                const work_folder_system_path = join(choose_folder.ob.work_folder, 'system');
+                const work_folder_system_path = join(choose_folder.ob.work_folder, x.unique_id());
 
                 move_system_folder(system_path, work_folder_system_path);
 
