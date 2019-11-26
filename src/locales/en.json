@@ -284,7 +284,7 @@
   "tints_frame_incognito_help_text": "Specifies a color tint for the frame area in incognito mode.",
   "tints_frame_incognito_inactive_help_text": "Specifies a color tint for the frame area in incognito mode, but when the window is inactive/out of focus.",
   "tints_background_tab_help_text": "Specifies the color tint of the inactive tabs.",
-  "tints_buttons_help_text": "Specifies a color tint for icons inside all the buttons in the toolbar (back, forward, refresh,etc.).",
+  "tints_buttons_help_text": "Specifies a color tint for icons inside all the buttons in the toolbar (back, forward, refresh, etc.).",
 
   "properties_help_text": "Property elements change how images are displayed.",
   "properties_ntp_background_alignment_help_text": "Controls the alignment of the background image.",
