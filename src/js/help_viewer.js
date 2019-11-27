@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { readFileSync } from 'fs-extra';
+import { existsSync, readFileSync } from 'fs-extra';
 
 import { action, observable, configure } from 'mobx';
 
@@ -17,11 +17,17 @@ export const open_help_viewer = action((family, name) => {
         if (family && no_image_families.indexOf(family) === -1) {
             const data_basename = `${family}_${name}`;
             const img_path = join(app_root, 'resources', 'app', 'bundle', 'help_imgs', `${data_basename}.png`);
-            const img_base_64 = readFileSync(img_path).toString('base64');
 
             ob.help_viewer_name = name;
             ob.help_viewer_message = x.msg(`${data_basename}_help_text`);
-            ob.help_viewer_img = `data:image/png;base64,${img_base_64}`;
+
+            if (existsSync(img_path)) {
+                const img_base_64 = readFileSync(img_path).toString('base64');
+                ob.help_viewer_img = `data:image/png;base64,${img_base_64}`;
+
+            } else {
+                ob.help_viewer_img = '';
+            }
 
         } else if (no_image_families.indexOf(family) > -1) {
             ob.help_viewer_name = '';
