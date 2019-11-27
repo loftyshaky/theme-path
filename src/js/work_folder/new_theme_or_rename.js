@@ -2,6 +2,7 @@ import { join, dirname, basename } from 'path';
 import { existsSync, copySync, renameSync } from 'fs-extra';
 
 import { action, configure } from 'mobx';
+import sanitize_filename from 'sanitize-filename';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -119,7 +120,7 @@ export const create_new_theme_or_rename_theme_folder = action((mode, folder_path
 
 export const rename_theme_folder = (new_folder_name, target_folder_path, renaming_after_bulk_copy_the_name) => {
     const target_folder_path_final = target_folder_path || chosen_folder_path.ob.chosen_folder_path;
-    const new_folder_name_final = new_folder_name || inputs_data.obj.theme_metadata.name.val;
+    const new_folder_name_final = sanitize_filename(new_folder_name || inputs_data.obj.theme_metadata.name.val, { replacement: ' ' });
     const locale = inputs_data.obj.theme_metadata.locale.val;
     const default_locale = inputs_data.obj.theme_metadata.default_locale.val;
 
