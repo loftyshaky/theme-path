@@ -49,6 +49,7 @@
   "theme_tab_background_inactive_label_text": "Inactive tabs (inactive)",
   "theme_tab_background_incognito_label_text": "Inactive tabs (incognito)",
   "theme_tab_background_incognito_inactive_label_text": "Inactive tabs (incognito, inactive)",
+  "theme_tab_background_v_label_text": "Inactive tabs (Aero)",
   "theme_window_control_background_label_text": "Window controls",
   "theme_ntp_attribution_label_text": "Attribution",
   
@@ -70,8 +71,11 @@
   "tab_background_text_incognito_label_text": "Inactive tabs text (incognito)",
   "tab_background_text_incognito_inactive_label_text": "Inactive tabs text (incognito, inactive)",
   "omnibox_text_label_text": "Address bar text",
+  "toolbar_button_icon_label_text": "Buttons",
   "button_background_label_text": "Window controls",
   "ntp_text_label_text": "Shortcuts background",
+  "ntp_link_label_text": "Links in \"Apps\" page",
+  "ntp_header_label_text": "Border in \"Apps\" page",
 
   "buttons_label_text": "Buttons",
 
@@ -253,6 +257,7 @@
   "images_theme_tab_background_inactive_help_text": "Recommended width x height: ∞ x 60.\nSupported formats: .png\nThis image represents all the inactive tabs, when the chrome window is out of focus/inactive.",
   "images_theme_tab_background_incognito_help_text": "Recommended width x height: ∞ x 60.\nSupported formats: .png\nThis image represents the inactive tabs in the incognito mode.",
   "images_theme_tab_background_incognito_inactive_help_text": "Recommended width x height: ∞ x 60.\nSupported formats: .png\nThis image represents all the inactive tabs, but this image is for the inactive frame of a window in incognito mode.",
+  "images_theme_tab_background_v_help_text": "Recommended width x height: ∞ x 60.\nSupported formats: .png\nThis is an image that serves to function as an alternative inactive tabs background when Chrome is used in Aero mode. v may stand for \"vista\", etc.",
   "images_theme_window_control_background_help_text": "Recommended width x height: ∞ x 60.\nSupported formats: .png\nThis image specifies the background for the window control buttons (minimize, maximize, close). This image is not necessary until you desperately need to change the control button background. If this image is not included, the control buttons assume the background color specified in the color element \"Window controls\".",
   "images_theme_ntp_attribution_help_text": "Recommended width x height: Any but not too large.\nSupported formats: .png\nAn image that is displayed at the bottom right corner of the new tab page. Chrome automatically puts a heading \"Theme created by:\" and below that displays whatever image you give as attribution. A good practice is to create a small .png file enough for an author name (and contact if needed) with alpha transparency background. Making large and more color intense image will attract view. If \"Background image\" is not set this element will not be displayed.",
 
@@ -275,8 +280,11 @@
   "colors_tab_background_text_incognito_help_text": "This is a color element similar to \"Inactive tabs text\", but under the incognito mode.",
   "colors_tab_background_text_incognito_inactive_help_text": "This is a color element similar to \"Inactive tabs text (inactive)\", but under the incognito mode.",
   "colors_omnibox_text_help_text": "Specifies the text color of the address bar.",
+  "colors_toolbar_button_icon_help_text": "Specifies the color of icons inside all buttons in the toolbar (back, forward, refresh, etc.).",
   "colors_button_background_help_text": "Specifies the background color of the window control buttons (minimize, maximize, close).",
   "colors_ntp_text_help_text": "Specifies the color of the background area of shortcuts on hover. Can be only white or black. This element also determines color of top right items (Gmail, Images etc.).",
+  "colors_ntp_link_help_text": "Specifies the color of links in the \"Apps\" page.",
+  "colors_ntp_header_help_text": "Specifies the color of the footer's border in the \"Apps\" page.",
 
   "tints_help_text": "Tint elements change the hue, saturation and lightness of images. To disable specefic tint element click \"Disabled\" checkbox.",
   "tints_frame_help_text": "Specifies a color tint for the frame area. Whatever image you've created for the frame area will be tinted with a color that you specify here.",
