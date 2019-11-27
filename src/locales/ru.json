@@ -71,13 +71,13 @@
   "tab_background_text_incognito_label_text": "Текст неактивных вкладок (инкогнито)",
   "tab_background_text_incognito_inactive_label_text": "Текст неак. вкладок (инког., неак. окно)",
   "omnibox_text_label_text": "Текст адресной строки",
-  "toolbar_button_icon_label_text": "Кнопки",
+  "toolbar_button_icon_label_text": "Кнопки панели инструментов",
   "button_background_label_text": "Кнопки управления окном",
   "ntp_text_label_text": "Текст ярлыков",
   "ntp_link_label_text": "Ссылки на странице \"Приложения\"",
   "ntp_header_label_text": "Граница на странице \"Приложения\"",
 
-  "buttons_label_text": "Кнопки",
+  "buttons_label_text": "Кнопки панели инструм.",
 
   "ntp_background_alignment_label_text": "Позиция фонового изображения",
   "ntp_background_repeat_label_text": "Повторение фонового изображения",

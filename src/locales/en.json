@@ -71,13 +71,13 @@
   "tab_background_text_incognito_label_text": "Inactive tabs text (incognito)",
   "tab_background_text_incognito_inactive_label_text": "Inactive tabs text (incognito, inactive)",
   "omnibox_text_label_text": "Address bar text",
-  "toolbar_button_icon_label_text": "Buttons",
+  "toolbar_button_icon_label_text": "Toolbar buttons",
   "button_background_label_text": "Window controls",
   "ntp_text_label_text": "Shortcuts text",
   "ntp_link_label_text": "Links in \"Apps\" page",
   "ntp_header_label_text": "Border in \"Apps\" page",
 
-  "buttons_label_text": "Buttons",
+  "buttons_label_text": "Toolbar buttons",
 
   "ntp_background_alignment_label_text": "Background image position",
   "ntp_background_repeat_label_text": "Background image repeat",
