@@ -234,7 +234,6 @@ export const find_file_name_by_element_name = (name, target_folder_path) => {
     return undefined;
 };
 
-
 export const get_folder_i = folder_path => ob.folders.findIndex(cur_folder => cur_folder.path === folder_path);
 
 export const ob = observable({
