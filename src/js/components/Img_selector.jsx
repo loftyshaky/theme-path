@@ -106,7 +106,6 @@ export class Img_selector extends React.Component {
                             />
                         </span>
                     </Tr>
-
                     <Color
                         {...this.props}
                         color_input_type="img"
