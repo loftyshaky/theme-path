@@ -66,11 +66,12 @@ export const create_solid_color_image = (family, name, hex, alpha, history_obj) 
 //> image upload
 export const handle_files = async (mode, file, family, name) => {
     try {
+        const uploading_img = mode === 'browse_upload' || mode === 'dnd_upload';
+        let reuploaded_img = false;
         let img_extension;
         let uploaded_file_is_valid;
-        let reuploaded_img;
 
-        if (mode === 'upload') {
+        if (uploading_img) {
             const valid_file_types = r.cond([
                 [r.equals('theme_ntp_background'), () => ['image/png', 'image/jpeg', 'image/gif']],
                 [r.equals('icon'), () => ['image/png', 'image/jpeg']],
@@ -78,20 +79,28 @@ export const handle_files = async (mode, file, family, name) => {
                 [r.T, () => ['image/png']],
             ])(name);
 
-            uploaded_file_is_valid = valid_file_types.indexOf(file[0].type) > -1;
+            let file_path;
+
+            if (mode === 'dnd_upload') {
+                file_path = file[0].path;
+                uploaded_file_is_valid = valid_file_types.indexOf(file[0].type) > -1;
+
+            } else if (mode === 'browse_upload') {
+                file_path = file;
+                uploaded_file_is_valid = true;
+            }
 
             if (uploaded_file_is_valid) {
                 const history_obj = record_img_change(family, name);
+                img_extension = extname(file_path); // .png
 
                 remove_img_by_name(name);
 
-                img_extension = extname(file[0].path); // .png
+                copy_img(name, img_extension, file_path);
 
-                copy_img(name, img_extension, file[0].path);
+                history.copy_to_history_folder(family, name, history_obj ? history_obj.to_img_id : null, file_path);
 
-                history.copy_to_history_folder(family, name, history_obj ? history_obj.to_img_id : null, file[0].path);
-
-                reupload_img.record_img_path(file[0].path, family, name);
+                reupload_img.record_img_path(file_path, family, name);
 
             } else {
                 err(er_obj('Invalid file type'), 2, 'invalid_file_type');
@@ -135,7 +144,7 @@ export const handle_files = async (mode, file, family, name) => {
             });
         }
 
-        if ((mode === 'upload' && uploaded_file_is_valid) || reuploaded_img) {
+        if ((uploading_img && uploaded_file_is_valid) || reuploaded_img) {
             change_val.change_val(family, name, name, img_extension, true, true);
 
             picked_colors.remove_picked_color(family, name);
@@ -284,8 +293,24 @@ export const set_dims = action((family, name, dims) => {
     }
 });
 
+export const select_allowed_extension = action(name => {
+    try {
+        return con.ext[name] ? con.ext[name] : con.ext.common;
+
+    } catch (er) {
+        err(er, 314);
+    }
+
+    return undefined;
+});
 
 const con = {
+    ext: {
+        theme_ntp_background: ['png', 'jpg', 'jpeg', 'gif'],
+        icon: ['png', 'jpg', 'jpeg'],
+        clear_new_tab_video: ['mp4', 'webm', 'ogv', 'gif'],
+        common: ['png'],
+    },
     width: {
         icon: 128,
         theme_ntp_background: 1,
