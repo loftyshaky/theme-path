@@ -5,6 +5,7 @@ import { observable, action, configure } from 'mobx';
 import * as r from 'ramda';
 import Store from 'electron-store';
 import Jimp from 'jimp';
+import imageSize from 'image-size';
 
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as change_val from 'js/change_val';
@@ -48,6 +49,8 @@ export const create_solid_color_image = (family, name, hex, alpha, history_obj) 
                     if (history_obj) {
                         history.copy_to_history_folder(family, name, history_obj.to_img_id, join(chosen_folder_path.ob.chosen_folder_path, `${name}.png`));
                     }
+
+                    get_dims(family, name);
 
                 } catch (er3) {
                     err(er3, 1);
@@ -141,6 +144,8 @@ export const handle_files = async (mode, file, family, name) => {
 
             change_val.set_inputs_data_color(family, name, color_input_default);
         }
+
+        get_dims(family, name);
 
     } catch (er) {
         err(er, 14);
@@ -244,6 +249,41 @@ export const remove_img_by_name = (name, target_folder_path) => {
         err(er, 231);
     }
 };
+
+export const get_dims = (family, name) => {
+    try {
+        if (conds.imgs_2(family, name)) {
+            let dims = {
+                width: null,
+                height: null,
+            };
+            let img_path;
+            const img_name = folders.find_file_name_by_element_name(name);
+
+            if (img_name) {
+                img_path = join(chosen_folder_path.ob.chosen_folder_path, img_name);
+            }
+
+            if (img_path && existsSync(img_path)) {
+                dims = imageSize(img_path);
+            }
+
+            set_dims(family, name, dims);
+        }
+
+    } catch (er) {
+        err(er, 312);
+    }
+};
+
+export const set_dims = action((family, name, dims) => {
+    try {
+        inputs_data.obj[family][name].img_dims = dims;
+    } catch (er) {
+        err(er, 313);
+    }
+});
+
 
 const con = {
     width: {

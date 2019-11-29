@@ -24,6 +24,7 @@ import * as confirm from 'js/confirm';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as folders from 'js/work_folder/folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as imgs from 'js/imgs';
 
 const readdir_p = promisify(readdir);
 const stat_p = promisify(stat);
@@ -218,6 +219,8 @@ export const accept_history_change = () => {
                             picked_colors.remove_picked_color(change.family, change.name);
                         }
                     }
+
+                    imgs.get_dims(change.family, change.name);
                 }
 
                 change_val.set_previous_val('theme_metadata', 'name', inputs_data.obj.theme_metadata.name.val);

@@ -58,6 +58,7 @@ export const set_default_icon = (family, name, remove_reverted_history, target_p
         //< restore default color_input_vizualization color
 
         picked_colors.remove_picked_color(family, name);
+        imgs.get_dims(family, name);
 
     } catch (er) {
         err(er, 49);
@@ -178,6 +179,8 @@ const set_default = (family, name, target_path, manifest_obj) => {
         } else {
             change_val.set_inputs_data_val(family, name, color_input_default);
         }
+
+        imgs.get_dims(family, name);
 
     } catch (er) {
         err(er, 51);

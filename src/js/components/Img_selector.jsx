@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import * as analytics from 'js/analytics';
 
+import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as imgs from 'js/imgs';
 import * as enter_click from 'js/enter_click';
@@ -69,6 +70,9 @@ export class Img_selector extends React.Component {
     }
 
     render() {
+        const { img_dims } = inputs_data.obj[this.family][this.name];
+        const upload_box_label_text = x.msg('upload_box_label_text');
+
         return (
             <div className="input">
                 <label
@@ -100,10 +104,12 @@ export class Img_selector extends React.Component {
                                 className="upload_box_browse_label"
                                 htmlFor={`${this.name}_file`}
                                 tabIndex={els_state.com2.inputs_disabled_1}
-                                data-text="upload_box_label_text"
                                 onKeyUp={enter_click.simulate_click_on_enter}
                                 onClick={analytics.send_event.bind(null, 'upload_inputs', `browsed_for_image-${this.family}-${this.name}`)}
-                            />
+                            >
+                                <span className="upload_box_browse_label_part choose_img">{upload_box_label_text}</span>
+                                <span className="upload_box_browse_label_part img_dims">{img_dims.width && img_dims.height ? `${img_dims.width}x${img_dims.height}` : upload_box_label_text}</span>
+                            </label>
                         </span>
                     </Tr>
                     <Color

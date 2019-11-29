@@ -257,20 +257,20 @@ a,
 
 a,
 .help_link,
-.upload_box_browse_label {
+.upload_box_browse_label_part {
     color: #fbff75 !important;
 }
 
 a:hover,
 .help_link:hover,
-.upload_box_browse_label:hover,
+.upload_box_browse_label:hover .upload_box_browse_label_part,
 .skip_tutorial_btn:hover {
     color: #77ff6f !important;
 }
 
 a:active,
 .help_link:active,
-.upload_box_browse_label:active {
+.upload_box_browse_label:active .upload_box_browse_label_part {
     color: #f493ff !important;
 }
 
@@ -947,19 +947,29 @@ body.using_mouse .folder_name:focus {
     white-space: nowrap;
 }
 
-.upload_box_what_to_do_message label {
+.upload_box_browse_label_part {
     font-size: 19px;
 }
 
-.upload_box_browse_label {
+.upload_box_browse_label_part {
     cursor: pointer;
     font-weight: bold;
+    text-align: center;
+    opacity: 0;
 }
 
 .upload_box_browse_label:focus,
 .close_btn:focus,
 a:focus {
     outline: 1px solid #fbff75;
+}
+
+.img_dims {
+position: relative;
+    display: block;
+    height: 0px;
+    bottom: 23px;
+    opacity: 1;
 }
 
 .tall_color_input_vizualization {
@@ -1473,7 +1483,7 @@ body.using_mouse .header_btn:focus {
 .checkbox_input,
 a,
 .help_link,
-.upload_box_browse_label,
+.upload_box_browse_label_part,
 .using_mouse .btn,
 .using_mouse textarea,
 .color_input_vizualization,
@@ -1520,7 +1530,7 @@ fieldset,
 
 a,
 .help_link,
-.upload_box_browse_label,
+.upload_box_browse_label_part,
 .legend,
 .skip_tutorial_btn {
     transition-property: color;
@@ -1551,7 +1561,7 @@ fieldset,
 
 a:active,
 .help_link:active,
-.upload_box_browse_label:active,
+.upload_box_browse_label:active .upload_box_browse_label_part,
 .btn:active {
     transition: none;
 }

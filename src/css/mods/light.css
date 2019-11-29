@@ -22,15 +22,15 @@
     background-color: #eb36ff;
 }
 
-a, .help_link, .upload_box_browse_label, .help_viewer_name {
+a, .help_link, .upload_box_browse_label_part, .help_viewer_name {
     color: #3892ff!important;
 }
 
-a:hover, .help_link:hover, .upload_box_browse_label:hover {
+a:hover, .help_link:hover, .upload_box_browse_label:hover .upload_box_browse_label_part {
     color: #0bc700!important;
 }
 
-a:active, .help_link:active, .upload_box_browse_label:active {
+a:active, .help_link:active, .upload_box_browse_label:active .upload_box_browse_label_part{
     color: #eb36ff!important;
 }
 

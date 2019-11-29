@@ -23,6 +23,7 @@ import * as picked_colors from 'js/picked_colors';
 import * as conds from 'js/conds';
 import * as change_val from 'js/change_val';
 import * as reupload_img from 'js/reupload_img';
+import * as imgs from 'js/imgs';
 
 configure({ enforceActions: 'observed' });
 
@@ -84,9 +85,13 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
                                     if (picked_colors_obj && picked_colors_obj[family] && picked_colors_obj[family][name]) {
                                         color_pickiers.set_color_input_vizualization_color(family, name, picked_colors_obj[family][name]);
                                     }
+
+                                    imgs.get_dims(family, name);
                                 });
                             });
                         }
+
+                        imgs.get_dims('theme_metadata', 'icon');
 
                         //> set icon default checkbox state
                         if (manifest.mut.manifest.icons && manifest.mut.manifest.icons['128']) {

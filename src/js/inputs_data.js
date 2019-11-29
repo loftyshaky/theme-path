@@ -94,6 +94,10 @@ const img_selector = (name, bulk_copy_checkbox_checked_by_default) => {
             color: color_input_default,
             color_pickier_is_visible: false,
             color_pickiers_position: 'top',
+            img_dims: {
+                width: null,
+                height: null,
+            },
             default: true,
             changed_color_once_after_focus: false,
             add_help: true,
