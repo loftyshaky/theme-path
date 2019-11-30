@@ -1,12 +1,16 @@
 import { existsSync, readdirSync, statSync } from 'fs-extra';
-import { join } from 'path';
+import { join, sep } from 'path';
 
 import { observable, action, configure } from 'mobx';
+import { remote, shell } from 'electron';
 
 import { reset_inputs_data } from 'js/inputs_data';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as choose_folder from 'js/work_folder/choose_folder';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
+import * as processing_msg from 'js/processing_msg';
+import * as confirm from 'js/confirm';
+import * as analytics from 'js/analytics';
 
 configure({ enforceActions: 'observed' });
 
@@ -235,6 +239,43 @@ export const find_file_name_by_element_name = (name, target_folder_path) => {
 };
 
 export const get_folder_i = folder_path => ob.folders.findIndex(cur_folder => cur_folder.path === folder_path);
+
+export const move_to_trash = () => {
+    try {
+        analytics.move_to_trash_analytics('tried_to_move');
+
+        const dialog_options = confirm.generate_confirm_options('move_to_trash_confirm_msg', 'move_to_trash_confirm_answer_move');
+        const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
+
+        if (choice === 0) {
+            analytics.move_to_trash_analytics('moved');
+
+            processing_msg.process(() => {
+                let top_level_folders_paths = chosen_folder_path.ob.chosen_folder_bulk_paths.slice();
+
+                if (chosen_folder_path.ob.chosen_folder_path !== choose_folder.ob.work_folder) {
+                    shell.moveItemToTrash(chosen_folder_path.ob.chosen_folder_path);
+                }
+
+                for (const bulk_folder of top_level_folders_paths) {
+                    top_level_folders_paths = top_level_folders_paths.filter(path => (path === bulk_folder || path.indexOf(bulk_folder + sep) === -1));
+                }
+
+                for (const top_level_folder_path of top_level_folders_paths) {
+                    shell.moveItemToTrash(top_level_folder_path);
+                }
+
+                chosen_folder_path.deselect_all_bulk_folders();
+            });
+
+        } else {
+            analytics.move_to_trash_analytics('canceled');
+        }
+
+    } catch (er) {
+        err(er, 315);
+    }
+};
 
 export const ob = observable({
     folders: [],

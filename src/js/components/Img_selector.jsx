@@ -48,7 +48,7 @@ export class Img_selector extends React.Component {
     //> browse_handle_files f
     browse_handle_files = () => {
         try {
-            analytics.send_event.bind(null, 'upload_inputs', `browsed_for_image-${this.family}-${this.name}`);
+            analytics.send_event('upload_inputs', `browsed_for_image-${this.family}-${this.name}`);
 
             const file_path = dialog.showOpenDialog({
                 properties: ['openFile'],

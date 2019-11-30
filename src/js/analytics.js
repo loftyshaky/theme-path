@@ -103,6 +103,10 @@ export const add_pack_analytics = (type, action) => {
     send_event('pack', `${type}-${action}`);
 };
 
+export const move_to_trash_analytics = action => {
+    send_event('move_to_trash', action);
+};
+
 export const track_app_start = () => {
     send_pageview('main');
     send_event('app_version', app_version);

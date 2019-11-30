@@ -36,6 +36,7 @@ import history_svg from 'svg/history';
 import layers_clear_svg from 'svg/layers_clear';
 import upload_svg from 'svg/upload';
 import queue_svg from 'svg/queue';
+import delete_svg from 'svg/delete';
 
 export class Header extends React.Component {
     constructor(props) {
@@ -188,6 +189,11 @@ export class Header extends React.Component {
                         title={`${x.msg('reupload_img_btn_title')}${reupload_img.ob.previous_img_path ? ` - ${reupload_img.ob.previous_img_path}` : ''}`}
                         svg={upload_svg}
                         f={() => imgs.handle_files('reupload')}
+                    />
+                    <Btn
+                        name="move_to_trash"
+                        svg={delete_svg}
+                        f={() => folders.move_to_trash()}
                     />
                     <div className="btn_w">
                         <Btn

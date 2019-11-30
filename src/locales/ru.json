@@ -144,6 +144,7 @@
   "new_theme_btn_label_text": "Новая тема",
   "create_custom_folder_btn_title": "Создать пользовательскую папку",
   "reupload_img_btn_title": "Перезагрузить последнее загруженное изображение",
+  "move_to_trash_btn_title": "Переместить в Корзину",
   "pack_as_zip_btn_title": "Упаковать (ZIP)",
   "pack_as_crx_btn_title": "Упаковать (CRX)",
   "deselect_all_bulk_folders_btn_title": "Снять выбор со всех папок, выбранных для массового копирования",
@@ -393,6 +394,8 @@
   "bulk_copy_confirm_answer_copy": "Копировать",
   "pack_confirm_msg": "Вы уверены, что хотите упаковать все выбранные темы?",
   "pack_confirm_answer_pack": "Упаковать",
+  "move_to_trash_confirm_msg": "Вы уверены, что хотите переместить все выбранные темы/папки в Корзину?",
+  "move_to_trash_confirm_answer_move": "Переместить",
   "delete_all_history_msg": "Вы уверены, что хотите удалить всю историю изменений из всех тем?",
   "delete_all_history_answer_delete": "Удалить"
 }
