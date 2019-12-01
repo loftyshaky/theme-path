@@ -254,7 +254,7 @@ export const move_to_trash = () => {
                 let top_level_folders_paths = chosen_folder_path.ob.chosen_folder_bulk_paths.slice();
 
                 if (chosen_folder_path.ob.chosen_folder_path !== choose_folder.ob.work_folder) {
-                    shell.moveItemToTrash(chosen_folder_path.ob.chosen_folder_path);
+                    move_to_trash_inner(chosen_folder_path.ob.chosen_folder_path);
                 }
 
                 for (const bulk_folder of top_level_folders_paths) {
@@ -262,7 +262,7 @@ export const move_to_trash = () => {
                 }
 
                 for (const top_level_folder_path of top_level_folders_paths) {
-                    shell.moveItemToTrash(top_level_folder_path);
+                    move_to_trash_inner(top_level_folder_path);
                 }
 
                 chosen_folder_path.deselect_all_bulk_folders();
@@ -274,6 +274,19 @@ export const move_to_trash = () => {
 
     } catch (er) {
         err(er, 315);
+    }
+};
+
+const move_to_trash_inner = folder_path => {
+    try {
+        shell.moveItemToTrash(folder_path);
+
+        if (existsSync(folder_path)) {
+            err(er_obj('Cant delete folder'), 317, 'folder_is_locked');
+        }
+
+    } catch (er) {
+        err(er, 316);
     }
 };
 
