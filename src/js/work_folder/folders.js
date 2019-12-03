@@ -59,6 +59,22 @@ export const check_if_multiple_themes_is_selected = (return_result, callback) =>
     return undefined;
 };
 
+export const check_if_at_least_one_folder_is_selected = callback => {
+    try {
+        if (choose_folder.reset_work_folder(false)) {
+            if (chosen_folder_path.ob.chosen_folder_path !== choose_folder.ob.work_folder || chosen_folder_path.ob.chosen_folder_bulk_paths.length > 0) {
+                callback();
+
+            } else {
+                err(er_obj('No folder is selected'), 318, 'no_folder_is_selected');
+            }
+        }
+
+    } catch (er) {
+        err(er, 284);
+    }
+};
+
 export const check_if_at_least_one_theme_is_selected = callback => {
     try {
         if (choose_folder.reset_work_folder(false)) {
@@ -76,7 +92,6 @@ export const check_if_at_least_one_theme_is_selected = callback => {
         err(er, 284);
     }
 };
-
 
 export const check_if_folder_is_theme = folder_path => {
     try {
@@ -241,40 +256,42 @@ export const find_file_name_by_element_name = (name, target_folder_path) => {
 export const get_folder_i = folder_path => ob.folders.findIndex(cur_folder => cur_folder.path === folder_path);
 
 export const move_to_trash = () => {
-    try {
-        analytics.move_to_trash_analytics('tried_to_move');
+    check_if_at_least_one_folder_is_selected(() => {
+        try {
+            analytics.move_to_trash_analytics('tried_to_move');
 
-        const dialog_options = confirm.generate_confirm_options('move_to_trash_confirm_msg', 'move_to_trash_confirm_answer_move');
-        const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
+            const dialog_options = confirm.generate_confirm_options('move_to_trash_confirm_msg', 'move_to_trash_confirm_answer_move');
+            const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
 
-        if (choice === 0) {
-            analytics.move_to_trash_analytics('moved');
+            if (choice === 0) {
+                analytics.move_to_trash_analytics('moved');
 
-            processing_msg.process(() => {
-                let top_level_folders_paths = chosen_folder_path.ob.chosen_folder_bulk_paths.slice();
+                processing_msg.process(() => {
+                    let top_level_folders_paths = chosen_folder_path.ob.chosen_folder_bulk_paths.slice();
 
-                if (chosen_folder_path.ob.chosen_folder_path !== choose_folder.ob.work_folder) {
-                    move_to_trash_inner(chosen_folder_path.ob.chosen_folder_path);
-                }
+                    if (chosen_folder_path.ob.chosen_folder_path !== choose_folder.ob.work_folder) {
+                        move_to_trash_inner(chosen_folder_path.ob.chosen_folder_path);
+                    }
 
-                for (const bulk_folder of top_level_folders_paths) {
-                    top_level_folders_paths = top_level_folders_paths.filter(path => (path === bulk_folder || path.indexOf(bulk_folder + sep) === -1));
-                }
+                    for (const bulk_folder of top_level_folders_paths) {
+                        top_level_folders_paths = top_level_folders_paths.filter(path => (path === bulk_folder || path.indexOf(bulk_folder + sep) === -1));
+                    }
 
-                for (const top_level_folder_path of top_level_folders_paths) {
-                    move_to_trash_inner(top_level_folder_path);
-                }
+                    for (const top_level_folder_path of top_level_folders_paths) {
+                        move_to_trash_inner(top_level_folder_path);
+                    }
 
-                chosen_folder_path.deselect_all_bulk_folders();
-            });
+                    chosen_folder_path.deselect_all_bulk_folders();
+                });
 
-        } else {
-            analytics.move_to_trash_analytics('canceled');
+            } else {
+                analytics.move_to_trash_analytics('canceled');
+            }
+
+        } catch (er) {
+            err(er, 315);
         }
-
-    } catch (er) {
-        err(er, 315);
-    }
+    });
 };
 
 const move_to_trash_inner = folder_path => {
