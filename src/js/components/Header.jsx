@@ -194,6 +194,7 @@ export class Header extends React.Component {
                     />
                     <Btn
                         name="move_to_trash"
+                        btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         svg={delete_svg}
                         f={() => folders.move_to_trash()}
                     />
