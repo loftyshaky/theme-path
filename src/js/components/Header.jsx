@@ -128,6 +128,7 @@ export class Header extends React.Component {
                                     btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                                     title={`${x.msg('open_in_chrome_btn_title')} - ${folder_path}`}
                                     attach_action_to_on_key_up_too
+                                    add_auxclick_e
                                     no={i + 1}
                                     f={e => open_and_pack.open_in_chrome(exe, folder_path, e)}
                                 />
@@ -139,6 +140,7 @@ export class Header extends React.Component {
                             name="open_in_chrome"
                             btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                             attach_action_to_on_key_up_too
+                            add_auxclick_e
                             svg={open_in_browser_svg}
                             f={e => open_and_pack.open_in_chrome(null, null, e)}
                         />
@@ -239,7 +241,7 @@ export class Header extends React.Component {
 
 
 const Btn = props => {
-    const { name, btn_is_inactive_class, label_text, title, no, svg, custom_action, attach_action_to_on_key_up_too, f } = props;
+    const { name, btn_is_inactive_class, label_text, title, no, svg, custom_action, attach_action_to_on_key_up_too, add_auxclick_e, f } = props;
     let btn_content = <Svg src={svg} />;
 
     if (!r.isNil(label_text)) {
@@ -266,7 +268,7 @@ const Btn = props => {
         }
     };
 
-    const on_mouse_up = custom_action ? f : action;
+    const click_f = custom_action ? f : action;
     let on_key_up = enter_click.simulate_mouse_up_on_enter;
 
     if (attach_action_to_on_key_up_too) {
@@ -286,7 +288,8 @@ const Btn = props => {
             type="button"
             title={title || x.msg(`${name}_btn_title`)}
             disabled={els_state.com2.inputs_disabled_5}
-            onMouseUp={on_mouse_up}
+            onClick={click_f}
+            onAuxClick={add_auxclick_e ? click_f : null}
             onKeyUp={on_key_up}
         >
             {btn_content}

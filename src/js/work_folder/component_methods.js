@@ -14,10 +14,10 @@ export const select_work_folder = action(e => {
         if (choose_folder.reset_work_folder(false)) {
             const folder_is_already_selected = chosen_folder_path.ob.chosen_folder_path === choose_folder.ob.work_folder;
 
-            if ((e.type === 'mouseup' && e.button === 2) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code && (e.ctrlKey || e.shiftKey))) {
+            if ((e.type === 'auxclick' && e.button === 2) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code && (e.ctrlKey || e.shiftKey))) {
                 select_folder.select_bulk_by_ctrl_clicking_on_folder(choose_folder.ob.work_folder);
 
-            } else if (!folder_is_already_selected && ((e.type === 'mouseup' && e.button === 0) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code))) {
+            } else if (!folder_is_already_selected && ((e.type === 'click' && e.button === 0) || (e.type === 'keyup' && e.keyCode === enter_click.con.enter_key_code))) {
                 chosen_folder_path.ob.chosen_folder_path = choose_folder.ob.work_folder;
 
                 folders.deselect_theme();
