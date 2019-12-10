@@ -146,6 +146,8 @@ class Color_input_vizualization extends React.Component {
         }).on('save', () => {
             color_pickiers.accept_color(this.family, this.name);
 
+            this.pickr.hide();
+
         }).on('change', color => {
             if (inputs_data.obj[this.family][this.name].color_pickier_is_visible) {
                 color_pickiers.convert_pickr_rgba_obj_into_arr(color);
