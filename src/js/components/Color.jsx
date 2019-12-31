@@ -134,6 +134,8 @@ class Color_input_vizualization extends React.Component {
             this.set_default_color_representation();
 
         }).on('show', async () => {
+            color_pickiers.set_color_pickier_to_right_if_neeeded(this.color_pickier_w.current);
+
             const hsva = tinycolor(inputs_data.obj[this.family][this.name].color || inputs_data.obj[this.family][this.name].val).toHsv();
 
             this.pickr.setHSVA(hsva.h, hsva.s * 100, hsva.v * 100, hsva.a, true);
@@ -183,7 +185,7 @@ class Color_input_vizualization extends React.Component {
         const color = inputs_data.obj[this.family][this.name].color || inputs_data.obj[this.family][this.name].val;
 
         return (
-            <React.Fragment>
+            <div className="color_input_vizualization_w">
                 <span
                     className={x.cls([
                         'color_input_vizualization',
@@ -201,7 +203,7 @@ class Color_input_vizualization extends React.Component {
                     className="color_pickier_w"
                     ref={this.color_pickier_w}
                 />
-            </React.Fragment>
+            </div>
         );
     }
 }

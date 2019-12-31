@@ -380,6 +380,23 @@ export const convert_picked_colors_from_objects_to_arrays = files => {
     }
 };
 
+export const set_color_pickier_to_right_if_neeeded = color_pickier_w => {
+    try {
+        const pcr_app = sb(color_pickier_w, '.pcr-app');
+        const fieldset_scroll_content = x.closest(color_pickier_w, '.fieldset_content');
+        const padding = 12;
+
+        if ((Math.round(pcr_app.getBoundingClientRect().right) + padding) > Math.round(fieldset_scroll_content.getBoundingClientRect().right)) {
+            x.add_cls(color_pickier_w, 'stick_right');
+            x.add_cls(pcr_app, 'color_pickier_right');
+        }
+
+    } catch (er) {
+        err(er, 319);
+    }
+};
+
+
 export const con = {
     no_alpha: ['theme_frame', 'theme_frame_inactive', 'theme_frame_incognito', 'theme_frame_incognito_inactive'],
 };

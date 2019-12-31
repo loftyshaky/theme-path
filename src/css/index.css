@@ -1368,15 +1368,13 @@ ul.help_block .important {
 
 .ordinary_color_input_inner {
     display: flex;
-    position: relative;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 /*< ordinary color inputs */
 
 .color_pickier_w {
-    position: relative;
-    right: 149px;
+    position: absolute;
 }
 
 /*> color pickier */
@@ -1385,6 +1383,8 @@ ul.help_block .important {
     left: unset !important;
     top: unset !important;
     width: 260px !important;
+    padding: 12px !important;
+    transform: translateX(calc(-50% + 16px)); /* center color picker relative to color input vizualization */
     box-shadow: 0px 0px 22px -3px rgba(0, 0, 0, 0.75) !important;
 }
 
@@ -1612,19 +1612,19 @@ body:not(.using_mouse) .select__menu {
 }
 
 .color_pickier_tall_offset_top {
-    bottom: 40px !important;
+    bottom: 39px !important;
 }
 
 .color_pickier_ordinary_offset_top {
-    bottom: 26px !important;
+    bottom: 25px !important;
 }
 
 .color_pickier_tall_offset_bottom {
-    top: 40px !important;
+    top: 5px !important;
 }
 
 .color_pickier_ordinary_offset_bottom {
-    top: 26px !important;
+    top: 5px !important;
 }
 /*< mods */
 
@@ -1682,6 +1682,14 @@ body:not(.using_mouse) .select__menu {
 
 .wrap_theme_metadata_and_theme_fieldsets .theme_metadata_and_theme_fieldset_w {
     width: 100%;
+}
+
+.stick_right {
+    right: 0;
+}
+
+.color_pickier_right {
+    transform: translateX(calc(-100% - 12px));
 }
 /*< Tr mods */
 
