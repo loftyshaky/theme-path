@@ -15,7 +15,7 @@ import * as settings from 'js/settings';
 import { Checkbox } from 'components/Checkbox';
 import { Help_btn } from 'components/Help_btn';
 
-import '@simonwep/pickr/dist/themes/nano.min.css';
+import '@simonwep/pickr/dist/themes/monolith.min.css';
 
 export class Color extends React.Component {
     constructor(props) {
@@ -106,7 +106,7 @@ class Color_input_vizualization extends React.Component {
         this.pickr = new Pickr({
             container: this.color_pickier_w.current,
             el: this.color_input_vizualization.current,
-            theme: 'nano',
+            theme: 'monolith',
             default: options.ob.theme_vals[options.ob.theme].color_input_default,
             useAsButton: true,
             autoReposition: false,
