@@ -8,7 +8,7 @@ configure({ enforceActions: 'observed' });
 
 export const search = action(() => {
     try {
-        const query = con.search_input[0] ? con.search_input[0].value : '';
+        const query = (con.search_input[0] ? con.search_input[0].value : '').toLowerCase();
 
         if (query !== '') {
             mut.filtered_folders = folders.ob.folders.filter(folder => folder.nest_level !== 0 || folder.name.toLowerCase().indexOf(query) > -1);
