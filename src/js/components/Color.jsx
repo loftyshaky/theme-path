@@ -120,6 +120,7 @@ class Color_input_vizualization extends React.Component {
                     hex: true,
                     rgba: true,
                     hsva: true,
+                    hsla: true,
                     input: true,
                     save: true,
                 },

@@ -166,6 +166,7 @@ export const selects_options = {
     color_picker_default_mode: [
         option(false, null, 'HEX'),
         option(false, null, 'RGBA'),
+        option(false, null, 'HSLA'),
         option(false, null, 'HSVA'),
     ],
 };
