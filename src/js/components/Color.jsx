@@ -139,6 +139,7 @@ class Color_input_vizualization extends React.Component {
             const hsva = tinycolor(inputs_data.obj[this.family][this.name].color || inputs_data.obj[this.family][this.name].val).toHsv();
 
             this.pickr.setHSVA(hsva.h, hsva.s * 100, hsva.v * 100, hsva.a, true);
+            this.pickr.applyColor({ silent: true });
 
             if (settings.ob.settings.set_color_picker_to_default_mode_when_opening_it) {
                 this.set_default_color_representation();
