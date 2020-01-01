@@ -653,7 +653,7 @@ export const delete_all_history = async () => {
                     const files = await get_files_and_folders(choose_folder.ob.work_folder);
                     const files_to_delete = files.filter(file => {
                         const file_name = basename(file);
-                        return file_name === 'history.json' || file_name === 'old_imgs';
+                        return file_name === 'history.json' || file_name === 'previous_img.json' || file_name === 'reverted_history.json' || file_name === 'history' || file_name === 'reverted_history' || file_name === 'old_imgs';
                     });
 
                     for (const file_to_delete of files_to_delete) {
