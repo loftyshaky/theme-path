@@ -14,7 +14,6 @@ import * as picked_colors from 'js/picked_colors';
 import * as options from 'js/options';
 import * as history from 'js/history';
 import * as reupload_img from 'js/reupload_img';
-import * as json_file from 'js/json_file';
 import * as conds from 'js/conds';
 import * as folders from 'js/work_folder/folders';
 
@@ -108,10 +107,9 @@ export const handle_files = async (mode, file, family, name) => {
 
         } else if (mode === 'reupload') {
             folders.check_if_selected_folder_is_theme(() => {
-                const previous_img_file_path = join(chosen_folder_path.ob.chosen_folder_path, reupload_img.con.previous_img_file_path);
+                const previous_img_obj = store.get('previous_img');
 
-                if (existsSync(previous_img_file_path)) {
-                    const previous_img_obj = json_file.parse_json(previous_img_file_path);
+                if (existsSync(previous_img_obj.path)) {
                     const img_path = previous_img_obj.path;
                     family = previous_img_obj.family; // eslint-disable-line no-param-reassign, prefer-destructuring
                     name = previous_img_obj.name; // eslint-disable-line no-param-reassign, prefer-destructuring

@@ -129,6 +129,7 @@ const con = {
         enable_analytics: false,
         bulk_copy_checkboxes: {},
         default_bulk_copy_checkboxes: {},
+        previous_img: {},
     },
 };
 
