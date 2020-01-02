@@ -443,6 +443,24 @@ export const copy_color_picker_input_val = (that, color_pickier_w, click_el_sele
         err(er, 322);
     }
 };
+
+export const paste_color_val_from_clipboard = (that, color_pickier_w, family, name) => {
+    try {
+        x.bind(sb(color_pickier_w, '.pcr-result'), 'auxclick', e => {
+            if (e.button === 1) {
+                const rgba_obj = tinycolor(clipboard.readText());
+
+                // eslint-disable-next-line no-underscore-dangle
+                mut.current_pickied_color = [rgba_obj._r, rgba_obj._g, rgba_obj._b, rgba_obj._a];
+
+                set_color_input_vizualization_color(family, name, rgba_obj.toRgbString());
+
+                that.pickr.applyColor();
+            }
+        });
+
+    } catch (er) {
+        err(er, 323);
     }
 };
 

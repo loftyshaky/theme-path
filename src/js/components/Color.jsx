@@ -132,7 +132,7 @@ class Color_input_vizualization extends React.Component {
 
         this.pickr.on('init', async () => {
             this.set_default_color_representation();
-            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '.pcr-result');
+            color_pickiers.paste_color_val_from_clipboard(this, this.color_pickier_w.current, this.family, this.name);
             color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="HEXA"]', 'HEX');
             color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="RGBA"]', 'RGBA');
             color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="HSLA"]', 'HSLA');
@@ -161,7 +161,6 @@ class Color_input_vizualization extends React.Component {
         }).on('change', color => {
             if (inputs_data.obj[this.family][this.name].color_pickier_is_visible) {
                 color_pickiers.convert_pickr_rgba_obj_into_arr(color);
-
                 color_pickiers.set_color_input_vizualization_color(this.family, this.name, color_pickiers.mut.current_pickied_color);
 
                 if (!inputs_data.obj[this.family][this.name].changed_color_once_after_focus) {
