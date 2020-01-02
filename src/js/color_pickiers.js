@@ -396,6 +396,29 @@ export const set_color_pickier_to_right_if_neeeded = color_pickier_w => {
     }
 };
 
+export const remove_color_picker_input_selection = color_picker => {
+    try {
+        mut.current_pcr_app = sb(color_picker, '.pcr-app');
+
+        if (!store.get('highlight_color_picker_val_when_opening_color_picker')) {
+            mut.current_pcr_app.addEventListener('transitionend', remove_color_picker_input_selection_inner);
+        }
+
+    } catch (er) {
+        err(er, 320);
+    }
+};
+
+export const remove_color_picker_input_selection_inner = () => {
+    try {
+        window.getSelection().removeAllRanges();
+
+        mut.current_pcr_app.removeEventListener('transitionend', remove_color_picker_input_selection_inner);
+
+    } catch (er) {
+        err(er, 321);
+    }
+};
 
 export const con = {
     no_alpha: ['theme_frame', 'theme_frame_inactive', 'theme_frame_incognito', 'theme_frame_incognito_inactive'],
@@ -411,4 +434,5 @@ export const mut = {
         color: '',
     },
     accepted_by_enter_key: false,
+    current_pcr_app: null,
 };

@@ -135,6 +135,7 @@ class Color_input_vizualization extends React.Component {
 
         }).on('show', async () => {
             color_pickiers.set_color_pickier_to_right_if_neeeded(this.color_pickier_w.current);
+            color_pickiers.remove_color_picker_input_selection(this.color_pickier_w.current);
 
             const hsva = tinycolor(inputs_data.obj[this.family][this.name].color || inputs_data.obj[this.family][this.name].val).toHsv();
 
