@@ -63,7 +63,11 @@ export class All extends React.Component {
 
         return (
             <Error_boundary>
-                <div className="all">
+                <div
+                    className="all"
+                    onMouseDown={e => { if (e.button === 1) e.preventDefault(); }}
+                    role="none"
+                >
                     <Header />
                     <div className={x.cls([
                         'fieldsets',
