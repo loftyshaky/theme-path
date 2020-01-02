@@ -307,7 +307,7 @@ export const bulk_copy = theme_paths => {
                                             const src_img_path = join(chosen_folder_path.ob.chosen_folder_path, new_image_name);
                                             let history_obj;
 
-                                            if (name !== 'clear_new_tab_video') {
+                                            if (name !== 'clear_new_tab_video' && name !== 'theme_ntp_background') {
                                                 history_obj = history.record_change(() => history.generate_img_history_obj(family, name, target_is_default, src_rgba_color.arr, false, target_path), target_path);
                                             }
 
