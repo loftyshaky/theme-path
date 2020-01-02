@@ -312,7 +312,7 @@ export const bulk_copy = theme_paths => {
                                             }
 
                                             imgs.remove_img_by_name(new_image_name, target_path); // remove old image from target theme
-l(5)
+
                                             imgs.copy_img(name, img_extension, src_img_path, target_path); // copy image from source theme to target theme on place of removed image in previous line
                                             if (name !== 'clear_new_tab_video') {
                                                 if (name !== 'theme_ntp_background') {
