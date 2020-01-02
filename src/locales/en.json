@@ -395,7 +395,7 @@
   "bulk_copy_confirm_answer_copy": "Copy",
   "pack_confirm_msg": "Are you sure you want to pack all selected themes?",
   "pack_confirm_answer_pack": "Pack",
-  "move_to_trash_confirm_msg": "Are you sure you want to move the all selected themes/folders to Recycle Bin?",
+  "move_to_trash_confirm_msg": "Are you sure you want to move all selected themes/folders to Recycle Bin?",
   "move_to_trash_confirm_answer_move": "Move",
   "delete_all_history_msg": "Are you sure you want to delete all changes history from all themes?",
   "delete_all_history_answer_delete": "Delete"
