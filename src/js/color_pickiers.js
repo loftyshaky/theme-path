@@ -421,7 +421,7 @@ export const remove_color_picker_input_selection_inner = () => {
     }
 };
 
-export const copy_color_picker_input_val = (that, color_pickier_w, click_el_selector, color_representation) => {
+export const copy_color_picker_input_val = (that, color_pickier_w, click_el_selector, color_representation, family, name) => {
     try {
         x.bind(sb(color_pickier_w, click_el_selector), 'auxclick', e => {
             if (e.button === 1) {
@@ -434,6 +434,8 @@ export const copy_color_picker_input_val = (that, color_pickier_w, click_el_sele
                 }
 
                 clipboard.writeText(input.value);
+
+                set_color_input_vizualization_color(family, name, mut.previous_pickied_color);
 
                 that.pickr.hide();
             }
