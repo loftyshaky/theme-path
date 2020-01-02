@@ -396,9 +396,9 @@ export const set_color_pickier_to_right_if_neeeded = color_pickier_w => {
     }
 };
 
-export const remove_color_picker_input_selection = color_picker => {
+export const remove_color_picker_input_selection = color_pickier_w => {
     try {
-        mut.current_pcr_app = sb(color_picker, '.pcr-app');
+        mut.current_pcr_app = sb(color_pickier_w, '.pcr-app');
 
         if (!store.get('highlight_color_picker_val_when_opening_color_picker')) {
             mut.current_pcr_app.addEventListener('transitionend', remove_color_picker_input_selection_inner);
