@@ -19,6 +19,7 @@ export const Help = () => (
             <Help_item name="bulk_select" />
             <Help_item name="bulk_copy" />
             <Help_item name="bulk_pack" />
+            <Help_item name="change_sub_vals_in_color_picker" />
         </ul>
         <Hr name="links" />
         <div className="help_block links_block">
