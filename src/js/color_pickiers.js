@@ -451,7 +451,8 @@ export const paste_color_val_from_clipboard = (that, color_pickier_w, family, na
         x.bind(sb(color_pickier_w, '.pcr-result'), 'auxclick', e => {
             if (e.button === 1) {
                 const rgba_obj = tinycolor(clipboard.readText());
-
+                // eslint-disable-next-line no-underscore-dangle
+                rgba_obj._a = family === 'images' && con.no_alpha.indexOf(name) === -1 ? rgba_obj._a : 1;
                 // eslint-disable-next-line no-underscore-dangle
                 mut.current_pickied_color = [rgba_obj._r, rgba_obj._g, rgba_obj._b, rgba_obj._a];
 
