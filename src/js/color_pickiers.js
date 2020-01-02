@@ -440,7 +440,9 @@ export const copy_color_picker_input_val = (that, color_pickier_w, click_el_sele
         });
 
     } catch (er) {
-        err(er, 321);
+        err(er, 322);
+    }
+};
     }
 };
 
