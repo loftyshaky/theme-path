@@ -166,6 +166,7 @@
   "bulk_copy_li_text": "When multiple themes are selected, you can copy properties from one theme to others. Select a theme you want to copy properties from by left clicking on it, then click on the %@queue@% button. In the opened window select all propierties you wanna copy and click \"Accept\".",
   "bulk_pack_li_text": "You can also pack all selected themes at once by clicking on the %@archive@% button.",
   "change_sub_vals_in_color_picker_li_text": "You can use a mouse wheel to change sub-values in a color picker input's color value.",
+  "copy_color_val_in_color_picker_li_text": "You can copy a color value by middle-clicking on a color picker input in the color picker. Middle-click on color representation buttons (HEX, RGB etc.) to copy a color value of the certain type.",
 
   "privacy_policy_link_text": "📜 Privacy policy",
   "clear_new_tab_link_text": "⚗️ Hide everything from the new tab page with the Clear New Tab Chrome extension",
