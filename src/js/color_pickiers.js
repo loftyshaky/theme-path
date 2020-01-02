@@ -1,5 +1,6 @@
 import { basename } from 'path';
 
+import { clipboard } from 'electron';
 import * as r from 'ramda';
 import { action, configure } from 'mobx';
 import tinycolor from 'tinycolor2';
@@ -414,6 +415,29 @@ export const remove_color_picker_input_selection_inner = () => {
         window.getSelection().removeAllRanges();
 
         mut.current_pcr_app.removeEventListener('transitionend', remove_color_picker_input_selection_inner);
+
+    } catch (er) {
+        err(er, 321);
+    }
+};
+
+export const copy_color_picker_input_val = (that, color_pickier_w, click_el_selector, color_representation) => {
+    try {
+        x.bind(sb(color_pickier_w, click_el_selector), 'auxclick', e => {
+            if (e.button === 1) {
+                const input = sb(color_pickier_w, '.pcr-result');
+
+                input.blur();
+
+                if (color_representation) {
+                    that.pickr.setColorRepresentation(color_representation);
+                }
+
+                clipboard.writeText(input.value);
+
+                that.pickr.hide();
+            }
+        });
 
     } catch (er) {
         err(er, 321);
