@@ -177,9 +177,12 @@ const pack_inner = (type, theme_paths_to_pack) => {
                 const package_name = theme_path.substring(theme_path.lastIndexOf(sep) + 1);
                 const pak_path = join(theme_path, 'Cached Theme.pak');
                 const system_path = join(theme_path, 'system');
-                const work_folder_system_path = join(choose_folder.ob.work_folder, x.unique_id());
+                const id_path = join(theme_path, 'id.txt');
+                const temp_folder_system_path = join(choose_folder.ob.work_folder, x.unique_id());
+                const temp_folder_id_path = join(choose_folder.ob.work_folder, x.unique_id());
 
-                move_system_folder(system_path, work_folder_system_path);
+                move_file_temporary(system_path, temp_folder_system_path);
+                move_file_temporary(id_path, temp_folder_id_path);
 
                 try {
                     if (existsSync(pak_path)) {
@@ -208,7 +211,8 @@ const pack_inner = (type, theme_paths_to_pack) => {
                             if (!er) {
                                 zip.compress().save(zip_path);
 
-                                move_system_folder(work_folder_system_path, system_path);
+                                move_file_temporary(temp_folder_system_path, system_path);
+                                move_file_temporary(temp_folder_id_path, id_path);
 
                                 resolve();
 
@@ -249,7 +253,8 @@ const pack_inner = (type, theme_paths_to_pack) => {
 
                     execFileSync(getChrome(platform()), [`--pack-extension=${theme_path}`]);
 
-                    move_system_folder(work_folder_system_path, system_path);
+                    move_file_temporary(temp_folder_system_path, system_path);
+                    move_file_temporary(temp_folder_id_path, id_path);
                 }
 
                 if (tutorial.ob.tutorial_stage === 7) {
@@ -265,7 +270,7 @@ const pack_inner = (type, theme_paths_to_pack) => {
     });
 };
 
-const move_system_folder = (src, destination) => {
+const move_file_temporary = (src, destination) => {
     if (existsSync(src)) {
         moveSync(src, destination, { overwrite: true });
     }
