@@ -6,6 +6,7 @@ import * as els_state from 'js/els_state';
 
 import { Tr } from 'components/Tr';
 import { History_fieldset_protecting_screen } from 'components/Protecting_screen';
+import { Tutorial_item } from 'components/Tutorial_item';
 
 export const Fieldset = observer(props => {
     const { name, children } = props;
@@ -54,6 +55,12 @@ export const Fieldset = observer(props => {
                     </div>
                     {fieldset_protecting_screen}
                 </div>
+                {name === 'theme_metadata' ? (
+                    <Tutorial_item
+                        name="change_theme_properties"
+                        tutorial_stage="5"
+                    />
+                ) : null}
             </Tr>
         </div>
     );

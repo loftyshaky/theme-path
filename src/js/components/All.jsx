@@ -21,7 +21,6 @@ import { Options } from 'components/Options';
 import { Help } from 'components/Help';
 import { Help_viewer } from 'components/Help_viewer';
 import { Protecting_screen } from 'components/Protecting_screen';
-import { Tutorial_item } from 'components/Tutorial_item';
 import { Auto_updater } from 'components/Auto_updater';
 import { Analytics_privacy } from 'components/Analytics_privacy';
 import { Processing_msg } from 'components/Processing_msg';
@@ -30,12 +29,13 @@ export class All extends React.Component {
     componentDidMount() {
         try {
             settings.set_settings_observable();
+            tutorial.apply_alt_style_change_theme_properties_tutorial_item();
 
             document.addEventListener('mousedown', color_pickiers.show_or_hide_color_pickier_when_clicking_on_color_input_vizualization);
             document.body.addEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
             document.body.addEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
             document.body.addEventListener('keydown', help_viewer.close_help_viewer_by_keyboard);
-            window.addEventListener('resize', tutorial.rerender_Tutorial_item);
+            window.addEventListener('resize', tutorial.apply_alt_style_change_theme_properties_tutorial_item);
 
             history.set_history_side_popup_width();
 
@@ -52,7 +52,7 @@ export class All extends React.Component {
             document.body.removeEventListener('keydown', color_pickiers.close_or_open_color_pickier_by_keyboard);
             document.body.removeEventListener('keydown', toggle_popup.close_all_popups_by_keyboard);
             document.body.removeEventListener('keydown', help_viewer.close_help_viewer_by_keyboard);
-            window.removeEventListener('resize', tutorial.rerender_Tutorial_item);
+            window.removeEventListener('resize', tutorial.apply_alt_style_change_theme_properties_tutorial_item);
 
         } catch (er) {
             err(er, 94);
@@ -106,11 +106,6 @@ export class All extends React.Component {
                                     add_help
                                 />
                             </Fieldset>
-                            <Tutorial_item
-                                name="change_theme_properties"
-                                tutorial_stage="5"
-                                outline
-                            />
                         </span>
                     </div>
                     <Protecting_screen tr_name="gen" state_key="protecting_screen_is_visible" />

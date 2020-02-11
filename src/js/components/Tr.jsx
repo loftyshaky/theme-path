@@ -38,7 +38,6 @@ export class Tr extends React.Component {
                 upload_box: this.create_tran('upload_box_background_unactive', 'upload_box_background_active'),
                 fieldset: this.create_tran('fieldset_border_color_unactive', 'fieldset_border_color_active'),
                 legend: this.create_tran('legend_color_unactive', 'legend_color_active'),
-                tutorial_outline: this.create_tran('tutorial_outline_border_color_unactive', 'tutorial_outline_border_color_active'),
                 analytics_privacy_protecting_screen: this.create_tran('analytics_privacy_protecting_screen_unactive', 'analytics_privacy_protecting_screen_active'),
             };
 

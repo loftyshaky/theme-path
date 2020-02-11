@@ -93,7 +93,6 @@ export class Header extends React.Component {
                         <Tutorial_item
                             name="create_new_theme"
                             tutorial_stage="3"
-                            outline={false}
                         />
                     </div>
                     {
@@ -147,7 +146,6 @@ export class Header extends React.Component {
                         <Tutorial_item
                             name="open_in_chrome"
                             tutorial_stage="6"
-                            outline={false}
                         />
                     </div>
                     <Btn
@@ -218,7 +216,6 @@ export class Header extends React.Component {
                         <Tutorial_item
                             name="pack"
                             tutorial_stage="7"
-                            outline={false}
                         />
                     </div>
                     <Btn

@@ -157,12 +157,10 @@ export class Work_folder extends React.Component {
                 <Tutorial_item
                     name="select_folder"
                     tutorial_stage="2"
-                    outline
                 />
                 <Tutorial_item
                     name="select_theme"
                     tutorial_stage="4"
-                    outline
                 />
             </Fieldset>
         );
@@ -221,7 +219,6 @@ class Work_folder_selector extends React.Component {
                         <Tutorial_item
                             name="choose_folder"
                             tutorial_stage="1"
-                            outline={false}
                         />
                     </div>
                     <button

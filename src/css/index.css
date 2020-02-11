@@ -805,6 +805,7 @@ body.using_mouse .folder_name:focus {
     padding: 12px;
     padding-top: 28px;
     z-index: 3;
+    top: 61px;
 }
 
 .tutorial_item_choose_folder,
@@ -816,24 +817,18 @@ body.using_mouse .folder_name:focus {
 
 .tutorial_item_select_folder,
 .tutorial_item_select_theme {
-    right: -31px;
-    top: 39px;
-    transform: translateX(100%);
-}
-
-.tutorial_item_select_folder.alt,
-.tutorial_item_select_theme.alt {
+    right: -29px;
     transform: translateX(-56px);
 }
 
 .tutorial_item_change_theme_properties {
-    left: -30px;
-    top: 60px;
+    top: 62px;
+    left: -23px;
     transform: translateX(-100%);
 }
 
 .tutorial_item_change_theme_properties.alt {
-    left: 220px;
+    transform: translateX(-33%);
 }
 
 .tutorial_item_pack {
@@ -841,8 +836,22 @@ body.using_mouse .folder_name:focus {
     transform: translate(-100%, 22px);
 }
 
+.tutorial_item_choose_folder {
+    top: 28px;
+}
+
+.tutorial_item_create_new_theme,
+.tutorial_item_open_in_chrome,
+.tutorial_item_pack {
+    top: 40px;
+}
+
 .tutorial_item_open_in_chrome {
     left: -6px;
+}
+
+.tutorial_item_create_new_theme {
+    left: 12px;
 }
 
 .tutorial_item:before {
@@ -884,29 +893,6 @@ body.using_mouse .folder_name:focus {
 .tutorial_item_pack:before {
     left: unset;
     right: 14px;
-}
-
-.tutorial_item_create_new_theme {
-    left: 10px;
-}
-
-.tutorial_outline {
-    height: 100%;
-    width: 100%;
-    border: 3px solid white;
-    position: absolute;
-    padding: 21px 6px 0 6px;
-    margin-left: -9px;
-    margin-top: -18px;
-    pointer-events: none;
-}
-
-.tutorial_outline_change_theme_properties {
-    height: calc(100% - 2px);
-    width: calc(100% - 6px);
-    padding: 0;
-    margin-left: -8px;
-    margin-top: 4px;
 }
 
 .skip_tutorial_btn {
@@ -965,7 +951,7 @@ a:focus {
 }
 
 .img_dims {
-position: relative;
+    position: relative;
     display: block;
     height: 0px;
     bottom: 23px;
@@ -1152,7 +1138,8 @@ position: relative;
     height: 18px;
 }
 
-.bottom_link:not(:first-child), .help_block li:not(:first-child) {
+.bottom_link:not(:first-child),
+.help_block li:not(:first-child) {
     margin-top: 8px;
 }
 
@@ -1499,7 +1486,6 @@ fieldset,
 .help_viewer_w,
 .help_viewer_expanded_img_w,
 .tutorial_item,
-.tutorial_outline,
 .skip_tutorial_btn,
 .using_mouse .history_item,
 .bulk_copy_set_default_message {
@@ -1544,8 +1530,7 @@ a,
     transition-property: border-color, box-shadow;
 }
 
-fieldset,
-.tutorial_outline {
+fieldset {
     transition-property: border-color;
 }
 
@@ -1666,14 +1651,6 @@ body:not(.using_mouse) .select__menu {
 
 .legend_color_active {
     color: #474747;
-}
-
-.tutorial_outline_border_color_unactive {
-    border-color: transparent;
-}
-
-.tutorial_outline_border_color_active {
-    border-color: #cb87d4;
 }
 
 .wrap_theme_metadata_and_theme_fieldsets .work_folder_fieldset {
