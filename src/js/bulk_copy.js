@@ -218,9 +218,7 @@ export const bulk_copy = theme_paths => {
                                     const target_rgba_color = get_rgba_color(family, name, target_manifest_obj, target_picked_colors_obj, target_is_default, target_picked_colors_obj_has_picked_colors_record, is_textarea, is_select);
                                     let src_is_disabled = false;
                                     let target_is_disabled = false;
-                                    let src_hsl_string = null;
                                     let src_hsl_arr = null;
-                                    let target_hsl_string = null;
                                     let target_hsl_arr = null;
                                     let src_color_string = null;
                                     let src_color_arr = null;
@@ -240,9 +238,6 @@ export const bulk_copy = theme_paths => {
                                             target_hsl_arr = null;
                                         }
 
-                                        src_hsl_string = src_is_default ? null : color_pickiers.convert_hsl_arr_to_rgba_string(src_hsl_arr);
-                                        target_hsl_string = target_hsl_arr ? color_pickiers.convert_hsl_arr_to_rgba_string(target_hsl_arr) : null;
-
                                     } else if (is_select) {
                                         if (name === 'default_locale') {
                                             src_select_val = src_manifest_obj[name] || 'en';
@@ -259,9 +254,7 @@ export const bulk_copy = theme_paths => {
                                     }
 
                                     if (family === 'tints') {
-                                        src_color_string = src_hsl_string;
                                         src_color_arr = src_hsl_arr;
-                                        target_color_string = target_hsl_string;
                                         target_color_arr = target_hsl_arr;
                                     }
 
@@ -322,7 +315,7 @@ export const bulk_copy = theme_paths => {
                                                 await change_val.change_val(family, name, name, img_extension, false, true, target_path);
                                             }
 
-                                        } else if (is_color && !same_colors) {
+                                        } else if ((is_color && !same_colors) || family === 'tints') {
                                             await change_val.change_val(family, name, src_color_arr, null, false, true, target_path);
 
                                             history.record_change(() => history.generate_color_history_obj(family, name, target_is_default, target_is_disabled, target_color_string, target_color_arr, src_color_string, src_rgba_color.arr, src_color_arr, false, false, target_path), target_path);
