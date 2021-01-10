@@ -226,6 +226,7 @@ body.using_mouse .close_btn,
 .search_input,
 .header_btn,
 textarea:focus,
+.number_input:focus,
 .btn:focus,
 .color_input_vizualization:focus,
 .popup,
@@ -315,7 +316,8 @@ body.using_mouse .color_input_vizualization:focus {
     color: #212121;
 }
 
-textarea {
+textarea,
+.number_input {
     resize: none;
     overflow-y: auto;
     max-height: 206px;
@@ -323,6 +325,7 @@ textarea {
 }
 
 textarea:focus,
+.number_input:focus,
 .btn:focus,
 .color_input_vizualization:focus,
 .popup,
@@ -337,6 +340,7 @@ textarea {
 }
 
 textarea,
+.number_input,
 .option {
     width: 100%;
     box-sizing: border-box;
@@ -361,7 +365,8 @@ textarea,
 .img_selector_box > .upload_box,
 .color_input_label,
 .color_input_vizualization,
-.img_selector_checkbox_w:not(:last-child) {
+.img_selector_checkbox_w:not(:last-child),
+.number_input_w {
     margin-right: 12px;
 }
 
@@ -374,6 +379,7 @@ body.using_mouse .header_btn:hover:focus,
 }
 
 textarea,
+.number_input,
 .btn,
 body.using_mouse .btn:focus,
 body.using_mouse .checkbox_checkmark_w:focus,
@@ -387,6 +393,7 @@ body.using_mouse .color_input_vizualization:focus,
 }
 
 textarea,
+.number_input,
 .checkbox_checkmark_w {
     background-color: transparent;
 }
@@ -1001,7 +1008,8 @@ a:focus {
     display: block;
 }
 
-.checkbox_label {
+.checkbox_label,
+.number_label {
     margin-right: 8px;
 }
 /*<1 checkboxes */
@@ -1094,6 +1102,25 @@ a:focus {
     background-color: #3892ff !important;
 }
 /*< selects */
+
+/*> tints */
+.tint_input_inner,
+.tint_inputs,
+.number_input_w {
+    display: flex;
+    align-items: center;
+}
+
+.number_input {
+    height: 28px;
+    width: 55px;
+    overflow: none;
+}
+
+.number_input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+/*< tints */
 
 /*> popup */
 .popup {
@@ -1473,6 +1500,7 @@ a,
 .upload_box_browse_label_part,
 .using_mouse .btn,
 .using_mouse textarea,
+.using_mouse .number_input,
 .color_input_vizualization,
 .protecting_screen,
 .fieldset_protecting_screen,
@@ -1526,7 +1554,8 @@ a,
     transition-property: color, background-color, border-color, box-shadow;
 }
 
-.using_mouse textarea {
+.using_mouse textarea,
+.number_input {
     transition-property: border-color, box-shadow;
 }
 

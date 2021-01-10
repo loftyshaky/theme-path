@@ -42,13 +42,6 @@ export class Color extends React.Component {
             />
         ) : null;
 
-        this.disabled_checkbox = this.family === 'tints' ? (
-            <Checkbox
-                {...props}
-                checkbox_type="disabled"
-            />
-        ) : null;
-
         this.color_input = React.createRef();
     }
 
@@ -77,7 +70,6 @@ export class Color extends React.Component {
                         name={this.name}
                         type={this.type}
                     />
-                    {this.disabled_checkbox}
                     {this.default_checkbox}
                 </span>
                 <Help_btn {...this.props} />

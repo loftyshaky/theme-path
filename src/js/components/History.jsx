@@ -61,9 +61,18 @@ export class History extends React.Component {
                     return <String name="changed" />;
                 }
 
-            } else if (item.family === 'colors' || item.family === 'tints') {
-                if (!item.set_to_default && !item.set_to_disabled) {
+            } else if (item.family === 'colors') {
+                if (!item.set_to_default) {
                     return <Color_and_img_changed_to color={item.to_val} />;
+                }
+
+            } else if (item.family === 'tints') {
+                if (!item.set_to_default && !item.set_to_disabled) {
+                    return (
+                        <Textarea_changed_to
+                            val={(item.to_manifest_val || item.to_val).join('/')}
+                        />
+                    );
                 }
 
             } else if (conds.selects(item.family, item.name)) {

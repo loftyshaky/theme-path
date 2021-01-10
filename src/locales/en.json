@@ -291,7 +291,7 @@
   "colors_ntp_link_help_text": "Specifies the color of links in the \"Apps\" page.",
   "colors_ntp_header_help_text": "Specifies the color of the footer's border in the \"Apps\" page.",
 
-  "tints_help_text": "Tint elements change the hue, saturation and lightness of images. To disable specefic tint element click \"Disabled\" checkbox.",
+  "tints_help_text": "The tint elements are used to assign color tints to certain elements of the browser area. The value of the tint is in floating values ranging from 0 to 1 and -1 means no change. Tints are in Hue-Saturation-Lightness (HSL).\n\nHue (H): Lets you set hue of the image/color, for which 0 and 1 means red.\n\nSaturation (S): Lets you set vibrancy of the image/color, here 0 means completely desaturated and 1 means fully saturated.\n\nLightness (L): Lets you set brightness of the image/color. Here 0 means least bright (black) and 1 means most bright (white)",
   "tints_frame_help_text": "Specifies a color tint for the frame area. Whatever image you've created for the frame area will be tinted with a color that you specify here.",
   "tints_frame_inactive_help_text": "Specifies a color tint for the frame area when the window is inactive/out of focus.",
   "tints_frame_incognito_help_text": "Specifies a color tint for the frame area in incognito mode.",

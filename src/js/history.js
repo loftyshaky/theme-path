@@ -25,6 +25,7 @@ import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 import * as folders from 'js/work_folder/folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
 import * as imgs from 'js/imgs';
+import * as tints from 'js/tints';
 
 const readdir_p = promisify(readdir);
 const stat_p = promisify(stat);
@@ -79,12 +80,16 @@ export const revert_tinker = revert_position => {
                 if (conds.imgs(change.family, change.name)) {
                     color_pickiers.set_color_input_vizualization_color(change.family, change.name, change.val || options.ob.theme_vals[options.ob.theme].color_input_default);
 
-                } else if (conds.colors(change.family)) {
+                } else if (change.family === 'colors') {
                     color_pickiers.set_color_input_vizualization_color(change.family, change.name, change.val || (change.default ? options.ob.theme_vals[options.ob.theme].color_input_default : options.ob.theme_vals[options.ob.theme].color_input_disabled));
 
-                    if (change.family === 'tints') {
-                        change_val.set_disabled_bool(change.family, change.name, change.disabled);
-                    }
+                } else if (change.family === 'tints') {
+                    const standard_val = change.default
+                        ? tints.con.default_val
+                        : tints.con.disabled_val;
+                    change_val.set_inputs_data_val(change.family, change.name, change.default || change.disabled ? standard_val : change.manifest_val || change.val); // keep change.manifest_val to support pre text input history
+
+                    change_val.set_disabled_bool(change.family, change.name, change.disabled);
 
                 } else if (conds.selects(change.family, change.name)) {
                     change_val.set_inputs_data_val(change.family, change.name, change.val);
@@ -175,10 +180,10 @@ export const accept_history_change = () => {
                             }
 
                             if (!change.disabled) {
-                                manifest.mut.manifest.theme[change.family][change.name] = change.manifest_val;
+                                manifest.mut.manifest.theme[change.family][change.name] = change.manifest_val || change.val; // keep change.manifest_val to support pre text input history
 
                             } else {
-                                manifest.mut.manifest.theme[change.family][change.name] = set_default_or_disabled.con.disabled_manifest_val;
+                                manifest.mut.manifest.theme[change.family][change.name] = tints.con.disabled_val;
                             }
 
                         } else {

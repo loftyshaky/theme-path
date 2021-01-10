@@ -111,6 +111,25 @@ const img_selector = (name, bulk_copy_checkbox_checked_by_default) => {
     return undefined;
 };
 
+const tint = name => {
+    try {
+        return {
+            name,
+            type: 'tint',
+            val: ['', '', ''],
+            default: true,
+            disabled: false,
+            add_help: true,
+            bulk_copy_checkbox_checked_by_default: true,
+        };
+
+    } catch (er) {
+        err(er, 325);
+    }
+
+    return undefined;
+};
+
 const options_btns = name => {
     try {
         return {
@@ -178,12 +197,12 @@ const inputs = {
         color('ntp_header'),
     ],
     tints: [
-        color('frame'),
-        color('frame_inactive'),
-        color('frame_incognito'),
-        color('frame_incognito_inactive'),
-        color('background_tab'),
-        color('buttons'),
+        tint('frame'),
+        tint('frame_inactive'),
+        tint('frame_incognito'),
+        tint('frame_incognito_inactive'),
+        tint('background_tab'),
+        tint('buttons'),
     ],
     properties: [
         select('ntp_background_alignment', 'default', true),

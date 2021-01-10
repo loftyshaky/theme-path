@@ -10,6 +10,7 @@ import { Select } from 'components/Select';
 import { Img_selector } from 'components/Img_selector';
 import { Color } from 'components/Color';
 import { Checkbox } from 'components/Checkbox';
+import { Tint } from 'components/Tint';
 import { Options_btns } from 'components/Options_btns';
 import { Help_btn } from 'components/Help_btn';
 
@@ -81,6 +82,7 @@ const con = {
         img_selector: Img_selector,
         color: Color,
         checkbox: Checkbox,
+        tint: Tint,
         options_btns: Options_btns,
     },
 };

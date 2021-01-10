@@ -15,6 +15,7 @@ import { inputs_data } from 'js/inputs_data';
 import * as history from 'js/history';
 import * as color_pickiers from 'js/color_pickiers';
 import * as conds from 'js/conds';
+import * as tints from 'js/tints';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
 const store = new Store();
@@ -89,8 +90,12 @@ export const set_default_or_disabled = (family, name, special_checkbox, remove_r
                                 name,
                                 false,
                                 was_disabled || Boolean(inputs_data.obj[family][name].disabled),
-                                previous_color || previous_color_obj.previous_color,
-                                previous_manifest_val || previous_color_obj.previous_manifest_val,
+                                family === 'tints'
+                                    ? inputs_data.obj.tints[name].val
+                                    : previous_color || previous_color_obj.previous_color,
+                                family === 'tints'
+                                    ? null
+                                    : previous_manifest_val || previous_color_obj.previous_manifest_val,
                                 null,
                                 null,
                                 null,
@@ -117,17 +122,14 @@ export const set_default_or_disabled = (family, name, special_checkbox, remove_r
 
             } else if (special_checkbox === 'disabled') {
                 if (!inputs_data.obj[family][name].disabled || force_set) {
-                    const previous_color_obj = get_previous_color(family, name);
-                    const disabled_color = options.ob.theme_vals[store.get('theme')].color_input_disabled;
-
                     history.record_change(
                         () => history.generate_color_history_obj(
                             family,
                             name,
                             was_default || inputs_data.obj[family][name].default,
                             false,
-                            previous_color || previous_color_obj.previous_color,
-                            previous_manifest_val || previous_color_obj.previous_manifest_val,
+                            inputs_data.obj[family][name].val,
+                            null,
                             null,
                             null,
                             null,
@@ -140,10 +142,9 @@ export const set_default_or_disabled = (family, name, special_checkbox, remove_r
                     change_val.set_disabled_bool(family, name, true);
                     change_val.set_default_bool(family, name, false);
 
-                    change_val.change_val(family, name, con.disabled_manifest_val, null, !force_set, false, theme_path);
+                    change_val.change_val(family, name, tints.con.disabled_val, null, !force_set, false, theme_path);
 
-                    change_val.set_inputs_data_val(family, name, disabled_color);
-                    color_pickiers.set_color_input_vizualization_color(family, name, disabled_color);
+                    change_val.set_inputs_data_val(family, name, tints.con.disabled_val);
                 }
             }
         }
@@ -176,8 +177,8 @@ const set_default = (family, name, target_path, manifest_obj) => {
         } else if (inputs_data.obj[family][name].color) {
             change_val.set_inputs_data_color(family, name, color_input_default);
 
-        } else {
-            change_val.set_inputs_data_val(family, name, color_input_default);
+        } else if (family === 'tints') {
+            change_val.set_inputs_data_val(family, name, tints.con.default_val);
         }
 
         imgs.get_dims(family, name);
@@ -229,8 +230,4 @@ const get_previous_color = (family, name) => {
     }
 
     return undefined;
-};
-
-export const con = {
-    disabled_manifest_val: [-1, -1, -1],
 };

@@ -13,7 +13,7 @@ const store = new Store();
 
 const convert_theme_color_props_to_color = item => {
     try {
-        const { color_input_default, color_input_disabled } = options.ob.theme_vals[store.get('theme')];
+        const { color_input_default } = options.ob.theme_vals[store.get('theme')];
         const val_is_arr = Array.isArray(item.val);
         const { family, name, val } = item;
 
@@ -44,32 +44,16 @@ const convert_theme_color_props_to_color = item => {
             }
 
         } else if (family === 'tints') {
-            if (val_is_default) {
-                change_val.set_inputs_data_val(family, name, color_input_default);
-                change_val.set_inputs_data_color(family, name, color_input_default);
-            }
-
-            //> on theme change
-            if (item.disabled) {
-                change_val.set_inputs_data_val(family, name, color_input_disabled);
-                change_val.set_inputs_data_color(family, name, color_input_disabled);
-            }
-            //< on theme change
-
             if (val_is_arr) {
                 if (!val_is_default) {
                     const hsl_arr = r.values(val);
                     const every_number_in_hsla_arr_is_minus_1 = hsl_arr.every(number => number.toString().indexOf('-1') > -1);
 
                     if (every_number_in_hsla_arr_is_minus_1) {
-                        change_val.set_inputs_data_val(family, name, color_input_disabled);
                         change_val.set_default_bool(family, name, false);
                         change_val.set_disabled_bool(family, name, true);
 
                     } else {
-                        const rgba_string = color_pickiers.convert_hsl_arr_to_rgba_string(hsl_arr);
-
-                        change_val.set_inputs_data_val(family, name, rgba_string);
                         change_val.set_default_bool(family, name, false);
                     }
                 }

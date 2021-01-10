@@ -80,7 +80,7 @@ export const change_val = async (family, name, new_val, img_extension, reload_ma
             } else if (third_if_strings.indexOf(family) > -1 || five_if_strings.indexOf(name) > -1) {
                 write_to_json(manifest_obj, manifest_path, name, new_val, family);
 
-                if (!bulk_copying) {
+                if (!bulk_copying && family !== 'tints') {
                     set_inputs_data_val(family, name, new_val);
                 }
 

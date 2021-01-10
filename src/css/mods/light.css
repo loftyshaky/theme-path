@@ -11,7 +11,7 @@
     background-color: #3892ff;
     background-clip: content-box;
     border-left: 4px solid #dddddd;
-	border-right: 4px solid #dddddd;
+    border-right: 4px solid #dddddd;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -22,68 +22,119 @@
     background-color: #eb36ff;
 }
 
-a, .help_link, .upload_box_browse_label_part, .help_viewer_name {
-    color: #3892ff!important;
+a,
+.help_link,
+.upload_box_browse_label_part,
+.help_viewer_name {
+    color: #3892ff !important;
 }
 
-a:hover, .help_link:hover, .upload_box_browse_label:hover .upload_box_browse_label_part {
-    color: #0bc700!important;
+a:hover,
+.help_link:hover,
+.upload_box_browse_label:hover .upload_box_browse_label_part {
+    color: #0bc700 !important;
 }
 
-a:active, .help_link:active, .upload_box_browse_label:active .upload_box_browse_label_part{
-    color: #eb36ff!important;
+a:active,
+.help_link:active,
+.upload_box_browse_label:active .upload_box_browse_label_part {
+    color: #eb36ff !important;
 }
 
-body, .btn, .option, .legend_line, .fieldset_w .cover, .popup {
+body,
+.btn,
+.option,
+.legend_line,
+.fieldset_w .cover,
+.popup {
     background-color: white;
 }
 
-textarea, .btn, body.using_mouse .btn:focus, body.using_mouse .checkbox_checkmark_w:focus, body.using_mouse .color_input_vizualization:focus, .checkbox_checkmark_w, .upload_box, .history_item_color {
+textarea,
+.number_input,
+.btn,
+body.using_mouse .btn:focus,
+body.using_mouse .checkbox_checkmark_w:focus,
+body.using_mouse .color_input_vizualization:focus,
+.checkbox_checkmark_w,
+.upload_box,
+.history_item_color {
     border-color: #212121;
 }
 
-.selected_folder, .selected_folder_bulk, .btn:hover, .option:hover, .header_btn, .header_btn:hover, body.using_mouse .header_btn:hover:focus, .header_btn label, .header_btn:hover label,
-body.using_mouse .header_btn:hover:focus label, .help_viewer_message, .search_input, .er_msg, .er_msg div, .er_msg button, .using_keyboard .history_item:focus, .using_keyboard .history_item:focus span, .processing_msg > div {
+.selected_folder,
+.selected_folder_bulk,
+.btn:hover,
+.option:hover,
+.header_btn,
+.header_btn:hover,
+body.using_mouse .header_btn:hover:focus,
+.header_btn label,
+.header_btn:hover label,
+body.using_mouse .header_btn:hover:focus label,
+.help_viewer_message,
+.search_input,
+.er_msg,
+.er_msg div,
+.er_msg button,
+.using_keyboard .history_item:focus,
+.using_keyboard .history_item:focus span,
+.processing_msg > div {
     color: white;
 }
 
-body.using_mouse .header_btn:hover:focus:active, body.using_mouse .header_btn:hover:focus:active label {
-     color: #212121;
+body.using_mouse .header_btn:hover:focus:active,
+body.using_mouse .header_btn:hover:focus:active label {
+    color: #212121;
 }
 
 .work_folder_fieldset {
-    border-color: #212121!important;
+    border-color: #212121 !important;
 }
 
-.work_folder_fieldset_w .legend, .select__single-value, .select__placeholder, .select__option--is-selected, .select__option--is-selected.select__option--is-focused, .select__menu-notice {
-    color: #212121!important;
+.work_folder_fieldset_w .legend,
+.select__single-value,
+.select__placeholder,
+.select__option--is-selected,
+.select__option--is-selected.select__option--is-focused,
+.select__menu-notice {
+    color: #212121 !important;
 }
 
 hr {
-    background-color: #212121!important;
+    background-color: #212121 !important;
 }
 
-.header_btn:hover, body.using_mouse .header_btn:hover:focus {
+.header_btn:hover,
+body.using_mouse .header_btn:hover:focus {
     background-color: #212121;
 }
 
-svg, body.using_mouse .folder_arrow:focus svg {
+svg,
+body.using_mouse .folder_arrow:focus svg {
     fill: #212121;
 }
 
-.header_btn_icon svg, .header_btn:hover svg, body.using_mouse .header_btn:hover:focus svg, .help_viewer .close_btn svg, .tutorial_item_close_btn svg, .er_close_btn svg {
+.header_btn_icon svg,
+.header_btn:hover svg,
+body.using_mouse .header_btn:hover:focus svg,
+.help_viewer .close_btn svg,
+.tutorial_item_close_btn svg,
+.er_close_btn svg {
     fill: white;
 }
 
-.work_folder_path:focus, .folder_name:focus {
+.work_folder_path:focus,
+.folder_name:focus {
     box-shadow: inset 0 0 0 1px #3892ff;
 }
 
 .folder_arrow:focus svg {
-    fill:#3892ff;
+    fill: #3892ff;
 }
 
-.side_popup_content .ReactVirtualized__List, .bulk_copy_side_popup_content {
+.side_popup_content .ReactVirtualized__List,
+.bulk_copy_side_popup_content {
     border: 1px solid #212121;
 }
 
@@ -93,28 +144,31 @@ svg, body.using_mouse .folder_arrow:focus svg {
 
 /*> selects */
 .select__control {
-    border-color: #212121!important;
+    border-color: #212121 !important;
 }
 
-.select__control--is-focused, .select__menu_is_focused {
-    box-shadow: 0 0 5px #3892ff!important;
-    border-color: #3892ff!important;
+.select__control--is-focused,
+.select__menu_is_focused {
+    box-shadow: 0 0 5px #3892ff !important;
+    border-color: #3892ff !important;
 }
 
 .select__control--is-focused .select__dropdown-indicator svg {
     fill: #fbff75;
 }
 
-.select__option, .select__menu-notice {
-    background-color: white!important;
+.select__option,
+.select__menu-notice {
+    background-color: white !important;
 }
 
 .select__indicator-separator {
-    background-color: #212121!important;
+    background-color: #212121 !important;
 }
 
-.select__option--is-focused, .select__control--is-focused .select__indicator-separator {
-    background-color: #3892ff!important;
+.select__option--is-focused,
+.select__control--is-focused .select__indicator-separator {
+    background-color: #3892ff !important;
 }
 
 .select__control--is-focused .select__dropdown-indicator svg {
@@ -122,15 +176,20 @@ svg, body.using_mouse .folder_arrow:focus svg {
 }
 
 .select__option--is-focused {
-    color: white!important;
+    color: white !important;
 }
 
 .select__option--is-selected {
-    background-color: #fbff75!important;
+    background-color: #fbff75 !important;
 }
 /*< selects */
 
-textarea:focus, .btn:focus, .checkbox_checkmark_w:focus, .color_input_vizualization:focus, .popup {
+textarea:focus,
+.number_input:focus,
+.btn:focus,
+.checkbox_checkmark_w:focus,
+.color_input_vizualization:focus,
+.popup {
     box-shadow: 0 0 5px #3892ff;
     border-color: #3892ff;
 }
@@ -143,12 +202,13 @@ ul.help_block .important {
     color: #ff6565;
 }
 
-.btn:hover, .option:hover {
-    background-color: #3892ff!important;
+.btn:hover,
+.option:hover {
+    background-color: #3892ff !important;
 }
 
 .btn:active {
-    background-color: #eb36ff!important;
+    background-color: #eb36ff !important;
 }
 
 .selected_folder {
@@ -159,7 +219,8 @@ ul.help_block .important {
     background-color: #18c944;
 }
 
-.selected_folder, .header_btn:focus {
+.selected_folder,
+.header_btn:focus {
     background-color: #3892ff;
 }
 
@@ -167,11 +228,15 @@ ul.help_block .important {
     background-color: #e42162;
 }
 
-.upload_box_browse_label:focus, .close_btn:focus, a:focus, a:focus {
+.upload_box_browse_label:focus,
+.close_btn:focus,
+a:focus,
+a:focus {
     outline: 1px solid #3892ff;
 }
 
-.protecting_screen, .fieldset_protecting_screen {
+.protecting_screen,
+.fieldset_protecting_screen {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -189,7 +254,7 @@ ul.help_block .important {
 }
 
 .reverted_history_item:nth-child(odd) {
-     background-color: #c3c3c3;
+    background-color: #c3c3c3;
 }
 
 .reverted_history_item:nth-child(even) {
