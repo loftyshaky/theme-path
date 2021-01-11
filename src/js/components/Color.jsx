@@ -125,12 +125,14 @@ class Color_input_vizualization extends React.Component {
         this.pickr.on('init', async () => {
             this.set_default_color_representation();
             color_pickiers.paste_color_val_from_clipboard(this, this.color_pickier_w.current, this.family, this.name);
-            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="HEXA"]', 'HEX', this.family, this.name);
-            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="RGBA"]', 'RGBA', this.family, this.name);
-            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="HSLA"]', 'HSLA', this.family, this.name);
-            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="HSVA"]', 'HSVA', this.family, this.name);
+            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="HEXA"]', this.family, this.name);
+            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="RGBA"]', this.family, this.name);
+            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="HSLA"]', this.family, this.name);
+            color_pickiers.copy_color_picker_input_val(this, this.color_pickier_w.current, '[data-type="HSVA"]', this.family, this.name);
 
         }).on('show', async () => {
+            // eslint-disable-next-line no-underscore-dangle
+            color_pickiers.mut.current_color_representation = this.pickr._representation;
             color_pickiers.set_color_pickier_to_right_if_neeeded(this.color_pickier_w.current);
             color_pickiers.remove_color_picker_input_selection(this.color_pickier_w.current);
 

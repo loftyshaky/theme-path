@@ -421,17 +421,15 @@ export const remove_color_picker_input_selection_inner = () => {
     }
 };
 
-export const copy_color_picker_input_val = (that, color_pickier_w, click_el_selector, color_representation, family, name) => {
+export const copy_color_picker_input_val = (that, color_pickier_w, click_el_selector, family, name) => {
     try {
         x.bind(sb(color_pickier_w, click_el_selector), 'auxclick', e => {
             if (e.button === 1) {
+                that.pickr.setColorRepresentation(mut.current_color_representation);
+
                 const input = sb(color_pickier_w, '.pcr-result');
 
                 input.blur();
-
-                if (color_representation) {
-                    that.pickr.setColorRepresentation(color_representation);
-                }
 
                 clipboard.writeText(input.value);
 
@@ -439,6 +437,11 @@ export const copy_color_picker_input_val = (that, color_pickier_w, click_el_sele
 
                 that.pickr.hide();
             }
+        });
+
+        x.bind(sb(color_pickier_w, click_el_selector), 'click', () => {
+            // eslint-disable-next-line no-underscore-dangle
+            mut.current_color_representation = that.pickr._representation;
         });
 
     } catch (er) {
@@ -482,4 +485,5 @@ export const mut = {
     },
     accepted_by_enter_key: false,
     current_pcr_app: null,
+    current_color_representation: 'HEXA',
 };
