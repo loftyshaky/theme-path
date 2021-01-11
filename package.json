@@ -1,15 +1,15 @@
 {
-  "name": "chrome-theme-creator",
-  "productName": "Chrome Theme Creator",
+  "name": "theme-path",
+  "productName": "ThemePath",
   "version": "1.6.0",
   "description": "App for creating Chrome themes.",
-  "homepage": "https://github.com/loftyshaky/chrome-theme-creator",
+  "homepage": "https://github.com/loftyshaky/theme-path",
   "author": {
     "name": "loftyshaky",
     "email": "loftyshaky@gmail.com"
   },
   "license": "MIT",
-  "repository": "https://github.com/loftyshaky/chrome-theme-creator",
+  "repository": "https://github.com/loftyshaky/theme-path",
   "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --host 0.0.0.0 --config=./webpack.dev.js",
@@ -21,7 +21,7 @@
     "builddir": "electron-builder build --dir"
   },
   "build": {
-    "appId": "chrome-theme-creator|loftyshaky@gmail.com",
+    "appId": "theme-path|loftyshaky@gmail.com",
     "asar": true,
     "files": {
       "filter": [

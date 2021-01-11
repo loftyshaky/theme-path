@@ -100,7 +100,7 @@
   "highlight_color_picker_val_when_opening_color_picker_label_text": "Highlight a color value in the color picker textbox when opening a color picker",
   "wrap_theme_metadata_and_theme_fieldsets_label_text": "Put \"Theme metadata\" and \"Theme\" blocks below the \"Work folder\" block",
   "color_picker_default_mode_label_text": "Color picker default mode",
-  "enable_analytics_label_text": "Allow Chrome Theme Creator to send anonymous usage information",
+  "enable_analytics_label_text": "Allow ThemePath to send anonymous usage information",
   "export_settings_btn_text": "Export settings",
   "import_settings_btn_text": "Import settings",
   "delete_all_history_btn_text": "Delete all history",
@@ -161,7 +161,7 @@
 
   "delete_all_history_li_text": "If you updated from v1.3.1, it's recommended to delete all previously recorded history and convert previously picked colors of \"Images\" elements to the new format by going to options page and clicking \"Delete all history\" button. The old history is not compatible with v1.4.0",
   "preview_li_text": "To open a theme in Chrome in a normal mode, select a theme with left-click, and then left-click on the %@open_in_browser@% button. To open it in an incognito mode right-click (or if you selected the %@open_in_browser@% button with a tab key, hit Ctrl/Shift + Enter) on the same button. Middle-click (Ctrl + Shift + Enter) will open two browser windows, one in normal and the other in an incognito mode.",
-  "reupload_img_li_text": "Each time you upload image with a \"Choose image\" button Chrome Theme Creator remembers its location and element it was uploaded for. If you edit the same file in an image editing app and save it in the same location, you can quickly reupload it by clicking on the %@upload@% button.",
+  "reupload_img_li_text": "Each time you upload image with a \"Choose image\" button ThemePath remembers its location and element it was uploaded for. If you edit the same file in an image editing app and save it in the same location, you can quickly reupload it by clicking on the %@upload@% button.",
   "bulk_select_li_text": "You can select multiple themes at once. To do this right-click on a theme or folder that contains themes (or select theme/folder with tab key, then hit Ctrl/Shift + Enter). To deselect all themes click on the %@layers_clear@% button.",
   "bulk_copy_li_text": "When multiple themes are selected, you can copy properties from one theme to others. Select a theme you want to copy properties from by left clicking on it, then click on the %@queue@% button. In the opened window select all propierties you wanna copy and click \"Accept\".",
   "bulk_pack_li_text": "You can also pack all selected themes at once by clicking on the %@archive@% button.",
@@ -177,7 +177,7 @@
   "clear_new_tab_link_href": "https://bit.ly/clear-new-tab",
 
   
-  "analytics_privacy_message_text": "Do you want to allow Chrome Theme Creator to send anonymous usage information to Google Analytics for product improvement purposes? (can be changed later in options)",
+  "analytics_privacy_message_text": "Do you want to allow ThemePath to send anonymous usage information to Google Analytics for product improvement purposes? (can be changed later in options)",
   "allow_analytics_btn_text": "Allow",
   "disallow_analytics_btn_text": "Disallow",
 
@@ -305,13 +305,13 @@
   "properties_ntp_logo_alternate_help_text": "Specifies the color of the Google logo in new tab.",
 
   "clear_new_tab_help_text": "Clear New Tab elements change the background image/video settings in the Clear New Tab Chrome extension.",
-  "clear_new_tab_clear_new_tab_video_help_text": "Supported formats: .mp4, .webm, .ogg, .gif\nThis is the video that is displayed in new tab instead of a background image. Note that this video will not be displayed when you previewing a theme from Chrome Theme Creator, it will be displayed only when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
+  "clear_new_tab_clear_new_tab_video_help_text": "Supported formats: .mp4, .webm, .ogg, .gif\nThis is the video that is displayed in new tab instead of a background image. Note that this video will not be displayed when you previewing a theme from ThemePath, it will be displayed only when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
   "clear_new_tab_video_volume_help_text": "Volume of the video that you upload above. This value will be applied to the video when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode.",
   "clear_new_tab_size_help_text": "Size of the background image or video that you upload above. This value will be applied to the image/video when you install a theme from the Chrome Web Store with the Clear New Tab installed and running in \"Theme background\" mode. Recommended value: Cover the screen.",
 
   "options_chrome_exe_paths_help_text": "Paths to Chrome executables separated by commas. Used to preview themes in the separate user profile (see \"Paths to Chrome user data folders\" help). For example if you have Stable and Canary channel installed you can put in this text input executable to Stable channel if you wish to preview themes with it. Example: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe, C:\\Program Files (x86)\\Google\\Chrome Beta\\Application\\chrome.exe",
   "options_chrome_user_data_folders_help_text": "Paths to Chrome user data folders separated by commas. Each given path will create a button in the header next to \"Open in Chrome\" button. When you click on one of these buttons Chrome will be opened in the separate user profile with theme installed. If folder doesnt exist it will be created on the first preview. You can specify Chrome executable for each user data folder (see \"Paths to Chrome executables\" above). Example: D:\\dev-chrome\\chrome-dev-en, D:\\dev-chrome\\chrome-dev-ru",
-  "options_custom_folders_help_text": "Paths to any folders separated by commas. Each given path will create a button in the header next to \"New Theme\" button. When you click on one of these buttons the folder and all of its content will be recreated in the selected folder. Example: C:\\Custom Chrome Theme Creator folders, D:\\Custom Chrome Theme Creator folders",
+  "options_custom_folders_help_text": "Paths to any folders separated by commas. Each given path will create a button in the header next to \"New Theme\" button. When you click on one of these buttons the folder and all of its content will be recreated in the selected folder. Example: C:\\Custom ThemePath folders, D:\\Custom ThemePath folders",
   "options_max_number_of_history_records_help_text": "Set to 0 to disable changes history.",
   "options_locales_whitelist_help_text": "Language codes of languages that you want to see in \"Locale\" and \"Default locale\" selects, separeted by commas. Example: en, ru, fr",
 
@@ -393,7 +393,7 @@
   
   "confirm_title": "Confirm",
   "confirm_answer_cancel": "Cancel",
-  "app_close_confirm_msg": "Are you sure you want to quit Chrome Theme Creator?",
+  "app_close_confirm_msg": "Are you sure you want to quit ThemePath?",
   "app_close_confirm_answer_quit": "Quit",
   "bulk_copy_confirm_msg": "Are you sure you want to copy properties from the current theme into all selected themes?",
   "bulk_copy_confirm_answer_copy": "Copy",

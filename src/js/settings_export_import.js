@@ -12,7 +12,7 @@ const store = new Store();
 export const export_settings = () => {
     try {
         const save_path = dialog.showSaveDialog({
-            defaultPath: 'Chrome Theme Creator settings.json',
+            defaultPath: 'ThemePath settings.json',
             filters: con.filters,
         });
 
@@ -35,7 +35,7 @@ export const export_settings = () => {
 export const import_settings = () => {
     try {
         const file_path = dialog.showOpenDialog({
-            defaultPath: 'Chrome Theme Creator settings.json',
+            defaultPath: 'ThemePath settings.json',
             filters: con.filters,
         });
 
