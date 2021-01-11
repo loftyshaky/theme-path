@@ -29,6 +29,7 @@ export const change_sub_val = action((family, name, new_sub_val, type_i) => {
     try {
         if (/^[\d-.]+$/.test(new_sub_val) || new_sub_val === '') {
             manifest.reload_manifest();
+            add_tints_obj();
 
             const new_sub_val_number = +new_sub_val;
             const sub_val_is_in_accepted_range = (new_sub_val_number >= 0 && new_sub_val_number <= 1) || new_sub_val_number === -1;
@@ -86,6 +87,7 @@ const set_val = x.debounce((family, name, previous_val, new_val, type_i) => {
 export const change_val_by_mouse_wheel = action((e, family, name, type_i) => {
     try {
         manifest.reload_manifest();
+        add_tints_obj();
 
         const previous_full_val = manifest.mut.manifest.theme[family][name]
             ? manifest.mut.manifest.theme[family][name].slice()
@@ -163,5 +165,19 @@ const normalize_other_sub_vals = (family, name) => {
         });
     } catch (er) {
         err(er, 330);
+    }
+};
+
+const add_tints_obj = () => {
+    try {
+        if (!manifest.mut.manifest.theme) {
+            manifest.mut.manifest.theme = {};
+        }
+
+        if (!manifest.mut.manifest.theme.tints) {
+            manifest.mut.manifest.theme.tints = {};
+        }
+    } catch (er) {
+        err(er, 331);
     }
 };
