@@ -21,7 +21,7 @@
     "builddir": "electron-builder build --dir"
   },
   "build": {
-    "appId": "theme-path|loftyshaky@gmail.com",
+    "appId": "chrome-theme-creator|loftyshaky@gmail.com",
     "asar": true,
     "files": {
       "filter": [
