@@ -7,7 +7,7 @@ const store = new Store();
 
 export const send_pageview = async page => {
     try {
-        check_if_analytics_enabled(() => send_request('pageview', page, null, null));
+       // check_if_analytics_enabled(() => send_request('pageview', page, null, null));
 
     } catch (er) {
         err(er, 194);
@@ -16,13 +16,14 @@ export const send_pageview = async page => {
 
 export const send_event = (category, action) => {
     try {
-        check_if_analytics_enabled(() => send_request('event', null, category, action));
+      //  check_if_analytics_enabled(() => send_request('event', null, category, action));
 
     } catch (er) {
         err(er, 195);
     }
 };
 
+/*
 const check_if_analytics_enabled = callback => {
     try {
         const allow_analytics = store.get('enable_analytics');
@@ -62,6 +63,7 @@ export const send_request = async (mode, page, category, action, callback) => {
         err(er, 197, null, true);
     }
 };
+*/
 
 export const add_header_btns_analytics = name => {
     send_event('header_items', `clicked-${name}`);

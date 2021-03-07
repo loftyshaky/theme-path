@@ -228,7 +228,6 @@ const inputs = {
         checkbox('set_color_picker_to_default_mode_when_opening_it'),
         checkbox('highlight_color_picker_val_when_opening_color_picker'),
         checkbox('wrap_theme_metadata_and_theme_fieldsets'),
-        checkbox('enable_analytics'),
         options_btns('options_btns'),
     ],
 };
