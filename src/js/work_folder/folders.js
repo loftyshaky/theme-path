@@ -1,317 +1,355 @@
-import { existsSync, readdirSync, statSync } from 'fs-extra';
-import { join, sep } from 'path';
+import { existsSync, readdirSync, statSync } from "fs-extra";
+import { join, sep } from "path";
 
-import { observable, action, configure } from 'mobx';
-import { remote, shell } from 'electron';
+import { observable, action, configure } from "mobx";
+import { shell, ipcRenderer } from "electron";
 
-import { reset_inputs_data } from 'js/inputs_data';
-import * as chosen_folder_path from 'js/chosen_folder_path';
-import * as choose_folder from 'js/work_folder/choose_folder';
-import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
-import * as processing_msg from 'js/processing_msg';
-import * as confirm from 'js/confirm';
-import * as analytics from 'js/analytics';
+import { reset_inputs_data } from "js/inputs_data";
+import * as chosen_folder_path from "js/chosen_folder_path";
+import * as choose_folder from "js/work_folder/choose_folder";
+import * as expand_or_collapse from "js/work_folder/expand_or_collapse";
+import * as processing_msg from "js/processing_msg";
+import * as confirm from "js/confirm";
+import * as analytics from "js/analytics";
 
-configure({ enforceActions: 'observed' });
+const remote = require("@electron/remote");
 
-export const check_if_selected_folder_is_theme = callback => {
-    try {
-        if (choose_folder.reset_work_folder(false)) {
-            const folder_is_theme = check_if_folder_is_theme(chosen_folder_path.ob.chosen_folder_path);
+configure({ enforceActions: "observed" });
 
-            if (folder_is_theme) {
-                callback();
+export const check_if_selected_folder_is_theme = (callback) => {
+  try {
+    if (choose_folder.reset_work_folder(false)) {
+      const folder_is_theme = check_if_folder_is_theme(
+        chosen_folder_path.ob.chosen_folder_path
+      );
 
-            } else {
-                err(er_obj('Chosen folder is not a theme'), 3, 'chosen_folder_is_not_theme');
-            }
-        }
-
-    } catch (er) {
-        err(er, 16);
+      if (folder_is_theme) {
+        callback();
+      } else {
+        err(
+          er_obj("Chosen folder is not a theme"),
+          3,
+          "chosen_folder_is_not_theme"
+        );
+      }
     }
+  } catch (er) {
+    err(er, 16);
+  }
 };
 
-export const check_if_multiple_themes_is_selected = (return_result, callback) => {
-    try {
-        const number_of_themes = chosen_folder_path.ob.chosen_folder_bulk_paths.filter(path => check_if_folder_is_theme(path)).length;
-        const one_bulk_theme_is_also_chosen_as_main_theme = chosen_folder_path.ob.chosen_folder_bulk_paths.some(path => path === chosen_folder_path.ob.chosen_folder_path);
+export const check_if_multiple_themes_is_selected = (
+  return_result,
+  callback
+) => {
+  try {
+    const number_of_themes =
+      chosen_folder_path.ob.chosen_folder_bulk_paths.filter((path) =>
+        check_if_folder_is_theme(path)
+      ).length;
+    const one_bulk_theme_is_also_chosen_as_main_theme =
+      chosen_folder_path.ob.chosen_folder_bulk_paths.some(
+        (path) => path === chosen_folder_path.ob.chosen_folder_path
+      );
 
-        if ((one_bulk_theme_is_also_chosen_as_main_theme && number_of_themes >= 2) || (!one_bulk_theme_is_also_chosen_as_main_theme && number_of_themes >= 1)) {
-            if (return_result) {
-                return true;
-            }
+    if (
+      (one_bulk_theme_is_also_chosen_as_main_theme && number_of_themes >= 2) ||
+      (!one_bulk_theme_is_also_chosen_as_main_theme && number_of_themes >= 1)
+    ) {
+      if (return_result) {
+        return true;
+      }
 
-            callback();
+      callback();
+    } else {
+      if (return_result) {
+        return false;
+      }
 
-        } else {
-            if (return_result) {
-                return false;
-            }
-
-            err(er_obj('Wrong bulk theme selection'), 274, 'wrong_bulk_theme_selection');
-        }
-
-    } catch (er) {
-        err(er, 272);
+      err(
+        er_obj("Wrong bulk theme selection"),
+        274,
+        "wrong_bulk_theme_selection"
+      );
     }
+  } catch (er) {
+    err(er, 272);
+  }
 
-    return undefined;
+  return undefined;
 };
 
-export const check_if_at_least_one_folder_is_selected = callback => {
-    try {
-        if (choose_folder.reset_work_folder(false)) {
-            if (chosen_folder_path.ob.chosen_folder_path !== choose_folder.ob.work_folder || chosen_folder_path.ob.chosen_folder_bulk_paths.length > 0) {
-                callback();
-
-            } else {
-                err(er_obj('No folder is selected'), 318, 'no_folder_is_selected');
-            }
-        }
-
-    } catch (er) {
-        err(er, 284);
+export const check_if_at_least_one_folder_is_selected = (callback) => {
+  try {
+    if (choose_folder.reset_work_folder(false)) {
+      if (
+        chosen_folder_path.ob.chosen_folder_path !==
+          choose_folder.ob.work_folder ||
+        chosen_folder_path.ob.chosen_folder_bulk_paths.length > 0
+      ) {
+        callback();
+      } else {
+        err(er_obj("No folder is selected"), 318, "no_folder_is_selected");
+      }
     }
+  } catch (er) {
+    err(er, 284);
+  }
 };
 
-export const check_if_at_least_one_theme_is_selected = callback => {
-    try {
-        if (choose_folder.reset_work_folder(false)) {
-            const at_least_on_theme_is_selected = check_if_folder_is_theme(chosen_folder_path.ob.chosen_folder_path) || chosen_folder_path.ob.chosen_folder_bulk_paths.some(path => check_if_folder_is_theme(path));
+export const check_if_at_least_one_theme_is_selected = (callback) => {
+  try {
+    if (choose_folder.reset_work_folder(false)) {
+      const at_least_on_theme_is_selected =
+        check_if_folder_is_theme(chosen_folder_path.ob.chosen_folder_path) ||
+        chosen_folder_path.ob.chosen_folder_bulk_paths.some((path) =>
+          check_if_folder_is_theme(path)
+        );
 
-            if (at_least_on_theme_is_selected) {
-                callback();
-
-            } else {
-                err(er_obj('No theme is selected'), 283, 'no_themes_is_selected');
-            }
-        }
-
-    } catch (er) {
-        err(er, 284);
+      if (at_least_on_theme_is_selected) {
+        callback();
+      } else {
+        err(er_obj("No theme is selected"), 283, "no_themes_is_selected");
+      }
     }
+  } catch (er) {
+    err(er, 284);
+  }
 };
 
-export const check_if_folder_is_theme = folder_path => {
-    try {
-        const manifest_path = join(folder_path, 'manifest.json');
-        const is_theme = existsSync(manifest_path);
+export const check_if_folder_is_theme = (folder_path) => {
+  try {
+    const manifest_path = join(folder_path, "manifest.json");
+    const is_theme = existsSync(manifest_path);
 
-        return is_theme;
+    return is_theme;
+  } catch (er) {
+    err(er, 273);
+  }
 
-    } catch (er) {
-        err(er, 273);
-    }
-
-    return undefined;
+  return undefined;
 };
 
 export const rerender_work_folder = action(() => {
-    try {
-        const previous_val = chosen_folder_path.ob.chosen_folder_path;
-        chosen_folder_path.ob.chosen_folder_path = '';
-        chosen_folder_path.ob.chosen_folder_path = previous_val;
-
-    } catch (er) {
-        err(er, 89);
-    }
+  try {
+    const previous_val = chosen_folder_path.ob.chosen_folder_path;
+    chosen_folder_path.ob.chosen_folder_path = "";
+    chosen_folder_path.ob.chosen_folder_path = previous_val;
+  } catch (er) {
+    err(er, 89);
+  }
 });
 
-export const get_folders = folder_path => {
-    try {
-        if (existsSync(folder_path)) {
-            const files = readdirSync(folder_path);
+export const get_folders = (folder_path) => {
+  try {
+    if (existsSync(folder_path)) {
+      const files = readdirSync(folder_path);
 
-            return files.map(file => {
-                const child_path = join(folder_path, file);
+      return files
+        .map((file) => {
+          const child_path = join(folder_path, file);
 
-                if (existsSync(child_path)) {
-                    return {
-                        name: file,
-                        path: child_path,
-                        is_directory: statSync(join(folder_path, file)).isDirectory(),
-                    };
-                }
+          if (existsSync(child_path)) {
+            return {
+              name: file,
+              path: child_path,
+              is_directory: statSync(join(folder_path, file)).isDirectory(),
+            };
+          }
 
-                return null;
-            }).filter(file => file);
-        }
-
-    } catch (er) {
-        err(er, 90);
+          return null;
+        })
+        .filter((file) => file);
     }
+  } catch (er) {
+    err(er, 90);
+  }
 
-    return undefined;
+  return undefined;
 };
 
+export const get_info_about_folder = (folder_path) => {
+  try {
+    const folder_info = {};
+    const folder_exist = existsSync(folder_path);
+    const getting_info_about_work_folder =
+      folder_path === choose_folder.ob.work_folder;
 
-export const get_info_about_folder = folder_path => {
-    try {
-        const folder_info = {};
-        const folder_exist = existsSync(folder_path);
-        const getting_info_about_work_folder = folder_path === choose_folder.ob.work_folder;
-
-        if (getting_info_about_work_folder) {
-            folder_info.children = ob.folders.filter(item => item.nest_level === 0);
-
-        } else {
-            folder_info.children = get_folders(folder_path);
-        }
-
-        if (folder_exist && folder_info.children) {
-            folder_info.is_theme = existsSync(join(folder_path, 'manifest.json'));
-            folder_info.is_empty = !folder_info.children.some(item => {
-                const folder_stat = existsSync(item.path) ? statSync(item.path) : null;
-
-                if (folder_stat) {
-                    return folder_stat.isDirectory();
-
-                }
-
-                return false;
-            });
-
-        } else {
-            folder_info.is_theme = false;
-            folder_info.is_empty = true;
-        }
-
-        return folder_info;
-
-    } catch (er) {
-        err(er, 91);
+    if (getting_info_about_work_folder) {
+      folder_info.children = ob.folders.filter((item) => item.nest_level === 0);
+    } else {
+      folder_info.children = get_folders(folder_path);
     }
 
-    return undefined;
+    if (folder_exist && folder_info.children) {
+      folder_info.is_theme = existsSync(join(folder_path, "manifest.json"));
+      folder_info.is_empty = !folder_info.children.some((item) => {
+        const folder_stat = existsSync(item.path) ? statSync(item.path) : null;
+
+        if (folder_stat) {
+          return folder_stat.isDirectory();
+        }
+
+        return false;
+      });
+    } else {
+      folder_info.is_theme = false;
+      folder_info.is_empty = true;
+    }
+
+    return folder_info;
+  } catch (er) {
+    err(er, 91);
+  }
+
+  return undefined;
 };
 
 export const get_number_of_folders_to_work_with = (start_i, nest_level) => {
-    try {
-        const no_preceding_folders = ob.folders.filter((item, i) => i >= start_i);
+  try {
+    const no_preceding_folders = ob.folders.filter((item, i) => i >= start_i);
 
-        return no_preceding_folders.findIndex(item => item.nest_level < nest_level || item === ob.folders[ob.folders.length - 1]);
+    return no_preceding_folders.findIndex(
+      (item) =>
+        item.nest_level < nest_level ||
+        item === ob.folders[ob.folders.length - 1]
+    );
+  } catch (er) {
+    err(er, 92);
+  }
 
-    } catch (er) {
-        err(er, 92);
-    }
-
-    return undefined;
+  return undefined;
 };
 
 export const collapse_all_folders = () => {
-    try {
-        const at_least_one_folder_is_open = mut.opened_folders[1];
+  try {
+    const at_least_one_folder_is_open = mut.opened_folders[1];
 
-        if (at_least_one_folder_is_open) {
-            if (mut.opened_folders[1] !== choose_folder.ob.work_folder) {
-                const i = ob.folders.findIndex(cur_folder => cur_folder.path === mut.opened_folders[1]);
+    if (at_least_one_folder_is_open) {
+      if (mut.opened_folders[1] !== choose_folder.ob.work_folder) {
+        const i = ob.folders.findIndex(
+          (cur_folder) => cur_folder.path === mut.opened_folders[1]
+        );
 
-                expand_or_collapse.expand_or_collapse_folder('arrow', ob.folders[i].path, ob.folders[i].nest_level + 1);
+        expand_or_collapse.expand_or_collapse_folder(
+          "arrow",
+          ob.folders[i].path,
+          ob.folders[i].nest_level + 1
+        );
 
-                if (mut.opened_folders[1]) {
-                    collapse_all_folders();
-                }
-            }
+        if (mut.opened_folders[1]) {
+          collapse_all_folders();
         }
-
-    } catch (er) {
-        err(er, 147);
+      }
     }
+  } catch (er) {
+    err(er, 147);
+  }
 };
 
-export const set_folders = action(val => {
-    ob.folders = val;
+export const set_folders = action((val) => {
+  ob.folders = val;
 });
 
 export const deselect_theme = action(() => {
-    try {
-        chosen_folder_path.ob.chosen_folder_path = choose_folder.ob.work_folder;
+  try {
+    chosen_folder_path.ob.chosen_folder_path = choose_folder.ob.work_folder;
 
-        mut.chosen_folder_info.is_theme = false;
+    mut.chosen_folder_info.is_theme = false;
 
-        reset_inputs_data();
-
-    } catch (er) {
-        err(er, 62);
-    }
+    reset_inputs_data();
+  } catch (er) {
+    err(er, 62);
+  }
 });
 
 export const find_file_name_by_element_name = (name, target_folder_path) => {
-    try {
-        if (chosen_folder_path.ob.chosen_folder_path) {
-            const files = readdirSync(target_folder_path || chosen_folder_path.ob.chosen_folder_path);
-            const file_name = files.find(file => file.indexOf(`${name}.`) > -1);
+  try {
+    if (chosen_folder_path.ob.chosen_folder_path) {
+      const files = readdirSync(
+        target_folder_path || chosen_folder_path.ob.chosen_folder_path
+      );
+      const file_name = files.find((file) => file.indexOf(`${name}.`) > -1);
 
-            return file_name;
-        }
-
-    } catch (er) {
-        err(er, 310);
+      return file_name;
     }
+  } catch (er) {
+    err(er, 310);
+  }
 
-    return undefined;
+  return undefined;
 };
 
-export const get_folder_i = folder_path => ob.folders.findIndex(cur_folder => cur_folder.path === folder_path);
+export const get_folder_i = (folder_path) =>
+  ob.folders.findIndex((cur_folder) => cur_folder.path === folder_path);
 
 export const move_to_trash = () => {
-    check_if_at_least_one_folder_is_selected(() => {
-        try {
-            analytics.move_to_trash_analytics('tried_to_move');
+  check_if_at_least_one_folder_is_selected(() => {
+    try {
+      analytics.move_to_trash_analytics("tried_to_move");
 
-            const dialog_options = confirm.generate_confirm_options('move_to_trash_confirm_msg', 'move_to_trash_confirm_answer_move');
-            const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
+      const dialog_options = confirm.generate_confirm_options(
+        "move_to_trash_confirm_msg",
+        "move_to_trash_confirm_answer_move"
+      );
+      const choice = remote.dialog.showMessageBoxSync(
+        confirm.con.win,
+        dialog_options
+      );
 
-            if (choice === 0) {
-                analytics.move_to_trash_analytics('moved');
+      if (choice === 0) {
+        analytics.move_to_trash_analytics("moved");
 
-                processing_msg.process(() => {
-                    let top_level_folders_paths = chosen_folder_path.ob.chosen_folder_bulk_paths.slice();
+        processing_msg.process(() => {
+          let top_level_folders_paths =
+            chosen_folder_path.ob.chosen_folder_bulk_paths.slice();
 
-                    if (chosen_folder_path.ob.chosen_folder_path !== choose_folder.ob.work_folder) {
-                        move_to_trash_inner(chosen_folder_path.ob.chosen_folder_path);
-                    }
+          if (
+            chosen_folder_path.ob.chosen_folder_path !==
+            choose_folder.ob.work_folder
+          ) {
+            move_to_trash_inner(chosen_folder_path.ob.chosen_folder_path);
+          }
 
-                    for (const bulk_folder of top_level_folders_paths) {
-                        top_level_folders_paths = top_level_folders_paths.filter(path => (path === bulk_folder || path.indexOf(bulk_folder + sep) === -1));
-                    }
+          for (const bulk_folder of top_level_folders_paths) {
+            top_level_folders_paths = top_level_folders_paths.filter(
+              (path) =>
+                path === bulk_folder || path.indexOf(bulk_folder + sep) === -1
+            );
+          }
 
-                    for (const top_level_folder_path of top_level_folders_paths) {
-                        move_to_trash_inner(top_level_folder_path);
-                    }
+          for (const top_level_folder_path of top_level_folders_paths) {
+            move_to_trash_inner(top_level_folder_path);
+          }
 
-                    chosen_folder_path.deselect_all_bulk_folders();
-                });
-
-            } else {
-                analytics.move_to_trash_analytics('canceled');
-            }
-
-        } catch (er) {
-            err(er, 315);
-        }
-    });
+          chosen_folder_path.deselect_all_bulk_folders();
+        });
+      } else {
+        analytics.move_to_trash_analytics("canceled");
+      }
+    } catch (er) {
+      err(er, 315);
+    }
+  });
 };
 
-const move_to_trash_inner = folder_path => {
-    try {
-        shell.moveItemToTrash(folder_path);
+const move_to_trash_inner = (folder_path) => {
+  try {
+    ipcRenderer.sendSync("move_folder_to_trash", folder_path);
 
-        if (existsSync(folder_path)) {
-            err(er_obj('Cant delete folder'), 317, 'folder_is_locked');
-        }
-
-    } catch (er) {
-        err(er, 316);
+    if (existsSync(folder_path)) {
+      err(er_obj("Cant delete folder"), 317, "folder_is_locked");
     }
+  } catch (er) {
+    err(er, 316);
+  }
 };
 
 export const ob = observable({
-    folders: [],
+  folders: [],
 });
 
 export const mut = {
-    opened_folders: [],
-    chosen_folder_info: {},
+  opened_folders: [],
+  chosen_folder_info: {},
 };

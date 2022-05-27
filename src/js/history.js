@@ -5,7 +5,6 @@ import { existsSync, copySync, moveSync, removeSync, readdir, stat } from 'fs-ex
 import * as r from 'ramda';
 import { observable, action, toJS, configure } from 'mobx';
 import Store from 'electron-store';
-import { remote } from 'electron';
 
 import x from 'x';
 import { inputs_data, set_inputs_data } from 'js/inputs_data';
@@ -26,6 +25,8 @@ import * as folders from 'js/work_folder/folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
 import * as imgs from 'js/imgs';
 import * as tints from 'js/tints';
+
+const remote = require("@electron/remote");
 
 const readdir_p = promisify(readdir);
 const stat_p = promisify(stat);
@@ -629,7 +630,7 @@ const move_images_revert = (change, path_to_manifest_img, imgs_folder_1_name, im
 export const delete_all_history = async () => {
     try {
         const dialog_options = confirm.generate_confirm_options('delete_all_history_msg', 'delete_all_history_answer_delete');
-        const choice = remote.dialog.showMessageBox(confirm.con.win, dialog_options);
+        const choice = remote.dialog.showMessageBoxSync(confirm.con.win, dialog_options);
 
         analytics.add_options_btns_analytics('tried_to_delete_all_history');
 
