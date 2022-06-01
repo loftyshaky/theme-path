@@ -1,19 +1,5 @@
 import x from 'x';
 
-const option = (is_locale_option, label_modifier, val) => {
-    try {
-        return {
-            label: label_modifier ? create_option_data_text_val(is_locale_option, label_modifier) : val,
-            value: val || label_modifier,
-        };
-
-    } catch (er) {
-        err(er, 238);
-    }
-
-    return undefined;
-};
-
 //> create select label content t
 const create_option_data_text_val = (is_locale_option, label_modifier) => {
     try {
@@ -21,11 +7,9 @@ const create_option_data_text_val = (is_locale_option, label_modifier) => {
 
         if (is_locale_option) {
             return `${label_modifier} - ${text}`;
-
         }
 
         return text;
-
     } catch (er) {
         err(er, 48);
     }
@@ -33,6 +17,21 @@ const create_option_data_text_val = (is_locale_option, label_modifier) => {
     return undefined;
 };
 //< create select label content t
+
+const option = (is_locale_option, label_modifier, val) => {
+    try {
+        return {
+            label: label_modifier
+                ? create_option_data_text_val(is_locale_option, label_modifier)
+                : val,
+            value: val || label_modifier,
+        };
+    } catch (er) {
+        err(er, 238);
+    }
+
+    return undefined;
+};
 
 const create_video_volume_options = () => {
     try {
@@ -44,7 +43,7 @@ const create_video_volume_options = () => {
             },
         ];
 
-        for (let i = 100; i > 0; i--) {
+        for (let i = 100; i > 0; i -= 1) {
             const video_volume_option = {
                 label: i,
                 value: i,
@@ -54,7 +53,6 @@ const create_video_volume_options = () => {
         }
 
         return video_volume_options;
-
     } catch (er) {
         err(er, 188);
     }
@@ -154,15 +152,8 @@ export const selects_options = {
         option(false, 'stretch_screen'),
         option(false, 'stretch_browser'),
     ],
-    theme: [
-        option(false, 'light'),
-        option(false, 'dark'),
-    ],
-    language: [
-        option(false, 'system'),
-        option(false, 'en'),
-        option(false, 'ru'),
-    ],
+    theme: [option(false, 'light'), option(false, 'dark')],
+    language: [option(false, 'system'), option(false, 'en'), option(false, 'ru')],
     color_picker_default_mode: [
         option(false, null, 'HEX'),
         option(false, null, 'RGBA'),

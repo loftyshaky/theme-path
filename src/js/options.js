@@ -1,45 +1,9 @@
-import { observable, action, configure } from 'mobx';
+import { observable, action } from 'mobx';
 import Store from 'electron-store';
 
 import x from 'x';
 
 const store = new Store();
-configure({ enforceActions: 'observed' });
-
-export const load_theme = action(() => {
-    try {
-        const theme_setting = store.get('theme');
-
-        if (theme_setting === 'light') {
-            x.load_css(theme_setting);
-
-        } else if (theme_setting === 'dark') {
-            x.remove(s('.light'));
-        }
-
-        ob.theme = theme_setting;
-
-    } catch (er) {
-        err(er, 54);
-    }
-});
-
-export const load_setting = action(() => {
-    try {
-        Object.values(inputs_data.obj.options).forEach(item => {
-            const new_item = item;
-
-            new_item.val = store.get(item.name);
-        });
-
-        open_and_pack.update_chrome_exe_paths_observable();
-        open_and_pack.update_chrome_user_data_folders_observable();
-        custom_folders.update_custom_folders_observable();
-
-    } catch (er) {
-        err(er, 55);
-    }
-});
 
 export const ob = observable({
     theme: store.get('theme'),
@@ -58,3 +22,35 @@ export const ob = observable({
 const open_and_pack = require('js/open_and_pack');
 const custom_folders = require('js/work_folder/custom_folders');
 const { inputs_data } = require('js/inputs_data');
+
+export const load_theme = action(() => {
+    try {
+        const theme_setting = store.get('theme');
+
+        if (theme_setting === 'light') {
+            x.load_css(theme_setting);
+        } else if (theme_setting === 'dark') {
+            x.remove(s('.light'));
+        }
+
+        ob.theme = theme_setting;
+    } catch (er) {
+        err(er, 54);
+    }
+});
+
+export const load_setting = action(() => {
+    try {
+        Object.values(inputs_data.obj.options).forEach((item) => {
+            const new_item = item;
+
+            new_item.val = store.get(item.name);
+        });
+
+        open_and_pack.update_chrome_exe_paths_observable();
+        open_and_pack.update_chrome_user_data_folders_observable();
+        custom_folders.update_custom_folders_observable();
+    } catch (er) {
+        err(er, 55);
+    }
+});

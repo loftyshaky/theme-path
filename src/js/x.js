@@ -1,17 +1,17 @@
-import * as r from "ramda";
+import * as r from 'ramda';
 
-import { join } from "path";
-import Store from "electron-store";
+import { join } from 'path';
+import Store from 'electron-store';
 
-import package_json from "package_json"; // eslint-disable-line import/no-unresolved
+import package_json from 'package_json'; // eslint-disable-line import/no-unresolved
 
-const remote = require("@electron/remote");
+// eslint-disable-next-line import/no-extraneous-dependencies
+const remote = require('@electron/remote');
 
 const store = new Store();
 
-const os_lang = remote.getGlobal("os_lang");
-window.user_language =
-  store.get("language") === "system" ? os_lang : store.get("language");
+const os_lang = remote.getGlobal('os_lang');
+window.user_language = store.get('language') === 'system' ? os_lang : store.get('language');
 const loc = require(`locales/${user_language}.json`); // eslint-disable-line import/no-dynamic-require
 require(`locale_css/${user_language}`); // eslint-disable-line import/no-dynamic-require
 
@@ -22,9 +22,7 @@ window.l = console.log.bind(remote); // eslint-disable-line no-console
 //< console.log
 
 window.app_version = package_json.version;
-window.app_root = remote.getGlobal("dev")
-  ? process.cwd()
-  : join(remote.app.getAppPath(), "../../");
+window.app_root = remote.getGlobal('dev') ? process.cwd() : join(remote.app.getAppPath(), '../../');
 
 //> selecting elements
 window.s = (selector) => document.querySelector(selector); // $
@@ -32,240 +30,233 @@ window.s = (selector) => document.querySelector(selector); // $
 window.sa = (selector) => document.querySelectorAll(selector); // $ All
 
 window.sb = (
-  base_element,
-  selector // $ with base element
+    base_element,
+    selector, // $ with base element
 ) => (base_element ? base_element.querySelector(selector) : null);
 
 window.sab = (
-  base_element,
-  selector // $ All with base element
+    base_element,
+    selector, // $ All with base element
 ) => (base_element ? base_element.querySelectorAll(selector) : null);
 //< selecting elements
 
 //> dom manipulation
 x.create = (el_type, class_name) => {
-  // create element
-  const el = document.createElement(el_type);
-  el.className = class_name;
+    // create element
+    const el = document.createElement(el_type);
+    el.className = class_name;
 
-  return el;
+    return el;
 };
 
 x.append = (el, child) => {
-  // append child
-  if (el && el.nodeType === 1) {
-    // if not document
-    el.appendChild(child);
-  }
+    // append child
+    if (el && el.nodeType === 1) {
+        // if not document
+        el.appendChild(child);
+    }
 };
 
 x.remove = (el) => {
-  // remove child
-  if (el && el.nodeType === 1) {
-    // if not document
-    el.parentNode.removeChild(el);
-  }
+    // remove child
+    if (el && el.nodeType === 1) {
+        // if not document
+        el.parentNode.removeChild(el);
+    }
 };
 
 x.remove_a = (els) => {
-  // remove child
-  if (els && Object.prototype.isPrototypeOf.call(NodeList.prototype, els)) {
-    // NodeList.prototype.isPrototypeOf(els) * returns true if els is node list (querySelectorAll) not (querySelector)
-    for (const el of els) {
-      el.parentNode.removeChild(el);
+    // remove child
+    if (els && Object.prototype.isPrototypeOf.call(NodeList.prototype, els)) {
+        // NodeList.prototype.isPrototypeOf(els) * returns true if els is node list (querySelectorAll) not (querySelector)
+        for (const el of els) {
+            el.parentNode.removeChild(el);
+        }
     }
-  }
 };
 
 x.before = (el_to_insert_before, el_to_insert) => {
-  // insert before
-  if (el_to_insert_before && el_to_insert.nodeType === 1) {
-    // if not document
-    el_to_insert_before.parentNode.insertBefore(
-      el_to_insert,
-      el_to_insert_before
-    );
-  }
+    // insert before
+    if (el_to_insert_before && el_to_insert.nodeType === 1) {
+        // if not document
+        el_to_insert_before.parentNode.insertBefore(el_to_insert, el_to_insert_before);
+    }
 };
 
 x.after = (el_to_insert_after, el_to_insert) => {
-  // insert after
-  if (el_to_insert_after && el_to_insert.nodeType === 1) {
-    // if not document
-    el_to_insert_after.parentNode.insertBefore(
-      el_to_insert,
-      el_to_insert_after.nextElementSibling
-    );
-  }
+    // insert after
+    if (el_to_insert_after && el_to_insert.nodeType === 1) {
+        // if not document
+        el_to_insert_after.parentNode.insertBefore(
+            el_to_insert,
+            el_to_insert_after.nextElementSibling,
+        );
+    }
 };
 
 x.as_first = (el_to_insert_first, el_to_insert) => {
-  // insert as the first child
-  if (el_to_insert_first && el_to_insert.nodeType === 1) {
-    // if not document
-    el_to_insert_first.insertBefore(
-      el_to_insert,
-      el_to_insert_first.firstElementChild
-    );
-  }
+    // insert as the first child
+    if (el_to_insert_first && el_to_insert.nodeType === 1) {
+        // if not document
+        el_to_insert_first.insertBefore(el_to_insert, el_to_insert_first.firstElementChild);
+    }
 };
 //< dom manipulation
 
 x.matches = (el, selector) => {
-  if (el && el.nodeType === 1) {
-    // if not document
-    return el.matches(selector);
-  }
+    if (el && el.nodeType === 1) {
+        // if not document
+        return el.matches(selector);
+    }
 
-  return false;
+    return false;
 };
 
 x.closest = (el, selector) => {
-  if (el && el.nodeType === 1) {
-    // if not document
-    return el.closest(selector);
-  }
+    if (el && el.nodeType === 1) {
+        // if not document
+        return el.closest(selector);
+    }
 
-  return false;
+    return false;
 };
 
-x.move = (from, to, arr) =>
-  r.insert(to, r.nth(from, arr), r.remove(from, 1, arr));
+x.move = (from, to, arr) => r.insert(to, r.nth(from, arr), r.remove(from, 1, arr));
 
 x.remove_cls = (el, cls_name) => {
-  if (el && el.nodeType === 1) {
-    // if not document
-    el.classList.remove(cls_name);
-  }
+    if (el && el.nodeType === 1) {
+        // if not document
+        el.classList.remove(cls_name);
+    }
 };
 
 x.add_cls = (el, cls_name) => {
-  if (el && el.nodeType === 1) {
-    // if not document
-    el.classList.add(cls_name);
-  }
+    if (el && el.nodeType === 1) {
+        // if not document
+        el.classList.add(cls_name);
+    }
 };
 
 //> move an array item
 x.move_a_item = (a, from, to) => {
-  a.splice(to, 0, a.splice(from, 1)[0]);
+    a.splice(to, 0, a.splice(from, 1)[0]);
 };
 //< move an array item
 
 //> add event listener to one or multiple elements t
 x.bind = (els, event, f) => {
-  if (els) {
-    if (Object.prototype.isPrototypeOf.call(NodeList.prototype, els)) {
-      // NodeList.prototype.isPrototypeOf(els) * returns true if els is node list (querySelectorAll) not (querySelector)
-      for (const el of els) {
-        el.addEventListener(event, f);
-      }
-    } else {
-      els.addEventListener(event, f);
+    if (els) {
+        if (Object.prototype.isPrototypeOf.call(NodeList.prototype, els)) {
+            // NodeList.prototype.isPrototypeOf(els) * returns true if els is node list (querySelectorAll) not (querySelector)
+            for (const el of els) {
+                el.addEventListener(event, f);
+            }
+        } else {
+            els.addEventListener(event, f);
+        }
     }
-  }
 };
 //< add event listener to one or multiple elements t
 
 //> add event listener with arguments to one or multiple elements t
 x.bind_a = (els, event, f, args) => {
-  if (els) {
-    if (Object.prototype.isPrototypeOf.call(NodeList.prototype, els)) {
-      // NodeList.prototype.isPrototypeOf(els) * returns true if els is node list (querySelectorAll) not (querySelector)
-      for (const el of els) {
-        el.addEventListener(event, f.bind(...[el].concat(args)));
-      }
-    } else {
-      els.addEventListener(event, f.bind(...[els].concat(args)));
+    if (els) {
+        if (Object.prototype.isPrototypeOf.call(NodeList.prototype, els)) {
+            // NodeList.prototype.isPrototypeOf(els) * returns true if els is node list (querySelectorAll) not (querySelector)
+            for (const el of els) {
+                el.addEventListener(event, f.bind(...[el].concat(args)));
+            }
+        } else {
+            els.addEventListener(event, f.bind(...[els].concat(args)));
+        }
     }
-  }
 };
 //< add event listener with arguments to one or multiple elements t
 
 x.load_css = (filename) => {
-  let link;
+    let link;
 
-  if (!sb(document.head, `.${filename}`)) {
-    link = document.createElement("link");
-    link.className = filename;
-    link.href = `${filename}.css`;
-    link.setAttribute("rel", "stylesheet");
-    link.setAttribute("type", "text/css");
-    x.append(document.head, link);
-  }
+    if (!sb(document.head, `.${filename}`)) {
+        link = document.createElement('link');
+        link.className = filename;
+        link.href = `${filename}.css`;
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('type', 'text/css');
+        x.append(document.head, link);
+    }
 
-  return link;
+    return link;
 };
 
 x.debounce = (f, wait, immediate) => {
-  let timeout;
+    let timeout;
 
-  return function () {
-    // eslint-disable-line func-names
-    const context = this;
-    const args = arguments; // eslint-disable-line prefer-rest-params
+    return function () {
+        // eslint-disable-line func-names
+        const context = this;
+        const args = arguments; // eslint-disable-line prefer-rest-params
 
-    const later = () => {
-      timeout = null;
+        const later = () => {
+            timeout = null;
 
-      if (!immediate) {
-        f.apply(context, args);
-      }
+            if (!immediate) {
+                f.apply(context, args);
+            }
+        };
+
+        const call_now = immediate && !timeout;
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(later, wait);
+
+        if (call_now) {
+            f.apply(context, args);
+        }
     };
-
-    const call_now = immediate && !timeout;
-
-    clearTimeout(timeout);
-
-    timeout = setTimeout(later, wait);
-
-    if (call_now) {
-      f.apply(context, args);
-    }
-  };
 };
 
-x.delay = (delay) =>
-  new Promise((resolve) => window.setTimeout(() => resolve(), delay));
+// eslint-disable-next-line no-promise-executor-return
+x.delay = (delay) => new Promise((resolve) => window.setTimeout(() => resolve(), delay));
 
 x.unique_id = () => {
-  const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const len = possible.length;
-  let unique_id = Date.now();
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const len = possible.length;
+    let unique_id = Date.now();
 
-  for (let i = 0; i < 8; i++) {
-    unique_id += possible.charAt(Math.floor(Math.random() * len));
-  }
+    for (let i = 0; i < 8; i += 1) {
+        unique_id += possible.charAt(Math.floor(Math.random() * len));
+    }
 
-  return unique_id;
+    return unique_id;
 };
 
 x.cls = (classes) => {
-  const pipe_f = r.pipe(r.filter, r.values, r.join(" "));
+    const pipe_f = r.pipe(r.filter, r.values, r.join(' '));
 
-  return pipe_f((item) => item, classes);
+    return pipe_f((item) => item, classes);
 };
 
 //> localization
 x.msg = (msg) => loc[msg];
 
 x.localize = (base_element) => {
-  const localize_inner = (item_key, loc_key) => {
-    const arr = sab(base_element, `[data-${loc_key}]`);
+    const localize_inner = (item_key, loc_key) => {
+        const arr = sab(base_element, `[data-${loc_key}]`);
 
-    arr.forEach((item) => {
-      const new_item = item;
-      new_item[item_key] = x.msg(item.dataset[loc_key]);
-    });
-  };
+        arr.forEach((item) => {
+            const new_item = item;
+            new_item[item_key] = x.msg(item.dataset[loc_key]);
+        });
+    };
 
-  const localize_inner_cur = r.curry(localize_inner)(r.__, r.__, "");
+    // eslint-disable-next-line no-underscore-dangle
+    const localize_inner_cur = r.curry(localize_inner)(r.__, r.__, '');
 
-  localize_inner_cur("innerHTML", "text");
-  localize_inner_cur("placeholder", "placeholder");
-  localize_inner_cur("href", "href");
-  localize_inner_cur("title", "title");
+    localize_inner_cur('innerHTML', 'text');
+    localize_inner_cur('placeholder', 'placeholder');
+    localize_inner_cur('href', 'href');
+    localize_inner_cur('title', 'title');
 };
 //< localization
 

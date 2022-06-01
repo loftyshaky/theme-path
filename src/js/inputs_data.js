@@ -1,4 +1,4 @@
-import { observable, action, configure } from 'mobx';
+import { observable, action } from 'mobx';
 import * as r from 'ramda';
 import Store from 'electron-store';
 
@@ -6,7 +6,6 @@ import x from 'x';
 import * as options from 'js/options';
 
 const store = new Store();
-configure({ enforceActions: 'observed' });
 
 const { color_input_default } = options.ob.theme_vals[store.get('theme')];
 
@@ -22,7 +21,6 @@ const textarea = (name, add_help, counter, char_limit) => {
             char_limit,
             bulk_copy_checkbox_checked_by_default: false,
         };
-
     } catch (er) {
         err(er, 233);
     }
@@ -39,7 +37,6 @@ const select = (name, val, add_help) => {
             add_help,
             bulk_copy_checkbox_checked_by_default: true,
         };
-
     } catch (er) {
         err(er, 234);
     }
@@ -47,7 +44,7 @@ const select = (name, val, add_help) => {
     return undefined;
 };
 
-const checkbox = name => {
+const checkbox = (name) => {
     try {
         return {
             name,
@@ -55,7 +52,6 @@ const checkbox = name => {
             val: true,
             add_help: false,
         };
-
     } catch (er) {
         err(er, 237);
     }
@@ -63,7 +59,7 @@ const checkbox = name => {
     return undefined;
 };
 
-const color = name => {
+const color = (name) => {
     try {
         return {
             name,
@@ -76,7 +72,6 @@ const color = name => {
             add_help: true,
             bulk_copy_checkbox_checked_by_default: true,
         };
-
     } catch (er) {
         err(er, 236);
     }
@@ -101,9 +96,11 @@ const img_selector = (name, bulk_copy_checkbox_checked_by_default) => {
             default: true,
             changed_color_once_after_focus: false,
             add_help: true,
-            bulk_copy_checkbox_checked_by_default: typeof bulk_copy_checkbox_checked_by_default === 'boolean' ? bulk_copy_checkbox_checked_by_default : true,
+            bulk_copy_checkbox_checked_by_default:
+                typeof bulk_copy_checkbox_checked_by_default === 'boolean'
+                    ? bulk_copy_checkbox_checked_by_default
+                    : true,
         };
-
     } catch (er) {
         err(er, 235);
     }
@@ -111,7 +108,7 @@ const img_selector = (name, bulk_copy_checkbox_checked_by_default) => {
     return undefined;
 };
 
-const tint = name => {
+const tint = (name) => {
     try {
         return {
             name,
@@ -122,7 +119,6 @@ const tint = name => {
             add_help: true,
             bulk_copy_checkbox_checked_by_default: true,
         };
-
     } catch (er) {
         err(er, 325);
     }
@@ -130,13 +126,12 @@ const tint = name => {
     return undefined;
 };
 
-const options_btns = name => {
+const options_btns = (name) => {
     try {
         return {
             name,
             type: 'options_btns',
         };
-
     } catch (er) {
         err(er, 239);
     }
@@ -241,7 +236,6 @@ Object.entries(inputs).forEach(([family, elements]) => {
 
             return obj;
         }, {});
-
     } catch (er) {
         err(er, 232);
     }
@@ -251,26 +245,24 @@ export const inputs_data = observable({
     obj: inputs,
 });
 
+const data_obj_default = r.clone(inputs_data.obj);
+
 export const reset_inputs_data = action(() => {
     try {
         inputs_data.obj = data_obj_default;
 
         options.load_setting();
-
     } catch (er) {
         err(er, 45);
     }
 });
 
-export const set_inputs_data = action(new_inputs_data => {
+export const set_inputs_data = action((new_inputs_data) => {
     try {
         inputs_data.obj = new_inputs_data;
-
     } catch (er) {
         err(er, 201);
     }
 });
-
-const data_obj_default = r.clone(inputs_data.obj);
 
 observable(inputs_data);

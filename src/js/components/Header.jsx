@@ -21,22 +21,22 @@ import * as search from 'js/work_folder/search';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as custom_folders from 'js/work_folder/custom_folders';
 
-import { Tutorial_item } from 'components/Tutorial_item';
-import { History_fieldset_protecting_screen } from 'components/Protecting_screen';
+import { TutorialItem } from 'components/TutorialItem';
+import { HistoryFieldsetProtectingScreen } from 'components/ProtectingScreen';
 
-import add_svg from 'svg/add';
-import dehaze_svg from 'svg/dehaze';
-import arrow_upward_svg from 'svg/arrow_upward';
-import visibility_svg from 'svg/visibility';
-import open_in_browser_svg from 'svg/open_in_browser';
-import archive_svg from 'svg/archive';
-import settings_applications_svg from 'svg/settings_applications';
-import help_svg from 'svg/help';
-import history_svg from 'svg/history';
-import layers_clear_svg from 'svg/layers_clear';
-import upload_svg from 'svg/upload';
-import queue_svg from 'svg/queue';
-import delete_svg from 'svg/delete';
+import add_svg from 'svg/add.svg';
+import dehaze_svg from 'svg/dehaze.svg';
+import arrow_upward_svg from 'svg/arrow_upward.svg';
+import visibility_svg from 'svg/visibility.svg';
+import open_in_browser_svg from 'svg/open_in_browser.svg';
+import archive_svg from 'svg/archive.svg';
+import settings_applications_svg from 'svg/settings_applications.svg';
+import help_svg from 'svg/help.svg';
+import history_svg from 'svg/history.svg';
+import layers_clear_svg from 'svg/layers_clear.svg';
+import upload_svg from 'svg/upload.svg';
+import queue_svg from 'svg/queue.svg';
+import delete_svg from 'svg/delete.svg';
 
 export class Header extends React.Component {
     constructor(props) {
@@ -54,213 +54,216 @@ export class Header extends React.Component {
 
                 analytics.send_event('header_items', 'input-search_input');
             }
-
         } catch (er) {
             err(er, 164);
         }
-    }
+    };
 
     on_blur_search_input = () => {
         try {
             this.entered_one_char_in_search_input_after_focus = false;
-
         } catch (er) {
             err(er, 168);
         }
-    }
+    };
 
     create_new_theme = () => {
         analytics.add_header_btns_analytics('new_theme');
 
         expand_or_collapse.create_new_theme_or_folder(null);
-    }
+    };
 
     render() {
-        const chrome_exe_paths = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_exe_paths);
-        const chrome_user_data_folders = custom_paths_btns.create_paths_arr(open_and_pack.ob.chrome_user_data_folders);
-        const custom_folders_var = custom_paths_btns.create_paths_arr(custom_folders.ob.custom_folders);
+        const chrome_exe_paths = custom_paths_btns.create_paths_arr(
+            open_and_pack.ob.chrome_exe_paths,
+        );
+        const chrome_user_data_folders = custom_paths_btns.create_paths_arr(
+            open_and_pack.ob.chrome_user_data_folders,
+        );
+        const custom_folders_var = custom_paths_btns.create_paths_arr(
+            custom_folders.ob.custom_folders,
+        );
 
         return (
             <header>
-                <span className="header_section header_left">
-                    <div className="btn_w">
+                <span className='header_section header_left'>
+                    <div className='btn_w'>
                         <Btn
-                            name="new_theme"
+                            name='new_theme'
                             label_text={x.msg('new_theme_btn_label_text')}
                             svg={add_svg}
                             f={this.create_new_theme}
                         />
-                        <Tutorial_item
-                            name="create_new_theme"
-                            tutorial_stage="3"
-                        />
+                        <TutorialItem name='create_new_theme' tutorial_stage='3' />
                     </div>
-                    {
-                        custom_folders_var.map((folder_path, i) => (
-                            <Btn
-                                key={x.unique_id()}
-                                name="open_folder"
-                                title={`${x.msg('create_custom_folder_btn_title')} - ${folder_path}`}
-                                no={i + 1}
-                                f={() => header.create_custom_folder(folder_path)}
-                            />
-                        ))
-                    }
+                    {custom_folders_var.map((folder_path, i) => (
+                        <Btn
+                            key={x.unique_id()}
+                            name='open_folder'
+                            title={`${x.msg('create_custom_folder_btn_title')} - ${folder_path}`}
+                            no={i + 1}
+                            f={() => header.create_custom_folder(folder_path)}
+                        />
+                    ))}
                     <input
-                        className="search_input"
-                        type="text"
-                        data-placeholder="search_input_placeholder"
+                        className='search_input'
+                        type='text'
+                        data-placeholder='search_input_placeholder'
                         disabled={els_state.com2.inputs_disabled_5}
                         onInput={this.on_input_in_search_input}
                         onBlur={this.on_blur_search_input}
                     />
                 </span>
-                <span className="header_section header_right">
-                    {
-                        chrome_user_data_folders.map((folder_path, i) => {
-                            const exe = chrome_exe_paths[i] ? chrome_exe_paths[i] : chrome_exe_paths[0];
+                <span className='header_section header_right'>
+                    {chrome_user_data_folders.map((folder_path, i) => {
+                        const exe = chrome_exe_paths[i] ? chrome_exe_paths[i] : chrome_exe_paths[0];
 
-                            return (
-                                <Btn
-                                    key={x.unique_id()}
-                                    name="open_folder"
-                                    btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
-                                    title={`${x.msg('open_in_chrome_btn_title')} - ${folder_path}`}
-                                    attach_action_to_on_key_up_too
-                                    add_auxclick_e
-                                    no={i + 1}
-                                    f={e => open_and_pack.open_in_chrome(exe, folder_path, e)}
-                                />
-                            );
-                        })
-                    }
-                    <div className="btn_w">
+                        return (
+                            <Btn
+                                key={x.unique_id()}
+                                name='open_folder'
+                                btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
+                                title={`${x.msg('open_in_chrome_btn_title')} - ${folder_path}`}
+                                attach_action_to_on_key_up_too
+                                add_auxclick_e
+                                no={i + 1}
+                                f={(e) => open_and_pack.open_in_chrome(exe, folder_path, e)}
+                            />
+                        );
+                    })}
+                    <div className='btn_w'>
                         <Btn
-                            name="open_in_chrome"
+                            name='open_in_chrome'
                             btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                             attach_action_to_on_key_up_too
                             add_auxclick_e
                             svg={open_in_browser_svg}
-                            f={e => open_and_pack.open_in_chrome(null, null, e)}
+                            f={(e) => open_and_pack.open_in_chrome(null, null, e)}
                         />
-                        <Tutorial_item
-                            name="open_in_chrome"
-                            tutorial_stage="6"
-                        />
+                        <TutorialItem name='open_in_chrome' tutorial_stage='6' />
                     </div>
                     <Btn
-                        name="history"
+                        name='history'
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         svg={history_svg}
                         f={history.load_history}
                     />
                     <Btn
-                        name="bulk_copy"
+                        name='bulk_copy'
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         label_text={chosen_folder_path.ob.bulk_theme_count}
                         svg={queue_svg}
                         f={() => bulk_copy.show_or_hide_bulk_copy(true)}
                     />
                     <Btn
-                        name="deselect_all_bulk_folders"
+                        name='deselect_all_bulk_folders'
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         svg={layers_clear_svg}
                         f={chosen_folder_path.deselect_all_bulk_folders}
                     />
                     <Btn
-                        name="collapse_all_folders"
+                        name='collapse_all_folders'
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         svg={dehaze_svg}
                         f={folders.collapse_all_folders}
                     />
                     <Btn
-                        name="show_folder"
+                        name='show_folder'
                         svg={arrow_upward_svg}
                         f={() => show_or_open_folder.show_or_open_folder('show')}
                     />
                     <Btn
-                        name="open_folder"
+                        name='open_folder'
                         svg={visibility_svg}
                         f={() => show_or_open_folder.show_or_open_folder('open')}
                     />
                     <Btn
-                        name="reupload_img"
+                        name='reupload_img'
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
-                        title={`${x.msg('reupload_img_btn_title')}${reupload_img.ob.previous_img_path ? ` - ${reupload_img.ob.previous_img_path}` : ''}`}
+                        title={`${x.msg('reupload_img_btn_title')}${
+                            reupload_img.ob.previous_img_path
+                                ? ` - ${reupload_img.ob.previous_img_path}`
+                                : ''
+                        }`}
                         svg={upload_svg}
                         f={() => imgs.handle_files('reupload')}
                     />
                     <Btn
-                        name="move_to_trash"
+                        name='move_to_trash'
                         btn_is_inactive_class={els_state.try_to_set_btn_is_inactive_class()}
                         svg={delete_svg}
                         f={() => folders.move_to_trash()}
                     />
-                    <div className="btn_w">
+                    <div className='btn_w'>
                         <Btn
-                            name="pack_as_zip"
-                            label_text="ZIP"
+                            name='pack_as_zip'
+                            label_text='ZIP'
                             btn_is_inactive_class
                             custom_action
                             svg={archive_svg}
                             f={() => header.pack('zip')}
                         />
                         <Btn
-                            name="pack_as_crx"
-                            label_text="CRX"
+                            name='pack_as_crx'
+                            label_text='CRX'
                             btn_is_inactive_class
                             custom_action
                             svg={archive_svg}
                             f={() => header.pack('crx')}
                         />
-                        <Tutorial_item
-                            name="pack"
-                            tutorial_stage="7"
-                        />
+                        <TutorialItem name='pack' tutorial_stage='7' />
                     </div>
                     <Btn
-                        name="options"
+                        name='options'
                         svg={settings_applications_svg}
                         custom_action
                         f={() => header.toggle_popup_f('options')}
                     />
                     <Btn
-                        name="help"
+                        name='help'
                         custom_action
                         svg={help_svg}
                         f={() => header.toggle_popup_f('help')}
                     />
                 </span>
-                <History_fieldset_protecting_screen />
+                <HistoryFieldsetProtectingScreen />
             </header>
         );
     }
 }
 
-
-const Btn = props => {
-    const { name, btn_is_inactive_class, label_text, title, no, svg, custom_action, attach_action_to_on_key_up_too, add_auxclick_e, f } = props;
+const Btn = (props) => {
+    const {
+        name,
+        btn_is_inactive_class,
+        label_text,
+        title,
+        no,
+        svg,
+        custom_action,
+        attach_action_to_on_key_up_too,
+        add_auxclick_e,
+        f,
+    } = props;
     let btn_content = <Svg src={svg} />;
 
     if (!r.isNil(label_text)) {
         btn_content = (
-            <React.Fragment>
+            <>
                 <span>
                     <Svg src={svg} />
                 </span>
                 <label>{label_text}</label>
-            </React.Fragment>
+            </>
         );
-
     } else if (no) {
         btn_content = no;
     }
 
-    const action = e => {
+    const action = (e) => {
         try {
             f(e);
             analytics.add_header_btns_analytics(name);
-
         } catch (er) {
             err(er, 165);
         }
@@ -278,12 +281,12 @@ const Btn = props => {
             className={x.cls([
                 'header_btn',
                 'header_btn_icon',
-                !r.isNil(label_text) ? 'label_btn' : null,
+                r.isNil(label_text) ? null : 'label_btn',
                 no ? 'numered_btn' : null,
                 `${name}_btn`,
                 btn_is_inactive_class ? els_state.try_to_set_btn_is_inactive_class() : null,
             ])}
-            type="button"
+            type='button'
             title={title || x.msg(`${name}_btn_title`)}
             disabled={els_state.com2.inputs_disabled_5}
             onClick={click_f}

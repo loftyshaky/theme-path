@@ -1,28 +1,28 @@
-import Store from "electron-store";
+import Store from 'electron-store';
 
-import * as help_viewer from "js/help_viewer";
-import * as tutorial from "js/tutorial";
+import * as help_viewer from 'js/help_viewer';
+import * as tutorial from 'js/tutorial';
 
 const store = new Store();
 
 export const send_pageview = async (page) => {
-  try {
-    // check_if_analytics_enabled(() => send_request('pageview', page, null, null));
-  } catch (er) {
-    err(er, 194);
-  }
+    try {
+        // check_if_analytics_enabled(() => send_request('pageview', page, null, null));
+    } catch (er) {
+        err(er, 194);
+    }
 };
 
 export const send_event = (category, action) => {
-  try {
-    //  check_if_analytics_enabled(() => send_request('event', null, category, action));
-  } catch (er) {
-    err(er, 195);
-  }
+    try {
+        //  check_if_analytics_enabled(() => send_request('event', null, category, action));
+    } catch (er) {
+        err(er, 195);
+    }
 };
 
 const check_if_analytics_enabled = (callback) => {
-  /*
+    /*
     try {
         const allow_analytics = store.get('enable_analytics');
 
@@ -37,7 +37,7 @@ const check_if_analytics_enabled = (callback) => {
 };
 
 export const send_request = async (mode, page, category, action, callback) => {
-  /*
+    /*
     try {
         const tracking_id = con.dev ? 'UA-131099848-3' : 'UA-131099848-1';
         const client_id_try = await store.get('client_id');
@@ -66,65 +66,65 @@ export const send_request = async (mode, page, category, action, callback) => {
 };
 
 export const add_header_btns_analytics = (name) => {
-  send_event("header_items", `clicked-${name}`);
+    send_event('header_items', `clicked-${name}`);
 };
 
 export const add_work_folder_analytics = (action) => {
-  send_event("work_folder", `${action}`);
+    send_event('work_folder', `${action}`);
 };
 
 export const add_help_viewer_analytics = (action) => {
-  send_event(
-    "help_viewer",
-    `${action}-${help_viewer.mut.current_family}-${help_viewer.mut.current_name}`
-  );
+    send_event(
+        'help_viewer',
+        `${action}-${help_viewer.mut.current_family}-${help_viewer.mut.current_name}`,
+    );
 };
 
 export const add_tutorial_analytics = (action) => {
-  send_event("tutorial", `${action}_at_stage_${tutorial.ob.tutorial_stage}`);
+    send_event('tutorial', `${action}_at_stage_${tutorial.ob.tutorial_stage}`);
 };
 
 export const add_options_btns_analytics = (action) => {
-  send_event("options_btns", `${action}`);
+    send_event('options_btns', `${action}`);
 };
 
 export const add_popup_close_btns_analytics = (name) => {
-  send_event("popup_close_btns", `clicked-${name}`);
+    send_event('popup_close_btns', `clicked-${name}`);
 };
 
 export const add_history_analytics = (name) => {
-  send_event("history", `clicked-${name}`);
+    send_event('history', `clicked-${name}`);
 };
 
 export const add_bulk_copy_analytics = (name) => {
-  send_event("bulk_copy", `clicked-${name}`);
+    send_event('bulk_copy', `clicked-${name}`);
 };
 
 export const add_bulk_copy_action_analytics = (action) => {
-  send_event("bulk_copy", `${action}`);
+    send_event('bulk_copy', `${action}`);
 };
 
 export const add_pack_analytics = (type, action) => {
-  send_event("pack", `${type}-${action}`);
+    send_event('pack', `${type}-${action}`);
 };
 
 export const move_to_trash_analytics = (action) => {
-  send_event("move_to_trash", action);
+    send_event('move_to_trash', action);
 };
 
 export const track_app_start = () => {
-  send_pageview("main");
-  send_event("app_version", app_version);
-  send_event("app_host", process.windowsStore ? "microsoft_store" : "package");
+    send_pageview('main');
+    send_event('app_version', app_version);
+    send_event('app_host', process.windowsStore ? 'microsoft_store' : 'package');
 };
 
 const con = {
-  dev: !!(
-    process.defaultApp ||
-    /[\\/]electron-prebuilt[\\/]/.test(process.execPath) ||
-    /[\\/]electron[\\/]/.test(process.execPath)
-  ),
-  generated_client_id: `${
-    Math.floor(Math.random() * (2147483647 - 1000000000 + 1)) + 1000000000
-  }.${Math.floor(new Date().getTime() / 1000)}`, // eqwuavelent of php rand(1000000000, 2147483647) . '.' . time();
+    dev: !!(
+        process.defaultApp ||
+        /[\\/]electron-prebuilt[\\/]/.test(process.execPath) ||
+        /[\\/]electron[\\/]/.test(process.execPath)
+    ),
+    generated_client_id: `${
+        Math.floor(Math.random() * (2147483647 - 1000000000 + 1)) + 1000000000
+    }.${Math.floor(new Date().getTime() / 1000)}`, // eqwuavelent of php rand(1000000000, 2147483647) . '.' . time();
 };

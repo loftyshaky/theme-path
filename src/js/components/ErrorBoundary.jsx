@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import x from 'x';
 import * as error from 'js/error';
 
-export class Error_boundary extends React.Component {
+export class ErrorBoundary extends React.Component {
     static getDerivedStateFromError() {
         error.set_component_has_er(true);
     }
@@ -21,8 +21,8 @@ export class Error_boundary extends React.Component {
         if (error.ob.component_has_er) {
             return (
                 <button
-                    className="btn reload_ui_btn"
-                    type="button"
+                    className='btn reload_ui_btn'
+                    type='button'
                     onClick={error.set_component_has_er.bind(null, false)}
                 >
                     {x.msg('reload_ui_btn_text')}
@@ -36,4 +36,4 @@ export class Error_boundary extends React.Component {
     }
 }
 
-observer(Error_boundary);
+observer(ErrorBoundary);

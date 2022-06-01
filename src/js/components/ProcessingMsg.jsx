@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import x from 'x';
 import * as processing_msg from 'js/processing_msg';
 
-export class Processing_msg extends React.Component {
+export class ProcessingMsg extends React.Component {
     componentDidUpdate() {
         if (processing_msg.mut.processing) {
             window.requestAnimationFrame(async () => {
@@ -21,13 +21,16 @@ export class Processing_msg extends React.Component {
 
     render() {
         return (
-            <div className={x.cls(['processing_msg', processing_msg.ob.processing_msg_is_visible ? '' : 'none'])}>
-                <div
-                    data-text="processing_message_text"
-                />
+            <div
+                className={x.cls([
+                    'processing_msg',
+                    processing_msg.ob.processing_msg_is_visible ? '' : 'none',
+                ])}
+            >
+                <div data-text='processing_message_text' />
             </div>
         );
     }
 }
 
-observer(Processing_msg);
+observer(ProcessingMsg);

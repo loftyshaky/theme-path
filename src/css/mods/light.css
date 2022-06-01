@@ -4,14 +4,14 @@
 
 ::-webkit-scrollbar {
     width: 15px;
-    background-color: #dddddd;
+    background-color: #ddd;
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: #3892ff;
     background-clip: content-box;
-    border-left: 4px solid #dddddd;
-    border-right: 4px solid #dddddd;
+    border-left: 4px solid #ddd;
+    border-right: 4px solid #ddd;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -142,7 +142,7 @@ body.using_mouse .header_btn:hover:focus svg,
     background-color: #a5f3ab;
 }
 
-/*> selects */
+/* > selects */
 .select__control {
     border-color: #212121 !important;
 }
@@ -151,10 +151,6 @@ body.using_mouse .header_btn:hover:focus svg,
 .select__menu_is_focused {
     box-shadow: 0 0 5px #3892ff !important;
     border-color: #3892ff !important;
-}
-
-.select__control--is-focused .select__dropdown-indicator svg {
-    fill: #fbff75;
 }
 
 .select__option,
@@ -182,7 +178,8 @@ body.using_mouse .header_btn:hover:focus svg,
 .select__option--is-selected {
     background-color: #fbff75 !important;
 }
-/*< selects */
+
+/* < selects */
 
 textarea:focus,
 .number_input:focus,
@@ -230,21 +227,20 @@ ul.help_block .important {
 
 .upload_box_browse_label:focus,
 .close_btn:focus,
-a:focus,
 a:focus {
     outline: 1px solid #3892ff;
 }
 
 .protecting_screen,
 .fieldset_protecting_screen {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(255 255 255 / 80%);
 }
 
 .skip_tutorial_btn {
     color: #fbff75;
 }
 
-/*> history */
+/* > history */
 .history_item:nth-child(odd) {
     background-color: #9ff1a5;
 }
@@ -260,13 +256,14 @@ a:focus {
 .reverted_history_item:nth-child(even) {
     background-color: #adadad;
 }
-/*< history */
+
+/* < history */
 
 .processing_msg > div {
     background-color: #68c2e8;
 }
 
-/*> mods */
+/* > mods */
 .char_limit_exceeded_textarea {
     background-color: #ff8e8e;
 }
@@ -274,9 +271,10 @@ a:focus {
 .char_limit_exceeded_counter {
     color: #e40000;
 }
-/*< mods */
 
-/*> Tr mods */
+/* < mods */
+
+/* > Tr mods */
 .upload_box_background_unactive {
     background-color: #fbff75;
 }
@@ -300,4 +298,5 @@ a:focus {
 .legend_color_active {
     color: #d3d3d3;
 }
-/*< Tr mods */
+
+/* < Tr mods */

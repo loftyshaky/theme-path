@@ -10,7 +10,7 @@ import * as enter_click from 'js/enter_click';
 import * as history from 'js/history';
 import * as conds from 'js/conds';
 
-import { Side_popup } from 'components/Side_popup';
+import { SidePopup } from 'components/SidePopup';
 
 export class History extends React.Component {
     cache = new CellMeasurerCache({
@@ -24,7 +24,6 @@ export class History extends React.Component {
         history.met.reset_history_side_popup_content = () => {
             try {
                 this.cache.clearAll();
-
             } catch (er) {
                 err(er, 216);
             }
@@ -49,56 +48,39 @@ export class History extends React.Component {
         }
     }
 
-    render_history_item_content = item => {
+    render_history_item_content = (item) => {
         try {
-
             if (conds.imgs(item.family, item.name)) {
                 if (!item.set_to_default) {
                     if (item.to_val) {
-                        return <Color_and_img_changed_to color={item.to_val} />;
+                        return <ColorAndImgChangedTo color={item.to_val} />;
                     }
 
-                    return <String name="changed" />;
+                    return <String name='changed' />;
                 }
-
             } else if (item.family === 'colors') {
                 if (!item.set_to_default) {
-                    return <Color_and_img_changed_to color={item.to_val} />;
+                    return <ColorAndImgChangedTo color={item.to_val} />;
                 }
-
             } else if (item.family === 'tints') {
                 if (!item.set_to_default && !item.set_to_disabled) {
                     return (
-                        <Textarea_changed_to
-                            val={(item.to_manifest_val || item.to_val).join('/')}
-                        />
+                        <TextareaChangedTo val={(item.to_manifest_val || item.to_val).join('/')} />
                     );
                 }
-
             } else if (conds.selects(item.family, item.name)) {
-                return (
-                    <Selects_changed_to
-                        name={item.name}
-                        val={item.to_val}
-                    />
-                );
-
+                return <SelectsChangedTo name={item.name} val={item.to_val} />;
             } else if (conds.textareas(item.family, item.name)) {
-                return (
-                    <Textarea_changed_to
-                        val={item.to_val}
-                    />
-                );
+                return <TextareaChangedTo val={item.to_val} />;
             }
 
             if (item.set_to_default) {
-                return <String name="set_to_default" />;
+                return <String name='set_to_default' />;
             }
 
             if (item.set_to_disabled) {
-                return <String name="set_to_disabled" />;
+                return <String name='set_to_disabled' />;
             }
-
         } catch (er) {
             err(er, 212);
         }
@@ -111,7 +93,6 @@ export class History extends React.Component {
             history.cancel_history_change();
 
             analytics.add_popup_close_btns_analytics('history');
-
         } catch (er) {
             err(er, 218);
         }
@@ -122,7 +103,6 @@ export class History extends React.Component {
             history.cancel_history_change();
 
             analytics.add_history_analytics('history_cancel');
-
         } catch (er) {
             err(er, 220);
         }
@@ -133,7 +113,6 @@ export class History extends React.Component {
             history.revert_tinker(0);
 
             analytics.add_history_analytics('history_revert_all');
-
         } catch (er) {
             err(er, 219);
         }
@@ -152,19 +131,24 @@ export class History extends React.Component {
             >
                 <div
                     key={key}
-                    className={x.cls(['history_item', index >= history.ob.revert_position ? 'reverted_history_item' : null])}
-                    role="button"
-                    tabIndex="0"
+                    className={x.cls([
+                        'history_item',
+                        index >= history.ob.revert_position ? 'reverted_history_item' : null,
+                    ])}
+                    role='button'
+                    tabIndex='0'
                     style={style}
                     onClick={history.revert_tinker.bind(null, index + 1)}
                     onKeyUp={enter_click.simulate_click_on_enter}
                 >
-                    <History_item_family_and_name
+                    <HistoryItemFamilyAndName
                         family={history_item.family}
                         name={history_item.name}
                     />
                     {this.render_history_item_content(history_item)}
-                    <span className="history_item_date">{history.get_date_from_timestamp(history_item.timestamp)}</span>
+                    <span className='history_item_date'>
+                        {history.get_date_from_timestamp(history_item.timestamp)}
+                    </span>
                 </div>
             </CellMeasurer>
         );
@@ -175,9 +159,9 @@ export class History extends React.Component {
         history.ob.revert_position; // eslint-disable-line no-unused-expressions
 
         return (
-            <Side_popup
+            <SidePopup
                 popup_is_visible={history.ob.history_is_visible}
-                name="history"
+                name='history'
                 additional_btns={[
                     {
                         key: x.unique_id(),
@@ -199,81 +183,87 @@ export class History extends React.Component {
                             rowRenderer={this.render_row}
                             rowCount={number_of_rows}
                             tabIndex={null}
-                            ref={ref => this.list = ref} // eslint-disable-line no-return-assign
+                            ref={(ref) => (this.list = ref)} // eslint-disable-line no-return-assign
                         />
                     )}
                 </AutoSizer>
-            </Side_popup>
+            </SidePopup>
         );
     }
 }
 
-const History_item_family_and_name = props => {
+const HistoryItemFamilyAndName = (props) => {
     const { family, name } = props;
 
     return (
-        <React.Fragment>
-            <span className="history_item_family">{x.msg(`${family}_hr_text`) || x.msg(`${family}_legend_text`)}</span>
-            |
-            <span className="history_item_name">{x.msg(`${name}_label_text`)}</span>
-            |
-        </React.Fragment>
+        <>
+            <span className='history_item_family'>
+                {x.msg(`${family}_hr_text`) || x.msg(`${family}_legend_text`)}
+            </span>
+            |<span className='history_item_name'>{x.msg(`${name}_label_text`)}</span>|
+        </>
     );
 };
 
-const Color_and_img_changed_to = props => {
+const ColorAndImgChangedTo = (props) => {
     const { color } = props;
     const tinycolor_color = tinycolor(color);
     // eslint-disable-next-line no-underscore-dangle
 
     return (
-        <React.Fragment>
-            <Changed_to_text />
+        <>
+            <ChangedToText />
             <span
-                className="history_item_color"
+                className='history_item_color'
                 // eslint-disable-next-line no-underscore-dangle
-                title={`${tinycolor_color._a === 1 ? tinycolor_color.toHexString() : tinycolor_color.toHex8String()} / ${tinycolor_color.toRgbString()} / ${tinycolor_color.toHsvString()}`}
+                title={`${
+                    // eslint-disable-next-line no-underscore-dangle
+                    tinycolor_color._a === 1
+                        ? tinycolor_color.toHexString()
+                        : tinycolor_color.toHex8String()
+                } / ${tinycolor_color.toRgbString()} / ${tinycolor_color.toHsvString()}`}
                 style={{ backgroundColor: color }}
             />
             |
-        </React.Fragment>
+        </>
     );
 };
 
-const Selects_changed_to = props => {
+const SelectsChangedTo = (props) => {
     const { name, val } = props;
     const options = selects_options[name === 'default_locale' ? 'locale' : name];
-    const { label } = options.find(option => option.value === val) || { label: '' };
+    const { label } = options.find((option) => option.value === val) || { label: '' };
 
     return (
-        <React.Fragment>
-            <Changed_to_text />
-            <span className="history_item_changed_to">{`"${label}"`}</span>
-            |
-        </React.Fragment>
+        <>
+            <ChangedToText />
+            <span className='history_item_changed_to'>{`"${label}"`}</span>|
+        </>
     );
 };
 
-const Textarea_changed_to = props => {
+const TextareaChangedTo = (props) => {
     const { val } = props;
+
     return (
-        <React.Fragment>
-            <Changed_to_text />
-            <span className="history_item_changed_to">{`"${val}"`}</span>
-            |
-        </React.Fragment>
+        <>
+            <ChangedToText />
+            <span className='history_item_changed_to'>{`"${val}"`}</span>|
+        </>
     );
 };
 
-const Changed_to_text = () => <span className="history_item_text">{x.msg('history_changed_to_text')}</span>;
+const ChangedToText = () => (
+    <span className='history_item_text'>{x.msg('history_changed_to_text')}</span>
+);
 
-const String = props => {
+const String = (props) => {
     const { name } = props;
 
     return (
-        <React.Fragment>
-            <span className="history_item_text">{x.msg(`history_${name}_text`)}</span>|
-        </React.Fragment>
+        <>
+            <span className='history_item_text'>{x.msg(`history_${name}_text`)}</span>|
+        </>
     );
 };
 

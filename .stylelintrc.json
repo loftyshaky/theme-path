@@ -1,0 +1,22 @@
+{
+    "extends": [
+        "stylelint-config-standard",
+        "stylelint-config-recommended"
+    ],
+    "rules": {
+        "selector-class-pattern": null,
+        "keyframes-name-pattern": "^([a-z][a-z0-9_]*)([a-z0-9]+)*$",
+        "custom-property-pattern": "^([a-z][a-z0-9_]*)([a-z0-9]+)*$",
+        "selector-id-pattern": "^([a-z][a-z0-9_]*)([a-z0-9]+)*$",
+        "string-quotes": "single",
+        "indentation": 4,
+        "max-nesting-depth": 4,
+        "declaration-colon-newline-after": null,
+        "value-list-comma-newline-after": null,
+        "color-named": null,
+        "selector-no-qualifying-type": null,
+        "selector-max-compound-selectors": null,
+        "selector-max-id": null,
+        "no-descending-specificity": null
+    }
+}
