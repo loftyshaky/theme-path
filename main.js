@@ -3,7 +3,7 @@ const { format } = require('url');
 const { existsSync } = require('fs');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { app, BrowserWindow, shell, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, shell, Menu, ipcMain, session } = require('electron');
 const remote = require('@electron/remote/main');
 const ElectronStore = require('electron-store');
 
@@ -182,6 +182,21 @@ function create_window() {
         }
     });
     //< app close prompt
+
+    session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+        callback({
+            responseHeaders: {
+                'Content-Security-Policy': [
+                    `default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'${
+                        global.dev && process.argv.indexOf('--noDevServer') === -1
+                            ? "; connect-src 'self' ws://localhost:8080"
+                            : ''
+                    }`,
+                ],
+                ...details.responseHeaders,
+            },
+        });
+    });
 }
 
 app.on('ready', create_window); // this method will be called when Electron has finished initialization and is ready to create browser windows. some APIs can only be used after this event occurs.
