@@ -18,7 +18,7 @@ module.exports = (env) =>
             new WriteFileWebpackPlugin(),
         ],
 
-        devtool: 'eval-cheap-module-source-map',
+        devtool: 'source-map',
 
         devServer: {
             port: 8080,
