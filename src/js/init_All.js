@@ -19,6 +19,8 @@ ReactDOM.createRoot(s('#root')).render(
 
 export const on_render = async () => {
     try {
+        x.load_css(user_language);
+
         //> 1 remove no_tr css
         await x.delay(500);
 
