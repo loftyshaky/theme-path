@@ -2,6 +2,7 @@ const { join, resolve } = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 // -
@@ -15,7 +16,7 @@ module.exports = (env) => {
         },
 
         output: {
-            filename: 'index.js',
+            filename: '[name].js',
             path: resolve(output_dir),
         },
 
@@ -27,7 +28,7 @@ module.exports = (env) => {
                 },
                 {
                     test: /\.css$/,
-                    use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+                    use: [MiniCssExtractPlugin.loader, 'css-loader'],
                 },
                 {
                     test: /\.svg$/,
@@ -49,6 +50,7 @@ module.exports = (env) => {
         },
 
         plugins: [
+            new MiniCssExtractPlugin(),
             new HtmlWebpackPlugin({
                 template: join(__dirname, 'src', 'html', 'index.html'),
                 filename: 'index.html',
@@ -58,6 +60,10 @@ module.exports = (env) => {
                 patterns: [
                     {
                         from: join(__dirname, 'src', 'css', 'mods'),
+                        to: join(__dirname, output_dir),
+                    },
+                    {
+                        from: join(__dirname, 'src', 'css', 'locale_css'),
                         to: join(__dirname, output_dir),
                     },
                     {
@@ -93,7 +99,6 @@ module.exports = (env) => {
                 components: join(__dirname, 'src', 'js', 'components'),
                 locales: join(__dirname, 'src', 'locales'),
                 css: join(__dirname, 'src', 'css'),
-                locale_css: join(__dirname, 'src', 'css', 'locale_css'),
                 svg: join(__dirname, 'src', 'svg'),
             },
             extensions: ['.js', '.jsx', '.css', '.svg', '.png', '.gif'],
