@@ -244,6 +244,7 @@ Object.entries(inputs).forEach(([family, elements]) => {
 });
 
 export const inputs_data = observable({
+    manifest_version: 3,
     obj: inputs,
 });
 

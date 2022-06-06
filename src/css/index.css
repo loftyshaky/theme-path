@@ -79,6 +79,10 @@ fieldset:not(.work_folder_fieldset) .fieldset_content_w,
     padding: 12px;
 }
 
+.manifest_version {
+    padding-left: 12px;
+}
+
 fieldset:not(.work_folder_fieldset) .fieldset_content_w,
 .input .tall_color_input,
 .popup:not(.side_popup):not(.auto_updater) {

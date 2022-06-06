@@ -24,6 +24,7 @@
     "work_folder_is_not_specified_message_text": "Рабочая папка не выбрана.",
     "work_folder_is_empty_message_text": "Рабочая папка пуста.",
     "work_folder_is_theme_message_text": "Рабочая папка является темой.",
+    "manifest_version_label_text": "Версия manifest",
     "locale_label_text": "Язык",
     "default_locale_label_text": "Язык по умолчанию",
     "icon_label_text": "Иконка",

@@ -24,6 +24,7 @@
     "work_folder_is_not_specified_message_text": "Work folder is not specified.",
     "work_folder_is_empty_message_text": "Work folder is empty.",
     "work_folder_is_theme_message_text": "Work folder is a theme.",
+    "manifest_version_label_text": "Manifest version",
     "locale_label_text": "Locale",
     "default_locale_label_text": "Default locale",
     "icon_label_text": "Icon",

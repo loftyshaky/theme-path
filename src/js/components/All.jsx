@@ -24,6 +24,7 @@ import { HelpViewer } from 'components/HelpViewer';
 import { ProtectingScreen } from 'components/ProtectingScreen';
 import { AutoUpdater } from 'components/AutoUpdater';
 import { ProcessingMsg } from 'components/ProcessingMsg';
+import { ManifestVersion } from 'components/ManifestVersion';
 
 export class All extends React.Component {
     componentDidMount() {
@@ -105,6 +106,7 @@ export class All extends React.Component {
                         <WorkFolder />
                         <span className='theme_metadata_and_theme_fieldset_w'>
                             <Fieldset name='theme_metadata'>
+                                <ManifestVersion />
                                 <InputBlock name='theme_metadata' />
                             </Fieldset>
                             <Fieldset name='theme'>

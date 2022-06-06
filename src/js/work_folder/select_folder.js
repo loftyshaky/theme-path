@@ -179,6 +179,9 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
                         manifest.mut.manifest = json_file.parse_json(
                             join(folder_path, 'manifest.json'),
                         );
+
+                        inputs_data.manifest_version = manifest.mut.manifest.manifest_version;
+
                         const { default_locale } = manifest.mut.manifest;
 
                         get_theme_name_or_descrption_inner(
