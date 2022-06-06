@@ -90,6 +90,7 @@
     "export_settings_btn_text": "Экспортировать настройки",
     "import_settings_btn_text": "Импортировать настройки",
     "delete_all_history_btn_text": "Удалить всю историю",
+    "update_manifest_version_of_all_themes_to_v3_text": "Обновить версию manifest всех тем до V3",
     "option_default_text": "Стандарт",
     "option_black_text": "Чёрный",
     "option_white_text": "Белый",
@@ -342,5 +343,7 @@
     "move_to_trash_confirm_msg": "Вы уверены, что хотите переместить все выбранные темы/папки в Корзину?",
     "move_to_trash_confirm_answer_move": "Переместить",
     "delete_all_history_msg": "Вы уверены, что хотите удалить всю историю изменений из всех тем?",
-    "delete_all_history_answer_delete": "Удалить"
+    "delete_all_history_answer_delete": "Удалить",
+    "update_manifest_version_of_all_themes_to_v3_msg": "Вы уверены, что хотите обновить версию manifest всех тем до V3?",
+    "update_manifest_version_of_all_themes_to_v3_answer_update": "Обновить"
 }

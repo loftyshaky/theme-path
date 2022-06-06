@@ -90,6 +90,7 @@
     "export_settings_btn_text": "Export settings",
     "import_settings_btn_text": "Import settings",
     "delete_all_history_btn_text": "Delete all history",
+    "update_manifest_version_of_all_themes_to_v3_text": "Update manifest version of all themes to V3",
     "option_default_text": "Default",
     "option_black_text": "Black",
     "option_white_text": "White",
@@ -342,5 +343,7 @@
     "move_to_trash_confirm_msg": "Are you sure you want to move all selected themes/folders to Recycle Bin?",
     "move_to_trash_confirm_answer_move": "Move",
     "delete_all_history_msg": "Are you sure you want to delete all changes history from all themes?",
-    "delete_all_history_answer_delete": "Delete"
+    "delete_all_history_answer_delete": "Delete",
+    "update_manifest_version_of_all_themes_to_v3_msg": "Are you sure you want to update manifest version of all themes to V3?",
+    "update_manifest_version_of_all_themes_to_v3_answer_update": "Update"
 }
