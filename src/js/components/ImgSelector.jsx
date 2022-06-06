@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -44,8 +43,6 @@ export class ImgSelector extends React.Component {
     //> browse_handle_files f
     browse_handle_files = () => {
         try {
-            analytics.send_event('upload_inputs', `browsed_for_image-${this.family}-${this.name}`);
-
             const file_path = remote.dialog.showOpenDialogSync({
                 properties: ['openFile'],
                 title: `${x.msg(`${this.name}_label_text`)} - ${this.name}`,
@@ -55,16 +52,6 @@ export class ImgSelector extends React.Component {
             if (file_path) {
                 imgs.handle_files('browse_upload', file_path[0], this.family, this.name);
                 imgs.reset_upload_btn_val();
-
-                analytics.send_event(
-                    'upload_inputs',
-                    `uploaded_by_choosing-${this.family}-${this.name}`,
-                );
-            } else {
-                analytics.send_event(
-                    'upload_inputs',
-                    `canceled_upload_by_choosing-${this.family}-${this.name}`,
-                );
             }
         } catch (er) {
             err(er, 101);
@@ -76,8 +63,6 @@ export class ImgSelector extends React.Component {
         try {
             imgs.dehighlight_upload_box_on_drop(this.family, this.name);
             imgs.handle_files('dnd_upload', e.dataTransfer.files, this.family, this.name);
-
-            analytics.send_event('upload_inputs', `uploaded_with_dnd-${this.family}-${this.name}`);
         } catch (er) {
             err(er, 102);
         }

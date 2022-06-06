@@ -5,7 +5,6 @@ import Svg from 'svg-inline-react';
 import { List, AutoSizer } from 'react-virtualized';
 
 import x from 'x';
-import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as els_state from 'js/els_state';
 import * as folders from 'js/work_folder/folders';
@@ -75,12 +74,6 @@ export class WorkFolder extends React.Component {
                 folder.path,
                 folder.nest_level + 1,
             );
-
-            if (folder_is_opened) {
-                analytics.add_work_folder_analytics('collapsed_folder');
-            } else {
-                analytics.add_work_folder_analytics('expanded_folder');
-            }
         };
 
         const arrow =

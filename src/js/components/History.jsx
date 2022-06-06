@@ -5,7 +5,6 @@ import tinycolor from 'tinycolor2';
 
 import x from 'x';
 import { selects_options } from 'js/selects_options';
-import * as analytics from 'js/analytics';
 import * as enter_click from 'js/enter_click';
 import * as history from 'js/history';
 import * as conds from 'js/conds';
@@ -88,31 +87,9 @@ export class History extends React.Component {
         return undefined;
     };
 
-    close_history = () => {
-        try {
-            history.cancel_history_change();
-
-            analytics.add_popup_close_btns_analytics('history');
-        } catch (er) {
-            err(er, 218);
-        }
-    };
-
-    cancel = () => {
-        try {
-            history.cancel_history_change();
-
-            analytics.add_history_analytics('history_cancel');
-        } catch (er) {
-            err(er, 220);
-        }
-    };
-
     revert_all = () => {
         try {
             history.revert_tinker(0);
-
-            analytics.add_history_analytics('history_revert_all');
         } catch (er) {
             err(er, 219);
         }
@@ -169,9 +146,9 @@ export class History extends React.Component {
                         on_click: this.revert_all,
                     },
                 ]}
-                close_f={this.close_history}
+                close_f={history.cancel_history_change}
                 accept_f={history.accept_history_change}
-                cancel_f={this.cancel}
+                cancel_f={history.cancel_history_change}
             >
                 <AutoSizer>
                     {({ width, height }) => (

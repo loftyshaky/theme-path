@@ -45,10 +45,6 @@ export class Tr extends React.Component {
                     'fieldset_border_color_active',
                 ),
                 legend: this.create_tran('legend_color_unactive', 'legend_color_active'),
-                analytics_privacy_protecting_screen: this.create_tran(
-                    'analytics_privacy_protecting_screen_unactive',
-                    'analytics_privacy_protecting_screen_active',
-                ),
             };
         } catch (er) {
             err(er, 115);
@@ -71,8 +67,7 @@ export class Tr extends React.Component {
     handle_transition = (called_from_component_did_update, tr_end_callbacks) => {
         try {
             const { state } = this.props;
-            const component_uses_fading_transition =
-                this.name === 'gen' || this.name === 'analytics_privacy_protecting_screen';
+            const component_uses_fading_transition = this.name === 'gen';
 
             if (component_uses_fading_transition) {
                 const component_is_visible = this.display_style.visibility;

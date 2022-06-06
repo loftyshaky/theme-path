@@ -9,7 +9,6 @@ import Store from 'electron-store';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
-import * as analytics from 'js/analytics';
 import * as change_val from 'js/change_val';
 import * as imgs from 'js/imgs';
 import * as picked_colors from 'js/picked_colors';
@@ -287,8 +286,6 @@ const cancel_color_picking = () => {
 
             change_color_pickier_display_status(family, name, false);
             set_color_input_vizualization_color(family, name, color);
-
-            analytics.send_event('color_pickiers', `canceled-${family}-${name}`);
         }
     } catch (er) {
         err(er, 181);
@@ -357,8 +354,6 @@ export const show_or_hide_color_pickier_when_clicking_on_color_input_vizualizati
                                     name,
                                 );
                             }
-
-                            analytics.send_event('color_pickiers', `showed-${family}-${name}`);
                         }
                     }
                 } catch (er) {
@@ -479,8 +474,6 @@ export const accept_color = (family, name) => {
         if (family === 'colors') {
             picked_colors.record_picked_color(family, name);
         }
-
-        analytics.send_event('color_pickiers', `accepted_color-${family}-${name}`);
     } catch (er) {
         err(er, 35);
     }

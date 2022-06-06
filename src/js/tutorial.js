@@ -1,8 +1,6 @@
 import { action, observable } from 'mobx';
 import Store from 'electron-store';
 
-import * as analytics from 'js/analytics';
-
 const store = new Store();
 
 export const ob = observable({
@@ -43,12 +41,8 @@ export const apply_alt_style_change_theme_properties_tutorial_item = action(() =
     }
 });
 
-export const increment_tutorial_stage = action((tutorial_completed, send_event_to_analytics) => {
+export const increment_tutorial_stage = action((tutorial_completed) => {
     try {
-        if (send_event_to_analytics) {
-            analytics.add_tutorial_analytics('incremented_stage');
-        }
-
         apply_alt_style_change_theme_properties_tutorial_item();
 
         const new_tutorial_stage = tutorial_completed

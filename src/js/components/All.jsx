@@ -23,7 +23,6 @@ import { Help } from 'components/Help';
 import { HelpViewer } from 'components/HelpViewer';
 import { ProtectingScreen } from 'components/ProtectingScreen';
 import { AutoUpdater } from 'components/AutoUpdater';
-import { AnalyticsPrivacy } from 'components/AnalyticsPrivacy';
 import { ProcessingMsg } from 'components/ProcessingMsg';
 
 export class All extends React.Component {
@@ -118,10 +117,6 @@ export class All extends React.Component {
                         </span>
                     </div>
                     <ProtectingScreen tr_name='gen' state_key='protecting_screen_is_visible' />
-                    <ProtectingScreen
-                        tr_name='analytics_privacy_protecting_screen'
-                        state_key='analytics_privacy_is_visible'
-                    />
                     <History />
                     <BulkCopy />
                     <Options />
@@ -129,7 +124,6 @@ export class All extends React.Component {
                     <HelpViewer />
                     <ProcessingMsg />
                     <AutoUpdater />
-                    <AnalyticsPrivacy />
                 </div>
             </ErrorBoundary>
         );

@@ -8,7 +8,6 @@ import Store from 'electron-store';
 
 import x from 'x';
 import { inputs_data, set_inputs_data } from 'js/inputs_data';
-import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as manifest from 'js/manifest';
 import * as json_file from 'js/json_file';
@@ -388,8 +387,6 @@ export const revert_tinker = (revert_position) => {
                 }
             }
         }
-
-        analytics.add_history_analytics('history_item');
     } catch (er) {
         err(er, 209);
     }
@@ -628,8 +625,6 @@ export const accept_history_change = () => {
             if (new_folder_name) {
                 new_theme_or_rename.rename_theme_folder(new_folder_name);
             }
-
-            analytics.add_history_analytics('history_accept');
         } catch (er) {
             err(er, 205);
         }
@@ -864,11 +859,7 @@ export const delete_all_history = async () => {
         );
         const choice = remote.dialog.showMessageBoxSync(confirm.con.win, dialog_options);
 
-        analytics.add_options_btns_analytics('tried_to_delete_all_history');
-
         if (choice === 0) {
-            analytics.add_options_btns_analytics('deleted_all_history');
-
             const get_files_and_folders = async (folder) => {
                 const dirs = [];
                 const subdirs = await readdir_p(folder);
@@ -917,8 +908,6 @@ export const delete_all_history = async () => {
                     err(er, 304);
                 }
             });
-        } else {
-            analytics.add_options_btns_analytics('canceled_deleting_all_history');
         }
     } catch (er) {
         err(er, 303);

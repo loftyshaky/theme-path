@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 import x from 'x';
-import * as analytics from 'js/analytics';
 import * as tutorial from 'js/tutorial';
 import * as els_state from 'js/els_state';
 
@@ -24,9 +23,7 @@ export class TutorialItem extends React.Component {
 
     skip_tutorial = () => {
         try {
-            analytics.add_tutorial_analytics('skipped', tutorial.ob.tutorial_stage);
-
-            tutorial.increment_tutorial_stage(true, false);
+            tutorial.increment_tutorial_stage(true);
         } catch (er) {
             err(er, 172);
         }
@@ -35,8 +32,6 @@ export class TutorialItem extends React.Component {
     close_tutorial = () => {
         try {
             tutorial.show_or_hide_tutorial_item(false);
-
-            analytics.add_tutorial_analytics('closed', tutorial.ob.tutorial_stage);
         } catch (er) {
             err(er, 173);
         }

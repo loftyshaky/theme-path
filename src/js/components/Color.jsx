@@ -4,7 +4,6 @@ import Pickr from '@simonwep/pickr';
 import tinycolor from 'tinycolor2';
 
 import x from 'x';
-import * as analytics from 'js/analytics';
 import { inputs_data } from 'js/inputs_data';
 import * as els_state from 'js/els_state';
 import * as color_pickiers from 'js/color_pickiers';
@@ -192,11 +191,6 @@ class ColorInputVizualization extends React.Component {
                         inputs_data.obj[this.family][
                             this.name
                         ].changed_color_once_after_focus = true;
-
-                        analytics.send_event(
-                            'color_pickiers',
-                            `changed_color-${this.family}-${this.name}`,
-                        );
                     }
                 }
             });

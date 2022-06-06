@@ -64,7 +64,7 @@ export const create_new_theme_or_rename_theme_folder = action(
                                 copySync(source_folder_path, new_theme_path);
 
                                 if (tutorial.ob.tutorial_stage === 3) {
-                                    tutorial.increment_tutorial_stage(false, true);
+                                    tutorial.increment_tutorial_stage(false);
                                 }
                             } else if (
                                 mode === 'renaming_folder' &&

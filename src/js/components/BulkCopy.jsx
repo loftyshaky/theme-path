@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
 import * as bulk_copy from 'js/bulk_copy';
-import * as analytics from 'js/analytics';
 
 import { SidePopup } from 'components/SidePopup';
 import { Checkbox } from 'components/Checkbox';
@@ -13,14 +12,10 @@ import { Hr } from 'components/Hr';
 
 export class BulkCopy extends React.Component {
     close = () => {
-        analytics.add_popup_close_btns_analytics('bulk_copy');
-
         bulk_copy.show_or_hide_bulk_copy(false);
     };
 
     cancel = () => {
-        analytics.add_bulk_copy_analytics('cancel');
-
         bulk_copy.show_or_hide_bulk_copy(false);
     };
 

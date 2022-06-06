@@ -1,6 +1,5 @@
 import { action } from 'mobx';
 
-import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as enter_click from 'js/enter_click';
 import * as folders from 'js/work_folder/folders';
@@ -28,7 +27,6 @@ export const select_work_folder = action((e) => {
                 chosen_folder_path.ob.chosen_folder_path = choose_folder.ob.work_folder;
 
                 folders.deselect_theme();
-                analytics.add_work_folder_analytics('selected_work_folder');
             }
         }
     } catch (er) {

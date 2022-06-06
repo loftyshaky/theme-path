@@ -13,7 +13,6 @@ import getChrome from 'get-chrome';
 import x from 'x';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as tutorial from 'js/tutorial';
-import * as analytics from 'js/analytics';
 import * as confirm from 'js/confirm';
 import * as processing_msg from 'js/processing_msg';
 import * as folders from 'js/work_folder/folders';
@@ -101,8 +100,6 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
                     //< kill al chrome processes
 
                     try {
-                        const name = chrome_exe_path ? 'open_in_profiled_chrome' : 'open_in_chrome';
-                        const click_type = left_button_clicked ? 'clicked' : 'right_clicked';
                         const child_process = await execFile(chrome_exe_path_final, [
                             new_tab_url,
                             new_tab_url,
@@ -121,10 +118,8 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
                         mut[chrome_process_ids][user_data_path] = child_process.pid;
 
                         if (tutorial.ob.tutorial_stage === 6) {
-                            tutorial.increment_tutorial_stage(false, true);
+                            tutorial.increment_tutorial_stage(false);
                         }
-
-                        analytics.send_event('header_items', `${click_type}-${name}`);
                     } catch (er2) {
                         err(er2, 46);
                     }
@@ -249,7 +244,7 @@ const pack_inner = (type, theme_paths_to_pack) => {
                     }
 
                     if (tutorial.ob.tutorial_stage === 7) {
-                        tutorial.increment_tutorial_stage(true, true);
+                        tutorial.increment_tutorial_stage(true);
                     }
 
                     return undefined;
@@ -276,8 +271,6 @@ export const pack = (type) => {
             }
 
             if (theme_paths_to_pack.length > chosen_folder_path.mut.confirm_breakpoint) {
-                analytics.add_pack_analytics(type, 'tried_to_bulk_pack_large_batch');
-
                 const dialog_options = confirm.generate_confirm_options(
                     'pack_confirm_msg',
                     'pack_confirm_answer_pack',
@@ -285,19 +278,9 @@ export const pack = (type) => {
                 const choice = remote.dialog.showMessageBoxSync(confirm.con.win, dialog_options);
 
                 if (choice === 0) {
-                    analytics.add_pack_analytics(type, 'bulk_packed_large_batch');
-
                     pack_inner(type, theme_paths_to_pack);
-                } else {
-                    analytics.add_pack_analytics(type, 'canceled_bulk_packing_large_batch');
                 }
             } else {
-                if (theme_paths_to_pack.length === 1) {
-                    analytics.add_pack_analytics(type, 'packed');
-                } else {
-                    analytics.add_pack_analytics(type, 'bulk_packed');
-                }
-
                 pack_inner(type, theme_paths_to_pack);
             }
         } catch (er) {

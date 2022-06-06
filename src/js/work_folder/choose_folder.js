@@ -5,7 +5,6 @@ import Store from 'electron-store';
 
 import * as tutorial from 'js/tutorial';
 import * as processing_msg from 'js/processing_msg';
-import * as analytics from 'js/analytics';
 import * as chosen_folder_path from 'js/chosen_folder_path';
 import * as folders from 'js/work_folder/folders';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
@@ -41,8 +40,6 @@ export const choose_folder = (callback) => {
             properties: ['openDirectory'],
         });
 
-        analytics.add_work_folder_analytics('browsed_for_work_folder');
-
         if (folder_path) {
             // if not cancelled folder chosing
             processing_msg.process(() => {
@@ -55,7 +52,7 @@ export const choose_folder = (callback) => {
 
                 if (tutorial.ob.tutorial_stage === 1 || tutorial.ob.tutorial_stage === 2) {
                     if (tutorial.ob.tutorial_stage === 1) {
-                        tutorial.increment_tutorial_stage(false, true);
+                        tutorial.increment_tutorial_stage(false);
                     }
 
                     const there_is_non_theme_folder = folders.ob.folders.some(
@@ -63,14 +60,10 @@ export const choose_folder = (callback) => {
                     );
 
                     if (folders.ob.folders.length === 0 || !there_is_non_theme_folder) {
-                        tutorial.increment_tutorial_stage(false, true);
+                        tutorial.increment_tutorial_stage(false);
                     }
                 }
-
-                analytics.add_work_folder_analytics('chosen_folder');
             });
-        } else {
-            analytics.add_work_folder_analytics('canceled_work_folder_choosing');
         }
     } catch (er) {
         err(er, 70);

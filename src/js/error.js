@@ -1,7 +1,6 @@
 import { observable, action } from 'mobx';
 
 import x from 'x';
-import * as analytics from 'js/analytics';
 
 export const ob = observable({
     component_has_er: false,
@@ -86,8 +85,6 @@ window.err = action((er_obj, er_code, er_msg_param, silent, persistent, exit) =>
 
         console.error(console_output); // eslint-disable-line no-console
     }
-
-    analytics.send_event('error', er_code);
 });
 
 window.t = (msg) => {

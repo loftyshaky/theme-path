@@ -6,7 +6,6 @@ import * as change_val from 'js/change_val';
 import * as history from 'js/history';
 import * as manifest from 'js/manifest';
 import * as els_state from 'js/els_state';
-import * as analytics from 'js/analytics';
 
 export const con = {
     types: {
@@ -55,7 +54,7 @@ const normalize_other_sub_vals = (family, name) => {
     }
 };
 
-const set_val = x.debounce((family, name, previous_val, new_val, type_i) => {
+const set_val = x.debounce((family, name, previous_val, new_val) => {
     try {
         const was_default = previous_val === undefined;
         const was_disabled = was_default ? false : previous_val.every((sub_val) => sub_val === -1);
@@ -81,8 +80,6 @@ const set_val = x.debounce((family, name, previous_val, new_val, type_i) => {
         );
 
         els_state.set_applying_textarea_val_val(false);
-
-        analytics.send_event('number', `input-${family}-${name}-${con.types_reverse[type_i]}`);
     } catch (er) {
         err(er, 327);
     }
@@ -121,7 +118,7 @@ export const change_sub_val = action((family, name, new_sub_val, type_i) => {
 
                 full_val[type_i] = new_sub_val_number;
 
-                set_val(family, name, previous_full_val, full_val, type_i);
+                set_val(family, name, previous_full_val, full_val);
             }
         }
     } catch (er) {
@@ -187,7 +184,7 @@ export const change_val_by_mouse_wheel = action((e, family, name, type_i) => {
 
                 normalize_other_sub_vals(family, name);
 
-                set_val(family, name, previous_full_val, inputs_data.obj[family][name].val, type_i);
+                set_val(family, name, previous_full_val, inputs_data.obj[family][name].val);
             }
         }
     } catch (er) {

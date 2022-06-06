@@ -33,9 +33,7 @@ export class ProtectingScreen extends React.Component {
     }
 
     close_all_popups = () => {
-        if (!toggle_popup.ob.analytics_privacy_is_visible) {
-            toggle_popup.close_all_popups(true, 'clicked');
-        }
+        toggle_popup.close_all_popups(true, 'clicked');
     };
 
     render() {

@@ -12,7 +12,6 @@ import * as icons from 'js/icons';
 import * as msg from 'js/msg';
 import * as json_file from 'js/json_file';
 import * as tutorial from 'js/tutorial';
-import * as analytics from 'js/analytics';
 import * as enter_click from 'js/enter_click';
 import * as folders from 'js/work_folder/folders';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
@@ -56,12 +55,6 @@ export const select_bulk_by_ctrl_clicking_on_folder = async (folder_path) => {
         chosen_folder_path.set_chosen_folder_bulk_path('force_remove', folder_path);
     } else {
         chosen_folder_path.set_chosen_folder_bulk_path('force_add', folder_path);
-    }
-
-    if (force_remove) {
-        analytics.add_work_folder_analytics('bulk_deselected_folder');
-    } else {
-        analytics.add_work_folder_analytics('bulk_selected_folder');
     }
 
     chosen_folder_path.count_bulk_themes();
@@ -142,8 +135,6 @@ const uncheck_icon_input_default_checkbox = action(() => {
 export const select_folder = async (is_work_folder, folder_path, children, nest_level, e) => {
     try {
         if (choose_folder.reset_work_folder(false)) {
-            const folder_is_already_selected =
-                folder_path === chosen_folder_path.ob.chosen_folder_path;
             const folder_info = folders.get_info_about_folder(folder_path);
 
             if (
@@ -153,7 +144,7 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
                     (e.ctrlKey || e.shiftKey))
             ) {
                 if (folder_info.is_theme) {
-                    chosen_folder_path.set_chosen_folder_bulk_path('decide', folder_path, true);
+                    chosen_folder_path.set_chosen_folder_bulk_path('decide', folder_path);
 
                     chosen_folder_path.count_bulk_themes();
                 } else if (!folder_info.is_theme) {
@@ -271,10 +262,10 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
                         }
 
                         if (tutorial.ob.tutorial_stage === 4) {
-                            tutorial.increment_tutorial_stage(false, true);
+                            tutorial.increment_tutorial_stage(false);
                         }
                     } else if (tutorial.ob.tutorial_stage === 2) {
-                        tutorial.increment_tutorial_stage(false, true);
+                        tutorial.increment_tutorial_stage(false);
                     }
 
                     convert_color.convert_all();
@@ -285,14 +276,6 @@ export const select_folder = async (is_work_folder, folder_path, children, nest_
                         nest_level: nest_level || null,
                         i_to_insert_folder_in: i_to_insert_folder_in || null,
                     };
-
-                    if (!folder_is_already_selected) {
-                        if (folder_info.is_theme) {
-                            analytics.add_work_folder_analytics('selected_theme');
-                        } else {
-                            analytics.add_work_folder_analytics('selected_folder');
-                        }
-                    }
 
                     reupload_img.set_current_previous_img_path_ob();
                 });

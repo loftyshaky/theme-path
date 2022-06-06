@@ -20,7 +20,6 @@ import * as msg from 'js/msg';
 import * as conds from 'js/conds';
 import * as confirm from 'js/confirm';
 import * as processing_msg from 'js/processing_msg';
-import * as analytics from 'js/analytics';
 import * as folders from 'js/work_folder/folders';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
 
@@ -41,11 +40,6 @@ export const toggle_checkbox = action((family, name) => {
     try {
         const bool = !ob.bulk_copy_checkboxes[family][name];
 
-        analytics.send_event(
-            'bulk_copy_checkboxes',
-            `${bool ? 'checked' : 'unchecked'}-${family}-${name}`,
-        );
-
         ob.bulk_copy_checkboxes[family][name] = bool;
 
         store.set(`bulk_copy_checkboxes.${family}.${name}`, bool);
@@ -65,8 +59,6 @@ export const select_or_deselect_all_family = action((family, bool, set_to_store)
         });
 
         if (set_to_store) {
-            analytics.add_bulk_copy_analytics(`${bool ? 'select_all' : 'deselect_all'}-${family}`);
-
             store.set('bulk_copy_checkboxes', ob.bulk_copy_checkboxes);
         }
     } catch (er) {
@@ -76,8 +68,6 @@ export const select_or_deselect_all_family = action((family, bool, set_to_store)
 
 export const select_or_deselect_all_global = action((bool) => {
     try {
-        analytics.add_bulk_copy_analytics(bool ? 'select_all' : 'deselect_all');
-
         Object.keys(inputs_data.obj).forEach((family) => {
             if (family !== 'options') {
                 select_or_deselect_all_family(family, bool, false);
@@ -118,13 +108,6 @@ export const show_or_hide_bulk_copy = action((bool) => {
 
 export const toggle_set_default_mode = () => {
     try {
-        const bool = !ob.set_default_mode_is_activated;
-        if (bool) {
-            analytics.add_bulk_copy_action_analytics('activated_set_default_mode');
-        } else {
-            analytics.add_bulk_copy_action_analytics('deactivated_set_default_mode');
-        }
-
         activate_or_deactivate_set_default_mode(!ob.set_default_mode_is_activated);
     } catch (er) {
         err(er, 271);
@@ -133,8 +116,6 @@ export const toggle_set_default_mode = () => {
 
 export const select_default = action(() => {
     try {
-        analytics.add_bulk_copy_analytics('select_default');
-
         ob.bulk_copy_checkboxes = store.get('default_bulk_copy_checkboxes');
     } catch (er) {
         err(er, 269);
@@ -710,14 +691,10 @@ export const accept = () => {
         const theme_paths = chosen_folder_path.exclude_non_themes();
 
         if (ob.set_default_mode_is_activated) {
-            analytics.add_bulk_copy_action_analytics('accepted_new_default');
-
             activate_or_deactivate_set_default_mode(false);
 
             store.set('default_bulk_copy_checkboxes', toJS(ob.bulk_copy_checkboxes));
         } else if (theme_paths.length > chosen_folder_path.mut.confirm_breakpoint) {
-            analytics.add_bulk_copy_action_analytics('tried_to_bulk_copy_large_batch');
-
             const dialog_options = confirm.generate_confirm_options(
                 'bulk_copy_confirm_msg',
                 'bulk_copy_confirm_answer_copy',
@@ -726,16 +703,10 @@ export const accept = () => {
             const choice = remote.dialog.showMessageBoxSync(confirm.con.win, dialog_options);
 
             if (choice === 0) {
-                analytics.add_bulk_copy_action_analytics('bulk_copied_large_batch');
-
                 bulk_copy(theme_paths);
                 show_or_hide_bulk_copy(false);
-            } else {
-                analytics.add_bulk_copy_action_analytics('canceled_bulk_copying_large_batch');
             }
         } else {
-            analytics.add_bulk_copy_analytics('accept');
-
             bulk_copy(theme_paths);
             show_or_hide_bulk_copy(false);
         }

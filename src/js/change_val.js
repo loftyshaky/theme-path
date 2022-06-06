@@ -166,7 +166,7 @@ const write_to_json = (json, json_path, name, new_val, family) => {
         json_file.write_to_json(new_json, json_path);
 
         if (family !== 'theme_metadata' && tutorial.ob.tutorial_stage === 5) {
-            tutorial.increment_tutorial_stage(false, true);
+            tutorial.increment_tutorial_stage(false);
         }
     } catch (er) {
         err(er, 23);

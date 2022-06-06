@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
 import x from 'x';
-import * as analytics from 'js/analytics';
 import * as els_state from 'js/els_state';
 import * as folders from 'js/work_folder/folders';
 import * as open_and_pack from 'js/open_and_pack';
@@ -51,8 +50,6 @@ export class Header extends React.Component {
 
             if (!this.entered_one_char_in_search_input_after_focus) {
                 this.entered_one_char_in_search_input_after_focus = true;
-
-                analytics.send_event('header_items', 'input-search_input');
             }
         } catch (er) {
             err(er, 164);
@@ -68,8 +65,6 @@ export class Header extends React.Component {
     };
 
     create_new_theme = () => {
-        analytics.add_header_btns_analytics('new_theme');
-
         expand_or_collapse.create_new_theme_or_folder(null);
     };
 
@@ -263,7 +258,6 @@ const Btn = (props) => {
     const action = (e) => {
         try {
             f(e);
-            analytics.add_header_btns_analytics(name);
         } catch (er) {
             err(er, 165);
         }

@@ -4,7 +4,6 @@ import { existsSync, readFileSync } from 'fs-extra';
 import { action, observable } from 'mobx';
 
 import x from 'x';
-import * as analytics from 'js/analytics';
 
 export const ob = observable({
     help_viewer_is_none: false,
@@ -47,8 +46,6 @@ const show_help_viewer_expanded_img = action((bool) => {
 export const close_help_viewer_by_right_click_when_img_collapsed = () => {
     try {
         show_help_viewer(false);
-
-        analytics.add_help_viewer_analytics('closed_by_right_click_when_img_collapsed');
     } catch (er) {
         err(er, 169);
     }
@@ -59,8 +56,6 @@ export const deactivate_all = () => {
         none_help_viewer(true);
         show_help_viewer(false);
         show_help_viewer_expanded_img(false);
-
-        analytics.add_help_viewer_analytics('closed_by_right_click_when_img_expanded');
     } catch (er) {
         err(er, 138);
     }
@@ -75,8 +70,6 @@ export const close_help_viewer_by_keyboard = (e) => {
         } else if (ob.help_viewer_is_visible) {
             show_help_viewer(false);
         }
-
-        analytics.add_help_viewer_analytics('closed_by_esc');
     }
 };
 
@@ -117,8 +110,6 @@ export const open_help_viewer = action((family, name) => {
         }
 
         show_help_viewer(true);
-
-        analytics.add_help_viewer_analytics('opened');
     } catch (er) {
         err(er, 133);
     }
@@ -134,22 +125,10 @@ export const on_help_viewer_click = (e) => {
 
         if (clicked_on_help_viewer_img) {
             show_help_viewer_expanded_img(true);
-
-            analytics.add_help_viewer_analytics('expanded_img');
         } else if (clicked_on_help_viewer_expanded_img) {
             show_help_viewer_expanded_img(false);
-
-            analytics.add_help_viewer_analytics('collapsed_img');
         } else {
-            const clicked_on_close_btn = x.matches(x.closest(e.target, '.close_btn'), '.close_btn');
-
             show_help_viewer(false);
-
-            if (clicked_on_close_btn) {
-                analytics.add_help_viewer_analytics('closed_by_clicking_on_close_btn');
-            } else {
-                analytics.add_help_viewer_analytics('closed_by_clicking_on_empty_space');
-            }
         }
     } catch (er) {
         err(er, 134);

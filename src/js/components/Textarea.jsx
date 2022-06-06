@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
-import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -66,8 +65,6 @@ export class Textarea extends React.Component {
 
                 if (!this.mut.entered_one_char_in_textarea_after_focus) {
                     this.mut.entered_one_char_in_textarea_after_focus = true;
-
-                    analytics.send_event('textareas', `input-${this.family}-${this.name}`);
                 }
 
                 if (this.name === 'name') {

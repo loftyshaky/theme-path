@@ -4,7 +4,6 @@ import Svg from 'svg-inline-react';
 
 import x from 'x';
 import * as toggle_popup from 'js/toggle_popup';
-import * as analytics from 'js/analytics';
 
 import { Tr } from 'components/Tr';
 import { Hr } from 'components/Hr';
@@ -15,8 +14,6 @@ export const Popup = observer((props) => {
     const { name, children } = props;
 
     const on_click = () => {
-        analytics.add_popup_close_btns_analytics(name);
-
         toggle_popup.close_all_popups();
     };
 

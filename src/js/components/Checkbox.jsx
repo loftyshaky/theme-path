@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 import * as r from 'ramda';
-import * as analytics from 'js/analytics';
 
 import * as set_default_or_disabled from 'js/set_default_or_disabled';
 import * as enter_click from 'js/enter_click';
@@ -28,11 +27,6 @@ export const Checkbox = observer((props) => {
     const change_checkbox_val = (e) => {
         try {
             change_val.change_val(family, name, e.target.checked, null, true, true);
-
-            analytics.send_event(
-                'checkboxes',
-                `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}`,
-            );
         } catch (er) {
             err(er, 152);
         }
@@ -40,19 +34,12 @@ export const Checkbox = observer((props) => {
 
     const on_change = r.ifElse(
         () => is_special_checkbox,
-        (e) => {
+        () => {
             if (name === 'icon') {
                 set_default_or_disabled.set_default_icon(family, name, true);
             } else {
                 set_default_or_disabled.set_default_or_disabled(family, name, checkbox_type, true);
             }
-
-            analytics.send_event(
-                'checkboxes',
-                `${e.target.checked ? 'checked' : 'unchecked'}-${family}-${name}-${
-                    checkbox_type || ''
-                }`,
-            );
         },
 
         (e) => change_checkbox_val(e),

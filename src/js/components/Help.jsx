@@ -1,7 +1,6 @@
 import React from 'react';
 
 import x from 'x';
-import * as analytics from 'js/analytics';
 
 import { Popup } from 'components/Popup';
 import { Hr } from 'components/Hr';
@@ -46,7 +45,6 @@ const Link = (props) => {
             rel='noopener noreferrer'
             data-text={`${name}_link_text`}
             data-href={href ? null : `${name}_link_href`}
-            onClick={analytics.send_event.bind(null, 'help', `clicked-${name}`)}
         />
     );
 };

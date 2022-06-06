@@ -11,7 +11,6 @@ import * as choose_folder from 'js/work_folder/choose_folder';
 import * as expand_or_collapse from 'js/work_folder/expand_or_collapse';
 import * as processing_msg from 'js/processing_msg';
 import * as confirm from 'js/confirm';
-import * as analytics from 'js/analytics';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 const remote = require('@electron/remote');
@@ -291,8 +290,6 @@ export const get_folder_i = (folder_path) =>
 export const move_to_trash = () => {
     check_if_at_least_one_folder_is_selected(() => {
         try {
-            analytics.move_to_trash_analytics('tried_to_move');
-
             const dialog_options = confirm.generate_confirm_options(
                 'move_to_trash_confirm_msg',
                 'move_to_trash_confirm_answer_move',
@@ -300,8 +297,6 @@ export const move_to_trash = () => {
             const choice = remote.dialog.showMessageBoxSync(confirm.con.win, dialog_options);
 
             if (choice === 0) {
-                analytics.move_to_trash_analytics('moved');
-
                 processing_msg.process(() => {
                     let top_level_folders_paths =
                         chosen_folder_path.ob.chosen_folder_bulk_paths.slice();
@@ -323,8 +318,6 @@ export const move_to_trash = () => {
 
                     chosen_folder_path.deselect_all_bulk_folders();
                 });
-            } else {
-                analytics.move_to_trash_analytics('canceled');
             }
         } catch (er) {
             err(er, 315);

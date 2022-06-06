@@ -3,7 +3,6 @@ import * as r from 'ramda';
 import { observer } from 'mobx-react';
 import ReactSelect from 'react-select';
 import Store from 'electron-store';
-import * as analytics from 'js/analytics';
 
 import x from 'x';
 import { inputs_data } from 'js/inputs_data';
@@ -72,8 +71,6 @@ export class Select extends React.Component {
                     ),
                 );
             }
-
-            analytics.send_event('selects', `selected_option-${this.family}-${this.name}-${value}`);
         } catch (er) {
             err(er, 107);
         }
@@ -85,8 +82,6 @@ export class Select extends React.Component {
 
         this.transit_menu();
         this.scroll_select_menu_into_view();
-
-        analytics.send_event('selects', `expanded-${this.family}-${this.name}`);
     };
 
     //> hide options when clicking on option or select_title / scroll select options into view when oipening select

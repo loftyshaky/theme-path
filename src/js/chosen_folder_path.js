@@ -1,6 +1,5 @@
 import { action, observable } from 'mobx';
 
-import * as analytics from 'js/analytics';
 import * as folders from 'js/work_folder/folders';
 import * as choose_folder from 'js/work_folder/choose_folder';
 
@@ -22,31 +21,21 @@ export const set_chosen_folder_path = action((chosen_folder_path) => {
     }
 });
 
-export const set_chosen_folder_bulk_path = action(
-    (mode, chosen_folder_path, send_analytics_event) => {
-        try {
-            const folder_path_to_deselect_index =
-                ob.chosen_folder_bulk_paths.indexOf(chosen_folder_path);
-            const chosen_folder_is_already_selected = folder_path_to_deselect_index > -1;
+export const set_chosen_folder_bulk_path = action((mode, chosen_folder_path) => {
+    try {
+        const folder_path_to_deselect_index =
+            ob.chosen_folder_bulk_paths.indexOf(chosen_folder_path);
+        const chosen_folder_is_already_selected = folder_path_to_deselect_index > -1;
 
-            if ((!chosen_folder_is_already_selected && mode === 'decide') || mode === 'force_add') {
-                if (send_analytics_event) {
-                    analytics.add_work_folder_analytics('bulk_selected_theme');
-                }
-
-                ob.chosen_folder_bulk_paths.push(chosen_folder_path);
-            } else if (mode === 'decide' || mode === 'force_remove') {
-                if (send_analytics_event) {
-                    analytics.add_work_folder_analytics('bulk_deselected_theme');
-                }
-
-                ob.chosen_folder_bulk_paths.splice(folder_path_to_deselect_index, 1);
-            }
-        } catch (er) {
-            err(er, 251);
+        if ((!chosen_folder_is_already_selected && mode === 'decide') || mode === 'force_add') {
+            ob.chosen_folder_bulk_paths.push(chosen_folder_path);
+        } else if (mode === 'decide' || mode === 'force_remove') {
+            ob.chosen_folder_bulk_paths.splice(folder_path_to_deselect_index, 1);
         }
-    },
-);
+    } catch (er) {
+        err(er, 251);
+    }
+});
 
 export const rename_chosen_folder_bulk_path = (old_name, new_name) => {
     try {

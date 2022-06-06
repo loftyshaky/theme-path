@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Svg from 'svg-inline-react';
 
-import * as analytics from 'js/analytics';
 import * as auto_update from 'js/auto_update';
 
 import { Tr } from 'components/Tr';
@@ -14,8 +13,6 @@ export const AutoUpdater = observer(() => {
     const postpone_update = () => {
         try {
             auto_update.show_or_hide_auto_updater(false);
-
-            analytics.send_event('btns', 'clicked-auto_updater-postpone_update');
         } catch (er) {
             err(er, 170);
         }
@@ -24,8 +21,6 @@ export const AutoUpdater = observer(() => {
     const close_auto_updater = () => {
         try {
             auto_update.show_or_hide_auto_updater(false);
-
-            analytics.add_popup_close_btns_analytics('auto_updater');
         } catch (er) {
             err(er, 217);
         }
