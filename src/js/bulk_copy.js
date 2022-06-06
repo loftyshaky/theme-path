@@ -28,13 +28,13 @@ const remote = require('@electron/remote');
 
 const store = new Store();
 
+settings.set_default_bulk_copy_checkboxes_obj(inputs_data); // needs to be above ob, otherwise there will be error when extension loads without user data
+
 export const ob = observable({
     bulk_copy_is_visible: false,
     bulk_copy_checkboxes: store.get('bulk_copy_checkboxes'),
     set_default_mode_is_activated: false,
 });
-
-settings.set_default_bulk_copy_checkboxes_obj(inputs_data);
 
 export const toggle_checkbox = action((family, name) => {
     try {
