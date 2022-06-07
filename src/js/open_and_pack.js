@@ -2,7 +2,7 @@ import { join, sep } from 'path';
 import { homedir, platform } from 'os';
 import { existsSync, unlinkSync, moveSync, createWriteStream } from 'fs-extra';
 import { execFile, execFileSync } from 'child_process';
-import glob from 'glob';
+import { glob } from 'glob';
 
 import { observable, action } from 'mobx';
 import psTree from 'ps-tree';
@@ -228,7 +228,7 @@ const pack_inner = (type, theme_paths_to_pack) => {
 
                             //> remove pems
                             const pem_files = glob.sync(
-                                `${directory_to_save_package_in + sep}*.pem`,
+                                `${directory_to_save_package_in.replaceAll('\\', '/')}/*.pem`,
                             );
 
                             pem_files.forEach((pem_file) => {
