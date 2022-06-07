@@ -236,7 +236,11 @@ ipcMain.on('set_let_app_close_var_to_false', () => {
 
 ipcMain.on('move_folder_to_trash', async (e, folder_path) => {
     if (existsSync(folder_path)) {
-        await shell.trashItem(folder_path);
+        try {
+            await shell.trashItem(folder_path);
+        } catch (er) {
+            e.returnValue = true;
+        }
     }
 
     e.returnValue = true;

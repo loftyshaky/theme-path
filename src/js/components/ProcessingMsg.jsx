@@ -8,13 +8,20 @@ export class ProcessingMsg extends React.Component {
     componentDidUpdate() {
         if (processing_msg.mut.processing) {
             window.requestAnimationFrame(async () => {
-                processing_msg.mut.processing = false;
+                try {
+                    processing_msg.mut.processing = false;
 
-                await x.delay(0);
+                    await x.delay(0);
 
-                await processing_msg.mut.process_callback();
+                    await processing_msg.mut.process_callback();
 
-                processing_msg.change_processing_message_visibility();
+                    processing_msg.change_processing_message_visibility();
+                } catch (er) {
+                    err(er, 343, '', true);
+                    processing_msg.mut.processing = false;
+
+                    processing_msg.change_processing_message_visibility();
+                }
             });
         }
     }
