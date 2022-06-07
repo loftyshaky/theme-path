@@ -180,72 +180,80 @@ const pack_inner = (type, theme_paths_to_pack) => {
 
                     move_file_temporary(system_path, temp_folder_system_path);
                     move_file_temporary(id_path, temp_folder_id_path);
-
                     try {
-                        if (existsSync(pak_path)) {
-                            unlinkSync(pak_path);
-                        }
-                    } catch (er) {
-                        err(er, 6, 'pak_is_locked', false, false, true);
-                    }
-
-                    if (type === 'zip') {
-                        const zip_path = join(directory_to_save_package_in, `${package_name}.zip`);
-
                         try {
-                            if (existsSync(zip_path)) {
-                                unlinkSync(zip_path);
+                            if (existsSync(pak_path)) {
+                                unlinkSync(pak_path);
                             }
                         } catch (er) {
-                            err(er, 18, 'zip_is_locked', false, false, true);
+                            err(er, 6, 'pak_is_locked', false, false, true);
                         }
 
-                        // eslint-disable-next-line no-new
+                        if (type === 'zip') {
+                            const zip_path = join(
+                                directory_to_save_package_in,
+                                `${package_name}.zip`,
+                            );
 
-                        try {
-                            await zip_folder(theme_path, zip_path);
-
-                            move_file_temporary(temp_folder_system_path, system_path);
-                            move_file_temporary(temp_folder_id_path, id_path);
-                        } catch (er) {
-                            err(er, 5, null, false, false, true);
-                        }
-                    }
-
-                    if (type === 'crx') {
-                        const crx_path = join(directory_to_save_package_in, `${package_name}.crx`);
-
-                        try {
-                            if (existsSync(crx_path)) {
-                                unlinkSync(crx_path);
-                            }
-                        } catch (er) {
-                            err(er, 19, 'crx_is_locked', false, false, true);
-                        }
-
-                        //> remove pems
-                        const pem_files = glob.sync(`${directory_to_save_package_in + sep}*.pem`);
-
-                        pem_files.forEach((pem_file) => {
                             try {
-                                if (existsSync(pem_file)) {
-                                    unlinkSync(pem_file);
+                                if (existsSync(zip_path)) {
+                                    unlinkSync(zip_path);
                                 }
                             } catch (er) {
-                                err(er, 7, 'pem_is_locked', false, false, true);
+                                err(er, 18, 'zip_is_locked', false, false, true);
                             }
-                        });
-                        //< remove pems
 
-                        execFileSync(getChrome(platform()), [`--pack-extension=${theme_path}`]);
+                            // eslint-disable-next-line no-new
 
-                        move_file_temporary(temp_folder_system_path, system_path);
-                        move_file_temporary(temp_folder_id_path, id_path);
+                            try {
+                                await zip_folder(theme_path, zip_path);
+                            } catch (er) {
+                                err(er, 5, null, false, false, true);
+                            }
+                        }
+
+                        if (type === 'crx') {
+                            const crx_path = join(
+                                directory_to_save_package_in,
+                                `${package_name}.crx`,
+                            );
+
+                            try {
+                                if (existsSync(crx_path)) {
+                                    unlinkSync(crx_path);
+                                }
+                            } catch (er) {
+                                err(er, 19, 'crx_is_locked', false, false, true);
+                            }
+
+                            //> remove pems
+                            const pem_files = glob.sync(
+                                `${directory_to_save_package_in + sep}*.pem`,
+                            );
+
+                            pem_files.forEach((pem_file) => {
+                                try {
+                                    if (existsSync(pem_file)) {
+                                        unlinkSync(pem_file);
+                                    }
+                                } catch (er) {
+                                    err(er, 7, 'pem_is_locked', false, false, true);
+                                }
+                            });
+                            //< remove pems
+
+                            execFileSync(getChrome(platform()), [`--pack-extension=${theme_path}`]);
+                        }
+
+                        if (tutorial.ob.tutorial_stage === 7) {
+                            tutorial.increment_tutorial_stage(true);
+                        }
+                    } catch (er) {
+                        err(er, 342);
                     }
 
-                    if (tutorial.ob.tutorial_stage === 7) {
-                        tutorial.increment_tutorial_stage(true);
-                    }
+                    move_file_temporary(temp_folder_system_path, system_path);
+                    move_file_temporary(temp_folder_id_path, id_path);
 
                     return undefined;
                 }),
