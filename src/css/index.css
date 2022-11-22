@@ -226,7 +226,7 @@ body.using_mouse .upload_box_browse_label:focus,
 body.using_mouse .close_btn,
 .search_input,
 .header_btn,
-textarea:focus,
+.textarea:focus,
 .number_input:focus,
 .btn:focus,
 .color_input_vizualization:focus,
@@ -317,7 +317,11 @@ body.using_mouse .color_input_vizualization:focus {
     color: #212121;
 }
 
-textarea,
+.textarea_and_default_btn {
+    display: flex;
+}
+
+.textarea,
 .number_input {
     resize: none;
     overflow-y: auto;
@@ -325,7 +329,7 @@ textarea,
     display: block;
 }
 
-textarea:focus,
+.textarea:focus,
 .number_input:focus,
 .btn:focus,
 .color_input_vizualization:focus,
@@ -335,12 +339,12 @@ textarea:focus,
     border: 1px solid #fbff75;
 }
 
-textarea {
+.textarea {
     height: 28px;
     overflow: hidden;
 }
 
-textarea,
+.textarea,
 .number_input,
 .option {
     width: 100%;
@@ -367,6 +371,10 @@ textarea,
     margin-right: 12px;
 }
 
+.textarea_and_default_btn .img_selector_checkbox_w {
+    margin-left: 12px;
+}
+
 hr,
 .color_input_vizualization,
 .header_btn:hover,
@@ -375,7 +383,7 @@ body.using_mouse .header_btn:hover:focus,
     background-color: white;
 }
 
-textarea,
+.textarea,
 .number_input,
 .btn,
 body.using_mouse .btn:focus,
@@ -389,7 +397,7 @@ body.using_mouse .color_input_vizualization:focus,
     border: 1px solid white;
 }
 
-textarea,
+.textarea,
 .number_input,
 .checkbox_checkmark_w {
     background-color: transparent;
@@ -1480,7 +1488,7 @@ a,
 .help_link,
 .upload_box_browse_label_part,
 .using_mouse .btn,
-.using_mouse textarea,
+.using_mouse .textarea,
 .using_mouse .number_input,
 .color_input_vizualization,
 .protecting_screen,
@@ -1536,7 +1544,7 @@ a,
     transition-property: color, background-color, border-color, box-shadow;
 }
 
-.using_mouse textarea,
+.using_mouse .textarea,
 .number_input {
     transition-property: border-color, box-shadow;
 }

@@ -22,6 +22,8 @@ import * as history from 'js/history';
 import * as odd_elements_highlighting from 'js/odd_elements_highlighting';
 import * as select_folder from 'js/work_folder/select_folder';
 import * as choose_folder from 'js/work_folder/choose_folder';
+import * as conds from 'js/conds';
+import * as set_default_or_disabled from 'js/set_default_or_disabled';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 const remote = require('@electron/remote');
@@ -396,6 +398,7 @@ export const change_val = async (
             const third_if_strings = ['colors', 'tints', 'properties'];
             const fourth_if_strings = ['images', 'icon'];
             const five_if_strings = ['video_volume', 'size'];
+            const six_if_strings = ['video_speed'];
             const img_extension_final = `${img_extension || '.png'}`;
 
             if (name !== 'clear_new_tab_video' && reload_manifest) {
@@ -432,9 +435,30 @@ export const change_val = async (
                 );
             } else if (
                 third_if_strings.indexOf(family) > -1 ||
-                five_if_strings.indexOf(name) > -1
+                five_if_strings.indexOf(name) > -1 ||
+                six_if_strings.indexOf(name) > -1
             ) {
-                write_to_json(manifest_obj, manifest_path, name, new_val, family);
+                if (conds.textareas_with_default_checkbox(family, name) && new_val === '') {
+                    set_default_or_disabled.set_default_or_disabled(
+                        family,
+                        name,
+                        'default',
+                        true,
+                        undefined,
+                        false,
+                        true,
+                        undefined,
+                        inputs_data.obj[family][name].previous_val,
+                    );
+                } else {
+                    write_to_json(
+                        manifest_obj,
+                        manifest_path,
+                        name,
+                        name === 'video_speed' ? +new_val : new_val,
+                        family,
+                    );
+                }
 
                 if (!bulk_copying && family !== 'tints') {
                     set_inputs_data_val(family, name, new_val);

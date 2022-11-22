@@ -69,8 +69,13 @@ export class History extends React.Component {
                 }
             } else if (conds.selects(item.family, item.name)) {
                 return <SelectsChangedTo name={item.name} val={item.to_val} />;
-            } else if (conds.textareas(item.family, item.name)) {
-                return <TextareaChangedTo val={item.to_val} />;
+            } else if (
+                conds.textareas(item.family, item.name) ||
+                conds.textareas_with_default_checkbox(item.family, item.name)
+            ) {
+                if (!item.set_to_default) {
+                    return <TextareaChangedTo val={item.to_val} />;
+                }
             }
 
             if (item.set_to_default) {

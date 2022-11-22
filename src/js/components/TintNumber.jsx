@@ -5,7 +5,7 @@ import { inputs_data } from 'js/inputs_data';
 import * as els_state from 'js/els_state';
 import * as tints from 'js/tints';
 
-export class Number extends React.Component {
+export class TintNumber extends React.Component {
     render() {
         const { family, name, type, type_i } = this.props;
         const { val } = inputs_data.obj[family][name];
@@ -35,4 +35,4 @@ export class Number extends React.Component {
     }
 }
 
-observer(Number);
+observer(TintNumber);

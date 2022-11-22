@@ -90,6 +90,8 @@ const set_default = (family, name, target_path, manifest_obj) => {
             change_val.set_inputs_data_color(family, name, color_input_default);
         } else if (family === 'tints') {
             change_val.set_inputs_data_val(family, name, tints.con.default_val);
+        } else if (conds.textareas_with_default_checkbox(family, name)) {
+            change_val.set_inputs_data_val(family, name, '');
         }
 
         imgs.get_dims(family, name);
@@ -209,6 +211,20 @@ export const set_default_or_disabled = (
                                     true,
                                     false,
                                     theme_path,
+                                ),
+                            theme_path,
+                        );
+                    } else if (conds.textareas_with_default_checkbox(family, name)) {
+                        history.record_change(
+                            () =>
+                                history.generate_textarea_history_obj(
+                                    family,
+                                    name,
+                                    previous_manifest_val || inputs_data.obj[family][name].val,
+                                    undefined,
+                                    undefined,
+                                    false,
+                                    true,
                                 ),
                             theme_path,
                         );

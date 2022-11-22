@@ -50,7 +50,7 @@ body,
     background-color: white;
 }
 
-textarea,
+.textarea,
 .number_input,
 .btn,
 body.using_mouse .btn:focus,
@@ -181,7 +181,7 @@ body.using_mouse .header_btn:hover:focus svg,
 
 /* < selects */
 
-textarea:focus,
+.textarea:focus,
 .number_input:focus,
 .btn:focus,
 .checkbox_checkmark_w:focus,

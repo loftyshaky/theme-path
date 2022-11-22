@@ -380,6 +380,13 @@ export const revert_tinker = (revert_position) => {
                     ) {
                         change_val.set_inputs_data_val(change.family, change.name, change.val);
                     }
+                } else if (conds.textareas_with_default_checkbox(change.family, change.name)) {
+                    change_val.set_inputs_data_val(
+                        change.family,
+                        change.name,
+                        change.default ? '' : change.val,
+                    );
+                    change_val.set_default_bool(change.family, change.name, change.default);
                 }
 
                 if (conds.colors(change.family) || conds.imgs(change.family, change.name)) {
@@ -523,8 +530,14 @@ export const accept_history_change = () => {
                                 false,
                             );
                         }
-                    } else if (conds.textareas(change.family, change.name)) {
-                        if (change.name === 'version') {
+                    } else if (
+                        conds.textareas(change.family, change.name) ||
+                        conds.textareas_with_default_checkbox(change.family, change.name)
+                    ) {
+                        if (
+                            change.name === 'version' ||
+                            conds.textareas_with_default_checkbox(change.family, change.name)
+                        ) {
                             change_val.change_val(
                                 change.family,
                                 change.name,
@@ -763,17 +776,33 @@ export const generate_select_history_obj = (
     return undefined;
 };
 
-export const generate_textarea_history_obj = (family, name, from_val, to_val, locale) => {
+export const generate_textarea_history_obj = (
+    family,
+    name,
+    from_val,
+    to_val,
+    locale,
+    was_default,
+    set_to_default,
+) => {
     try {
         return {
             timestamp: get_timestamp(),
             family,
             name,
+            ...(typeof set_to_default !== 'undefined' && {
+                was_default,
+            }),
+            ...(typeof set_to_default !== 'undefined' && {
+                set_to_default,
+            }),
             ...((name === 'name' || name === 'description') && {
                 locale: locale || inputs_data.obj.theme_metadata.locale.val,
             }),
             from_val: from_val ? from_val.toString() : '',
-            to_val: to_val ? to_val.toString() : '',
+            ...(typeof to_val !== 'undefined' && {
+                to_val: to_val.toString(),
+            }),
         };
     } catch (er) {
         err(er, 224);

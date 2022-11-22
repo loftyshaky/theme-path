@@ -8,7 +8,9 @@ import * as change_val from 'js/change_val';
 import * as els_state from 'js/els_state';
 import * as history from 'js/history';
 import * as new_theme_or_rename from 'js/work_folder/new_theme_or_rename';
+import * as conds from 'js/conds';
 
+import { Checkbox } from 'components/Checkbox';
 import { HelpBtn } from 'components/HelpBtn';
 
 export class Textarea extends React.Component {
@@ -20,7 +22,12 @@ export class Textarea extends React.Component {
             family: this.family,
             counter: this.counter,
             char_limit: this.char_limit,
+            input_type: this.input_type,
         } = this.props);
+
+        this.textareas_to_record_history =
+            this.family === 'theme_metadata' ||
+            conds.textareas_with_default_checkbox(this.family, this.name);
 
         this.textarea = React.createRef();
 
@@ -50,26 +57,40 @@ export class Textarea extends React.Component {
             try {
                 change_val.change_val(this.family, this.name, val, null, true, true);
 
-                if (this.family === 'theme_metadata') {
-                    history.record_change(() =>
-                        history.generate_textarea_history_obj(
-                            this.family,
-                            this.name,
-                            inputs_data.obj[this.family][this.name].previous_val,
-                            val,
-                        ),
-                    );
+                if (
+                    (val !== '' && conds.textareas_with_default_checkbox(this.family, this.name)) ||
+                    !conds.textareas_with_default_checkbox(this.family, this.name)
+                ) {
+                    if (this.textareas_to_record_history) {
+                        history.record_change(() =>
+                            history.generate_textarea_history_obj(
+                                this.family,
+                                this.name,
+                                inputs_data.obj[this.family][this.name].previous_val,
+                                val,
+                                undefined,
+                                conds.textareas_with_default_checkbox(this.family, this.name)
+                                    ? inputs_data.obj[this.family][this.name].default
+                                    : undefined,
+                                conds.textareas_with_default_checkbox(this.family, this.name)
+                                    ? false
+                                    : undefined,
+                            ),
+                        );
+                    }
 
-                    change_val.set_previous_val(this.family, this.name, val);
+                    if (!this.mut.entered_one_char_in_textarea_after_focus) {
+                        this.mut.entered_one_char_in_textarea_after_focus = true;
+                    }
+
+                    if (this.name === 'name') {
+                        new_theme_or_rename.rename_theme_folder();
+                    }
+
+                    change_val.set_default_bool(this.family, this.name, false);
                 }
 
-                if (!this.mut.entered_one_char_in_textarea_after_focus) {
-                    this.mut.entered_one_char_in_textarea_after_focus = true;
-                }
-
-                if (this.name === 'name') {
-                    new_theme_or_rename.rename_theme_folder();
-                }
+                change_val.set_previous_val(this.family, this.name, val);
 
                 els_state.set_applying_textarea_val_val(false);
             } catch (er) {
@@ -152,7 +173,7 @@ export class Textarea extends React.Component {
     };
 
     change_val = (val) => {
-        if (this.family === 'theme_metadata') {
+        if (this.textareas_to_record_history) {
             els_state.set_applying_textarea_val_val(true);
         }
 
@@ -170,6 +191,7 @@ export class Textarea extends React.Component {
 
     render() {
         const { val } = inputs_data.obj[this.family][this.name];
+        const Tag = this.input_type === 'number' ? 'input' : 'textarea';
 
         return (
             <div className='input'>
@@ -179,18 +201,26 @@ export class Textarea extends React.Component {
                     data-text={`${this.name}_label_text`}
                     htmlFor={`${this.name}_input`}
                 />
-                <textarea
-                    id={`${this.name}_input`}
-                    className={this.ob.char_limit_exceeded ? 'char_limit_exceeded_textarea' : ''}
-                    ref={(textarea) => {
-                        this.textarea = textarea;
-                    }}
-                    value={val}
-                    disabled={els_state.com2.inputs_disabled_2 && this.family !== 'options'}
-                    onInput={({ target: { value } }) => this.change_val(value)}
-                    onChange={() => null}
-                    onBlur={this.reset_entered_one_char_in_textarea_after_focus}
-                />
+                <div className='textarea_and_default_btn'>
+                    <Tag
+                        id={`${this.name}_input`}
+                        className={`textarea${
+                            this.ob.char_limit_exceeded ? ' char_limit_exceeded_textarea' : ''
+                        }`}
+                        ref={(textarea) => {
+                            this.textarea = textarea;
+                        }}
+                        value={val}
+                        type={this.input_type}
+                        disabled={els_state.com2.inputs_disabled_2 && this.family !== 'options'}
+                        onInput={({ target: { value } }) => this.change_val(value)}
+                        onChange={() => null}
+                        onBlur={this.reset_entered_one_char_in_textarea_after_focus}
+                    />
+                    {this.input_type === 'number' ? (
+                        <Checkbox {...this.props} checkbox_type='default' />
+                    ) : undefined}
+                </div>
                 <HelpBtn {...this.props} />
                 <Counter counter={this.counter} ob={this.ob} />
             </div>

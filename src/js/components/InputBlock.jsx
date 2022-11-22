@@ -17,6 +17,7 @@ import { HelpBtn } from 'components/HelpBtn';
 const con = {
     components: {
         textarea: Textarea,
+        number: Textarea,
         select: Select,
         img_selector: ImgSelector,
         color: Color,
@@ -83,6 +84,7 @@ export class InputBlock extends React.Component {
                         return (
                             <Component
                                 {...item}
+                                input_type={item.type === 'number' ? 'number' : undefined}
                                 count_char={this.count_char}
                                 checkbox_type={item.type === 'checkbox' ? 'options' : null}
                                 ref={

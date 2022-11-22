@@ -126,6 +126,23 @@ const tint = (name) => {
     return undefined;
 };
 
+const number = (name, add_help) => {
+    try {
+        return {
+            name,
+            type: 'number',
+            val: '',
+            default: true,
+            add_help,
+            bulk_copy_checkbox_checked_by_default: true,
+        };
+    } catch (er) {
+        err(er, 344);
+    }
+
+    return undefined;
+};
+
 const options_btns = (name) => {
     try {
         return {
@@ -208,6 +225,7 @@ const inputs = {
     ],
     clear_new_tab: [
         img_selector('clear_new_tab_video', false),
+        number('video_speed', true),
         select('video_volume', 'default', true),
         select('size', 'default', true),
     ],

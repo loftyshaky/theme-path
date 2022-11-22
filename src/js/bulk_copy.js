@@ -240,7 +240,9 @@ export const bulk_copy = (theme_paths) => {
 
                                 if (bulk_copy_checkbox_is_checked) {
                                     const is_color = conds.colors(family);
-                                    const is_textarea = conds.textareas(family, name);
+                                    const is_textarea =
+                                        conds.textareas(family, name) ||
+                                        conds.textareas_with_default_checkbox(family, name);
                                     const is_select = conds.selects(family, name);
                                     const is_select_default =
                                         inputs_data.obj[family][name].val === 'default';
@@ -326,7 +328,11 @@ export const bulk_copy = (theme_paths) => {
                                                 ? 'default'
                                                 : target_manifest_obj.theme[family][name];
                                         }
-                                    } else if (is_textarea && name !== 'version') {
+                                    } else if (
+                                        is_textarea &&
+                                        name !== 'version' &&
+                                        !conds.textareas_with_default_checkbox(family, name)
+                                    ) {
                                         src_messages_key = msg.get_message_name(
                                             src_manifest_obj[name],
                                         );
@@ -390,6 +396,9 @@ export const bulk_copy = (theme_paths) => {
                                         default_locale,
                                     ) => {
                                         if (src_textarea_val !== target_textarea_val) {
+                                            const is_textarea_with_default_checkbox =
+                                                conds.textareas_with_default_checkbox(family, name);
+
                                             await change_val.change_val(
                                                 family,
                                                 name,
@@ -408,15 +417,32 @@ export const bulk_copy = (theme_paths) => {
                                                         family,
                                                         name,
                                                         target_textarea_val,
-                                                        src_textarea_val,
-                                                        locale,
+                                                        is_textarea_with_default_checkbox &&
+                                                            typeof src_textarea_val === 'undefined'
+                                                            ? undefined
+                                                            : src_textarea_val,
+                                                        is_textarea_with_default_checkbox
+                                                            ? undefined
+                                                            : locale,
+                                                        is_textarea_with_default_checkbox
+                                                            ? typeof target_textarea_val ===
+                                                                  'undefined'
+                                                            : undefined,
+                                                        is_textarea_with_default_checkbox
+                                                            ? typeof src_textarea_val ===
+                                                                  'undefined'
+                                                            : undefined,
                                                     ),
                                                 target_path,
                                             );
                                         }
                                     };
 
-                                    if (!src_is_default && !src_is_disabled) {
+                                    if (
+                                        (conds.textareas_with_default_checkbox(family, name) &&
+                                            !src_is_default) ||
+                                        (!src_is_default && !src_is_disabled)
+                                    ) {
                                         if (
                                             (family === 'images' ||
                                                 name === 'icon' ||
@@ -528,6 +554,17 @@ export const bulk_copy = (theme_paths) => {
                                                 const src_textarea_val = src_manifest_obj[name];
                                                 const target_textarea_val =
                                                     target_manifest_obj[name];
+                                                await change_textarea_val(
+                                                    src_textarea_val,
+                                                    target_textarea_val,
+                                                );
+                                            } else if (
+                                                conds.textareas_with_default_checkbox(family, name)
+                                            ) {
+                                                const src_textarea_val =
+                                                    src_manifest_obj.theme[family][name];
+                                                const target_textarea_val =
+                                                    target_manifest_obj.theme[family][name];
 
                                                 await change_textarea_val(
                                                     src_textarea_val,

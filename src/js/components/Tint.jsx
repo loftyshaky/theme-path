@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import * as tints from 'js/tints';
 
-import { Number } from 'components/Number';
+import { TintNumber } from 'components/TintNumber';
 import { Checkbox } from 'components/Checkbox';
 import { HelpBtn } from 'components/HelpBtn';
 
@@ -18,7 +18,7 @@ export class Tint extends React.Component {
                 <div className='tint_input_inner'>
                     <div className='tint_inputs'>
                         {Object.entries(tints.con.types).map(([type, type_i], i) => (
-                            <Number
+                            <TintNumber
                                 // eslint-disable-next-line react/no-array-index-key
                                 key={i}
                                 {...this.props}

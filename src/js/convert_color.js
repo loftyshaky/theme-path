@@ -8,6 +8,7 @@ import * as color_pickiers from 'js/color_pickiers';
 import * as options from 'js/options';
 import * as folders from 'js/work_folder/folders';
 import * as picked_colors from 'js/picked_colors';
+import * as conds from 'js/conds';
 
 const store = new Store();
 
@@ -91,6 +92,8 @@ const convert_theme_color_props_to_color = (item) => {
             if (clear_new_tab_video_exist) {
                 change_val.set_default_bool(family, name, false);
             }
+        } else if (conds.textareas_with_default_checkbox(family, name)) {
+            change_val.set_default_bool(family, name, inputs_data.obj[family][name].val === '');
         }
     } catch (er) {
         err(er, 36);
