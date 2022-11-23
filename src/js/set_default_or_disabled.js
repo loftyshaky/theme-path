@@ -86,7 +86,7 @@ const set_default = (family, name, target_path, manifest_obj) => {
 
         if (inputs_data.obj[family][name].type === 'select') {
             change_val.set_inputs_data_val(family, name, 'default');
-        } else if (inputs_data.obj[family][name].color) {
+        } else if (['colors', 'images'].includes(family)) {
             change_val.set_inputs_data_color(family, name, color_input_default);
         } else if (family === 'tints') {
             change_val.set_inputs_data_val(family, name, tints.con.default_val);
