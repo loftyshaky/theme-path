@@ -103,7 +103,7 @@
         "confusing-browser-globals": "^1.0.11",
         "copy-webpack-plugin": "^11.0.0",
         "css-loader": "^6.7.1",
-        "electron": "^19.0.1",
+        "electron": "^19.0.11",
         "electron-builder": "^23.0.3",
         "eslint": "^8.16.0",
         "eslint-config-airbnb": "^19.0.4",
