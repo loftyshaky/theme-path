@@ -22,12 +22,11 @@ export const Help = () => (
         </ul>
         <Hr name='links' />
         <div className='help_block links_block'>
-            <Link name='privacy_policy' href='https://bit.ly/ctc-privacy-policy' />
+            <Link name='privacy_policy' href='https://github.com/loftyshaky/theme-path/blob/master/privacy-policy.md' />
             <Link // eslint-disable-line jsx-a11y/anchor-is-valid
                 name='clear_new_tab'
             />
-            <Link name='facebook_page' href='https://bit.ly/browservery' />
-            <Link name='donate' href='https://bit.ly/donate-loftyshaky' />
+            <Link name='facebook_page' href='https://www.facebook.com/browservery' />
         </div>
         <div className='app_version'>{`v${app_version}`}</div>
     </Popup>
