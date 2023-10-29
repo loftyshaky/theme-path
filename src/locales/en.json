@@ -283,7 +283,7 @@
     "select_theme_tutorial_item_text": "Select newly created theme.",
     "change_theme_properties_tutorial_item_text": "Change theme properties in \"Theme metadata\" and \"Theme\" sections.",
     "open_in_chrome_tutorial_item_text": "Open theme in Chrome by left-clicking on this button. Right-click to open theme in an incognito mode.",
-    "pack_tutorial_item_text": "Package theme as a zip file for distribution in the Chrome Web Store. The package will be stored in the folder that contains theme. Click on \"CRX\" button to package theme for personal use.",
+    "pack_tutorial_item_text": "Package the theme as a zip file for personal use or distribution in the Chrome Web Store. The package will be stored in the folder that contains the theme.",
     "skip_tutorial_btn_text": "Skip tutorial",
     "side_popup_accept_btn_text": "Accept",
     "side_popup_cancel_btn_text": "Cancel",

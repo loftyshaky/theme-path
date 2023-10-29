@@ -532,6 +532,10 @@ body.using_mouse .header_btn:hover:focus label {
     fill: #212121 !important;
 }
 
+.header_btn.pack_as_crx_btn {
+    display: none;
+}
+
 .new_theme_btn {
     white-space: nowrap;
 }
