@@ -71,7 +71,6 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
         ) {
             const left_button_clicked =
                 e.button === 0 || (e.type === 'keyup' && !e.ctrlKey && !e.shiftKey);
-            const new_tab_url = 'chrome-search://local-ntp/local-ntp.html';
             const chrome_exe_path_final = chrome_exe_path || getChrome(platform());
             const user_data_path =
                 folder_path || join(join(homedir(), 'theme-path'), 'chrome-preview-user-data');
@@ -101,9 +100,6 @@ export const open_in_chrome = (chrome_exe_path, folder_path, e) => {
 
                     try {
                         const child_process = await execFile(chrome_exe_path_final, [
-                            new_tab_url,
-                            new_tab_url,
-                            new_tab_url,
                             incognito,
                             '--start-maximized',
                             '--no-first-run', // without this canary chrome will not start if ThemePath Chrome Preview Directory doesn't exist
