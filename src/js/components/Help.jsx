@@ -9,7 +9,6 @@ import { HelpItem } from 'components/HelpItem';
 export const Help = () => (
     <Popup name='help'>
         <ul className='help_block'>
-            <HelpItem name='update_manifest_version_of_all_themes_to_v3' important />
             <HelpItem name='delete_all_history' important />
             <HelpItem name='multiple_tab_preview' important />
             <HelpItem name='preview' />
