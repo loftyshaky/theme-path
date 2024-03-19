@@ -4,6 +4,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const LicensePlugin = require('webpack-license-plugin');
+
+const { Dependencies } = require('./js/dependencies');
+
+const dependencies = new Dependencies();
 
 // -
 
@@ -88,6 +93,22 @@ module.exports = (env) => {
                     join(__dirname, 'bundle'),
                     join(__dirname, 'resources'),
                 ],
+            }),
+            {
+                apply: (compiler) => {
+                    compiler.hooks.done.tap('done', () =>
+                        dependencies.add_missing_dependesies(output_dir),
+                    );
+                },
+            },
+            new LicensePlugin({
+                outputFilename: 'dependencies.json',
+                replenishDefaultLicenseTexts: true,
+                licenseOverrides: {
+                    'exif-parser@0.1.12': 'MIT',
+                    'map-stream@0.1.0': 'MIT',
+                    'pause-stream@0.0.11': 'MIT',
+                },
             }),
         ],
 

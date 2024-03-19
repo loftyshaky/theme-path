@@ -35,8 +35,13 @@
             "to": "app/bundle",
             "filter": [
                 "new_theme",
-                "help_imgs"
+                "help_imgs",
+                "dependencies.js"
             ]
+        },
+        "extraFiles": {
+            "from": "bundle/dependencies.json",
+            "to": "."
         },
         "appx": {
             "artifactName": "microsoft_store-${version}-${arch}.${ext}",
@@ -121,15 +126,17 @@
         "stylelint-config-recommended": "^7.0.0",
         "stylelint-config-standard": "^25.0.0",
         "svg-inline-loader": "^0.8.2",
-        "webpack": "^5.72.1",
-        "webpack-cli": "^4.9.2",
+        "webpack": "^5.90.3",
+        "webpack-cli": "^4.10.0",
         "webpack-dev-server": "^4.9.0",
+        "webpack-license-plugin": "^4.4.2",
         "webpack-merge": "^5.8.0",
         "write-file-webpack-plugin": "^4.5.1"
     },
     "dependencies": {
         "@electron/remote": "^2.0.8",
         "@simonwep/pickr": "^1.8.2",
+        "app-root-path": "^3.1.0",
         "archiver": "^5.3.1",
         "chokidar": "^3.5.3",
         "confusing-browser-globals": "^1.0.11",
