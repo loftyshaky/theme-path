@@ -201,6 +201,8 @@ export const copy_color_picker_input_val = (
     try {
         x.bind(sb(color_pickier_w, click_el_selector), 'auxclick', (e) => {
             if (e.button === 1) {
+                e.target.click();
+
                 that.pickr.setColorRepresentation(mut.current_color_representation);
 
                 const input = sb(color_pickier_w, '.pcr-result');
